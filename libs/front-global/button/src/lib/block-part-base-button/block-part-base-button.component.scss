@@ -1,0 +1,6 @@
+:is(.btn-left, .btn-content, .btn-right):empty {
+  display: none;
+}
+button {
+  touch-action: manipulation;
+}

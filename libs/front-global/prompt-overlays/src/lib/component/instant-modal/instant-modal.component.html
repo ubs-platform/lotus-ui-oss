@@ -1,0 +1,49 @@
+<div #parent>
+  <div *ngIf="!closed">
+    <div *ngIf="data?.templateRef" style="height: 100%; width: 100%">
+      <div
+        *ngTemplateOutlet="data!.templateRef!; context: { dialog: dial }"
+      ></div>
+    </div>
+    <div *ngIf="safeUrl" class="p-3 h-full w-full">
+      <iframe
+        [height]="'100%'"
+        [width]="'100%'"
+        [frameBorder]="0"
+        [src]="safeUrl"
+      ></iframe>
+    </div>
+    <div
+      *ngIf="data && (data.htmlContent || data.htmlContentUrl)"
+      class="p-3 h-full w-full"
+    >
+      <instant-html
+        [htmlContent]="data.htmlContent!"
+        [htmlContentUrl]="data.htmlContentUrl!"
+        [yesButtonText]="data.yesButtonText"
+        [noButtonText]="data.noButtonText"
+        (buttonClicked)="closeDialog($event)"
+      ></instant-html>
+    </div>
+    <div
+      *ngIf="data && !(data.htmlContent || data.htmlContentUrl)"
+      class="flex gap-2 pt-1"
+    >
+      <block-button
+        btnTabindex="-1"
+        buttonClass="primary"
+        *ngIf="data?.yesButtonText"
+        (click)="closeDialog(true)"
+      >
+        {{ data.yesButtonText | translate }}</block-button
+      >
+      <block-button
+        btnTabindex="-1"
+        *ngIf="data?.noButtonText"
+        (click)="closeDialog(false)"
+      >
+        {{ data.noButtonText | translate }}</block-button
+      >
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+:host {
+  display: block;
+  overflow: auto;
+  width: 100%;
+}
+
+table {
+  min-width: 100%;
+  height: 100%;
+}
+th:last-child
+,td:last-child {
+  text-align: right;
+  // text-align: left;
+  // padding: 0.5em;
+  // border-right: 1px solid var(--bg-2);
+}
+
+th,td {
+  border-bottom: 1px solid var(--bg-2);
+  text-align: left;
+
+  // text-align: center;
+}
+
+.mobile-field-item {
+  border-bottom: 1px solid var(--bg-2);
+}
+.mobile-item {
+  border-bottom: 1px solid var(--bg-2);
+}

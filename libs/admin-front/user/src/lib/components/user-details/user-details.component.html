@@ -1,0 +1,19 @@
+<!-- <div class="flex align-items-center gap-2">
+  <block-button
+    iconClass="pi pi-chevron-left"
+    [hasContent]="false"
+    routerLink=".."
+  ></block-button>
+  <h1>{{ 'users.information' | translate }}</h1>
+</div> -->
+<!-- <lotus-web-h1 [showBackButton]="true">{{
+  'users.information' | translate
+}}</lotus-web-h1> -->
+<!-- [showBackButton]="true" -->
+<onpage-header
+  [title]="'users.information' | translate"
+></onpage-header>
+<div>
+  <minky-reform-prime [reform]="reform"></minky-reform-prime>
+</div>
+<block-button iconClass="pi pi-save" (click)="save()">Kaydet</block-button>

@@ -1,0 +1,300 @@
+[
+  {
+    "prefix": "tk",
+    "stringMap": {
+      "registeredmark": "Tetakent markası (Kuzeybatıyı işaret eden ok ve 'Tetakent' yazısı) H.C.G'nin tescilli markasıdır. "
+    }
+  },
+  {
+    "prefix": "tetakent.support",
+    "stringMap": {
+      "_": "Destek",
+      "faq": "SSS",
+      "feedback": "Geri bildirim",
+      "feedback-short": "GBl",
+      "subreddit": "r/tetakent",
+      "contact-support": "Destek birimi ile iletişim kur"
+    }
+  },
+  {
+    "prefix": "lotus.supervisor",
+    "stringMap": {
+      "_": "Süpervizör",
+      "portal": "Portal"
+    }
+  },
+  {
+    "prefix": "lotus.books",
+    "stringMap": {
+      "question-book": "Soru kitabı",
+      "question-books": "Soru kitapları",
+      "options": "Seçenekler",
+      "questions": "Sorular",
+      "created": "Oluşturdukların",
+      "comments": "Yorumlar",
+      "select-a-question": "Bir soru seçin",
+      "next-question": "Sonraki soru",
+      "previous-question": "Önceki soru",
+      "question-nth": "Soru {number}",
+      "categories": "Kategoriler",
+      "library": "Kütüphane",
+      "edit": "Düzenle",
+      "exit": "Çıkış",
+      "remove": "Kaldır",
+      "remove-question": "Soruyu sil",
+      "sure-remove-question": "Soruyu silmekten emin misiniz? Eğer bölümde başka bir soru olmazsa bölüm de silinecektir.",
+      "creator": "Oluşturucu",
+      "create": "Oluştur",
+      "create-new-book": "Yeni soru kitabı",
+      "add-new-question": "Yeni soru ekle",
+      "add-new-section": "Yeni bölüm ekle",
+      "name": "İsim",
+      "description": "Açıklama",
+      "image": "Resim",
+      "analysis": "Analizler",
+      "duration-dk": "Süre (DK)",
+      "general-book-analysis": "Soru kitabı geneli",
+      "last-trial-analysis": "Geçmiş denememden",
+      "in-library": "Kütüphanede",
+      "start-trial": "Denemeye başla",
+      "hide-from-library": "Kütüphaneden gizle",
+      "search-for-book-or-action": "Soru kitabı, eğitim ya da görev ara",
+      "creator-license-agreement": "Lotus soru kitabı sahipliği hakkındaki şartları kabul etmekteyim. Bu kitaba eklenen sorular üzerinde tüm izin ve haklara sahibim.",
+      "start": "Başla",
+      "adding": "Soru kitabı ekleniyor, lütfen bekleyin",
+      "promotion": "Tanıtım",
+      "go-to-promotion": "Tanıtıma git",
+      "add-into-library": "Kütüphaneye ekle",
+      "view-book": "Kitabı görüntüle",
+      "no-description": "Açıklama yok",
+      "publisher-tools": "Yayıncı araçları",
+      "teams": "Takımlarım",
+      "invitations": "Davetler",
+      "creators": "Oluşturanlar",
+      "earnings": "Kazanımlar",
+      "correct-answer-is": "Doğru cevap: {answer}",
+      "your-answer-is-correct": "Cevabın doğru 🎉",
+      "total-questions-length": "Toplam soru sayısı"
+    }
+  },
+  {
+    "prefix": "users",
+    "stringMap": {
+      "settings": "Hesap Ayarları",
+      "information": "Kullanıcı bilgileri",
+      "general-information": "Genel bilgiler"
+    }
+  },
+  {
+    "prefix": "lotus.home",
+    "stringMap": {
+      "slogan-1": "Dilediğin yerde, özgürce",
+      "slogan-2": "Yeni nesil ders çalışma ve soru çözme uygulaması",
+      "welcome-user": "Hoş Geldin, {name}",
+      "new-created": "Oluşturulan yeni kitaplar"
+    }
+  },
+  {
+    "prefix": "lotus.trial-session",
+    "stringMap": {
+      "stop": "Durdur",
+      "start": "Oturum başlat"
+    }
+  },
+  {
+    "prefix": "mona",
+    "stringMap": {
+      "login": "Giriş yap",
+      "register": "Üye ol",
+      "forgor-password": "Şifremi unuttum",
+      "color-theme": "Renk teması",
+      "dark-theme-normal": "Koyu (Normal)",
+      "dark-theme-oled": "Koyu (OLED optimizasyonu ile)",
+      "light-theme": "Açık",
+      "system-theme": "İşletim sisteminin temasını kullan",
+      "language": "Dil",
+      "user-operations": "Kullanıcı işlemleri",
+      "account-operations": "Hesap işlemleri",
+      "settings": "Ayarlar",
+      "back": "Geri",
+      "remember-me": "Beni hatırla",
+      "username": "Kullanıcı adı ya da Email",
+      "password": "Parola",
+      "logout": "Çıkış yap",
+      "yes": "Evet",
+      "no": "Hayır",
+      "unable-to-login": "Giriş yapılamıyor",
+      "required-fields": "Lütfen gerekli alanları doldurun",
+      "login-success": "Başarıyla giriş yapıldı",
+      "sure-logout": "Çıkış yapmak istediğinizden emin misiniz?",
+      "cancel": "İptal",
+      "account-settings": "Hesap ayarları",
+      "page-not-found": "Aradığınız sayfa bulunamadı",
+      "page-not-found-desc": "Aradığınız sayfaya ulaşılamadı. Hatanın nedeni yanlış sayfa adresi girmeniz yada ulaşmaya çalıştığınız sayfanın adresinin değişmesi olabilir. Eğer hatanın sizden kaynaklı olduğunu düşünmüyorsanız lütfen bize geri bildirimde bulunun.",
+      "home": "Ana sayfa",
+      "suspended": "Maalesef bu hesap üzerinde bir ya da birden fazla topluluk kurallarına uymayan eylem yapıldığı için, '{reason}' nedeniyle hesabınızı bir süreliğine askıya aldık.  Bunun yanlışıkla olduğunu düşünüyorsanız, lütfen info[at]tetakent[nokta]com üzerinden bizimle iletişime geçin.",
+      "feedback": "Geri bildirim",
+      "feedback-short": "GBl",
+      "save": "Kaydet",
+      "success-save": "Başarıyla kaydedildi",
+      "error-while-save": "Kaydedilirken bir hata oluştu",
+      "privacy": "Gizlilik",
+      "terms-of-use": "Kullanım şartları",
+      "need-to-login-to-show-page": "Bu sayfayı görüntüleyebilmeniz için giriş yapmanız gerekmektedir",
+      "account-activated": "Tekrardan hoş geldiniz. Hesabınız etkin hale gelmiştir ve giriş yapabilirsiniz."
+    }
+  },
+  {
+    "prefix": "mona.developer",
+    "stringMap": {
+      "": "Geliştirici",
+      "error-message": "Hata Mesajı",
+      "sample-error-message": "Örnek Hata Mesajı"
+    }
+  },
+  {
+    "stringMap": {
+      "customerAccountId": "Müşteri Hesap ID'si",
+      "sellerAccountId": "Satıcı Hesap ID'si",
+      "sellerAccountIds": "Satıcı Hesap ID'leri",
+      "dateFrom": "Başlangıç Tarihi",
+      "dateTo": "Bitiş Tarihi",
+      "paymentChannelId": "Ödeme Kanalı ID'si", 
+      "save": "Kaydet",
+      "email-format": "Lütfen geçerli bir e-posta adresi giriniz.",
+      "min-length": "Lütfen en az {intended} kelime giriniz",
+      "max-length": "Lütfen en fazla {intended} kelime giriniz",
+      "username-regex": "Kullanıcı adı en az 2 harften oluşmalıdır. Bir harf ile başlamalı, ardından sadece alfanumerik, nokta ve alt çizgi ile devam edebilir. Sadece küçük harf kullanılmalıdır",
+      "localeCode": "Dil kodu (E-Postalarda kullanılacak iletişim dili)",
+      "name": "İsim",
+      "surname": "Soyisim",
+      "fullname": "Tam ismi",
+      "username": "Kullanıcı adı",
+      "password": "Parola",
+      "passwordRepeat": "Parola tekrarı",
+      "type": "Tip",
+      "email": "E-Posta adresi",
+      "phoneNr": "Telefon Numarası",
+      "summary": "Özet",
+      "message": "Mesaj",
+      "primaryEmail": "Ana E-Posta adresi",
+      "RequiredValidator": "Bu alan gereklidir",
+      "PasswordLowerLetter": "En az 1 adet küçük harf gereklidir",
+      "PasswordUpperLetter": "En az 1 adet büyük harf gereklidir",
+      "PasswordMinChars": "Bu alan en az {length} karakter olmalıdır",
+      "PasswordNumbers": "Bu alan en az 1 adet rakam içermelidir",
+      "PasswordSpecialChars": "Bu alan en az 1 tane noktalama işareti içermelidir",
+      "PasswordCommons": "Güvenliğiniz için bu alanda 'password', 'admin' gibi yaygın kullanılan kelimeler ve '1234...' gibi ardışık rakamlar kullanılmamalıdır.",
+      "Samety": "İlgili alan ile eşleşmiyor",
+      "gender": "Cinsiyet/Yönelim",
+      "pronounce": "Hitap",
+      "country": "Ülke",
+      "state": "Eyalet/Şehir",
+      "city": "Şehir/İlçe",
+      "district": "İlçe",
+      "male": "Erkek",
+      "female": "Kadın",
+      "walmart-bag": "Walmart Poşeti",
+      "i-dont-want-to-tell": "Söylemek istemiyorum",
+      "other": "Diğer",
+      "new-email": "Yeni e-posta adresi",
+      "validation-code": "Doğrulama kodu",
+      "currentPassword": "Şu anki parola",
+      "newPassword": "Yeni parola",
+      "newPasswordRepeat": "Yeni parola tekrarı",
+      "insert": "Ekle",
+      "remove": "Kaldır",
+      "suspended": "Yasaklı",
+      "active": "Giriş yapabilir",
+      "roles": "Roller",
+      "status": "Durum",
+      "edit": "Düzenle",
+      "suspendReason": "Yasaklanma sebebi"
+    }
+  },
+  {
+    "prefix": "users.errors",
+    "stringMap": {
+      "fail-authentication": "Kullanıcı bulunamadı ya da parolalar uyuşmuyor"
+    }
+  },
+  {
+    "prefix": "admin.general",
+    "stringMap": {
+      "need-admin": "Santrali kullanabilmek için yönetici olarak giriş yapmalısınız. Sağ üstteki butonu kullanarak giriş yapabilirsiniz",
+      "first": "'Kyle Broflovski' başlangıç için eklenen yönetici kullanıcıdır. İlk açılışta konsol loglarından giriş bilgilerini bulabilirsiniz. Eğer yoksa, MongoDB üzerinde ubsusers veritabanındaki users dokümanını yedek alarak temizleyin ve UBS Users'ı tekrar çalıştırın. Ardından diğer kullanıcılarınızı yükleyin"
+    }
+  },
+  {
+    "prefix": "admin.users",
+    "stringMap": {
+      "": "UBS Kullanıcılar"
+    }
+  },
+  {
+    "prefix": "admin.lotus.books",
+    "stringMap": {
+      "": "Lotus Kitaplar"
+    }
+  },
+  {
+    "prefix": "language",
+    "stringMap": {
+      "tr-tr": "Türkçe",
+      "en-us": "İnglizce (ABD)"
+    }
+  },
+  {
+    "prefix": "mona.comments",
+    "stringMap": {
+      "open": "Açık",
+      "closed": "Kapalı",
+      "archive": "Arşiv",
+      "archive-long": "Arşiv modu kapalı'ya benzer, yorum girişi kapalı olur ancak yorumlar hala görüntülenebilir.",
+      "userCommentBlockReason.not-logged": "Yorum yapabilmek için lütfen giriş yapın.",
+      "userCommentBlockReason.disabled": "Bu alanda yorum yapılamıyor",
+      "block": "Kullanıcının yorum yapmasını engelle",
+      "unblock": "Kullanıcının yorum yapmasına izin ver",
+      "unblock-short": "İzin ver",
+      "unblock-question": "Kullanıcının bu alana yorum yapabilmesine artık izin veriyor musunuz?",
+      "block-question": "Kullanıcının bu alana yorum yapmasını engellemek istediğinizden emin misiniz?",
+      "contentType": "İçerik tipi",
+      "extraNotes": "Ekstra notlar"
+    }
+  },
+  {
+    "prefix": "lotus.home-intro",
+    "stringMap": {
+      "have-already-account": "Hesabım var",
+      "welcome": " Yeni nesil soru çözme platformuna hoş geldiniz. Anasayfadan istediğiniz kitabı bulun, kütüphanenize ekleyin ve çalışmaya başlayın",
+      "explore-published-recently": "Yeni çıkanları keşfet",
+      "try-urself": "Kendinizi deneyin",
+      "try-urself-long": " Herhangi bir soru kitabı içinden kendinizi deneyebilirsiniz, ve deneme sonunda doğrularınıza, yanlışlarınıza ve zamanlamanızı gözden geçirebilirsiniz. ",
+      "we-love-green": "Yeşili seviyoruz",
+      "we-love-green-long": " Hayır, yasadışı olan bir bitkiden ya da paradan sözetmiyoruz! Doğayı kastediyoruz. Lotus sayesinde yayınevleri matbaa ve nakliyat masrafları ve bunlar için harcanan enerji ve karbon ayakizi azalıyor.",
+      "platforms": "Telefonda, bilgisayarda ve tablette",
+      "no-download": " İndirme yok, kurulum yok, sadece başarı var "
+    }
+  },
+  {
+    "prefix": "lotus.promotion",
+    "stringMap": {
+      "demo": " Örnek",
+      "contact-links": "İletişim bağlantıları",
+      "free": "Ücretsiz",
+      "back-promotion": "Tanıtıma geri dön",
+      "login-or-register": "Giriş yap ya da Üye ol",
+      "benefit-start": "Giriş yaparak bu kitabı kütüphanenize eklemenin yanında",
+      "see-more-books": "Daha fazla kitabı görüntüleme ve göz atma imkanı",
+      "start-trial": "Deneme yapabilirsiniz",
+      "show-your-trials": "Denemelerinizi görüntüleyebilirsiniz",
+      "login-instant-add": "Giriş yaparsanız bu kitap anında kütüphanenize eklenecektir"
+    }
+  },
+  {
+    "prefix": "lotus",
+    "stringMap": {
+      "bu-kitap-bir-takm-tarafndan-yn": "Bu kitap bir takım tarafından yönetilmektedir."
+    }
+  }
+]

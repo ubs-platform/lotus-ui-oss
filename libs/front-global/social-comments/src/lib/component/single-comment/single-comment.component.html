@@ -1,0 +1,156 @@
+<ng-template #extraOptionButtons>
+  <div class="flex gap-1">
+    <block-button
+      *ngIf="existCommentAbility?.canRemove"
+      buttonClass="compact border"
+      iconClass="pi pi-trash"
+      (click)="deleteComment()"
+      pTooltip="Yorumu sil"
+    ></block-button>
+    <block-button
+      *ngIf="existCommentAbility?.canEdit"
+      buttonClass="compact border"
+      iconClass="pi pi-pencil"
+      (click)="editComment()"
+    ></block-button>
+    <block-button
+      *ngIf="existCommentAbility?.userCommentAdmin && !item()!?.userBanned"
+      buttonClass="compact border"
+      iconClass="pi pi-ban"
+      pTooltip="Kullanıcının bu alanda yorum işlevini kapat"
+      (click)="this.blockUser()"
+    ></block-button>
+    <block-button
+      *ngIf="existCommentAbility?.userCommentAdmin && item()!?.userBanned"
+      buttonClass="compact border"
+      iconClass="pi pi-check"
+      pTooltip="Kullanıcının bu alanda yorum işlevini kapatır"
+      (click)="this.unblockUser()"
+    ></block-button>
+  </div>
+</ng-template>
+<p-overlayPanel #extraOptions>
+  <div *ngTemplateOutlet="extraOptionButtons"></div>
+</p-overlayPanel>
+
+<div
+  class="flex gap-2 align-items-center p-1 comment-hold"
+  [class.child-right-border]="item()!.isChild"
+  *ngIf="item()!"
+>
+  <div class="user-img">
+    <img src="/api/file/PROFILE_PHOTO/{{ item()!.byUserId }}" alt="" />
+  </div>
+  <div class="flex align-items-center pr-3 w-full">
+    <div class="flex flex-column w-full">
+      <div
+        class="flex justify-content-between w-full"
+        [class.downvoted]="commentIsDownVoted"
+      >
+        <div [class.lower-font]="item()!.isChild">
+          <b> {{ item()!.byFullName }} </b>
+        </div>
+      </div>
+
+      <div
+        [class.downvoted]="commentIsDownVoted"
+        [class.lower-font]="item()!.isChild"
+      >
+        {{ item()!.textContent }}
+      </div>
+
+      <div class="flex justify-content-between">
+        <div class="flex flex-wrap gap-2 py-1">
+          <block-button
+            [buttonClass]="
+              'compact ' + (item()!.userUpVoted ? 'primary' : 'border')
+            "
+            iconClass="pi pi-chevron-up"
+            (click)="upvote()"
+            pTooltip="Olumlu olarak oyla"
+          ></block-button>
+
+          <block-button
+            [buttonClass]="
+              'compact ' + (item()!.userDownVoted ? 'primary' : 'border')
+            "
+            iconClass="pi pi-chevron-down"
+            (click)="downvote()"
+            pTooltip="Olumsuz olarak oyla"
+          ></block-button>
+          <block-button
+            *ngIf="!item()!.isChild && item()!.childCommentsCount"
+            [buttonClass]="
+              'compact ' + (item()!.childCommentsCount ? 'primary' : 'border')
+            "
+            iconClass="pi pi-comment"
+            (click)="toggleChildren()"
+          >
+            <div *ngIf="!showAnswers">
+              {{ item()!.childCommentsCount }}
+            </div>
+            <div *ngIf="showAnswers">Gizle</div>
+          </block-button>
+
+          <block-button
+            *ngIf="!item()!.isChild && !item()!.childCommentsCount"
+            [hasContent]="false"
+            buttonClass="compact border"
+            iconClass="pi pi-comment"
+            (click)="showAddAnswerDialogForThatComment()"
+          >
+          </block-button>
+        </div>
+
+        <div class="flex flex-wrap gap-2 py-1">
+          <block-button
+            buttonClass="compact border"
+            iconClass="pi pi-flag"
+            pTooltip="Yorumu bildir"
+            (click)="flag()"
+          ></block-button>
+          <block-button
+            buttonClass="compact border"
+            (click)="toggleExistCommentAbilities($event)"
+            iconClass="pi pi-ellipsis-h"
+          ></block-button>
+        </div>
+      </div>
+
+      <div [class.downvoted]="commentIsDownVoted" style="font-size: 0.75rem">
+        <div class="flex flex-column">
+          <div>Oluşturma: {{ creationDate }}</div>
+
+          <div>
+            <div *ngIf="item()!.editCount">
+              <div>{{ item()!.editCount }} kere düzenlendi.</div>
+              <div>
+                Son düzenlenme:
+                {{ editDate }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      style="min-width: 40px; font-size: 1.5rem; text-align: right"
+      class="pr-1 pl-3 sm:pl-4"
+    >
+      {{ item()!!.votesLength || 0 }}
+    </div>
+  </div>
+</div>
+<div class="ml-6 child-comments" #childCommentsParentDiv>
+  <social-comments-component
+    *ngIf="showAnswers && item()!"
+    initialSortField="creationDate"
+    initialSortRotation="asc"
+    [childEntityId]="item()!.childEntityId"
+    [childEntityName]="item()!.childEntityName"
+    [mainEntityId]="item()!.mainEntityId"
+    [mainEntityName]="item()!.mainEntityName"
+    [entityGroup]="item()!.entityGroup"
+    [parentCommentId]="item()!._id"
+  ></social-comments-component>
+</div>

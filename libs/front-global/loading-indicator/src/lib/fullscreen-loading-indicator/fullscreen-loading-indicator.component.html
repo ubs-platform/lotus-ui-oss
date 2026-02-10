@@ -1,0 +1,18 @@
+<div
+  class="parent flex flex-column align-items-center justify-content-center"
+  *ngIf="this.showCloseCount() && (loaderListener && (loaderListener | async)?.show)"
+>
+  <div
+    class="flex-grow-1 flex flex-column align-items-center justify-content-center"
+  >
+    <div (dblclick)="showClose()">
+      <lotus-web-circular-loading-indicator></lotus-web-circular-loading-indicator>
+    </div>
+    <div>
+      <h2>Lütfen bekleyin</h2>
+    </div>
+  </div>
+  <div class="p-2">
+    <ng-content select="[position='bottom']"></ng-content>
+  </div>
+</div>

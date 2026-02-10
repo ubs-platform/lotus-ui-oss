@@ -1,0 +1,33 @@
+  <div class="flex flex-column gap-1 flex-wrap" *ngIf="socialDialogUser()">
+    <block-button
+      [hasContent]="false"
+      iconClass="pi pi-trash"
+      buttonClass="bg-danger"
+      *ngIf="!userIsAdmin()"
+      (click)="clearComments(socialDialogUser()!)"
+      >Yorumlarını temizle</block-button
+    >
+    <block-button
+      [hasContent]="false"
+      iconClass="pi pi-ban"
+      buttonClass="bg-danger"
+      *ngIf="
+        !socialDialogUserSocialRestriction() &&
+        !userIsAdmin()
+      "
+      (click)="blockComments(socialDialogUser()!)"
+      >Yorumları engelle</block-button
+    >
+
+    <block-button
+      [hasContent]="false"
+      iconClass="pi pi-check"
+      buttonClass="bg-danger"
+      *ngIf="
+        socialDialogUserSocialRestriction() &&
+        !userIsAdmin()
+      "
+      (click)="unblockComments(socialDialogUser()!)"
+      >Yorumları etkinleştir</block-button
+    >
+  </div>

@@ -1,0 +1,13 @@
+<ng-container *ngIf="iconImageSource()">
+  <img [src]="iconImageSource()" style="height: 1em" />
+</ng-container>
+
+<ng-container>
+  <i
+    style="font-style: normal"
+    [ngClass]="iconClass()"
+    [style.fontSize]="iconSize()"
+  >
+    {{ iconContent() }}</i
+  >
+</ng-container>

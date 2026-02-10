@@ -1,0 +1,81 @@
+
+<div *ngIf="userMessage">
+  <div>
+    <block-button
+      buttonClass="primary"
+      iconClass="pi pi-check"
+      *ngIf="userMessage.status == 'WAITING'"
+      (click)="resolve()"
+      >Çözümle</block-button
+    >
+    <p-message
+      severity="success"
+      text="Bu geri bildirim çözümlenmiştir."
+      *ngIf="userMessage.status == 'RESOLVED'"
+    ></p-message>
+  </div>
+  <div>
+    <h3>Gönderen</h3>
+    <div>
+      <div>
+        <b>İsim soyisim</b>
+        {{ userMessage.firstName }}
+        {{ userMessage.lastName }}
+      </div>
+      <div>
+        <b>Email</b>
+        {{ userMessage.email }}
+      </div>
+      <div>
+        <b>Telefon numarası</b>
+        {{ userMessage.phoneNumber || 'Telefon numarası belirtmemiş' }}
+      </div>
+    </div>
+  </div>
+  <div>
+    <h3>Özet</h3>
+    <span>{{ userMessage.summary }}</span>
+  </div>
+  <div>
+    <h3>Mesaj</h3>
+    <span>
+      <lotus-web-markdown-editor
+        [editor]="false"
+        [value]="userMessage.message!"
+      ></lotus-web-markdown-editor>
+    </span>
+  </div>
+  <div>
+    <h3>URL</h3>
+    <span>
+      <a [href]="userMessage.relatedUrl" target="_blank">{{
+        userMessage.relatedUrl
+      }}</a>
+    </span>
+  </div>
+  <div>
+    <h3>Tarih</h3>
+    <span>{{ userMessage.creationDate | date }}</span>
+  </div>
+  <div>
+    <h3>Durum</h3>
+    <span>{{ userMessage.status }}</span>
+  </div>
+  <div *ngIf="userMessage.fileUrls?.length">
+    <h3>Dosyalar</h3>
+    <div>
+      <ul>
+        <li *ngFor="let file of userMessage.fileUrls">
+          <div>
+            <h4>
+              {{ file.title }}
+            </h4>
+            <a [href]="'/api/file/' + file.url" target="_blank">{{
+              file.url
+            }}</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

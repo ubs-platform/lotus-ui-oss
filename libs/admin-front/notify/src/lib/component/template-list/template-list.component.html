@@ -1,0 +1,49 @@
+<div style="margin-bottom: 1rem;">
+  <block-button buttonClass="primary" iconClass="pi pi-plus" routerLink="new"
+    >Yeni</block-button>
+  <block-button 
+    buttonClass="secondary" 
+    iconClass="pi pi-upload" 
+    (click)="importFromJson()"
+    [disabled]="isImporting()"
+    style="margin-left: 0.5rem;">
+    {{ isImporting() ? 'İçe Aktarılıyor...' : 'JSON İçe Aktar' }}
+  </block-button>
+</div>
+<ubs-table-ngx [items]="templates">
+  <column name="id">
+    <ng-template header> Id </ng-template>
+    <ng-template data let-item="item">
+      {{ item._id }}
+    </ng-template>
+  </column>
+  <column name="name">
+    <ng-template header> İsim </ng-template>
+    <ng-template data let-item="item">
+      <div>{{ item.name }}</div>
+    </ng-template>
+  </column>
+  <column name="htmlContent">
+    <ng-template header> İçerik </ng-template>
+    <ng-template data let-item="item">
+      <div>{{ item.htmlContent ? 'HTML İçerik' : 'Boş' }}</div>
+    </ng-template>
+  </column>
+  <column name="actions">
+    <ng-template header> Aksiyonlar </ng-template>
+    <ng-template data let-item="item">
+      <block-button
+        buttonClass="primary"
+        iconClass="pi pi-pencil"
+        routerLink="{{ item._id }}"
+        >Düzenle</block-button
+      >
+      <block-button
+        buttonClass="bg-danger"
+        iconClass="pi pi-trash"
+        (click)="remove(item._id)"
+        >Kaldır</block-button
+      >
+    </ng-template>
+  </column>
+</ubs-table-ngx>

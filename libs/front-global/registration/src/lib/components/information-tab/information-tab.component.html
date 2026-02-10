@@ -1,0 +1,16 @@
+<h3>Hesap oluşturma</h3>
+<p>Lütfen bilgilerinizi girin.</p>
+<minky-reform-prime [reform]="reform">
+  <ng-template title-link let-title="title">
+    {{ title | translate }}
+  </ng-template>
+</minky-reform-prime>
+<div class="action-buttons" *ngIf="reform">
+  <block-button
+    buttonClass="primary"
+    iconClass="pi pi-chevron-right"
+    iconPosition="RIGHT"
+    (click)="sendRequest()"
+    >İleri</block-button
+  >
+</div>

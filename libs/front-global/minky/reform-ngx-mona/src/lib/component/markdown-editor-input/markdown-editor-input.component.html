@@ -1,0 +1,23 @@
+<div *ngIf="carrier()!">
+  <div class="mb-3">
+    <label class="block font-bold mb-2">{{ carrier()!.title | translate }}</label>
+    <lotus-web-markdown-editor
+      [value]="carrier()!.value"
+      (valueChange)="carrier()!.setValue($event)"
+      [category]="imageCategory()"
+      [objectId]="imageObjectId()"
+    ></lotus-web-markdown-editor>
+  </div>
+  <p-message
+    *ngIf="carrier()!.isTouched && carrier()!.validationErrors?.length"
+    styleClass="my-1 w-full"
+    severity="error"
+    [text]="carrier()!.validationErrors[0].name | translate"
+  ></p-message>
+</div>
+<!--
+
+        ( ||
+        reform?.touchMap?.getPathStatus(carrier.path)) &&
+      carrier.validationErrors?.length
+ -->

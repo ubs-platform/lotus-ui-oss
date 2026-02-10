@@ -1,0 +1,22 @@
+{
+  "name": "front-global-minky-reform-ngx-prime",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/front-global/minky/reform-ngx-prime/src",
+  "prefix": "lotus-web",
+  "tags": [],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/libs/front-global/minky/reform-ngx-prime"
+      ],
+      "options": {
+        "jestConfig": "libs/front-global/minky/reform-ngx-prime/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

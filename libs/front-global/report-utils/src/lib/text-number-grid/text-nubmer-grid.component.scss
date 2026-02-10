@@ -1,0 +1,21 @@
+.text-number-grid {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+
+  gap: 2px;
+  width: 100%;
+  border-bottom: var(--border-color) solid 1px;
+  @media screen and (max-width: 499px) {
+    & > :nth-child(even) {
+      background-color: var(--bg-1);
+    }
+  }
+  @media screen and (min-width: 500px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    // border-top: none;
+    // border-right: var(--border-color) solid 1px;
+  }
+}

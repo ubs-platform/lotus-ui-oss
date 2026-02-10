@@ -1,0 +1,15 @@
+<div
+  class="w-full h-full flex flex-column align-items-center justify-content-center gap-4"
+>
+  <img *ngIf="imgPath()" src="{{ imgPath() }}" />
+  <i
+    *ngIf="primeIcons()"
+    [class]="'pi ' + primeIcons()"
+    style="font-size: 10em"
+  ></i>
+  <h1 class="text-center">{{ title() | translate }}</h1>
+  <span class="text-center">{{ desc() | translate }}</span>
+  <!-- <block-button routerLink="/" iconClass="pi pi-home">{{
+    'mona.home' | translate
+  }}</block-button> -->
+</div>

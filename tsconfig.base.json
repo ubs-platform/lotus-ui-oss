@@ -1,0 +1,48 @@
+{
+  "compileOnSave": false,
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": "error"
+  },
+  "compilerOptions": {
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@lotus-web/environment": ["environment/environment"],
+      "@lotus/*": ["libs/*/src/index.ts"],
+      "@lotus/front-global/ui/data-list-layout": [
+        "libs/front-global/ui/data-list-layout/src/index.ts"
+      ],
+      "PublisherTeamClient": [
+        "libs/lotus-front/publisher-teams/client/src/index.ts"
+      ],
+      "admin-social-options": [
+        "libs/front-global/admin-social-options/src/index.ts"
+      ],
+      "book-migration-dialog": [
+        "libs/lotus-frontend/book-migration-dialog/src/index.ts"
+      ],
+      "book-ownership": ["libs/lotus-frontend/book-ownership/src/index.ts"],
+      "consts": ["libs/lotus-common/consts/src/index.ts"],
+      "dynamic-headers": ["libs/front-global/dynamic-headers/src/index.ts"],
+      "entity-ownership": ["libs/front-global/entity-ownership/src/index.ts"],
+      "pages": ["libs/lotus-front/publisher-teams/pages/src/index.ts"],
+      "reform-data-edit": ["libs/front-global/reform-data-edit/src/index.ts"],
+      "sale-simulation": [
+        "libs/postral-core-frontend/sale-simulation/src/index.ts"
+      ],
+      "tab-view": ["libs/front-global/tab-view/src/index.ts"],
+      "warning-watermark": ["libs/front-global/warning-watermark/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

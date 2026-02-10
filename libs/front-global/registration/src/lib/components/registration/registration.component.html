@@ -1,0 +1,32 @@
+<div
+  class="h-full w-full flex flex-row align-items-center justify-content-center"
+>
+  <div class="mona-centered-card p-4 overflow-auto">
+    <div class="w-full" *ngIf="acceptUser">
+      <router-outlet></router-outlet>
+    </div>
+    <div
+      *ngIf="!acceptUser"
+      class="mona-card mx-auto"
+      style="max-width: 772px"
+      severity="warn"
+    >
+      Maalesef şu anda yeni üyelikleri kabul edemiyoruz. Bu rahatsızlıktan
+      dolayı özür dileriz, ve anlayışınız için teşekkür ederiz.
+      <div class="mt-2 action-buttons gap-1">
+        <block-button
+          routerLink="/"
+          buttonClass="border"
+          iconClass="pi pi-home"
+          stringContent="mona.home"
+        ></block-button>
+        <block-button
+          routerLink="/login"
+          buttonClass="border"
+          iconClass="pi pi-sign-in"
+          stringContent="mona.login"
+        ></block-button>
+      </div>
+    </div>
+  </div>
+</div>

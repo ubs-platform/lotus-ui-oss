@@ -1,0 +1,24 @@
+.warning {
+  padding: 0.5em;
+  background-color: var(--bg-2);
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.comments-view-wrap {
+  display: flex;
+  justify-content: center;
+  .comments-view {
+    max-width: 992px;
+  }
+  height: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.single-comment-wrap {
+  border-top: 1px solid var(--bg-1);
+  &:first-of-type {
+    border-top: none;
+  }
+}

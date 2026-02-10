@@ -1,0 +1,42 @@
+<ng-template let-item="item" #defaultOptionText>
+  {{ item?.text | translate }}
+</ng-template>
+
+<div 
+  (mouseenter)="mouseEntered.set(true)" 
+  (mouseleave)="mouseEntered.set(false)" 
+  (window:click)="handleWindowClick()"
+  [style.minWidth]="minWidth()">
+  
+  <div class="costum-selection" [ngClass]="containerClasses()">
+    <div 
+      class="head d-flex flex-row flex-align-center" 
+      [ngClass]="headClasses()"
+      (click)="toggleOptionsShow(); handleElementClick()">
+      <div class="text flex-grow-1">
+        {{ displayText() }}
+        <ng-container 
+          *ngTemplateOutlet="optionValuesTemplate() || defaultOptionText;
+          context: { $implicit: selected(), item: selected() }">
+        </ng-container>
+      </div>
+    </div>
+    
+    <div class="items">
+      @for (option of options(); track trackByValue($index, option)) {
+        @if (!isSelected(option.value) || !hideSelectedItem()) {
+          <div 
+            class="item" 
+            [class.error]="error()" 
+            [attr.value]="option.value" 
+            (click)="selectVal(option)">
+            <ng-container 
+              *ngTemplateOutlet="optionValuesTemplate() || defaultOptionText;
+              context: { $implicit: option, item: option }">
+            </ng-container>
+          </div>
+        }
+      }
+    </div>
+  </div>
+</div>

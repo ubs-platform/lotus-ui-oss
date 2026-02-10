@@ -1,0 +1,22 @@
+<div class="flex flex-column h-full w-full">
+  <div class="flex-grow-1">
+    <!-- <input pInputText [(ngModel)]="value" /> -->
+    <div class="h-full">
+      <ngx-monaco-editor
+        style="height: 100%"
+        *ngIf="monacoOps"
+        [(ngModel)]="value"
+        [options]="monacoOps"
+      ></ngx-monaco-editor>
+    </div>
+  </div>
+  <div>
+    <block-button
+      buttonClass="primary"
+      iconClass="pi pi-check"
+      (click)="close(value)"
+      >Tamam</block-button
+    >
+    <block-button (click)="close()"> İptal </block-button>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+{
+  "name": "front-global-ubs-touch-ngx",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/front-global/ubs-touch-ngx/src",
+  "prefix": "lotus-web",
+  "tags": [],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/front-global/ubs-touch-ngx"],
+      "options": {
+        "jestConfig": "libs/front-global/ubs-touch-ngx/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "libs/front-global/ubs-touch-ngx/.storybook",
+        "browserTarget": "front-global-ubs-touch-ngx:build-storybook",
+        "compodoc": false,
+        "styles": ["apps/lotus/src/styles.scss"]
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "outputs": ["{options.outputDir}"],
+      "options": {
+        "outputDir": "dist/storybook/front-global-ubs-touch-ngx",
+        "configDir": "libs/front-global/ubs-touch-ngx/.storybook",
+        "browserTarget": "front-global-ubs-touch-ngx:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    }
+  }
+}

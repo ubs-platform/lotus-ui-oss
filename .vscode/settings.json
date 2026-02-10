@@ -1,0 +1,12 @@
+{
+  "eslint.enable": false,
+  "vsicons.presets.angular": true,
+  "editor.mouseWheelZoom": true,
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/node_modules/**": true
+  },
+  "nxConsole.generateAiAgentRules": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+}

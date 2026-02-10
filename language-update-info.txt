@@ -1,0 +1,33 @@
+
+> nx run lotus-ondemand-translation-updater:serve:development
+
+chunk (runtime: main) [1m[32mmain.js[39m[22m (main) 4.68 KiB [1m[33m[entry][39m[22m [1m[32m[rendered][39m[22m
+webpack compiled [1m[32msuccessfully[39m[22m (6f40190824f5f57b)
+[32m[Nest] 57020  - [39m01.11.2024 19:59:29 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 57020  - [39m01.11.2024 19:59:29 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +11ms[39m
+[32m[Nest] 57020  - [39m01.11.2024 19:59:29 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/api}:[39m[38;5;3m +14ms[39m
+[32m[Nest] 57020  - [39m01.11.2024 19:59:29 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api, POST} route[39m[38;5;3m +3ms[39m
+[32m[Nest] 57020  - [39m01.11.2024 19:59:29 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +2ms[39m
+[32m[Nest] 57020  - [39m01.11.2024 19:59:29 [32m    LOG[39m [32m🚀 Application is running on: http://localhost:23123/api[39m
+{
+   "textByLang": {
+      "tr-tr": " flagType",
+      "en-us": "Content Type"
+   },
+   "elementClass": "block required ng-star-inserted",
+   "elementTag": "LABEL",
+   "prefix": "comments.mona",
+   "name": "contentType",
+   "url": "http://localhost:4200/book/viewer/66eb2f1a35a0867abc8dc265/questions/first?comments-show=true"
+}
+{
+   "textByLang": {
+      "tr-tr": " extraNotes",
+      "en-us": "Extra notes"
+   },
+   "elementClass": "block ng-star-inserted",
+   "elementTag": "LABEL",
+   "prefix": "comments.mona",
+   "name": "extraNotes",
+   "url": "http://localhost:4200/book/viewer/66eb2f1a35a0867abc8dc265/questions/first?comments-show=true"
+}

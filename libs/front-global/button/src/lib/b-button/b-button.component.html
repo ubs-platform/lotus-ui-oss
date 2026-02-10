@@ -1,0 +1,23 @@
+<lotus-web-block-part-base-button
+  [iconClass]="iconClass()"
+  [iconContent]="iconContent()"
+  [iconImageSource]="iconImageSource()"
+  [growLeft]="growLeft()"
+  [growRight]="growRight()"
+  [buttonClass]="buttonClass()"
+  [disabled]="disabled()"
+  [cover]="cover()"
+  [iconPosition]="iconPosition()"
+  [btnTabindex]="btnTabindex()"
+  [hideContentAtLowScr]="hideContentAtLowScr()"
+  [contentClass]="contentClass()"
+>
+  <div class="part-content flex align-items-center" *ngIf="hasContent()">
+    <div *ngIf="stringContent(); else loadDefaultContent">
+      {{ stringContent() | translate }}
+    </div>
+    <ng-template #loadDefaultContent>
+      <ng-content></ng-content>
+    </ng-template>
+  </div>
+</lotus-web-block-part-base-button>

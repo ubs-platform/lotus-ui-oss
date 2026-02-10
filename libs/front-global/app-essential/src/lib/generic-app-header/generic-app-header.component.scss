@@ -1,0 +1,90 @@
+.icon {
+  font-weight: 100;
+  font-size: 40px;
+}
+
+.account-image {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 100%;
+  margin-right: 5px;
+  display: inline-block;
+}
+
+.right-aligned-wrap {
+  margin-right: 10px;
+}
+
+@keyframes begin-scr {
+  from {
+    transform: translateY(-25px);
+    opacity: 0.1;
+  }
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+.animated {
+  transform: translateY(-25px);
+  animation-name: begin-scr;
+  animation-duration: 0.25s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.delay-1 {
+  animation-delay: 0.1s;
+}
+
+.delay-2 {
+  animation-delay: 0.2s;
+}
+
+@-webkit-keyframes LoadingAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@-moz-keyframes LoadingAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes LoadingAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.topbar.loading {
+  background: linear-gradient(
+    270deg,
+    var(--primary-color),
+    rgba(255, 255, 255, 0)
+  );
+  background-size: 400% 400%;
+
+  -webkit-animation: LoadingAnimation 30s ease infinite;
+  -moz-animation: LoadingAnimation 30s ease infinite;
+  animation: LoadingAnimation 30s ease infinite;
+}

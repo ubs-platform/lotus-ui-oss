@@ -1,0 +1,40 @@
+<div [class.loading]="(loading | async)?.show">
+  <div class="secondary">
+    <minky-reform-prime [reform]="reform">
+      <ng-template title-link let-title="title">
+        {{ title | translate }}
+      </ng-template>
+    </minky-reform-prime>
+
+    <block-button
+      [cover]="true"
+      buttonClass="primary"
+      iconPosition="RIGHT"
+      otherClass="login-submit-button"
+      (click)="submit()"
+      iconClass="pi pi-chevron-right"
+    >
+      {{ 'mona.login' | translate }}
+    </block-button>
+    <block-button
+      [cover]="true"
+      buttonClass="surface"
+      iconPosition="RIGHT"
+      otherClass="login-submit-button"
+      iconClass="pi pi-user-plus"
+      routerLink="/registration"
+    >
+      {{ 'mona.register' | translate }}
+    </block-button>
+    <block-button
+      [cover]="true"
+      buttonClass="surface"
+      iconPosition="RIGHT"
+      otherClass="login-submit-button"
+      iconClass="pi pi-question"
+      routerLink="/password-reset/init"
+    >
+      {{ 'mona.forgor-password' | translate }}
+    </block-button>
+  </div>
+</div>

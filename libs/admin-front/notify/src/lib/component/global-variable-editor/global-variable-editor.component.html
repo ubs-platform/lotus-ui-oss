@@ -1,0 +1,43 @@
+<div style="margin-bottom: 1rem;">
+  <block-button iconClass="material-symbols-outlined" (click)="insertNew()" buttonClass="primary" iconContent="add">{{
+    'new' | translate }}</block-button>
+  <block-button 
+    buttonClass="secondary" 
+    iconClass="pi pi-upload" 
+    (click)="importFromJson()"
+    [disabled]="isImporting()"
+    style="margin-left: 0.5rem;">
+    {{ isImporting() ? 'İçe Aktarılıyor...' : 'JSON İçe Aktar' }}
+  </block-button>
+</div>
+
+<ng-container *ngFor="let globalVariable of globalVars">
+  <div class="my-1 flex">
+    <div class="flex-grow-1">
+      <lotus-web-changeable-text [value]="globalVariable.name"
+        (valueChange)="rename(globalVariable, $event)"></lotus-web-changeable-text>
+    </div>
+    <block-button buttonClass="primary m-1" iconClass="pi pi-copy" (click)="dublicate(globalVariable)"></block-button>
+  </div>
+
+  <!-- <block-button buttonClass="surface m-1" (click)="rename(globalVariable)">
+    Yeniden isimlendir</block-button
+  > -->
+  <ubs-table-ngx [items]="globalVariable.values | keyvalue">
+    <column name="Language">
+      <ng-template header> Dil </ng-template>
+      <ng-template data let-item="item"> {{ item.key }} </ng-template>
+    </column>
+    <column name="Value">
+      <ng-template header> Değer </ng-template>
+      <ng-template data let-item="item"> {{ item.value }} </ng-template>
+    </column>
+    <column name="Actions">
+      <ng-template header> Aksiyonlar </ng-template>
+      <ng-template data let-item="item">
+        <block-button buttonClass="primary m-1" iconClass="pi pi-pencil"
+          (click)="edit(globalVariable, item.key, item.value)"></block-button>
+      </ng-template>
+    </column>
+  </ubs-table-ngx>
+</ng-container>

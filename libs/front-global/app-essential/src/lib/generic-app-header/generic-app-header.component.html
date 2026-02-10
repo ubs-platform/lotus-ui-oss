@@ -1,0 +1,191 @@
+<div
+  class="topbar flex md:flex-row justify-content-between align-items-center md:align-items-start"
+>
+  <!-- [class.loading]="" -->
+
+  <div class="flex">
+    <div>
+      <div *ngIf="showIcon()" class="hidden md:block">
+        <ng-container *ngIf="appLogo">
+          <div
+            class="block"
+            style="position: relative; transition: 0.1s ease-in-out"
+            [style.opacity]="showLogoScroll ? 1 : 0"
+            [style.margin-top]="showLogoScroll ? null : '-100px'"
+          >
+            <div *ngTemplateOutlet="appLogo.template"></div>
+          </div>
+        </ng-container>
+
+        <!-- <lotus-web-logo-area></lotus-web-logo-area> -->
+      </div>
+    </div>
+    <div class="flex p-2">
+      <ng-content select="[header-left]"></ng-content>
+      <div class="flex md:hidden">
+        <lib-onmobile-header></lib-onmobile-header>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex p-2">
+    <ng-content select="[header-center]"></ng-content>
+  </div>
+
+  <div class="flex flex-row p-2">
+    <div class="flex right-aligned-wrap">
+      <ng-content select="[header-right]"></ng-content>
+    </div>
+    <!--  -->
+    <!-- <p-menu #accountActions [popup]="true" [model]="accountMenu"></p-menu> -->
+    <div>
+      <div class="block md:hidden">
+        <block-button
+          pRipple
+          buttonClass="surface"
+          (click)="showMenu()"
+          [pTooltip]="'Ana Menü / Hesaplar' + '(' + userFullName() + ')'"
+        >
+          <i style="font-size: 1.5rem" class="material-symbols-outlined">
+            menu
+          </i>
+        </block-button>
+      </div>
+      <div class="hidden md:block">
+        <block-button
+          pRipple
+          buttonClass="surface border round"
+          (click)="showMenu()"
+          iconPosition="NONE"
+        >
+          <img
+            *ngIf="imgUrl(); let imgUrl_"
+            alt="logo"
+            [src]="imgUrl_"
+            class="account-image"
+          />
+          <ng-container *ngIf="!enableUserLoginOperations()">
+            <div>Ana menü</div>
+          </ng-container>
+          <ng-container *ngIf="enableUserLoginOperations() && user()">
+            <div>{{ userFullName() }}</div>
+          </ng-container>
+          <ng-container *ngIf="enableUserLoginOperations() && !user()">
+            {{ 'mona.user-operations' | translate }}
+          </ng-container>
+        </block-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <p-sidebar
+  [(visible)]="displayMenu"
+  position="right"
+  [baseZIndex]="10000"
+  [showCloseIcon]="false"
+  [modal]="true"
+  styleClass="w-screen md:w-30rem"
+> -->
+<lib-webdialog
+  swipeTrigger="RIGHT_TO_LEFT"
+  [suspendSwipe]="!isInFirstPage()"
+  position="right"
+  [(show)]="displayMenu"
+  [padding]="false"
+  [displayHeader]="false"
+>
+  <div class="flex flex-column h-full">
+    <div
+      [class.md:flex-row-reverse]="showIcon()"
+      class="flex justify-content-between align-items-start"
+    >
+      <div [class.md:hidden]="showIcon()">
+        <ng-container *ngIf="appLogo">
+          <div *ngTemplateOutlet="appLogo.template"></div>
+        </ng-container>
+        <!-- <lotus-web-logo-area></lotus-web-logo-area> -->
+      </div>
+      <div style="margin-right: 16px; margin-top: 16px">
+        <block-button
+          type="button"
+          iconClass="pi pi-caret-left"
+          (click)="hideMenuRaw()"
+        ></block-button>
+      </div>
+    </div>
+    <div class="px-4">
+      <lib-pwa-update-version> </lib-pwa-update-version>
+    </div>
+    <div class="p-3 flex-grow-1">
+      <!-- <lotus-web-block-demo></lotus-web-block-demo> -->
+      <b-pagination-programmatic
+        height="100%"
+        width="100%"
+        (closeStateEmitted)="closeStateEmit()"
+        *ngIf="allMenus().length"
+        [paginationItems]="allMenus()"
+        (isInFirst)="isInFirstPage.set($event)"
+        #programaticPagination
+      >
+        <ng-template custom-item="logged-user">
+          <lotus-web-block-part-base-button
+            *ngIf="user()"
+            buttonClass="light-1"
+          >
+            <div class="left">
+              <img
+                [src]="imgUrl()"
+                style="height: 96px; width: 96px; border-radius: 100%"
+              />
+            </div>
+            <div class="part-content">
+              <div style="font-size: 20px">
+                <b>{{ userFullName() }}</b>
+              </div>
+              <div style="font-size: 14px">
+                {{ 'mona.account-operations' | translate }}
+              </div>
+              <div style="font-size: 14px">
+                {{ 'mona.settings' | translate }}
+              </div>
+            </div>
+          </lotus-web-block-part-base-button>
+        </ng-template>
+
+        <ng-template custom-item="unsigned-user-view">
+          <lotus-web-block-part-base-button
+            *ngIf="!user()"
+            iconClass="pi pi-chevron-right"
+            otherClass="login-opener"
+            buttonClass="light-1"
+            iconPosition="RIGHT"
+          >
+            <div class="left p-3">
+              <i class="pi pi-user" style="font-size: 60px"></i>
+            </div>
+            <div class="part-content">
+              <div style="font-size: 20px">
+                <b>{{ 'mona.user-operations' | translate }}</b>
+              </div>
+              <div style="font-size: 14px">
+                {{ 'mona.login' | translate }}
+              </div>
+              <div style="font-size: 14px">
+                {{ 'mona.register' | translate }}
+              </div>
+            </div>
+          </lotus-web-block-part-base-button>
+        </ng-template>
+        <ng-template custom-item="login-view">
+          <lotus-web-login-dialog
+            (loginSuccess)="hideMenuRaw()"
+          ></lotus-web-login-dialog>
+        </ng-template>
+        <ng-template custom-item="footer" *ngIf="appFooter">
+          <div *ngTemplateOutlet="appFooter.template"></div>
+        </ng-template>
+      </b-pagination-programmatic>
+    </div>
+  </div>
+</lib-webdialog>

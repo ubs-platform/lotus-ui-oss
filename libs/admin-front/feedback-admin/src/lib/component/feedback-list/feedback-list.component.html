@@ -1,0 +1,65 @@
+
+<!-- <block-button
+  iconClass="material-symbols-outlined"
+  iconContent="filter"
+  (click)="showFilter = !showFilter"
+  >Filtre</block-button
+> -->
+<div class="flex flex-column md:flex-row">
+  <!-- <div *ngIf="showFilter" class="filter">
+    <h2>Filtre</h2>
+    <lotus-web-feedback-filter
+      (valueChange)="filterUpdated($event)"
+    ></lotus-web-feedback-filter>
+  </div> -->
+  <searchable-data-table
+    style="width: 100%"
+    [url]="fetchUrl"
+    [reformFilter]="reform"
+  >
+    <column name="type">
+      <ng-template header>Tip</ng-template>
+      <ng-template data let-item="item">
+        {{ item.type }}
+      </ng-template>
+    </column>
+    <column name="summary">
+      <ng-template header>Özet</ng-template>
+      <ng-template data let-item="item">
+        {{ item.summary }}
+      </ng-template>
+    </column>
+    <column name="firstname">
+      <ng-template header>İsim</ng-template>
+      <ng-template data let-item="item">
+        {{ item.firstName }}
+        {{ item.lastName }}
+      </ng-template>
+    </column>
+
+    <column name="date">
+      <ng-template header>Tarih</ng-template>
+      <ng-template data let-item="item">
+        {{ item.creationDate | date }}
+      </ng-template>
+    </column>
+
+    <column name="actions">
+      <ng-template header>Aksiyonlar</ng-template>
+      <ng-template data let-item="item">
+        <block-button
+          buttonClass="primary"
+          iconClass="pi pi-eye"
+          routerLink="./{{ item._id }}"
+          >Detaylar</block-button
+        >
+        <block-button
+          buttonClass="error"
+          iconClass="pi pi-times"
+          (click)="remove(item._id)"
+          >Sil</block-button
+        >
+      </ng-template>
+    </column>
+  </searchable-data-table>
+</div>

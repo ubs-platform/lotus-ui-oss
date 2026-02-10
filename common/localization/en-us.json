@@ -1,0 +1,299 @@
+[
+  {
+    "prefix": "tk",
+    "stringMap": {
+      "registeredmark": "Tetakent brand (Arch that's pointing north-west and 'Tetakent' text) is registered mark of H.C.G in Turkiye Republic. "
+    }
+  },
+  {
+    "prefix": "tetakent.support",
+    "stringMap": {
+      "_": "Support",
+      "faq": "Frequently Asked Questions",
+      "subreddit": "r/tetakent",
+      "contact-support": "Contact Support Team"
+    }
+  },
+  {
+    "prefix": "lotus.supervisor",
+    "stringMap": {
+      "_": "Supervisor",
+      "portal": "Portal"
+    }
+  },
+  {
+    "prefix": "lotus.books",
+    "stringMap": {
+      "question-book": "Question book",
+      "question-books": "Question books",
+      "options": "Options",
+      "questions": "Questions",
+      "created": "Created books",
+      "comments": "Comments",
+      "select-a-question": "Select a question",
+      "next-question": "Next question",
+      "previous-question": "Previous question",
+      "question-nth": "Question {number}",
+      "categories": "Categories",
+      "library": "Library",
+      "edit": "Edit",
+      "exit": "Exit",
+      "remove": "Remove",
+      "remove-question": "Remove question",
+      "sure-remove-question": "Are you sure to remove that question? If section has no questions, also section will be removed",
+      "creator": "Creator",
+      "create": "Create",
+      "create-new-book": "Create new book",
+      "add-new-question": "Add new question",
+      "add-new-section": "Add new section",
+      "name": "Name",
+      "description": "Description",
+      "image": "Image",
+      "analysis": "Analysis",
+      "duration-dk": "Duration (Minutes)",
+      "general-book-analysis": "All of question books",
+      "last-trial-analysis": "From last trials",
+      "in-library": "In library",
+      "start-trial": "Start trial",
+      "hide-from-library": "Hide from your library",
+      "search-for-book-or-action": "Search for books, actions, etc.",
+      "creator-license-agreement": "I agree to the terms of ownership of the Lotus question book. I have all permissions and rights to the questions included in this book.",
+      "start": "Start",
+      "adding": "Book is getting added, please wait",
+      "promotion": "Promotion",
+      "go-to-promotion": "Go to the Promotion",
+      "add-into-library": "Add into library",
+      "view-book": "View book",
+      "no-description": "No description",
+      "publisher-tools": "Publisher tools",
+      "teams": "Teams",
+      "invitations": "Invitations",
+      "creators": "Creators",
+      "earnings": "Earnings",
+      "correct-answer-is": "Correct answer is {answer}",
+      "your-answer-is-correct": "Your answer is correct 🎉",
+      "contactLinks": "Contact Links",
+      "url": "URL",
+      "total-questions-length": "Total questions"
+    }
+  },
+  {
+    "prefix": "users",
+    "stringMap": {
+      "settings": "Account Settings",
+      "information": "User Information",
+      "general-information": "General Information"
+    }
+  },
+  {
+    "prefix": "lotus.home",
+    "stringMap": {
+      "slogan-1": "In everywhere you want, freely",
+      "slogan-2": "New generation studying and problem solving application",
+      "welcome-user": "Welcome, {name}",
+      "new-created": "Created new books"
+    }
+  },
+  {
+    "prefix": "lotus.trial-session",
+    "stringMap": {
+      "stop": "Stop",
+      "start": "Start session"
+    }
+  },
+  {
+    "prefix": "mona",
+    "stringMap": {
+      "login": "Login",
+      "register": "Register",
+      "forgor-password": "I forgot password",
+      "color-theme": "Color theme",
+      "dark-theme-normal": "Dark (Normal)",
+      "dark-theme-oled": "Dark (OLED Optimisations)",
+      "light-theme": "Light theme",
+      "system-theme": "Use OS' theme",
+      "language": "Language",
+      "user-operations": "User operations",
+      "account-operations": "Account operations",
+      "settings": "Settings",
+      "back": "Back",
+      "remember-me": "Remember me",
+      "username": "Username",
+      "password": "Password",
+      "logout": "Logout",
+      "yes": "Yes",
+      "no": "No",
+      "unable-to-login": "Unable to login",
+      "required-fields": "Please fill the required fields",
+      "login-success": "Login success",
+      "sure-logout": "Are you sure to logout?",
+      "cancel": "Cancel",
+      "account-settings": "Account Settings",
+      "page-not-found": "The page you were looking for was not found",
+      "page-not-found-desc": "The page you were looking for could not be found. The reason for the error may be that you entered the wrong page address or the address of the page you are trying to reach has changed. If you do not think the error is yours, please send us a feedback.",
+      "home": "Home",
+      "suspended": "Unfortunately, because one or more actions were taken on this account that do not comply with the community rules, we have suspended your account for a period of time due to '{reason}'. If you think this is in error, please contact us at info[at]tetakent[dot]com.",
+      "feedback": "Feedback",
+      "feedback-short": "Fbk.",
+      "success-save": "Saved successfully",
+      "error-while-save": "An error has been occured while save",
+      "privacy": "Privacy",
+      "terms-of-use": "Terms of use",
+      "need-to-login-to-show-page": "You need to log in to view this page.",
+      "account-activated": "Welcome back. Your account has been activated and you can log in."
+    }
+  },
+  {
+    "prefix": "mona.developer",
+    "stringMap": {
+      "": "Developer",
+      "error-message": "Error message",
+      "sample-error-message": "Sample Error Message"
+    }
+  },
+  {
+    "stringMap": {
+      "customerAccountId": "Customer Account ID",
+      "sellerAccountId": "Seller Account ID",
+      "sellerAccountIds": "Seller Account IDs",
+      "dateFrom": "Date From",
+      "dateTo": "Date To",
+      "paymentChannelId": "Payment Channel ID", 
+      "save": "Save",
+      "email-format": "Please enter a valid email address.",
+      "min-length": "Please enter at least {intended} words",
+      "max-length": "Please enter at most {intended} words",
+      "username-regex": "Username must start with a letter, followed by alphanumerics, periods and underscores only. Lower case only",
+      "localeCode": "Locale code (That will be used in e-mails and other comminications)",
+      "name": "Name",
+      "surname": "Surname",
+      "fullname": "Fullname",
+      "username": "Username",
+      "password": "Password",
+      "passwordRepeat": "Password Repeat",
+      "type": "Type",
+      "email": "E-Maild",
+      "phoneNr": "Phone number",
+      "summary": "Summary",
+      "message": "Message",
+      "primaryEmail": "Primary Email",
+      "RequiredValidator": "This field is required",
+      "PasswordLowerLetter": "At least 1 lowercase letter is required",
+      "PasswordUpperLetter": "At least 1 uppercase letter is required",
+      "PasswordMinChars": "This field must be at least {length} long",
+      "PasswordNumbers": "This field must contain at least 1 number",
+      "PasswordSpecialChars": "This field must contain at least 1 punctuation character",
+      "PasswordCommons": "For your security, commonly used words such as 'password', 'admin' and consecutive numbers such as '1234...' should not be used in this field.",
+      "Samety": "This field is not same with related field",
+      "gender": "Gender",
+      "pronounce": "Pronounce",
+      "country": "Country",
+      "state": "State/City",
+      "city": "City/District",
+      "district": "District",
+      "male": "Male",
+      "female": "Female",
+      "walmart-bag": "Walmart Bag",
+      "i-dont-want-to-tell": "I don't want to tell",
+      "other": "Other",
+      "new-email": "New email",
+      "validation-code": "Validation Code",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "newPasswordRepeat": "New password repeat",
+      "insert": "Insert",
+      "remove": "Remove",
+      "suspended": "Suspended (Banned or like else)",
+      "active": "Can be logged in",
+      "roles": "Roles",
+      "status": "Status",
+      "edit": "Edit",
+      "suspendReason": "Suspend Reason"
+    }
+  },
+  {
+    "prefix": "users.errors",
+    "stringMap": {
+      "fail-authentication": "User is not found or password does not match"
+    }
+  },
+  {
+    "prefix": "admin.general",
+    "stringMap": {
+      "need-admin": "To use the central, you must log in as an admin. You can log in using the button on the top right.",
+      "first": "'Kyle Broflovski' is the admin user added for initial startup. You can find the login information from the console logs at first startup. If you can't see, clean the users document in the ubsusers database on MongoDB (after a backup) and then, run UBS Users. Then upload your backup"
+    }
+  },
+  {
+    "prefix": "admin.users",
+    "stringMap": {
+      "": "UBS Users"
+    }
+  },
+  {
+    "prefix": "admin.lotus.books",
+    "stringMap": {
+      "": "Lotus Books"
+    }
+  },
+  {
+    "prefix": "language",
+    "stringMap": {
+      "tr-tr": "Turkish",
+      "en-us": "English - US"
+    }
+  },
+  {
+    "prefix": "mona.comments",
+    "stringMap": {
+      "open": "Open",
+      "closed": "Closed",
+      "archive": "Archive",
+      "archive-long": "Archive mode is similar to off, comment entry is closed but comments can still be viewed.",
+      "userCommentBlockReason.not-logged": "Please login to comment",
+      "userCommentBlockReason.disabled": "Unable to comment in this section",
+      "block": "Block user to comment",
+      "unblock": "Allow user to comment",
+      "unblock-short": "Allow",
+      "unblock-question": "Do you now allow users to comment in this area?",
+      "block-question": "Are you sure you want to block the user to comment in this area?",
+      "contentType": "Content Type",
+      "extraNotes": "Extra notes"
+    }
+  },
+  {
+    "prefix": "lotus.home-intro",
+    "stringMap": {
+      "have-already-account": "i already have an account",
+      "welcome": "Welcome to the new generation question solving platform. Find the book you want from the homepage, add it to your library and start studying",
+      "explore-published-recently": "Explored published recently",
+      "try-urself": "Try yourself",
+      "try-urself-long": "You can try yourself from any question book, and at the end of the trial, you can review your correct answers, incorrect answers and timing.",
+      "we-love-green": "We love green!",
+      "we-love-green-long": "No, we are not talking about an illegal plant or money! We are talking about nature. Thanks to Lotus, publishing houses are reducing their printing and shipping costs, energy consumption and carbon footprint.",
+      "platforms": "On any phones, any computers or any tablets",
+      "no-download": "No downloads, no installation. The keys to success are right in your hands."
+    }
+  },
+  {
+    "prefix": "lotus.promotion",
+    "stringMap": {
+      "demo": "Demo",
+      "contact-links": "Contact Links",
+      "free": "Free",
+      "back-promotion": "Go back to the promotion",
+      "login-or-register": "Login or register",
+      "benefit-start": "By logging in, you can add this book to your library and also access these features for free.",
+      "see-more-books": "Exploring more books",
+      "start-trial": "Start a trial on any book",
+      "show-your-trials": "Show your recent trials on book being studied",
+      "login-instant-add": "If you log in, this book will be added to your library instantly"
+    }
+  },
+  {
+    "prefix": "lotus",
+    "stringMap": {
+      "bu-kitap-bir-takm-tarafndan-yn": "This book is managed by a team."
+    }
+  }
+]

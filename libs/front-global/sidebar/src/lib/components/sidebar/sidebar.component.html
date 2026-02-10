@@ -1,0 +1,25 @@
+<div class="sidebar-container" [class.open]="categorizerDisplaying()">
+  <aside class="menu-section" role="navigation" aria-label="Sidebar navigation">
+    <lotus-web-sidebar-menu
+      [currentPath]="currentPath()"
+      (currentPathChange)="changeCurrentPath($event)"
+      [items]="items()"
+      (openChange)="onMenuOpenChange($event!)">
+    </lotus-web-sidebar-menu>
+  </aside>
+
+  <main class="content-section" role="main">
+    <div class="content-wrapper">
+      <header class="content-header">
+        <onpage-header
+          [topMinimal]="title()"
+          [content]="currentPathTitle()">
+        </onpage-header>
+      </header>
+
+      <section class="content-body">
+        <ng-content></ng-content>
+      </section>
+    </div>
+  </main>
+</div>

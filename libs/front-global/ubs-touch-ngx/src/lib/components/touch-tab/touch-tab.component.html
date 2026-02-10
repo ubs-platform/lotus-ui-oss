@@ -1,0 +1,12 @@
+<div class="holster">
+  <div class="container" ubs-document-swipe="disable" #scrollableArea>
+    <ng-container *ngFor="let blockPage of blockPages()">
+      <div class="card h-full w-full overflow-hidden">
+        <div class="h-full w-full overflow-auto">
+          <div *ngTemplateOutlet="blockPage.template"></div>
+
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

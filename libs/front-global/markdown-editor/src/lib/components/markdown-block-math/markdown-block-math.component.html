@@ -1,0 +1,18 @@
+<!-- Editor: {{ editor }} -->
+<!-- {{ katexExpression }} -->
+<div class="mona-math-block" [class.redonny]="!editor()">
+  <div [class.redonny]="!editor()" #katexBlock></div>
+  <div *ngIf="!katexExpression() && editor()" style="color: var(--bg-3)">
+    Latex ifadesi eklemek için "Düzenle" butonuna tıklayın.
+  </div>
+</div>
+<!-- <block-button iconClass="pi pi-edit">Düzenle</block-button> -->
+<button *ngIf="editor()" class="edit-btn block-view primary mt-2">
+  <!--   (click)="clickEvent($event)" -->
+  Düzenle
+</button>
+
+<button *ngIf="editor()" class="info-btn block-view mt-2">
+  <!--  (click)="mathLatexInfo()" -->
+  Matematiksel Latex ifadeleri
+</button>

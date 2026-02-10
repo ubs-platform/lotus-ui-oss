@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "outDir": "../dist/tools",
+    "module": "commonjs",
+    "target": "es5",
+    "types": ["node"],
+    "importHelpers": false
+  },
+  "include": ["**/*.ts"]
+}

@@ -1,0 +1,74 @@
+<div class="flex flex-column align-items-center">
+  <!--  -->
+  <!-- <div class="mona-card flex flex-column align-items-center">
+    <img class="app-logo" src="assets/670838b09f89655058f87bc0.webp" />
+    <h1 class="text-align-center">
+      Pekala, sen kazandın... Ama ben bedellideyken lütfen sunucuyu bozma.
+      Teşekkür ederim 😇
+    </h1>
+  </div> -->
+
+  <!-- 
+
+  </div> -->
+  <img class="app-logo" src="assets/tkent.png" />
+  <h1 class="text-align-center">Tetakent hesabınızı oluşturun</h1>
+  <div class="mb-4">
+    <p>
+      Lotus ve heyecan verici yeni gelecek uygulamalarımızı bu hesap üzerinden
+      kullanabilecesiniz. Başlamadan önce kullanım şartlarını kabul etmeniz ve
+      robot olmadığınızı teyit etmeniz gerekmektedir.
+    </p>
+    <div
+      (click)="showEULAUpAndEnable()"
+      class="mb-1 flex justify-content-center"
+    >
+      <div [style.pointer-events]="eulaEnabled ? null : 'none'">
+        <p-checkbox
+          label="Kullanım şartlarını okudum ve kabul ediyorum"
+          [ngModel]="agreed"
+          [binary]="true"
+          (ngModelChange)="agreed = $event"
+        ></p-checkbox>
+      </div>
+    </div>
+    <br />
+    <div
+      (click)="showPrivacyUpAndEnable()"
+      class="mb-1 flex justify-content-center"
+    >
+      <div [style.pointer-events]="privacyEnabled ? null : 'none'">
+        <p-checkbox
+          label="Gizlilik politikasını okudum ve kabul ediyorum"
+          [ngModel]="privacyAccepted"
+          [binary]="true"
+          (ngModelChange)="privacyAccepted = $event"
+        ></p-checkbox>
+      </div>
+    </div>
+
+    <div class="m-3">
+      <!-- <p-captcha
+      *ngIf="!developar"
+      siteKey="6LeTAnEnAAAAAK3mlQmYg6ILLyn9mwAPN8IPeuth"
+      (onResponse)="notBot = true"
+      (onExpire)="expire()"
+    ></p-captcha> -->
+      <!-- <block-button
+      *ngIf="developar && !notBot"
+      (click)="notBot = true"
+      iconClass="pi pi-bot"
+      >Sanane benim robot olup olmadığımdan 🅰️ ırkçısı seni!</block-button
+    > -->
+    </div>
+    <div class="action-buttons">
+      <block-button
+        iconClass="pi pi-chevron-right"
+        [disabled]="!(agreed && notBot)"
+        (click)="nextStep(null)"
+        buttonClass="primary"
+        >İleri</block-button
+      >
+    </div>
+  </div>
+</div>

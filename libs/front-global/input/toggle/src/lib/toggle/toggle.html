@@ -1,0 +1,12 @@
+<div class="flex gap-2 items-center my-2" [ngClass]="contentClass()">
+  <div>
+    <input
+      type="checkbox"
+      [(ngModel)]="value"
+      [class.checkbox-style]="checkboxStyle()"
+      [class.toggle-style]="!checkboxStyle()"
+      [style.pointerEvents]="checkOnClickInput() ? null : 'none'"
+    />
+  </div>
+  <div class="label" (click)="checkOnClickText() && toggleValue(); $event.preventDefault()">{{label() | translate}}</div>
+</div>

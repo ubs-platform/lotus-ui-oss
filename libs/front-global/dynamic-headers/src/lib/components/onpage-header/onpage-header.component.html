@@ -1,0 +1,10 @@
+@if (isDesktop() || !hideOnMobile()) {
+<div>
+    @if (topMinimal()) {
+    <div>
+        <sub> {{ topMinimal() | translate }} </sub>
+    </div>
+    }
+    <h1>{{ content() | translate}}</h1>
+</div>
+}

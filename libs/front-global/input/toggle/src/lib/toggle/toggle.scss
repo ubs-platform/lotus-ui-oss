@@ -1,0 +1,94 @@
+input.toggle-style {
+  cursor: pointer;
+  // margin: 1rem auto;
+  margin: 0 0 -.1em;
+  position: relative;
+  width: 2.5rem;
+  height: 1.5rem;
+  border-radius: 25px;
+  outline: none;
+  border: 1px solid var(--fg);
+
+  -webkit-appearance: none;
+  // transition: background .3s;rgba(0,0,0,0.15);
+}
+input.toggle-style::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+  border: 0;
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+  background-color: #868686;
+  
+  // border: 1px solid var(--border-color);
+  transition: left 0.3s;
+}
+
+input.toggle-style:checked {
+  background-color: var(--primary-color);
+  border: none;
+
+}
+
+input.toggle-style:checked::after {
+  left: 70%;
+  background-color: white;
+}
+
+input.checkbox-style {
+  cursor: pointer;
+  margin: 0;
+  // margin: 1rem auto;
+  // margin: -0.1em 0 0 1.25em;
+  position: relative;
+  height: 1.25rem;
+  width: 1.25rem;
+  border-radius: 0;
+  outline: none;
+  border: 1px solid var(--fg);
+  border-radius: var(--border-radius);
+
+  -webkit-appearance: none;
+  transition: .3s;
+}
+input.checkbox-style::after {
+  font-family: 'Material Symbols Outlined';
+  content: 'check';
+  font-size: 1.25rem;
+  line-height: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  // border-radius: 50%;
+  // width: 1rem;
+  // height: 1rem;
+  color: white;
+  transition: ease-in-out 0.3s;
+  opacity: 0;
+}
+
+input.checkbox-style:checked {
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: var(--border-radius);
+}
+
+input.checkbox-style:checked::after {
+  // left: 70%;
+  opacity: 1;
+}
+
+div.label {
+  // margin-left: 0.25rem;
+  font-family: var(--font-family-secondary);
+  font-feature-settings: 'cv10' on, 'calt' on;
+  font-weight: bold;
+  margin: 0;
+  cursor: pointer;
+
+}

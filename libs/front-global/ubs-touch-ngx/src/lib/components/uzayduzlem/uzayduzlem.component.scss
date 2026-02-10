@@ -1,0 +1,13 @@
+:host {
+  height: 80dvh;
+  width: 80dvw;
+  display: block;
+  position: relative;
+  overflow: auto;
+  .space-surface-container {
+    height: 100%;
+    width: 100%;
+    display: block;
+    position: relative;
+  }
+}

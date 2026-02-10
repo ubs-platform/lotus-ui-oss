@@ -1,0 +1,60 @@
+// ...existing code...
+@import 'material-symbols';
+@import 'primeicons/primeicons.css';
+@import 'primeng/resources/primeng.min.css';
+@import 'libs/front-global/base-style/theme.css';
+@import 'primeflex/primeflex.css';
+@import './style/block.scss';
+@import './style/main.scss';
+@import './style/ubs-touch.scss';
+@import '@fontsource/jetbrains-mono/200.css';
+@import '@fontsource/jetbrains-mono/200-italic.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/400-italic.css';
+@import '@fontsource/jetbrains-mono/700.css';
+@import '@fontsource/jetbrains-mono/700-italic.css';
+
+// ...existing code...
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  flex-wrap: wrap;
+
+  &>* {
+    margin-bottom: 0.25rem;
+  }
+}
+
+table {
+  .action-buttons {
+    justify-content: end;
+  }
+}
+// @import url('https://fonts.cdnfonts.com/css/placard-next');
+.mona-math-block:not(.redonny) {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.redonny {
+  margin-bottom: 10px;
+}
+
+@supports selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-color: var(--primary-color) transparent;
+    scrollbar-width: thin;
+  }
+
+  // .scroller::-webkit-scrollbar {
+  //     max-width: var(--scrollbar-width-legacy);
+  //     max-height: var(--scrollbar-width-legacy);
+  // }
+}
+
+* {
+  box-sizing: border-box;
+}

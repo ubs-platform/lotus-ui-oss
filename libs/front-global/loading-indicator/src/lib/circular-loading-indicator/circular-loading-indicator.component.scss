@@ -1,0 +1,15 @@
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+span {
+  animation: spin 2s infinite;
+  animation-timing-function: linear;
+  user-select: none;
+  color: var(--primary-color);
+}

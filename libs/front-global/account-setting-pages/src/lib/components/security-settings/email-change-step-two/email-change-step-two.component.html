@@ -1,0 +1,17 @@
+<p>Kalan süre içerisinde yeni e-posta adresinize gelen kodu aşağıya giriniz</p>
+<p>
+  Eğer info&#64;tetakent.com adresinden bir posta göremezseniz 'Spam' klasörüne göz
+  atabilir, ya da bu iletişim kutusunu kapatıp yeniden değiştirme işlemine
+  başlayabilirsiniz
+</p>
+
+<div class="flex m-2 gap-2">
+  <circular-timer [duration]="2 * 60 * 1000" (onComplete)="timeOver()" #timer></circular-timer>
+  <minky-reform-prime [reform]="reform"></minky-reform-prime>
+</div>
+<div class="action-buttons">
+  <block-button buttonClass="primary" (click)="complete()">Tamamla</block-button>
+  <block-button buttonClass="light-1" iconClass="pi pi-chevron-left" buttonClass="surface"
+    (click)="cancel()">İptal</block-button>
+
+</div>

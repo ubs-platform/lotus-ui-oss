@@ -1,0 +1,40 @@
+<div class="p-2">
+  <div style="max-width: 500px">
+    <div class="warning">
+      <div>
+        <i class="pi pi-heart" style="font-size: 2em"></i>
+      </div>
+      <div>
+        <b>
+          Yorum yaparken yapıcı ve saygılı olmaya özen gösterdiğiniz için
+          teşekkür ederiz.</b
+        >
+        <div style="font-size: 12px">
+          Hakaret, taciz, zorbalık ve benzeri yorumlar kaldırılacaktır. Birkaç
+          kere tekrarlanması halinde yorum yapma özelliğiniz kapatılabilir.
+        </div>
+      </div>
+    </div>
+    <div class="flex w-100 gap-2 mt-2">
+      <div class="inline-flex align-items-center justify-content-center gap-2">
+        <div class="profile-photo" *ngIf="user">
+          <img src="/api/file/PROFILE_PHOTO/{{ user!.id }}" />
+        </div>
+      </div>
+      <div class="flex-grow-1">
+        <lotus-web-markdown-editor [(value)]="currentCommentText">
+        </lotus-web-markdown-editor>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-content-end gap-2 mt-2">
+    <block-button stringContent="İptal" (click)="closeDialog()" />
+    <block-button
+      stringContent="Yorum yap"
+      [disabled]="!currentCommentText().length"
+      (click)="sendComment()"
+      buttonClass="primary"
+      iconClass="pi pi-send"
+    />
+  </div>
+</div>

@@ -1,0 +1,20 @@
+{
+  "name": "front-global-app-essential",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/front-global/app-essential/src",
+  "prefix": "lotus-web",
+  "tags": [],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/front-global/app-essential"],
+      "options": {
+        "jestConfig": "libs/front-global/app-essential/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

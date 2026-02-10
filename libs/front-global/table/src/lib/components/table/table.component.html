@@ -1,0 +1,59 @@
+@if (!items()?.length && noDataTemplateDirective()?.[0]?.templateRef != null) {
+<ng-container
+  *ngTemplateOutlet="noDataTemplateDirective()?.[0]!.templateRef!"
+></ng-container>
+} @else {
+<div class="h-full overflow-hidden">
+  <!-- Mobilde sütunlar alt alta görünür, yanlarında da değerleri gelir -->
+  <div *ngIf="isOnMobile | async; else desktopView">
+    <div class="mobile-item" *ngFor="let item of items()">
+      <div
+        *ngFor="let key of colsKeys(); let index = index"
+        class="mobile-field-item w-full flex flex-column sm:flex-row sm:align-items-center sm:justify-content-between p-1"
+      >
+        <div *ngIf="cols()[key]?.[0]?.head; let head">
+          <h4>
+            <div *ngTemplateOutlet="head.templateRef"></div>
+          </h4>
+        </div>
+        <div [class.sm:text-right]="cols()[key]?.[0]?.head">
+          <ng-container *ngIf="cols()[key]?.[0]?.data; let d">
+            <div
+              *ngTemplateOutlet="d.templateRef; context: { item: item, index: index }"
+            ></div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #desktopView>
+    <table
+      class="table w-full h-full"
+    >
+      <tr>
+        <th
+          *ngFor="let key of colsKeys()"
+          [style.width]="cols()[key]?.[0]?.width()"
+        >
+          <ng-container *ngIf="cols()[key]?.[0]?.head; let head">
+            <div>
+              <div *ngTemplateOutlet="head.templateRef"></div>
+            </div>
+          </ng-container>
+        </th>
+      </tr>
+      <tr *ngFor="let item of items(); let index = index">
+        <td *ngFor="let key of colsKeys()">
+          <ng-container *ngIf="cols()[key]?.[0]?.data; let d">
+            <div class="p-1">
+              <div
+                *ngTemplateOutlet="d.templateRef; context: { item: item, index: index }"
+              ></div>
+            </div>
+          </ng-container>
+        </td>
+      </tr>
+    </table>
+  </ng-template>
+</div>
+}

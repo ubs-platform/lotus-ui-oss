@@ -1,0 +1,12 @@
+// input {
+//   margin-bottom: 10px !important;
+// }
+
+label {
+  margin: 0.5em 0px;
+  font-weight: bold;
+  &.required::after {
+    content: '*';
+    color: var(--red-400);
+  }
+}

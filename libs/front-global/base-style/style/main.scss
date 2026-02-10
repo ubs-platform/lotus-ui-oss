@@ -1,0 +1,45 @@
+body,
+html {
+  padding: 0px;
+  margin: 0px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-family-primary);
+}
+
+*:not(h1, h2, h3) {
+  font-family: var(--font-family-secondary);
+  font-feature-settings: 'cv10' on, 'calt' on;
+}
+
+.content-main {
+  margin-top: 25px;
+  padding: 25px;
+
+  .content {
+    margin-top: 20px;
+  }
+}
+
+.p-submenu-header {
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.fully-contain {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.p-sidebar-header {
+  padding: 0px !important;
+}
+
+.p-sidebar-content {
+  background-color: transparent !important;
+  padding: 0px !important;
+}

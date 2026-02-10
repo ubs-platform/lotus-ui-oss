@@ -1,0 +1,41 @@
+<h1>Parola sıfırlama</h1>
+<div *ngIf="requestSent">
+  <div class="flex align-items-center flex-column">
+    <h3>Son adım kaldı</h3>
+    <p class="block text-align-center">
+      Eğer sistemde bu isimle bir kaydınız varsa, bir parola sıfırlama e-postası
+      alacaksınız.
+    </p>
+    <p class="block text-align-center">
+      Eğer "info&#64;tetakent.com" üzerinden bir posta göremiyorsanız, spam
+      postalarınızı kontrol edebilir, ya da sayfayı yenileyip tekrar
+      deneyebilirsiniz. Yine de çözülmezse lütfen bize geri bildirimde bulunun
+    </p>
+    <!-- <block-button iconClass="pi pi-home" (click)="navigateHome()"
+      >Ana sayfa</block-button
+    >
+    <block-button iconClass="pi pi-chevron-left" (click)="navigateBack()"
+      >Geri</block-button
+    > -->
+  </div>
+</div>
+<div *ngIf="!requestSent">
+  <p>
+    Lütfen bilgilerinizi girin. Eğer bilgileriniz bizde varsa kayıtlı e-posta
+    adresinize bir posta alacaksınız
+  </p>
+  <minky-reform-prime [reform]="reform">
+    <ng-template title-link let-title="title">
+      {{ title | translate }}
+    </ng-template>
+  </minky-reform-prime>
+  <div *ngIf="reform">
+    <block-button
+      (click)="sendRequest()"
+      stringContent="İleri"
+      iconPosition="RIGHT"
+      buttonClass="primary"
+      iconClass="pi pi-chevron-right"
+    ></block-button>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = 'hcangunduz/tk-santral-frontend'
+        IMAGE_TAG    = 'latest'
+        DOCKER_FILE = "./dockerfile-santral-front"
+    }
+
+    stages {
+
+
+        stage('Build') {
+
+            steps {
+                sh 'docker build --file ${DOCKER_FILE} -t ${IMAGE_NAME}:${IMAGE_TAG} .'
+            }
+        }
+
+        stage('Push') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh 'docker login -u $USERNAME -p $PASSWORD && docker push ${IMAGE_NAME}:${IMAGE_TAG}'
+                }
+            }
+        }
+    }
+}

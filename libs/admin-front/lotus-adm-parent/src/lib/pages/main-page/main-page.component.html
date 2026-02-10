@@ -1,0 +1,8 @@
+<lotus-web-sidebar
+  *ngIf="approvedRole"
+  [currentPath]="currentNavigationItem"
+  (currentPathChange)="changeCurrent($event)"
+  [items]="navigationItemList"
+>
+  <router-outlet></router-outlet>
+</lotus-web-sidebar>

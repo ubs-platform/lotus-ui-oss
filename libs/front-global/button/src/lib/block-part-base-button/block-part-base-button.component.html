@@ -1,0 +1,55 @@
+<!-- <ng-template #iconTemplate>
+  <ng-container *ngIf="iconImageSource">
+    <img [src]="iconImageSource" />
+  </ng-container>
+
+  <ng-container>
+    <i [ngClass]="iconClass | arraySplit : ' '">{{
+      iconContent
+    }}</i>
+  </ng-container>
+</ng-template> -->
+<button
+  class="block block-view block-fill"
+  [ngClass]="[buttonClass()]"
+  [class.w-full]="cover()"
+  [class.flex]="cover()"
+  [class.inline-flex]="!cover()"
+  [class.disabled]="disabled()"
+  [attr.tabindex]="btnTabindex()"
+>
+  <div class="flex align-items-center justify-content-center gap-2 w-full">
+    <div
+      *ngIf="
+        iconPosition() == 'LEFT' && (iconClass() || iconContent() || iconImageSource())
+      "
+    >
+      <lib-icon
+        [iconClass]="iconClass()"
+        [iconContent]="iconContent()"
+        [iconImageSource]="iconImageSource()"
+        iconSize="0.85rem"
+      ></lib-icon>
+    </div>
+    <div class="btn-left" [class.flex-grow-1]="growLeft()">
+      <ng-content select=".left"></ng-content>
+    </div>
+    <div class="btn-content flex-grow-1" [ngClass]="[contentClassSys()]">
+      <ng-content select=".part-content"></ng-content>
+    </div>
+    <div class="btn-right" [class.flex-grow-1]="growRight()">
+      <ng-content select=".right"></ng-content>
+    </div>
+    <div
+      *ngIf="
+        iconPosition() == 'RIGHT' && (iconClass() || iconContent() || iconImageSource())
+      "
+    >
+      <lib-icon
+        [iconClass]="iconClass()"
+        [iconContent]="iconContent()"
+        iconSize="0.85rem"
+      ></lib-icon>
+    </div>
+  </div>
+</button>

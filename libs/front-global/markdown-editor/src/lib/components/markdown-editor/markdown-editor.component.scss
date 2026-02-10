@@ -1,0 +1,73 @@
+// .editor-view {
+//   margin-right: 10px;
+// }
+// .editor-view {
+//   textarea {
+//     width: 100%;
+//     height: auto;
+//     resize: none;
+//   }
+//   flex-basis: 50%;
+// }
+
+// .editor-base {
+//   width: 100%;
+// }
+// .preview {
+//   overflow: auto;
+//   position: relative;
+// }
+
+// p:first-of-type {
+//   margin-top: 0px !important;
+// }
+// todo: Sonra kaldır
+.operation-item {
+  display: none !important;
+}
+.editor-parent {
+  .editor {
+    .caption-input {
+      display: none;
+    }
+
+    img {
+      width: 100%;
+      max-width: 400px;
+    }
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0;
+    white-space: normal;
+    line-break: auto;
+    overflow: visible;
+
+    p {
+      margin-top: 0;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  &:not(.readonly) .editor {
+    padding: 0.5rem 0.5rem;
+    border: 1px solid var(--border-color);
+  }
+}
+
+// .readonly .editor {
+//   border: 0px !important;
+//   padding: 0px !important;
+// }
+.tooltip {
+  background-color: var(--surface-0);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+}
+
+.formatbtns {
+  position: sticky;
+  bottom: 0px;
+  left: 0px;
+  // background-color: var(--bg-surface);
+}

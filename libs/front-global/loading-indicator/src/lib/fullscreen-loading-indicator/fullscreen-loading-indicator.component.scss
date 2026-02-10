@@ -1,0 +1,11 @@
+.parent {
+  background-color: #1212128b;
+  height: 100dvh;
+  width: 100dvw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10003;
+  &.show {
+  }
+}

@@ -1,0 +1,152 @@
+<ng-template button-link let-title="title" let-action="action">
+  <button (click)="action()">
+    {{ title }}
+  </button>
+</ng-template>
+
+<ng-template group-label-link let-title="title">
+  <label>
+    {{ title }}
+  </label>
+</ng-template>
+
+<ng-template input-link let-carrier="carrier">
+  <div
+    *ngIf="carrier.inputType != 'checkbox'"
+    class="input-title flex align-items-center"
+  >
+    <!-- {{ carrier.title }} -->
+    <label>{{
+      carrier.title
+    }}</label>
+    <span *ngIf="carrier.validators?.includes('RequiredValidator')">*</span>
+  </div>
+  <!-- <ng-container *ngIf="carrier.inputType == 'select'; else notSelect">
+    <p-dropdown
+      *ngIf="carrier.inputType != 'file'"
+      [ngModel]="carrier.value"
+      (ngModelChange)="carrier.setValue($event)"
+      (blur)="carrier.setTouched(true)"
+      [attr.name]="carrier.name"
+      optionLabel="text"
+      optionValue="value"
+    >
+    </p-dropdown>
+  </ng-container>
+  <ng-template #notSelect> -->
+  <input
+    *ngIf="carrier.inputType != 'file'"
+    [type]="carrier.inputType"
+    [ngModel]="carrier.value"
+    (ngModelChange)="carrier.setValue($event)"
+    (blur)="carrier.setTouched(true)"
+    [attr.name]="carrier.name"
+  />
+  <input
+    *ngIf="carrier.inputType == 'file'"
+    type="file"
+    (input)="carrier.setValue($event, carrier)"
+    (blur)="carrier.setTouched(true)"
+    [attr.name]="carrier.name"
+  />
+  <!-- </ng-template> -->
+
+  <div
+    style="display: inline-block"
+    *ngIf="carrier.inputType == 'checkbox'"
+    class="input-title"
+  >
+    <label>{{ carrier.name }}</label>
+  </div>
+  <div class="input-title">
+    <label>{{ carrier.name }}</label>
+  </div>
+  <div style="background-color: red">
+    <ul>
+      <li *ngFor="let error of carrier.validationErrors">
+        {{ error.name }}
+      </li>
+    </ul>
+  </div>
+</ng-template>
+
+<ng-template button-link let-title="title" let-action="action">
+  <button (click)="action()">
+    {{ title }}
+  </button>
+</ng-template>
+
+<div
+  *ngIf="viewInit && reform() && carriers"
+  [style.gap]="gap() + 'px'"
+  class="form"
+>
+  <!-- INPUT REFLECTION -->
+
+  <ng-template #reformInputCarriers let-carrierList="carrierList">
+    @for (carrier of carrierList; track $index) {
+    <div
+      class="form-item"
+      [class.inline-block]="carrier.carrierType == 'ACTION'"
+      [style.flex-basis]="
+        carrier.carrierType != 'ACTION'
+          ? 'calc(' +
+            (carrier.widthRatio || '100%') +
+            ' - ' +
+            (gap() / 2 || 0).toString() +
+            'px)'
+          : null
+      "
+    >
+      <ng-container>
+        <div *ngIf="carrier.carrierType == 'ACTION'">
+          <div
+            *ngTemplateOutlet="
+              decideButtonTemplate()!.template;
+              context: {
+                carrier: carrier
+              }
+            "
+          ></div>
+        </div>
+
+        <div *ngIf="carrier.carrierType == 'GROUP'" style="width: 100%; padding: 0 .25rem;">
+          <div
+            *ngTemplateOutlet="
+              decideGroupLabelTemplate()!.template;
+              context: {
+                title:
+                  carrier.title
+              }
+            "
+          ></div>
+          <div
+            *ngTemplateOutlet="
+              reformInputCarriers;
+              context: {
+                carrierList: carrier.items
+              }
+            "
+            style="width: 100%;"
+          ></div>
+        </div>
+        <div
+          *ngIf="carrier.carrierType == 'INPUT'"
+          [attr.reform-path]="carrier.path"
+        >
+          <div
+            *ngTemplateOutlet="
+              getRelatedInputTemplate(carrier).template;
+              context: { carrier: carrier }
+            "
+          ></div>
+        </div>
+      </ng-container>
+    </div>
+    }
+
+  </ng-template>
+  <div
+    *ngTemplateOutlet="reformInputCarriers; context: { carrierList: carriers }"
+  ></div>
+</div>

@@ -1,0 +1,54 @@
+:host {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  position: absolute;
+}
+
+// svg {
+//   width: 100%;
+// }
+.canvas-parent {
+  // width: 100%;
+  // height: 100%;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  position: absolute;
+}
+
+.draw-tools {
+  position: fixed;
+  overflow: scroll;
+  display: flex;
+  gap: 1px;
+  flex-wrap: nowrap;
+  background-color: var(--bg-1);
+  padding: 0.2em;
+  &.bottom {
+    bottom: 0px;
+    width: 100%;
+  }
+
+  &.top {
+    width: 100%;
+  }
+
+  &.right {
+    flex-direction: column;
+    top: var(--canvas-safe-area-top);
+    bottom: 0px;
+    width: 37px;
+    right: 0px;
+  }
+  &.left {
+    flex-direction: column;
+    top: var(--canvas-safe-area-top);
+
+    bottom: 0px;
+    width: 37px;
+    left: 0px;
+  }
+}

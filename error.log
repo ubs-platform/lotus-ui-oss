@@ -1,0 +1,40 @@
+
+ >  NX   Resetting the Nx workspace cache and stopping the Nx Daemon.
+
+   This might take a few minutes.
+
+
+ >  NX   Daemon Server - Stopped
+
+
+nx reset
+
+Clears all the cached Nx artifacts and metadata about the workspace and shuts down the Nx Daemon.
+
+Seçenekler:
+  --help     Yardım detaylarını göster  [boolean]
+  --version  Versiyon detaylarını göster  [boolean]
+
+Error: ENOTEMPTY: directory not empty, rmdir '/media/huseyin/DATA/tetakent/lotus/lotus-web/node_modules/.cache/nx/d'
+    at Object.rmdirSync (fs.js:850:3)
+    at rmkidsSync (/media/huseyin/DATA/tetakent/lotus/lotus-web/node_modules/fs-extra/lib/remove/rimraf.js:296:25)
+    at rmdirSync (/media/huseyin/DATA/tetakent/lotus/lotus-web/node_modules/fs-extra/lib/remove/rimraf.js:269:7)
+    at rimrafSync (/media/huseyin/DATA/tetakent/lotus/lotus-web/node_modules/fs-extra/lib/remove/rimraf.js:243:7)
+    at /media/huseyin/DATA/tetakent/lotus/lotus-web/node_modules/fs-extra/lib/remove/rimraf.js:279:39
+    at Array.forEach (<anonymous>)
+    at rmkidsSync (/media/huseyin/DATA/tetakent/lotus/lotus-web/node_modules/fs-extra/lib/remove/rimraf.js:279:26)
+    at rmdirSync (/media/huseyin/DATA/tetakent/lotus/lotus-web/node_modules/fs-extra/lib/remove/rimraf.js:269:7)
+    at Function.rimrafSync [as sync] (/media/huseyin/DATA/tetakent/lotus/lotus-web/node_modules/fs-extra/lib/remove/rimraf.js:243:7)
+    at removeSync (/media/huseyin/DATA/tetakent/lotus/lotus-web/node_modules/fs-extra/lib/remove/index.js:16:10) {
+  errno: -39,
+  syscall: 'rmdir',
+  code: 'ENOTEMPTY',
+  path: '/media/huseyin/DATA/tetakent/lotus/lotus-web/node_modules/.cache/nx/d'
+}
+npm ERR! code 1
+npm ERR! path /media/huseyin/DATA/tetakent/lotus/lotus-web
+npm ERR! command failed
+npm ERR! command sh -c nx "reset"
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/huseyin/.npm/_logs/2022-09-20T16_25_28_646Z-debug.log

@@ -1,0 +1,32 @@
+.watermark-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  /* background: rgba(0, 0, 0, 0.7); */
+  color: var(--fg);
+  padding: 15px 20px;
+  border-radius: 8px;
+  /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); */
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.8;
+  max-width: 300px;
+}
+
+.watermark-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.watermark-title {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.watermark-message {
+  font-size: 12px;
+  line-height: 1.4;
+  opacity: 0.9;
+}

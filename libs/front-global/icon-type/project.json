@@ -1,0 +1,23 @@
+{
+  "name": "icon-type",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/front-global/icon-type/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/front-global/icon-type",
+        "main": "libs/front-global/icon-type/src/index.ts",
+        "tsConfig": "libs/front-global/icon-type/tsconfig.lib.json",
+        "assets": ["libs/front-global/icon-type/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  }
+}

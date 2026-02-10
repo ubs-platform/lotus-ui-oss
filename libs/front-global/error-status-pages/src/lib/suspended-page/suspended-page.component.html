@@ -1,0 +1,10 @@
+<!-- <p-message
+  [text]=" | translate : { reason: reason }"
+  severity="warn"
+></p-message> -->
+<lotus-web-custom-error-message
+  [title]="{ key: 'Hesabınız askıya alındı', parameters: { reason: 'Sebep' } }"
+  [desc]="'mona.suspended'"
+  primeIcons="pi-exclamation-triangle"
+>
+</lotus-web-custom-error-message>

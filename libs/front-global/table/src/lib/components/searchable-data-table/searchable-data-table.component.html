@@ -1,0 +1,66 @@
+<div class="flex flex-column" [class.h-full]="cover()">
+  <div>
+    <block-button
+      *ngIf="reformFilter()"
+      (click)="showFilter()"
+      stringContent="Filtreleme seçenekleri"
+    ></block-button>
+    <block-button
+      *ngIf="reformFilter()"
+      (click)="clearFilter()"
+      iconClass="pi pi-times"
+      stringContent="Filtreyi temizle"
+    ></block-button>
+  </div>
+  <div
+    class="flex-grow-1"
+    [class.flex-grow-1]="cover()"
+    [class.overflow-auto]="cover()"
+    [style.height]="cover() ? '31px' : ''"
+  >
+    <div>
+      <ubs-table-ngx [items]="itemsInternal()" [cover]="cover()">
+        @for (columnItem of columnsContent(); track $index) {
+        <column [name]="columnItem.name()">
+          @if (columnItem.head?.templateRef) {
+          <ng-template header>
+            <div *ngTemplateOutlet="columnItem.head!.templateRef"></div>
+          </ng-template>
+          } @if (columnItem.data?.templateRef) {
+          <ng-template data let-item="item">
+            <div
+              *ngTemplateOutlet="
+                columnItem.data!.templateRef;
+                context: { item: item }
+              "
+            ></div>
+          </ng-template>
+          }
+        </column>
+        } @if (noDataTemplateDirective()?.[0]?.templateRef != null) {
+        <ng-template empty-data>
+          <ng-container
+            *ngTemplateOutlet="noDataTemplateDirective()?.[0]!.templateRef!"
+          ></ng-container>
+        </ng-template>
+        }
+      </ubs-table-ngx>
+    </div>
+  </div>
+  <div class="w-full flex gap-1 align-items-center justify-content-center">
+    <block-button
+      (click)="back()"
+      stringContent="Geri"
+      iconClass="pi pi-chevron-left"
+      [disabled]="firstPage()"
+    ></block-button>
+    {{ pageHumanReadable() }} / {{ maxPage() }}
+    <block-button
+      (click)="next()"
+      [disabled]="lastPage()"
+      iconPosition="RIGHT"
+      stringContent="İleri"
+      iconClass="pi pi-chevron-right"
+    ></block-button>
+  </div>
+</div>

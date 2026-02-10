@@ -1,0 +1,28 @@
+<div class="touch-host-pagination">
+  <ng-container *ngFor="let blockPage of blockPages()">
+    <div
+      (touchstart)="mouseDownGroup($event)"
+      (touchend)="mouseUpGroup($event)"
+      (touchmove)="mouseMoveGroup($event)"
+      [style.animation-delay]="delaySecond()"
+      [ngClass]="{
+        group: true,
+        'anim-pause': backGesture(),
+        'send-left': blockPage.name() == sentBack(),
+        'send-right': blockPage.name() == sentForward(),
+        'bring-it-from-left':
+          blockPage.name() == foreground() && rotation() == 'BACK',
+        'hold-front': blockPage.name() == foreground() && rotation() == 'HOLD',
+        'bring-it-from-right':
+          blockPage.name() == foreground() && rotation() == 'FORWARD',
+        hidden: !(
+          blockPage.name() == sentBack() ||
+          blockPage.name() == sentForward() ||
+          blockPage.name() == foreground()
+        )
+      }"
+    >
+      <div *ngTemplateOutlet="blockPage.template"></div>
+    </div>
+  </ng-container>
+</div>

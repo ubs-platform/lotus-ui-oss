@@ -1,0 +1,20 @@
+{
+  "name": "front-global-password-reset",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/front-global/password-reset/src",
+  "prefix": "lotus-web",
+  "tags": [],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/front-global/password-reset"],
+      "options": {
+        "jestConfig": "libs/front-global/password-reset/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

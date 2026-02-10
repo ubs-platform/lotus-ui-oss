@@ -1,0 +1,160 @@
+<div class="mb-3">
+  @if (reform()) {
+  <minky-reform [reform]="reform()" (afterCarrierInitialized)="selectRegisterFeeders($event)" #reformComponent>
+    <ng-template input-link let-carrier="carrier">
+      <div *ngIf="
+          carrier.inputType == 'checkbox' ||
+          carrier.inputType == 'slider-toggle'
+        " class="flex align-items-center">
+        <!-- <p-checkbox [label]="
+            carrier.title | translate
+          " [binary]="true" [disabled]="carrier.disable" [ngModel]="carrier.value"
+          (ngModelChange)="carrier.setValue($event)"></p-checkbox> -->
+        <toggle [label]="carrier.title" [checkboxStyle]="carrier.inputType == 'checkbox'" [value]="carrier.value"
+          (valueChange)="carrier.setValue($event)"></toggle>
+      </div>
+
+      <label class="block" [class.required]="carrier.validators?.includes('RequiredValidator')" *ngIf="
+          carrier.inputType != 'checkbox' &&
+          carrier.inputType != 'slider-toggle'
+        " [for]="carrier.path">
+        {{ carrier.title | translate }}</label>
+      <div *ngIf="carrier.inputType == 'number'">
+        <span>
+          <input [id]="carrier.path" type="number" [disabled]="carrier.disable" pInputText [ngModel]="carrier.value"
+            (ngModelChange)="carrier.setValue($event)" (blur)="carrier.setTouched(true)"
+            [class.ng-invalid]="carrier.validationErrors?.length" [class.ng-dirty]="carrier.isTouched" />
+        </span>
+      </div>
+      <div *ngIf="carrier.inputType == 'password'">
+        <div class="flex w-full mb-1">
+          <div class="flex-grow-1">
+            <input class="block w-full mb-0" [id]="carrier.path"
+              [type]="showPasswordMap[carrier.path] ? 'text' : 'password'" [disabled]="carrier.disable" pInputText
+              [ngModel]="carrier.value" (ngModelChange)="carrier.setValue($event)" (blur)="carrier.setTouched(true)"
+              [class.ng-invalid]="carrier.validationErrors?.length" [class.ng-dirty]="carrier.isTouched" />
+          </div>
+          <block-button [disabled]="carrier.disable" iconClass="pi {{
+              showPasswordMap[carrier.path] ? 'pi-eye-slash' : 'pi-eye'
+            }}" (click)="
+              showPasswordMap[carrier.path] = !showPasswordMap[carrier.path]
+            "></block-button>
+        </div>
+      </div>
+      <div *ngIf="carrier.inputType == 'select'" class="w-100">
+        <!-- <div>
+          {{ carrier.path}}
+          {{ feeds[carrier.path] | async | json }}
+        </div> -->
+
+        <lib-custom-select [options]="(feeds[carrier.path] | async) || []" [selectedModel]="carrier.value"
+          [enabled]="!carrier.disable" (selectedChange)="carrier.setValue($event); ">
+        </lib-custom-select>
+        <!-- <p-dropdown
+          [options]="feeds[carrier.path]"
+          optionLabel="textShortened"
+          optionValue="value"
+          [disabled]="carrier.disable"
+          [style]="{ width: '100%' }"
+          [ngModel]="carrier.value"
+          (ngModelChange)="carrier.setValue($event); feedAllSelects()"
+          (onBlur)="carrier.setTouched(true)"
+          [filter]="false"
+          filterBy="text"
+        >
+        </p-dropdown> -->
+      </div>
+      <div *ngIf="carrier.inputType == 'radios'" class="w-100">
+        <div class="flex flex-column gap-3">
+          <div *ngFor="let item of ((feeds[carrier.path] | async) || []); let index = index">
+            <p-radioButton inputId="{{ carrier.path }}_{{ index }}" name="category" [value]="item.value"
+              [ngModel]="carrier.value" (ngModelChange)="carrier.setValue($event); " />
+            <label for="{{ carrier.path }}_{{ index }}" class="ml-2">
+              {{ item.text }}
+            </label>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="carrier.inputType == 'file'">
+        <!-- <input
+          type="file"
+          (input)="carrier.setFile($event, carrier)"
+        /> -->
+        <!--
+          accept="image/*" -->
+        <!--
+          [files]="carrier.getFiles()"
+
+           -->
+        <p-fileUpload mode="advanced" [attr.name]="carrier.name" [showUploadButton]="false"
+          (blur)="carrier.setTouched(true)" (onSelect)="carrier.setValue($event.files, carrier)" [multiple]="false"
+          chooseLabel="Dosya seç"></p-fileUpload>
+      </div>
+      <div *ngIf="carrier.inputType == 'datetime'">
+        <p-calendar styleClass="w-full" (ngModelChange)="carrier.setValue($event)" [ngModel]="carrier.value" [showTime]="true"
+          [showSeconds]="true"></p-calendar>
+        <!-- <input pInputText type="datetime" [ngModel]="carrier.value" (ngModelChange)="carrier.setValue($event)"
+          (blur)="carrier.setTouched(true)" [class.ng-invalid]="carrier.validationErrors?.length"
+          [class.ng-dirty]="carrier.isTouched" /> -->
+      </div>
+
+      <div *ngIf="
+          carrier.inputType != 'number' &&
+          carrier.inputType != 'checkbox' &&
+          carrier.inputType != 'file' &&
+          carrier.inputType != 'select' &&
+          carrier.inputType != 'array' &&
+          carrier.inputType != 'sub-object' &&
+          carrier.inputType != 'password' &&
+          carrier.inputType != 'datetime' &&
+          carrier.inputType != 'radios' &&
+          carrier.inputType != 'slider-toggle'
+        ">
+        <span>
+          <input [id]="carrier.path" [name]="carrier.path" [attr.list]="'autocomplete-for-' + carrier.path" type="text"
+            [disabled]="carrier.disable" pInputText [ngModel]="carrier.value" (ngModelChange)="carrier.setValue($event)"
+            (blur)="carrier.setTouched(true)" [class.ng-invalid]="carrier.validationErrors?.length"
+            [class.ng-dirty]="carrier.isTouched" />
+
+          <datalist [id]="'autocomplete-for-' + carrier.path">
+            <option *ngFor="let item of ((feeds[carrier.path] | async) || [])" [value]="item.value">
+              {{ item.text }}
+            </option>
+          </datalist>
+        </span>
+      </div>
+      <p-message *ngIf="
+          (reform()!.allErrorsRevealed ||
+            reform()!.touchMap.getPathStatus(carrier.path)) &&
+          carrier.validationErrors?.length
+        " styleClass="my-1 w-full" severity="error" [text]="
+          carrier.validationErrors[0].name | translate
+        "></p-message>
+    </ng-template>
+    <ng-template button-link let-carrier="carrier">
+      <block-button buttonClass="mb-1 mr-1" (click)="carrier.action();" [stringContent]="
+          carrier.title | translate
+        " [iconClass]="
+          carrier.title == 'insert'
+            ? 'pi pi-plus'
+            : carrier.title == 'remove'
+            ? 'pi pi-minus'
+            : ''
+        "></block-button>
+    </ng-template>
+    <ng-template group-label-link let-title="title">
+      <!-- <label class="block"><b>
+         
+        </b></label> -->
+      <h3> {{ title }}</h3>
+    </ng-template>
+    @for(cit of findCustoms(); track $index) {
+    <ng-template input-link [path]="cit.path()" let-carrier="carrier">
+      <div *ngTemplateOutlet="cit.template; context: { carrier: carrier }"></div>
+    </ng-template>
+    }
+
+  </minky-reform>
+  }
+
+</div>

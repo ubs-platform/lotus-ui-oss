@@ -1,0 +1,47 @@
+<ng-template #formatButtons>
+  <block-button
+    iconClass="material-symbols-outlined"
+    iconContent="format_bold"
+    [hasContent]="false"
+    (click)="makeBold()"
+  ></block-button>
+  <block-button
+    (click)="makeItalic()"
+    iconClass="material-symbols-outlined"
+    iconContent="format_italic"
+    [hasContent]="false"
+  ></block-button>
+  <block-button
+    iconClass="material-symbols-outlined"
+    iconContent="image"
+    [hasContent]="false"
+    (click)="showInsertImg()"
+    *ngIf="category()"
+  ></block-button>
+  <block-button
+    iconClass="material-symbols-outlined"
+    iconContent="link"
+    [hasContent]="false"
+    (click)="insertLink()"
+  ></block-button>
+</ng-template>
+
+<input
+  type="file"
+  accept=".png, .jpg"
+  class="hidden"
+  (input)="afterImageSelectDialog()"
+  #fileInputForImage
+/>
+<div>
+  <div
+    #editorRef
+    (mousedown)="mouseInTheHole = true"
+    class="editor-parent"
+    [class.readonly]="!allowWrite()"
+    (resize)="imageResize()"
+  ></div>
+</div>
+<div class="formatbtns" *ngIf="allowWrite() && showToolbar()">
+  <ng-container *ngTemplateOutlet="formatButtons"></ng-container>
+</div>

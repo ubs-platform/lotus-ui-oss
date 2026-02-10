@@ -1,0 +1,14 @@
+.profile-photo {
+  img {
+    height: 36px;
+    width: 36px;
+    border-radius: 100%;
+  }
+}
+.warning {
+  padding: 0.5em;
+  background-color: var(--bg-2);
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}

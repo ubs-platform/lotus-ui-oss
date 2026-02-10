@@ -1,0 +1,25 @@
+<div class="modal" [attr.animation-state]="animationState()" style="--duration: {{ animationDurationMs() }}; --animDelay: {{
+    animationDelayMs()
+  }}" (click)="maskClick($event)">
+  <div class="dialog" [style.max-width]="maxWidth()" [style.width]="width()" [style.height]="height()"
+    [style.max-height]="maxHeight()" [attr.animation-state]="animationState()" [attr.dialog-align]="position()" #dialog>
+    <div class="header flex align-items-center justify-content-between" *ngIf="displayHeader()">
+      <h2 class="my-1 w-full text-center">{{ title() | translate }}</h2>
+      @if (displayCloseButton()) {
+      <block-button *ngIf="displayCloseButton" iconClass="pi pi-times"
+        (click)="closeDialogByReference()"></block-button>
+      }
+
+    </div>
+    <div class="dialog-inner flex-grow-1 overflow-auto" [class.px-3]="padding()" [class.pb-3]="padding()">
+      @if (contentComponentRef) {
+      <div class="h-full w-full position-relative">
+        <div class="h-full w-full position-relative" (on-load)="componentExtract($event)"></div>
+      </div>
+      } @else {
+      <ng-content></ng-content>
+      }
+
+    </div>
+  </div>
+</div>

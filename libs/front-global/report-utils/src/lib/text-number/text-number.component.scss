@@ -1,0 +1,35 @@
+.text-number-card {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  @media screen and (min-width: 500px) {
+    min-height: 100px;
+    justify-content: center;
+    align-items: var(--large-screen-aligment);
+    flex-direction: column;
+    width: 0px;
+  }
+
+  .title {
+    white-space: nowrap;
+    @media screen and (min-width: 500px) {
+      white-space: nowrap;
+    }
+  }
+  .large-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    @media screen and (min-width: 500px) {
+      font-size: 1.5rem;
+    }
+    @media screen and (min-width: 768px) {
+      font-size: 2rem;
+    }
+    // @media screen and (min-width: 992px) {
+    //   font-size: 2.5rem;
+    // }
+  }
+}

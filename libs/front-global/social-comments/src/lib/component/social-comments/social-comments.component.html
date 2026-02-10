@@ -1,0 +1,117 @@
+<!-- <p-button (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v"/> -->
+
+<div class="comments-view-wrap">
+  <ng-template
+    let-field="field"
+    let-rotation="rotation"
+    let-text="text"
+    #sortBtn
+  >
+    <block-button
+      buttonClass="compact {{
+        sortField == field && sortRotation == rotation ? 'primary' : 'border'
+      }}"
+      (click)="setSorting(field, rotation); sortingStgs.hide()"
+      [stringContent]="generateTextForSort(field, rotation)"
+    ></block-button>
+  </ng-template>
+
+  <p-overlayPanel #sortingStgs>
+    <div
+      class="flex gap-1 flex-column md:flex-row align-items-center justify-content-center"
+    >
+      <div
+        *ngTemplateOutlet="
+          sortBtn;
+          context: {
+            field: 'creationDate',
+            rotation: 'asc'
+          }
+        "
+      ></div>
+      <div
+        *ngTemplateOutlet="
+          sortBtn;
+          context: {
+            field: 'creationDate',
+            rotation: 'desc'
+          }
+        "
+      ></div>
+
+      <div
+        *ngTemplateOutlet="
+          sortBtn;
+          context: {
+            field: 'vote',
+            rotation: 'asc'
+          }
+        "
+      ></div>
+      <div
+        *ngTemplateOutlet="
+          sortBtn;
+          context: {
+            field: 'vote',
+            rotation: 'desc'
+          }
+        "
+      ></div>
+    </div>
+  </p-overlayPanel>
+  <div class="comments-view w-full h-full flex flex-column">
+    <div class="flex-grow-1 overflow-auto">
+      <block-button
+        style="margin-left: 46px"
+        buttonClass="border compact"
+        (click)="sortingStgs.toggle($event)"
+        >Sıralama: {{ activeSortingText }}</block-button
+      >
+      <div class="single-comment-wrap" *ngFor="let item of comments">
+        <lib-single-comment
+          [item]="item"
+          (commentRemoval)="this.commentRemoval($event)"
+          (click)="activeComment = item"
+          [showOptions]="item == activeComment"
+        ></lib-single-comment>
+      </div>
+
+      <div class="flex justify-content-center">
+        <block-button
+          (click)="loadMoreComments()"
+          *ngIf="!allCommentsAreLoaded"
+          buttonClass="primary"
+          >Daha fazla yorum yükle ({{ comments.length + pageSize }}/{{
+            totalItemsLength
+          }})</block-button
+        >
+      </div>
+    </div>
+
+    <div
+      class="p-1"
+      style="margin: 0rem 1rem 0.25rem 44px"
+      *ngIf="commentAbility?.userCanComment"
+    >
+      <div>
+        <lib-comment-textbox
+          *ngIf="baseObj"
+          [isChild]="parentCommentId()"
+          [baseSearch]="baseObj"
+          (sendComment)="sendComment($event)"
+        ></lib-comment-textbox>
+      </div>
+    </div>
+    <div
+      class="warning"
+      *ngIf="!commentAbility?.userCanComment && !parentCommentId()"
+    >
+      <div>
+        <i class="pi pi-exclamation-triangle" style="font-size: 2em"></i>
+      </div>
+      <div>
+        <b> {{ commentAbility?.userCommentBlockReason | translate }}</b>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,147 @@
+<p-overlayPanel #colorSettingsOverlay>
+  <h4>Renk</h4>
+  <p-colorPicker [(ngModel)]="currentColor" [inline]="true"></p-colorPicker>
+  <h4>Kalınlık ({{ size }})</h4>
+  <p-slider [min]="1" [max]="100" [(ngModel)]="size"></p-slider>
+  <h4>Opaklık ({{ opacity }}%)</h4>
+  <p-slider [min]="0" [max]="100" [(ngModel)]="opacity"></p-slider>
+</p-overlayPanel>
+<p-overlayPanel #overlaySettingsOverlay>
+  <h4>Yerleşim</h4>
+  <div class="flex justify-content-center">
+    <block-button iconClass="pi pi-chevron-up" (click)="setPlacement('top')"
+      >Yukarı</block-button
+    >
+  </div>
+  <div class="flex">
+    <block-button
+      iconClass="pi pi-chevron-left"
+      iconPosition="LEFT"
+      (click)="setPlacement('left')"
+      >Sol</block-button
+    >
+    <block-button
+      iconClass="pi pi-chevron-right"
+      iconPosition="RIGHT"
+      (click)="setPlacement('right')"
+      >Sağ</block-button
+    >
+  </div>
+  <div class="flex justify-content-center">
+    <block-button
+      iconClass="pi pi-chevron-down"
+      (click)="setPlacement('bottom')"
+      >Aşağı</block-button
+    >
+  </div>
+</p-overlayPanel>
+
+<div
+  [tabIndex]="0"
+  (keydown)="keyDown($event)"
+  class="canvas-parent"
+  [style.cursor]="drawMode == 'ERASER' ? 'not-allowed' : 'crosshair'"
+  ubs-document-swipe="disable"
+  #canvas
+></div>
+
+<!--  -->
+<div
+  class="draw-tools {{ placement }}"
+  style="--canvas-safe-area-top: {{ safeTop() }}; "
+>
+  <block-button
+    iconClass="pi pi-th-large"
+    (click)="overlaySettingsOverlay.toggle($event)"
+  >
+  </block-button>
+  <block-button
+    [cover]="false"
+    iconClass="pi pi-arrows-v"
+    (click)="drawMode = 'SCROLL'"
+    [buttonClass]="drawMode == 'SCROLL' ? 'primary' : ''"
+    *ngIf="isTouchScreen"
+  >
+  </block-button>
+  <block-button
+    [cover]="false"
+    iconClass="material-symbols-outlined"
+    iconContent="ink_pen"
+    (click)="setPen()"
+    [buttonClass]="
+      drawMode == 'PEN' && currentColor != MARKER_COLOR ? 'primary' : ''
+    "
+  ></block-button>
+  <block-button
+    [cover]="false"
+    [hasContent]="false"
+    (click)="setMarker()"
+    iconClass="material-symbols-outlined"
+    iconContent="ink_marker"
+    [buttonClass]="
+      drawMode == 'PEN' && currentColor == MARKER_COLOR ? 'primary' : ''
+    "
+  ></block-button>
+  <block-button
+    [hasContent]="false"
+    [cover]="false"
+    (click)="colorSettingsOverlay.toggle($event)"
+    iconClass="material-symbols-outlined"
+    iconContent="palette"
+    buttonClass="border-primary light-1"
+  ></block-button>
+  <block-button
+    [cover]="false"
+    [hasContent]="false"
+    (click)="setEraser()"
+    iconClass="material-symbols-outlined"
+    iconContent="ink_eraser"
+    [buttonClass]="drawMode == 'ERASER' ? 'primary' : ''"
+  ></block-button>
+  <block-button
+    [hasContent]="false"
+    [cover]="false"
+    iconClass="pi pi-times"
+    (click)="sendExitRequest()"
+  ></block-button>
+  <block-button
+    [hasContent]="false"
+    [cover]="false"
+    iconClass="pi pi-trash"
+    (click)="clear()"
+  ></block-button>
+  <block-button
+    [cover]="false"
+    [hasContent]="false"
+    iconClass="material-symbols-outlined"
+    iconContent="undo"
+    [disabled]="!(undoRedoHelper.canUndo | async)!"
+    (click)="undoRedoHelper.undo()"
+  >
+  </block-button>
+  <block-button
+    [cover]="false"
+    [hasContent]="false"
+    iconClass="material-symbols-outlined"
+    iconContent="redo"
+    [disabled]="!(undoRedoHelper.canRedo | async)"
+    (click)="undoRedoHelper.redo()"
+  >
+  </block-button>
+  <!-- <block-button
+    [hasContent]="false"
+    [cover]="false"
+    iconClass="pi pi-save"
+  ></block-button> -->
+
+  <!-- <block-button
+    [hasContent]="false"
+    [cover]="false"
+    iconClass="pi pi-eraser"
+  ></block-button>
+  <block-button
+    [hasContent]="false"
+    [cover]="false"
+    iconClass="pi pi-marker"
+  ></block-button> -->
+</div>

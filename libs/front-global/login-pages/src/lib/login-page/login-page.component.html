@@ -1,0 +1,89 @@
+<div
+  class="h-full w-full flex flex-row align-items-center justify-content-center"
+>
+  <div
+    class="mona-centered-card p-4 overflow-auto"
+    *ngIf="(currentUser | async) == null"
+  >
+    <div class="w-full">
+      <p-message
+        severity="warn"
+        *ngIf="showWarning"
+        [text]="'mona.need-to-login-to-show-page' | translate"
+      ></p-message>
+
+      <p-message
+        severity="success"
+        *ngIf="activated"
+        [text]="'mona.account-activated' | translate"
+      ></p-message>
+      <h1>{{ 'mona.login' | translate }}</h1>
+      <lotus-web-login-dialog
+        (loginSuccess)="successLogin()"
+      ></lotus-web-login-dialog>
+    </div>
+  </div>
+  <div
+    class="mona-centered-card p-4 overflow-auto"
+    *ngIf="currentUser | async; let user"
+  >
+    <div class="div flex flex-column align-items-center justify-content-center">
+      <p-message
+        severity="info"
+        text="Şu an zaten giriş yapmış olarak görünüyorsunuz."
+      ></p-message>
+      <div
+        class="flex justify-content-center align-items-center animated delay-1 p-2"
+        *ngIf="user"
+      >
+        <img
+          alt="logo"
+          style="
+            height: 100px;
+            width: 100px;
+            margin-right: 10px;
+            border-radius: 100%;
+          "
+          src="/api/file/PROFILE_PHOTO/{{ user.id }}"
+          class="account-image"
+        />
+        <div>
+          <h1 class="m-0">{{ user.name }} {{ user.surname }}</h1>
+        </div>
+      </div>
+    </div>
+
+    <block-button
+      [cover]="true"
+      iconClass="pi pi-user-edit"
+      iconPosition="RIGHT"
+      routerLink="/account/information"
+      >Hesap ayarları</block-button
+    >
+
+    <block-button
+      [cover]="true"
+      iconClass="pi pi-sign-out"
+      iconPosition="RIGHT"
+      (click)="logout()"
+      >Çıkış yap ve ya farklı bir hesapla devam et</block-button
+    >
+    <block-button
+      [cover]="true"
+      iconClass="pi pi-home"
+      iconPosition="RIGHT"
+      [buttonClass]="!redirectTo || redirectTo == '/' ? 'primary' : ''"
+      routerLink="/"
+      >Ana sayfa</block-button
+    >
+    <block-button
+      *ngIf="redirectTo && redirectTo != '/'"
+      [cover]="true"
+      iconClass="pi pi-arrow-up-right"
+      iconPosition="RIGHT"
+      buttonClass="primary"
+      (click)="successLogin()"
+      >Bu hesapla devam et</block-button
+    >
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div
+  class="space-surface-container"
+  (touchstart)="touchStart($event)"
+  (touchmove)="touchMove($event)"
+  (touchend)="touchEnd($event)"
+  [style.zoom]="zoomFactor"
+>
+  <!-- 
+
+
+   -->
+  Scaling mode: {{ scaling }} <br />
+  Zoom factor {{ zoomFactor }} <br />
+  Pinch distance {{ pinchDistance }} <br />
+  Max maxHypotenus {{ maxHypotenus }} <br />
+  <!-- Pinch distance {{  }} <br /> -->
+</div>

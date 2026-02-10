@@ -1,0 +1,16 @@
+<minky-reform-prime [reform]="reform">
+  <ng-template
+    input-link
+    [overrideDefault]="false"
+    path="htmlContent"
+    let-carrier="carrier"
+  >
+    <lotus-web-code-editor-input
+      [carrier]="carrier"
+    ></lotus-web-code-editor-input>
+  </ng-template>
+</minky-reform-prime>
+
+<block-button buttonClass="primary" iconClass="pi pi-save" (click)="save()"
+  >Kaydet</block-button
+>

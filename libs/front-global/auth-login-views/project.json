@@ -1,0 +1,22 @@
+{
+  "name": "front-global-auth-login-views",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/front-global/auth-login-views/src",
+  "prefix": "lotus-web",
+  "tags": [],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/libs/front-global/auth-login-views"
+      ],
+      "options": {
+        "jestConfig": "libs/front-global/auth-login-views/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

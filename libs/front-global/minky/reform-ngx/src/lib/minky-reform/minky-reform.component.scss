@@ -1,0 +1,18 @@
+input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.input-title {
+  margin-bottom: 10px;
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  @media screen and (max-width: 800px) {
+    .form-item {
+      flex-basis: 100% !important;
+    }
+  }
+}

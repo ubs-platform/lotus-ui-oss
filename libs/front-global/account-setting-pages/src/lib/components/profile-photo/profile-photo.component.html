@@ -1,0 +1,14 @@
+<div class="mb-2">
+  <kasa-application-image-upload
+    #uploader
+    category="PROFILE_PHOTO"
+  ></kasa-application-image-upload>
+</div>
+<block-button
+  (click)="sendRequest()"
+  iconClass="material-symbols-outlined"
+  iconContent="ink_marker"
+  buttonClass="primary"
+  [cover]="false"
+  >Kaydet</block-button
+>

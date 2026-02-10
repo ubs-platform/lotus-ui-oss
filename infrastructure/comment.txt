@@ -1,0 +1,5 @@
+Files ve Users dışında çalışmak:
+
+docker compose up -d ubs-users ubs-feedback ubs-notify smtp4dev zookeeper kafka my-mongodb ubs-files
+
+Social'i açmayı unutma

@@ -1,0 +1,43 @@
+<div class="d-flex">
+  <div class="sidebar-tab">
+    <div class="menus">
+      <!-- GO BACK BUTTON -->
+      <div *ngIf="goBackEventEnabled" (click)="backGo.emit()">
+        <div class="go-back-button d-flex align-items-center">
+          <a class="material-icons">arrow_back</a>
+          <div class="back-button-text">{{ goBackText }}</div>
+        </div>
+      </div>
+      <div *ngFor="let tab of tabs">
+        <div
+          *ngIf="tab"
+          class="side-menu d-flex flex-shrink-0 flex-grow-0"
+          [class.selected]="selected ? tab.name === selected.name : false"
+          (click)="select(tab)"
+        >
+          <div class="menu-icon">
+            <span class="material-icons">
+              {{ tab.icon }}
+            </span>
+          </div>
+          <div class="menu-title">
+            {{ tab.title }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-content flex-shrink-1 flex-grow-1">
+    <ng-content> </ng-content>
+    <!-- <div>
+            <ng-content>
+
+            </ng-content>
+        </div>
+        <div class="loading-indicator-area" *ngIf="loading" >
+            <div class="loading-indicator">
+                <mat-spinner color="accent" [diameter]="48"></mat-spinner>
+            </div>
+        </div> -->
+  </div>
+</div>

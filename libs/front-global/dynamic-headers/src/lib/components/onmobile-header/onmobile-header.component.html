@@ -1,0 +1,22 @@
+@if (content() && (isMobile() || !hideOnDesktop())) {
+<div class="ml-3 marquee" #headerTextParent>
+  @if (topMinimal()) {
+
+  <div style="font-size: 9px">
+    {{ topMinimal() | translate }}
+  </div>
+  }
+  <div
+    class="header-text"
+    (mousedown)="$event.preventDefault(); enableMarquee.set(true)"
+    (mouseup)="enableMarquee.set(false)"
+    (touchstart)="$event.preventDefault(); enableMarquee.set(true)"
+    (touchend)="enableMarquee.set(false)"
+    [class.marquee-content]="enableMarquee()"
+    [style.--var-approx-length]="approxLength() + 'px'"
+  >
+    <b>{{ content() }}</b>
+  </div>
+</div>
+
+}

@@ -1,0 +1,8 @@
+@if (formInstruction()) {
+<div>
+    <minky-reform-prime [reform]="formInstruction()!.form"></minky-reform-prime>
+    <block-button buttonClass="primary" iconClass="material-symbols-outlined" iconContent="save" stringContent="Kaydet" (click)="saveForm()"></block-button>
+</div>
+} @else {
+<div>Form yükleniyor...</div>
+}

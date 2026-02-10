@@ -1,0 +1,43 @@
+<div *ngIf="carrier()">
+  <block-button
+    *ngIf="!sourceEditor()"
+    iconClass="pi pi-code"
+    (click)="sourceEditor.set(!sourceEditor())"
+    >Kaynağı düzenle</block-button
+  >
+  <block-button
+    *ngIf="sourceEditor()"
+    iconClass="pi pi-earth"
+    (click)="sourceEditor.set(!sourceEditor())"
+    >WYSIWYG</block-button
+  >
+  <div *ngIf="sourceEditor()">
+    <ngx-monaco-editor
+      [options]="monacoOps()"
+      [ngModel]="carrier()!.value"
+      (ngModelChange)="carrier()!.setValue($event)"
+    ></ngx-monaco-editor>
+    <!-- <textarea
+      pInputText
+      [ngModel]="carrier.value"
+      (ngModelChange)="carrier.setValue($event)"
+      (blur)="carrier.setTouched(true)"
+    ></textarea> -->
+  </div>
+  <p-editor
+    *ngIf="!sourceEditor()"
+    [ngModel]="carrier()!.value"
+    (ngModelChange)="carrier()!.setValue($event)"
+    [style]="{ height: '320px' }"
+  ></p-editor>
+  <div>
+    <p-message
+      *ngIf="carrier()!.isTouched && carrier()!.validationErrors?.length"
+      styleClass="my-1 w-full"
+      severity="error"
+      [text]="carrier()!.validationErrors[0].name || '' | translate"
+    ></p-message>
+  </div>
+</div>
+<!-- reform?.allErrorsRevealed ||
+      carrier?.touchMap?.getPathStatus(carrier.path) -->

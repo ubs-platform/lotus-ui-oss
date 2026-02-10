@@ -1,0 +1,16 @@
+<h2>{{ dialogConfig.data?.header | translate }}</h2>
+
+<div class="p-2">
+  <minky-reform-prime [reform]="dialogConfig.data?.reform"></minky-reform-prime>
+  <div class="action-buttons">
+    <block-button
+      (click)="complete()"
+      buttonClass="primary"
+      iconClass="pi pi-check"
+      >Tamam</block-button
+    >
+    <block-button (click)="cancel()" iconClass="pi pi-times"
+      >İptal</block-button
+    >
+  </div>
+</div>

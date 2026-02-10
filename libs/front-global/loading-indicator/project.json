@@ -1,0 +1,51 @@
+{
+  "name": "front-global-loading-indicator",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/front-global/loading-indicator/src",
+  "prefix": "lotus-web",
+  "tags": [],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/libs/front-global/loading-indicator"
+      ],
+      "options": {
+        "jestConfig": "libs/front-global/loading-indicator/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "libs/front-global/loading-indicator/.storybook",
+        "browserTarget": "front-global-loading-indicator:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "outputs": ["{options.outputDir}"],
+      "options": {
+        "outputDir": "dist/storybook/front-global-loading-indicator",
+        "configDir": "libs/front-global/loading-indicator/.storybook",
+        "browserTarget": "front-global-loading-indicator:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    }
+  }
+}

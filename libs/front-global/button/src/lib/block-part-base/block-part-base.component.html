@@ -1,0 +1,22 @@
+<div class="block " [class.w-full]="cover()" [class.flex]="cover()" [class.inline-flex]="!cover()"
+  [ngClass]="['block-view', 'block-fill', buttonClass()]" [class.disabled]="disabled()">
+  <div class="flex align-items-center justify-content-center gap-2 w-full">
+    <div *ngIf="iconPosition() == 'LEFT'">
+      <lib-icon [iconClass]="iconClasses()" [iconContent]="iconContent()" [iconImageSource]="iconImageSource()"
+        iconSize="0.85rem"></lib-icon>
+    </div>
+    <div class="btn-left" [class.flex-grow-1]="growLeft()">
+      <ng-content select=".left"></ng-content>
+    </div>
+    <div class="btn-content flex-grow-1">
+      <ng-content select=".part-content"></ng-content>
+    </div>
+    <div class="btn-right" [class.flex-grow-1]="growRight()">
+      <ng-content select=".right"></ng-content>
+    </div>
+    <div *ngIf="iconPosition() == 'RIGHT'">
+      <lib-icon [iconClass]="iconClasses()" [iconContent]="iconContent()" [iconImageSource]="iconImageSource()"
+        iconSize="0.85rem"></lib-icon>
+    </div>
+  </div>
+</div>

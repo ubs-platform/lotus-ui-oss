@@ -1,0 +1,18 @@
+<lotus-web-sidebar
+  [title]="'users.settings' | translate"
+  [items]="menuItems"
+  [currentPath]="currentMenu"
+  (currentPathChange)="navigate($event)"
+>
+  <!-- <p-messages severity="warn">
+    <ng-template pTemplate>
+      <div class="flex align-items-center gap-2">
+        <img class="tetakent" src="assets/tkent_flat_tr.png" />
+        <div>Bu ayarlar tüm Tetakent uygulamalarında geçerlidir</div>
+      </div>
+    </ng-template>
+  </p-messages> -->
+  <div class="w-100">
+    <router-outlet></router-outlet>
+  </div>
+</lotus-web-sidebar>

@@ -1,0 +1,20 @@
+.user-img img {
+  height: 36px;
+  width: 36px;
+  border-radius: 100%;
+}
+
+.downvoted {
+  opacity: 0.6;
+}
+
+:host {
+  cursor: pointer;
+}
+
+// .lower-font {
+//   font: 0.7rem;
+// }
+.child-comments {
+  border-left: 1px solid var(--primary-color);
+}

@@ -1,0 +1,24 @@
+<div *ngIf="showAdd && installPrompt" class="mona-card">
+  <div class="ruler">
+    <div
+      class="text-info flex flex-column justify-content-between align-items-center gap-1"
+    >
+      <div class="text-align-center">
+        Lotus'u ana ekranınıza ekleyerek daha hızlı ulaşabilirsiniz
+      </div>
+      <div
+        class="mt-2 flex flex-column sm:flex-row gap-2 align-items-center justify-content-center"
+      >
+        <block-button
+          buttonClass="primary"
+          iconClass="pi pi-download"
+          (click)="install()"
+          >Ekle</block-button
+        >
+        <block-button (click)="close()" iconClass="pi pi-times"
+          >Kapat</block-button
+        >
+      </div>
+    </div>
+  </div>
+</div>

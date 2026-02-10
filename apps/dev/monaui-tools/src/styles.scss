@@ -1,0 +1,121 @@
+@import "../../../../libs/front-global/base-style/base.scss";
+// @import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap');
+// @import url('https://fonts.cdnfonts.com/css/placard-next');
+@import '../../../../common/font/inter.css';
+
+@mixin darktema {
+  --primary-color: #1463ad;
+  --primary-color-text: #95cbfd;
+  --primary-color-bg-text: #1463ad;
+  --primary-color-card-bg: #1c020b;
+  --primary-color-card-bg-text: #ffc0d6;
+  --primary-color-bg-hover: #1463ad;
+  --primary-color-fg-hover: rgb(0, 0, 0);
+  --primary-color-bg-active: #1463ad;
+  --primary-color-fg-active: #ffffff;
+  --primary-color-hover: #1463ad;
+
+  --bg-surface: #121416;
+  --bg-1: #171416;
+  --bg-2: #072037;
+  --bg-3: #1463ad;
+  --border-color: #1463ad;
+  --fg: #ffffff;
+  &[amoled='true'] {
+    --bg-surface: #000000;
+    // --bg-1: #171416;
+    // --bg-2: #361416;
+    // --bg-3: #440c0c;
+  }
+}
+
+:root {
+  --bg-surface: #e8e9e9;
+  --bg-1: #d2d3d4;
+  --bg-2: #bcbdbe;
+  --bg-3: #5f6060;
+  --fg: black;
+  --border-color: #1463ad;
+  --surface-a: #3f91de;
+  --surface-b: #83c3ff;
+  --surface-c: #bddfff;
+  --surface-d: #bee0ff;
+  --surface-e: #ffffff;
+  --surface-f: #ffffff;
+  --text-color: #212529;
+  --text-color-inverse: #f6fbff;
+  --text-color-secondary: #6c757d;
+  --primary-color-hover: #245686;
+  // --primary-color: #ad1457;
+  --primary-color: #1463ad;
+  --primary-color-card-bg: #83c3ff;
+  --primary-color-card-bg-text: #ffffff;
+  --primary-color-bg-hover: #245686;
+  --primary-color-fg-hover: #ffffff;
+  --primary-color-bg-active: #235889;
+  --primary-color-fg-active: #ffffff;
+  --primary-color-text-on-bg: #ffffff;
+  --primary-color-text: #1463ad;
+  --font-family-primary: 'InterDisplay', system-ui, arial, sans-serif;
+
+  //'Placard Next',
+  --font-family-secondary: 'InterDisplay', system-ui, -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
+  /* --font-family-primary: 'Pretendard Variable'; */
+  --surface-0: #ffffff;
+  --surface-50: #f9fafb;
+  --surface-100: #f8f9fa;
+  --surface-200: #e9ecef;
+  --surface-300: #dee2e6;
+  --surface-400: #ced4da;
+  --surface-500: #adb5bd;
+  --surface-600: #6c757d;
+  --surface-700: #495057;
+  --surface-800: #343a40;
+  --surface-900: #212529;
+  --gray-50: #f9fafb;
+  --gray-100: #f8f9fa;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #ced4da;
+  --gray-500: #adb5bd;
+  --gray-600: #6c757d;
+  --gray-700: #495057;
+  --gray-800: #343a40;
+  --gray-900: #212529;
+  --content-padding: 1.25rem;
+  --inline-spacing: 0.5rem;
+  --border-radius: 2px;
+  --surface-ground: #83c3ff;
+  --surface-section: #83c3ff;
+  --surface-card: #83c3ff;
+  --surface-overlay: #83c3ff;
+  --surface-border: #dee2e6;
+  --surface-hover: #e9ecef;
+  --maskbg: rgba(0, 0, 0, 0.4);
+  --focus-ring: 0 0 0 0.2rem rgba(136, 60, 174, 0.5);
+
+  &[theme='dark'] {
+    @include darktema;
+  }
+  overflow: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([theme='light']) {
+    // --primary-color: #ad1457;
+    @include darktema;
+  }
+}
+
+body {
+  background-color: var(--bg-surface);
+  color: var(--fg);
+  overflow: auto;
+  // height: 100dvh;
+}
+
+.border-green {
+  border: 1px solid var(--green-600);
+}

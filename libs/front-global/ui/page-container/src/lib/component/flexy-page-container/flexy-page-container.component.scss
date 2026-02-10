@@ -1,0 +1,10 @@
+:host {
+  position: relative;
+  display: block;
+  height: 100dvh;
+}
+
+.content-parent {
+  flex-grow: 1;
+  overflow: auto;
+}

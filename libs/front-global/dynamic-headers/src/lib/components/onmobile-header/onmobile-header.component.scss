@@ -1,0 +1,42 @@
+@keyframes marquee-content {
+	/* Element one fully ON screen at left-edge of container. */
+	from {
+		transform: translateX( 0% );
+	}
+	/* Element one fully OFF screen (just beyond left-ledge of container). */
+	to {
+		transform: translateX( -100% );
+	}
+}
+
+:host {
+  width: 100%;
+//   display: flex;
+//   align-items: center;
+//   gap: 10px;
+}
+
+.header-text {
+    font-size: 24px;
+}
+
+.marquee {
+    /* Set up the container. */
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    overflow: hidden;
+    // width: calc(100% - 200px);
+    // width: ;
+    // min-width: 100px;
+    width: calc(30dvw - 10px);
+    max-width: 200px;
+    // min-width: 50px;
+}
+.marquee-content {
+    /* Set up the moving content. */
+    display: inline-block;
+    // padding-left: 100%;
+    animation: marquee-content 10s linear infinite;
+}
+
