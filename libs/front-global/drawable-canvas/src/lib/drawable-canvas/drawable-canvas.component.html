@@ -1,147 +1,112 @@
-<p-overlayPanel #colorSettingsOverlay>
-  <h4>Renk</h4>
-  <p-colorPicker [(ngModel)]="currentColor" [inline]="true"></p-colorPicker>
-  <h4>Kalınlık ({{ size }})</h4>
-  <p-slider [min]="1" [max]="100" [(ngModel)]="size"></p-slider>
-  <h4>Opaklık ({{ opacity }}%)</h4>
-  <p-slider [min]="0" [max]="100" [(ngModel)]="opacity"></p-slider>
-</p-overlayPanel>
 <p-overlayPanel #overlaySettingsOverlay>
-  <h4>Yerleşim</h4>
-  <div class="flex justify-content-center">
-    <block-button iconClass="pi pi-chevron-up" (click)="setPlacement('top')"
-      >Yukarı</block-button
-    >
-  </div>
-  <div class="flex">
-    <block-button
-      iconClass="pi pi-chevron-left"
-      iconPosition="LEFT"
-      (click)="setPlacement('left')"
-      >Sol</block-button
-    >
-    <block-button
-      iconClass="pi pi-chevron-right"
-      iconPosition="RIGHT"
-      (click)="setPlacement('right')"
-      >Sağ</block-button
-    >
-  </div>
-  <div class="flex justify-content-center">
-    <block-button
-      iconClass="pi pi-chevron-down"
-      (click)="setPlacement('bottom')"
-      >Aşağı</block-button
-    >
+  <div class="flex" [class.flex-column]="placement() == 'bottom'" [class.flex-column-reverse]="placement() != 'bottom'">
+    <div class="aligment-other-settings">
+      <h4>Yerleşim</h4>
+      <div class="w-full flex justify-content-center">
+        <div style="width: 100px">
+          <div class="flex justify-content-center">
+            <block-button iconClass="pi pi-chevron-up" (click)="setPlacement('top')"
+              [cover]="true">Yukarı</block-button>
+          </div>
+          <div class="flex w-full justify-content-center">
+            <block-button iconClass="pi pi-chevron-left" iconPosition="LEFT"
+              (click)="setPlacement('left')">Sol</block-button>
+            <block-button iconClass="pi pi-chevron-right" iconPosition="RIGHT"
+              (click)="setPlacement('right')">Sağ</block-button>
+          </div>
+          <div class="flex justify-content-center">
+            <block-button iconClass="pi pi-chevron-down" (click)="setPlacement('bottom')"
+              [cover]="true">Aşağı</block-button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="tablet-pen-input">
+      <toggle [value]="isPenOnly()" (valueChange)="setPenOnlyMode($event ?? false)"
+        label="Sadece tablet kalemine izin ver">
+      </toggle>
+      <sub>
+        {{
+        isPenOnly()
+        ? 'Tablet kalemi dışındaki tüm girişler engellenecektir.'
+        : 'Tüm giriş yöntemlerine izin verilecektir.'
+        }}
+      </sub>
+    </div>
+    <div class="color-settings">
+      <h4>Kalınlık ({{ size() }})</h4>
+      <p-slider [min]="1" [max]="100" [ngModel]="size()" (ngModelChange)="size.set($event)"></p-slider>
+      <h4>Opaklık ({{ opacity() }}%)</h4>
+      <p-slider [min]="0" [max]="100" [ngModel]="opacity()" (ngModelChange)="opacity.set($event)"></p-slider>
+    </div>
   </div>
 </p-overlayPanel>
 
-<div
-  [tabIndex]="0"
-  (keydown)="keyDown($event)"
-  class="canvas-parent"
-  [style.cursor]="drawMode == 'ERASER' ? 'not-allowed' : 'crosshair'"
-  ubs-document-swipe="disable"
-  #canvas
-></div>
+<div [tabIndex]="0" (keydown)="keyDown($event)" class="canvas-parent" [style.cursor]="cursorStyle()"
+  ubs-document-swipe="disable" #canvas></div>
 
 <!--  -->
-<div
-  class="draw-tools {{ placement }}"
-  style="--canvas-safe-area-top: {{ safeTop() }}; "
->
-  <block-button
-    iconClass="pi pi-th-large"
-    (click)="overlaySettingsOverlay.toggle($event)"
-  >
+<div class="draw-tools {{ placement() }}" style="--canvas-safe-area-top: {{ safeTop() }}; ">
+  <block-button iconClass="pi pi-th-large" (click)="toggleOverlaySettings($event)">
   </block-button>
-  <block-button
-    [cover]="false"
-    iconClass="pi pi-arrows-v"
-    (click)="drawMode = 'SCROLL'"
-    [buttonClass]="drawMode == 'SCROLL' ? 'primary' : ''"
-    *ngIf="isTouchScreen"
-  >
-  </block-button>
-  <block-button
-    [cover]="false"
-    iconClass="material-symbols-outlined"
-    iconContent="ink_pen"
-    (click)="setPen()"
-    [buttonClass]="
-      drawMode == 'PEN' && currentColor != MARKER_COLOR ? 'primary' : ''
-    "
-  ></block-button>
-  <block-button
-    [cover]="false"
-    [hasContent]="false"
-    (click)="setMarker()"
-    iconClass="material-symbols-outlined"
-    iconContent="ink_marker"
-    [buttonClass]="
-      drawMode == 'PEN' && currentColor == MARKER_COLOR ? 'primary' : ''
-    "
-  ></block-button>
-  <block-button
-    [hasContent]="false"
-    [cover]="false"
-    (click)="colorSettingsOverlay.toggle($event)"
-    iconClass="material-symbols-outlined"
-    iconContent="palette"
-    buttonClass="border-primary light-1"
-  ></block-button>
-  <block-button
-    [cover]="false"
-    [hasContent]="false"
-    (click)="setEraser()"
-    iconClass="material-symbols-outlined"
-    iconContent="ink_eraser"
-    [buttonClass]="drawMode == 'ERASER' ? 'primary' : ''"
-  ></block-button>
-  <block-button
-    [hasContent]="false"
-    [cover]="false"
-    iconClass="pi pi-times"
-    (click)="sendExitRequest()"
-  ></block-button>
-  <block-button
-    [hasContent]="false"
-    [cover]="false"
-    iconClass="pi pi-trash"
-    (click)="clear()"
-  ></block-button>
-  <block-button
-    [cover]="false"
-    [hasContent]="false"
-    iconClass="material-symbols-outlined"
-    iconContent="undo"
-    [disabled]="!(undoRedoHelper.canUndo | async)!"
-    (click)="undoRedoHelper.undo()"
-  >
-  </block-button>
-  <block-button
-    [cover]="false"
-    [hasContent]="false"
-    iconClass="material-symbols-outlined"
-    iconContent="redo"
-    [disabled]="!(undoRedoHelper.canRedo | async)"
-    (click)="undoRedoHelper.redo()"
-  >
-  </block-button>
-  <!-- <block-button
-    [hasContent]="false"
-    [cover]="false"
-    iconClass="pi pi-save"
-  ></block-button> -->
+
+  <div class="flex-grow-1 flex-shrink-1 overflow-auto">
+    <div class="flex gap-2 align-items-center justify-content-center"
+      [class.flex-column]="placement() == 'right' || placement() == 'left'">
+      <block-button [cover]="false" iconClass="pi pi-arrows-v" (click)="setScroll()"
+        [buttonClass]="drawMode() === 'SCROLL' ? 'primary' : ''" *ngIf="isTouchScreen">
+      </block-button>
+      <block-button [cover]="false" iconClass="material-symbols-outlined" iconContent="ink_pen" (click)="setPen()"
+        [buttonClass]="isPenWithoutMarker() ? 'primary' : ''"></block-button>
+      <block-button [cover]="false" [hasContent]="false" (click)="setMarker()" iconClass="material-symbols-outlined"
+        iconContent="ink_marker" [buttonClass]="isPenWithMarker() ? 'primary' : ''"></block-button>
+
+      <input #colorPickerInput class="color-ball" type="color" [value]="currentColor()" (input)="setColor($event)"
+        style="opacity: 0; position: absolute; z-index: -1;" />
+
+      <button class="color-ball selected"
+        [class.hidden]="drawMode() === 'ERASER' || recentColors().indexOf(currentColor()) != -1"
+        [style.background-color]="currentColor()"
+        (click)="colorPickerInput.style.left = $event.clientX + 'px'; openColorPicker()"></button>
+
+      @for (color of recentColors(); track $index) {
+      <button class="color-ball" [class.selected]="drawMode() !== 'ERASER' && currentColor() == color"
+        [style.background-color]="color"
+        (click)="colorPickerInput.style.left = $event.clientX + 'px'; setColorDirectly(color)"></button>
+      }
+    </div>
+  </div>
+
+  <!-- <button
+    class="color-ball"
+    [class.selected]="recentColors().indexOf(currentColor()) == -1"
+    [style.background-color]="currentColor()"
+    (click)="openColorPicker()"
+  ></button> -->
 
   <!-- <block-button
-    [hasContent]="false"
     [cover]="false"
-    iconClass="pi pi-eraser"
-  ></block-button>
-  <block-button
     [hasContent]="false"
-    [cover]="false"
-    iconClass="pi pi-marker"
+    (click)="openColorPicker()"
+    iconClass="material-symbols-outlined"
+    iconContent="palette"
+    title="Renk seç"
   ></block-button> -->
+  <!-- <button class="color-ball" [style.background-color]="currentColor()" (click)="openColorPicker()" title="Renk seç"></button> -->
+
+  <div style="font-family: monospace">{{ size() }}</div>
+
+  <block-button [cover]="false" [hasContent]="false" (click)="setEraser()" iconClass="material-symbols-outlined"
+    iconContent="ink_eraser" [buttonClass]="drawMode() === 'ERASER' ? 'primary' : ''"></block-button>
+  <div class="seperator"></div>
+  <block-button [cover]="false" [hasContent]="false" iconClass="material-symbols-outlined" iconContent="undo"
+    [disabled]="!(undoRedoHelper.canUndo | async)!" (click)="undoRedoHelper.undo()">
+  </block-button>
+  <block-button [cover]="false" [hasContent]="false" iconClass="material-symbols-outlined" iconContent="redo"
+    [disabled]="!(undoRedoHelper.canRedo | async)" (click)="undoRedoHelper.redo()">
+  </block-button>
+  <div class="seperator"></div>
+  <block-button [hasContent]="false" [cover]="false" iconClass="pi pi-trash" (click)="clear()"></block-button>
+  <block-button [hasContent]="false" [cover]="false" iconClass="pi pi-times" (click)="sendExitRequest()"></block-button>
 </div>

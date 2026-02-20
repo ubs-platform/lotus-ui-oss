@@ -178,9 +178,9 @@ export class MarkdownEditorComponent
     return nodes;
   };
 
-  // private urlWidthLimit(originalURL: string) {
-  //   return `${originalURL}?width=${this.imageWidth}`;
-  // }
+  private urlWidthLimit(originalURL: string) {
+    return originalURL + '?width=' + this.imageWidth;
+  }
 
   showInsertImg() {
     this.fileInputForImage()?.nativeElement.click();
@@ -194,7 +194,7 @@ export class MarkdownEditorComponent
         if (a) {
           this.editor?.action((context) => {
             const view = context.get(editorViewCtx);
-            const ac = `<a href=${a} target="_blank">${a}</a>`;
+            const ac = '<a href="' + a + '" target="_blank">' + a + '</a>';
             view.pasteHTML(ac);
           });
         }
@@ -257,7 +257,7 @@ export class MarkdownEditorComponent
     if (imgs?.length) {
       const { src, alt } = await this.uploadImage(imgs[0]);
       // const ac = `![${alt}](${src})`;
-      const ac = `<img alt="${alt}" src="${src}" />`;
+      const ac = '<img alt="' + alt + '" src="' + src + '" />';
       // this.resetEditor();
       this.editor?.action((context) => {
         const view = context.get(editorViewCtx);

@@ -8,6 +8,7 @@ import { OverlayModule } from 'primeng/overlay';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { SliderModule } from 'primeng/slider';
 import { FrontGlobalDebugToolsModule } from '@lotus/front-global/debug-tools';
+import { ToggleComponent } from "@lotus/front-global/input/toggle";
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { FrontGlobalDebugToolsModule } from '@lotus/front-global/debug-tools';
     OverlayPanelModule,
     SliderModule,
     FrontGlobalDebugToolsModule,
-  ],
+    ToggleComponent
+],
   declarations: [DrawableCanvasComponent],
   exports: [DrawableCanvasComponent],
 })

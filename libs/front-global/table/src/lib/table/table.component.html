@@ -1,0 +1,42 @@
+<div style="width: 100%; overflow: auto">
+  <table>
+    <tr>
+      <th
+        *ngFor="let key of colsKeys"
+        [style.position]="cols[key].sticky ? 'sticky' : null"
+        style="top: 0; left: 0; border: 0"
+      >
+        <div *ngTemplateOutlet="cols[key].head.templateRef"></div>
+      </th>
+    </tr>
+    <tr *ngFor="let item of items">
+      <td
+        *ngFor="let key of colsKeys"
+        [style.position]="cols[key].sticky ? 'sticky' : null"
+        style="top: 0; left: 0; border: 0"
+      >
+        <div
+          *ngTemplateOutlet="
+            cols[key].data.templateRef;
+            context: { item: item }
+          "
+        ></div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<!-- <p-table [value]="[]" [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template pTemplate="header">
+    <tr>
+    <th *ngFor="let key of colsKeys">
+      <div *ngTemplateOutlet="cols[key].head.templateRef"></div>
+    </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <td *ngFor="let key of colsKeys">
+      <div *ngTemplateOutlet="cols[key].data.templateRef; context: {data: item}"></div>
+    </td>
+  </ng-template>
+</p-table> -->

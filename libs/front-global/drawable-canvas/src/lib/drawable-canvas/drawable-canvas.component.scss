@@ -21,12 +21,15 @@
 
 .draw-tools {
   position: fixed;
-  overflow: scroll;
+  // overflow: auto;
   display: flex;
-  gap: 1px;
+  gap: 1em;
   flex-wrap: nowrap;
   background-color: var(--bg-1);
   padding: 0.2em;
+  align-items: center;
+  justify-content: center;
+
   &.bottom {
     bottom: 0px;
     width: 100%;
@@ -40,15 +43,53 @@
     flex-direction: column;
     top: var(--canvas-safe-area-top);
     bottom: 0px;
-    width: 37px;
+    width: 50px;
     right: 0px;
   }
+
   &.left {
     flex-direction: column;
     top: var(--canvas-safe-area-top);
 
     bottom: 0px;
-    width: 37px;
+    width: 50px;
     left: 0px;
   }
+}
+
+input.color-ball[type="color"] {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 0;
+  outline: 0;
+  background-color: transparent;
+}
+
+button.color-ball {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: 150ms ease-in-out;
+  &.selected {
+    box-shadow: 0 0 0 2px var(--primary-color);
+  }
+}
+
+.draw-tools.left div.seperator,
+.draw-tools.right div.seperator {
+  width: 24px;
+  height: 1px;
+  background-color: var(--bg-2);
+}
+
+.draw-tools.top div.seperator,
+.draw-tools.bottom div.seperator {
+  width: 1px;
+  height: 24px;
+  background-color: var(--bg-2);
 }

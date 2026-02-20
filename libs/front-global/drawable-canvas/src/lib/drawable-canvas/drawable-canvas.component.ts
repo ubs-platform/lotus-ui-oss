@@ -2,15 +2,15 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  EventEmitter,
-  HostBinding,
-  HostListener,
+  computed,
+  effect,
   OnDestroy,
   OnInit,
-  Output,
+  output,
   viewChild,
-  ViewChild,
-  input
+  signal,
+  input,
+  model,
 } from '@angular/core';
 import { UconsoleService } from '@lotus/front-global/debug-tools';
 import C2S, { SVGRenderingContext2D } from '@mithrandirii/canvas2svg';
@@ -19,6 +19,8 @@ import { ThemeManager } from '@lotus/front-global/theme-management';
 import { UndoRedoHelper } from '@lotus/front-global/undo-redo-helper';
 import { Placement } from '../placement';
 import { EventManager } from '@angular/platform-browser';
+import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
+import { set } from 'mongoose';
 
 @Component({
   selector: 'lotus-web-drawable-canvas',
@@ -27,77 +29,140 @@ import { EventManager } from '@angular/platform-browser';
   standalone: false,
 })
 export class DrawableCanvasComponent
-  implements OnInit, AfterViewInit, OnDestroy
-{
+  implements OnInit, AfterViewInit, OnDestroy {
   readonly height = input<number>(0);
   readonly safeTop = input('0px');
-  @Output() requestExitDrawMode = new EventEmitter<void>();
-  @Output() placementChange = new EventEmitter<Placement>();
-  @Output() newPathInsert = new EventEmitter<{
-    svgElement: SVGElement;
+  readonly requestExitDrawMode = output<void>();
+  readonly placementChange = output<Placement>();
+  readonly newPathInsert = output<{
+    svgElements: SVGElement[];
+    size: number;
+    canvasParentElement: HTMLElement;
+    coordinates: { x: number; y: number; width: number; height: number };
+  }>();
+  readonly pathRemoval = output<{
+    svgElements: SVGElement[];
     size: number;
     canvasParentElement: HTMLElement;
   }>();
-  @Output() click = new EventEmitter<TouchEvent | MouseEvent>();
-  canvasWrap = viewChild<ElementRef<HTMLElement>>('canvas');
-  colorSettingsOverlay = viewChild<OverlayPanel>('colorSettingsOverlay');
+  readonly click = output<TouchEvent | MouseEvent>();
+  readonly canvasWrap = viewChild<ElementRef<HTMLElement>>('canvas');
+  readonly colorSettingsOverlay = viewChild<OverlayPanel>(
+    'colorSettingsOverlay'
+  );
+  readonly overlaySettingsOverlay = viewChild<OverlayPanel>(
+    'overlaySettingsOverlay'
+  );
+  readonly colorPickerInput =
+    viewChild<ElementRef<HTMLInputElement>>('colorPickerInput');
   readonly INITIAL_PEN_SIZE = 10;
   readonly INITIAL_PEN_HIGHLIGHTER = 20;
   readonly MARKER_COLOR = '#fff700';
+
+  // Signals
+  currentColor = model<string>('#000000');
+  size = model<number>(this.INITIAL_PEN_SIZE);
+  opacity = model<number>(100);
+  drawMode = signal<'ERASER' | 'PEN' | 'SCROLL'>('PEN');
+  isPenOnly = model<boolean>(localStorage.getItem('pen-only-mode') === 'true');
+  placement = signal<Placement>('bottom');
+  multiTouch = signal<boolean>(false);
+  // son 3 renk, default olarak siyah (dark tema ise beyaz), mavi, kırmızı ve sarı gelecek
+  recentColors = signal<string[]>([
+    this.penColorByTheme(),
+    '#0000FF',
+    '#FF0000',
+    '#FFFF00',
+  ]);
+  // Non-reactive properties
   ctx!: SVGRenderingContext2D;
   ac?: string;
   bc?: string;
   canvasWidth!: number;
   canvasHeight!: number;
-  currentColor: string = this.penColorByTheme();
-  mouseMovement = false;
+  // mouseMovement = false;
   isTouchScreen = 'ontouchstart' in window;
-  size = this.INITIAL_PEN_SIZE;
-  sizeTrap = 0;
-  opacity = 100;
-  drawMode: 'ERASER' | 'PEN' | 'SCROLL' = 'PEN';
   svgElement!: SVGSVGElement;
-  removalMouseMove = false;
   drawStarted = false;
-  touchType: any;
   anyMotion = false;
   undoRedoHelper = new UndoRedoHelper();
-  placement!: Placement;
-  targetTagname!: string;
   resizeObs?: ResizeObserver;
+  private resizeListener?: () => void;
+  mouseIsDown = signal<boolean>(false);
+
+  // Computed
+  cursorStyle = computed(() =>
+    this.drawMode() === 'ERASER' ? 'not-allowed' : 'crosshair'
+  );
+  isPenWithMarker = computed(
+    () => this.drawMode() === 'PEN' && this.currentColor() === this.MARKER_COLOR
+  );
+  isPenWithoutMarker = computed(
+    () => this.drawMode() === 'PEN' && this.currentColor() !== this.MARKER_COLOR
+  );
+  touchType = 0;
+  targetTagname = '';
+  penPressureBefor = 0;
+  positionBefore?: { x: number; y: number };
+  colorChangeTimeout: any;
 
   constructor(
     private uConsole: UconsoleService,
-    private themeMan: ThemeManager
-  ) {}
-  canvasReinitEvent = () => {
-    this.reinit();
-  };
+    private themeMan: ThemeManager,
+    private basicOverlay: BasicOverlayService
+  ) {
+    // Initialize currentColor based on theme
+    this.currentColor.set(this.penColorByTheme());
+  }
 
   ngOnDestroy(): void {
     this.resizeObs?.disconnect();
-
-    // window.removeEventListener('resize', this.canvasReinitEvent);
+    if (this.resizeListener) {
+      window.removeEventListener('resize', this.resizeListener);
+    }
   }
 
   ngAfterViewInit(): void {
     this.initializeCanvas();
-
-    window.addEventListener('resize', () =>
-      this.setCanvasSizeAfterInitResize()
-    );
+    this.resizeListener = () => this.setCanvasSizeAfterInitResize();
+    window.addEventListener('resize', this.resizeListener);
   }
 
   ngOnInit(): void {
-    this.setPlacement(
-      (localStorage.getItem('drawing-bar-placement') as Placement) || 'bottom'
-    );
+    const savedPlacement =
+      (localStorage.getItem('drawing-bar-placement') as Placement) || 'bottom';
+    this.placement.set(savedPlacement);
   }
 
-  // @HostListener('resize', ['$event'])
-  // resize(e: Event) {
-  //   this.reinit();
-  // }
+  insertRecentColor(color: string) {
+    if (this.recentColors().includes(color)) {
+      return;
+    }
+    this.recentColors.update((colors) => {
+      colors.unshift(color);
+      return colors.slice(0, 5);
+    });
+  }
+
+  setColorDirectly(color: string) {  
+    if (this.drawMode() !== "ERASER" && this.currentColor() === color) {
+      this.openColorPicker();
+      return;
+    }
+    this.currentColor.set(color);
+    if (this.drawMode() === "ERASER") {
+      this.setPenRaw();
+    }
+  }
+
+  setColor($event: Event) {
+    const input = $event.target as HTMLInputElement;
+    this.currentColor.set(input.value);
+    if (this.drawMode() === "ERASER") {
+      this.setPenRaw();
+    }
+    // this.insertRecentColor(input.value);
+  }
 
   reinit() {
     this.svgElement.remove();
@@ -105,97 +170,130 @@ export class DrawableCanvasComponent
   }
 
   initializeCanvas() {
-    if (this.canvasWrap()!) {
-      // this.ctx = this.canvas?.nativeElement.getContext('2d');
-      this.calculateCanvasHeight();
-      this.ctx = new C2S({
-        width: this.canvasWidth,
-        height: this.canvasHeight,
-      }) as any;
-
-      this.ctx.getSvg().addEventListener('', console.info);
-      this.ctx!.lineJoin = 'round';
-      this.ctx!.lineCap = 'round';
-      this.svgElement = this.ctx.getSvg();
-      this.svgElement.tabIndex = 0;
-
-      // this.svgElement.addEventListener("resize", () => this.setCanvasSizeAfterInitResize())
-      this.resizeObs = new ResizeObserver(() =>
-        this.setCanvasSizeAfterInitResize()
-      );
-      this.resizeObs.observe(
-        this.canvasWrap()!.nativeElement.parentElement
-          ?.parentElement as HTMLElement
-      );
-      this.svgElement.addEventListener('mousedown', (e) => this.mouseStart(e));
-      this.svgElement.addEventListener('mouseup', (e) => this.mouseUp(e));
-      this.svgElement.addEventListener('mousemove', (e) => this.mouseMove(e));
-      this.svgElement.addEventListener('touchstart', (e) => this.touchStart(e));
-      this.svgElement.addEventListener('touchend', (e) => this.touchUp(e));
-      // this.svgElement.addEventListener('touchmove', (e) =>
-      //   this.touchMoveDraw(e)
-      // );
-
-      this.svgElement.addEventListener('touchmove', (e) =>
-        this.touchMoveEraser(e)
-      );
-      this.canvasWrap()!.nativeElement.appendChild(this.svgElement);
+    const canvasWrapRef = this.canvasWrap()!;
+    if (!canvasWrapRef) {
+      return;
     }
+
+    this.calculateCanvasHeight();
+    this.ctx = new C2S({
+      width: this.canvasWidth,
+      height: this.canvasHeight,
+    }) as any;
+
+    this.ctx.lineJoin = 'bevel';
+    this.ctx.lineCap = 'round';
+    this.svgElement = this.ctx.getSvg();
+    this.svgElement.tabIndex = 0;
+
+    this.resizeObs = new ResizeObserver(() =>
+      this.setCanvasSizeAfterInitResize()
+    );
+    const parentEl = canvasWrapRef.nativeElement.parentElement?.parentElement;
+    if (parentEl) {
+      this.resizeObs.observe(parentEl);
+    }
+
+    // PointerEvent API kullanarak kalem desteği ekle (modern cihazlar için)
+    if ('onpointerdown' in window) {
+      this.svgElement.addEventListener('pointerdown', (e) =>
+        this.pointerStart(e as PointerEvent)
+      );
+      this.svgElement.addEventListener('pointerup', (e) =>
+        this.pointerUp(e as PointerEvent)
+      );
+      this.svgElement.addEventListener('pointermove', (e) =>
+        this.pointerMove(e as PointerEvent)
+      );
+    }
+    // else {
+    // Zaten eski tarayıcılar muhakkak bir şekilde güncellenecektir, bu yüzden sadece mouse eventleri şimdilik bıraktım
+    // this.svgElement.addEventListener('mousedown', (e) => this.mouseIsDown.set(true));
+    // this.svgElement.addEventListener('mouseup', (e) => this.mouseIsDown.set(false));
+    // this.svgElement.addEventListener('mousemove', (e) => this.mouseMove(e));
+    // }
+
+    this.svgElement.addEventListener('touchstart', (e) => {
+      this.multiTouch.set(e.touches.length > 1);
+      if (this.drawStarted || !this.isPenOnly()) {
+        e.preventDefault();
+      }
+    });
+    this.svgElement.addEventListener('touchend', (e) => {
+      this.multiTouch.set(e.touches.length > 1);
+      if (this.drawStarted || !this.isPenOnly()) {
+        e.preventDefault();
+      }
+    });
+    this.svgElement.addEventListener('touchmove', (e) => {
+      this.multiTouch.set(e.touches.length > 1);
+      if (this.drawStarted || !this.isPenOnly()) {
+        e.preventDefault();
+      }
+    });
+
+    canvasWrapRef.nativeElement.appendChild(this.svgElement);
   }
 
-  setPlacement(arg0: Placement) {
-    this.placement = arg0;
-    this.placementChange.emit(arg0);
-    localStorage.setItem('drawing-bar-placement', this.placement);
+  setPlacement(newPlacement: Placement) {
+    this.placement.set(newPlacement);
+    this.placementChange.emit(newPlacement);
+    localStorage.setItem('drawing-bar-placement', newPlacement);
+    this.overlaySettingsOverlay()?.hide();
   }
 
-  svgElementMouseDown = (e: any) => {
-    this.removalMouseMove = true;
+  svgElementMouseDown = (e: MouseEvent) => {
+    // Handler reserved for future use
   };
-  svgElementMouseUp = (e: any) => {
-    this.removalMouseMove = false;
+  svgElementMouseUp = (e: MouseEvent) => {
+    // Handler reserved for future use
   };
 
   keyDown($event: KeyboardEvent) {
-    console.info($event);
     if ($event.ctrlKey) {
-      if ($event.key.toLowerCase() == 'z') {
+      if ($event.key.toLowerCase() === 'z') {
         this.undoRedoHelper.undo();
-      } else if ($event.key.toLowerCase() == 'y') {
+      } else if ($event.key.toLowerCase() === 'y') {
         this.undoRedoHelper.redo();
       }
     }
   }
 
-  clearElementFunction = (e: any) => {
-    if (this.drawMode == 'ERASER' && this.removalMouseMove) {
-      this.clearSVGElement(e.target);
-    }
-  };
+  // clearElementFunction = (e: MouseEvent) => {
+  //   if (this.drawMode() === 'ERASER' && this.drawStarted) {
+  //     this.clearSVGElement(e.target as SVGGeometryElement);
+  //   }
+  // };
 
   sendExitRequest() {
     this.requestExitDrawMode.emit();
   }
 
   clear() {
-    this.ctx?.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    if (this.ctx) {
+      this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    }
     this.undoRedoHelper.reset();
   }
 
   setMarker() {
-    this.drawMode = 'PEN';
+    this.drawMode.set('PEN');
     this.ctx!.lineCap = 'butt';
-    this.size = this.INITIAL_PEN_SIZE;
-    this.opacity = 75;
-    this.currentColor = this.MARKER_COLOR;
+    this.size.set(this.INITIAL_PEN_SIZE);
+    this.opacity.set(75);
+    this.currentColor.set(this.MARKER_COLOR);
+  }
+
+  setPenRaw() {
+    this.drawMode.set('PEN');
+    this.ctx!.lineCap = 'round';
   }
 
   setPen() {
-    this.drawMode = 'PEN';
-    this.ctx!.lineCap = 'round';
-    this.size = this.INITIAL_PEN_SIZE;
-    this.opacity = 100;
-    this.currentColor = this.penColorByTheme();
+    this.setPenRaw()
+    this.size.set(this.INITIAL_PEN_SIZE);
+    this.opacity.set(100);
+    this.currentColor.set(this.penColorByTheme());
   }
 
   private penColorByTheme(): string {
@@ -203,121 +301,60 @@ export class DrawableCanvasComponent
   }
 
   setEraser() {
-    this.drawMode = 'ERASER';
+    this.drawMode.set('ERASER');
     this.ctx!.lineCap = 'round';
+  }
+
+  setScroll() {
+    this.drawMode.set('SCROLL');
   }
 
   setCanvasSizeAfterInitResize() {
     this.calculateCanvasHeight();
-
-    this.ctx.canvas.height = this.canvasHeight;
-    this.ctx.canvas.width = this.canvasWidth;
+    if (this.ctx && this.ctx.canvas) {
+      this.ctx.canvas.height = this.canvasHeight;
+      this.ctx.canvas.width = this.canvasWidth;
+    }
   }
 
   calculateCanvasHeight() {
-    const canvasPlacementProps =
-      this.canvasWrap()!!.nativeElement.getBoundingClientRect();
-    this.canvasWidth = innerWidth * 2;
-    this.canvasHeight = Math.max(this.height() ?? 0, innerHeight) * 2;
-    // this.canvasWidth = innerWidth * 2;
-    // this.canvasHeight = innerHeight * 2;
+    this.canvasWrap()!.nativeElement.getBoundingClientRect();
+    this.canvasWidth = window.innerWidth * 2;
+    this.canvasHeight = Math.max(this.height() ?? 0, window.innerHeight) * 2;
   }
 
-  mouseStart(e: MouseEvent) {
-    this.colorSettingsOverlay()?.hide();
-    this.anyMotion = false;
-    this.uConsole.setValue('canvas draw', 'mouseStart');
-    if (this.drawMode == 'PEN') {
-      this.mouseMovement = true;
+  removeSvgThingFromIt(event: PointerEvent, x: number, y: number) {
+    event.preventDefault();
+    this.ctx?.closePath();
+    // const groupId = ((e.target as SVGElement).getAttribute('pathGroupId'));
+    const svgElementsUnderPoint = document
+      .elementsFromPoint(x, y)
+      .find(
+        (el) =>
+          el instanceof SVGElement && el.getAttribute('pathGroupId') != null
+      ) as SVGElement | undefined;
+    const groupId = svgElementsUnderPoint?.getAttribute('pathGroupId');
+    const parent = svgElementsUnderPoint?.parentElement;
+    if (!parent) {
+      return;
+    }
+    const elements = parent.querySelectorAll(`[pathGroupId="${groupId}"]`);
 
-      e.preventDefault();
-      const { x, y } = this.determineMouseDraw(e);
-      this.ac = x + 'x' + y;
-
-      this.drawStart(x, y);
-    } else if (this.drawMode == 'ERASER') {
-      this.mouseMovement = true;
-
-      this.removeSvgThingFromIt(e);
+    if (elements.length > 0) {
+      let elementsArray: SVGElement[] = [];
+      elements.forEach((el) => {
+        elementsArray.push(el as SVGElement);
+      });
+      this.undoForEraserInsert(elementsArray);
     }
   }
 
-  removeSvgThingFromIt(e: Event) {
-    e.preventDefault();
-
-    this.ctx.closePath();
-    this.clearSVGElement(e.target as SVGGeometryElement);
-  }
-
-  clearSVGElement(target: SVGGeometryElement) {
-    this.targetTagname = target.tagName;
-    if (target.tagName == 'path') {
-      this.undoForEraserInsert(target);
-    }
-  }
-
-  mouseMove(e: MouseEvent) {
-    if (this.ctx && this.mouseMovement) {
-      this.anyMotion = true;
-      this.uConsole.setValue('canvas draw', 'mouseMove with click');
-
-      e.preventDefault();
-      if (this.drawMode == 'PEN') {
-        this.drawMove(e);
-      } else if (this.drawMode == 'ERASER') {
-        this.removeSvgThingFromIt(e);
-      }
-    }
-  }
-
-  touchStart(e: TouchEvent) {
-    this.colorSettingsOverlay()?.hide();
-
-    if (e.targetTouches.length == 1 && e.targetTouches[0].radiusX === 0) {
-      this.touchType = e.touches[0].identifier;
-
-      if (this.drawMode == 'PEN') {
-        e.preventDefault();
-        const { x, y } = this.determineTouch(e);
-        this.ac = x + 'x' + y;
-        this.drawStart(x, y);
-      } else if (this.drawMode == 'ERASER') {
-        this.clearSVGElement(e.currentTarget as SVGGeometryElement);
-      }
-    }
-  }
-
-  // touchMoveDraw(e: TouchEvent) {
-  //   this.uConsole.setValue('canvas draw', 'touchMoveDraw');
-
+  // clearSVGElement(target: SVGGeometryElement) {
+  //   this.targetTagname = target.tagName;
+  //   if (target.tagName === 'path') {
+  //     this.undoForEraserInsert(target);
+  //   }
   // }
-
-  touchMoveEraser(e: TouchEvent) {
-    this.uConsole.setValue('canvas draw', 'touchMoveEraser');
-
-    if (this.drawMode == 'ERASER') {
-      e.preventDefault();
-
-      const paths = document
-        .elementsFromPoint(e.touches[0].pageX, e.touches[0].pageY)
-        .filter((a) => a.tagName == 'path');
-      paths.forEach((a) => this.clearSVGElement(a as SVGGeometryElement));
-    } else if (this.drawMode == 'PEN') {
-      const condition = e.targetTouches.length == 1;
-      // && e.targetTouches[0].radiusX === 0
-      this.uConsole.setValue('pen condition', condition);
-
-      this.uConsole.setValue('pen touch length', e.targetTouches.length);
-      this.uConsole.setValue(
-        'e.targetTouches[0].radiusX',
-        e.targetTouches[0].radiusX
-      );
-      if (condition) {
-        e.preventDefault();
-        this.drawMove(e);
-      }
-    }
-  }
 
   drawStart(x: any, y: any) {
     if (this.ctx && !this.drawStarted) {
@@ -328,75 +365,71 @@ export class DrawableCanvasComponent
 
       this.ctx.fillStyle = this.getColorWithAlpha();
       this.ctx.moveTo(x, y);
+      this.insertRecentColor(this.currentColor());
     }
   }
 
   getColorWithAlpha(): string {
-    const op = ((this.opacity / 100) * 255).toString(16).substring(0, 2);
+    const op = ((this.opacity() / 100) * 255).toString(16).padStart(2, '0');
 
     if (this.ctx) {
-      this.ctx.globalAlpha = this.opacity / 100;
+      this.ctx.globalAlpha = this.opacity() / 100;
       this.ctx.globalCompositeOperation = 'lighter';
     }
 
-    return this.currentColor + op;
-  }
-
-  mouseUp(e: MouseEvent) {
-    this.mouseMovement = false;
-    this.removalMouseMove = false;
-    this.drawStarted = false;
-
-    if (this.anyMotion == true) {
-      this.touchStop();
-    } else {
-      this.click.emit(e);
-    }
-
-    this.anyMotion = false;
-  }
-
-  touchUp(e: TouchEvent) {
-    this.mouseMovement = false;
-    this.removalMouseMove = false;
-    this.drawStarted = false;
-
-    if (this.anyMotion == true) {
-      this.touchStop();
-    } else {
-      this.click.emit(e);
-    }
-    this.anyMotion = false;
+    return this.currentColor();
   }
 
   touchStop() {
     this.uConsole.setValue('canvas draw', 'mouseup / touchStop');
-
+    this.positionBefore = undefined;
     if (this.ctx) {
       this.ctx.closePath();
-      this.sizeTrap = 0;
     }
-    const parent = this.ctx.getSvg().querySelector('g')!;
-    const lastEl = parent.lastChild! as SVGElement;
-    this.undoForPenInsert(lastEl);
-    this.newPathInsert.emit({
-      svgElement: lastEl,
-      size: this.size,
-      canvasParentElement: this.canvasWrap()!?.nativeElement!,
-    });
+    // Yeni eklenen path elementini al ve undo için gerekli bilgileri hazırla. Yeni eklenenleri ayırmak için attribute içine bir prop ekleyeceğiz. Yeni eklenenlerde bu prop olacak.
+
+    const parent = this.ctx?.getSvg().querySelector('g');
+    if (!parent) {
+      return;
+    }
+    const elements: SVGElement[] = [];
+    const pathGroupId = new Date().toISOString();
+    for (let index = 0; index < parent.children.length; index++) {
+      const element = parent.children[index];
+      if (
+        element instanceof SVGElement &&
+        element.tagName == 'path' &&
+        element.getAttribute('pathGroupId') == null
+      ) {
+        element.setAttribute('pathGroupId', pathGroupId);
+        elements.push(element as SVGElement);
+      }
+    }
+    const elementsCoordinates = this.calculateSvgPathSizeAndPosition(elements as SVGPathElement[]);
+    // Çizilen pathler tek bir grup altında toplanacak. Silme işlemi de bu grup üzerinden yapılacak. Böylece çoklu çizim desteği sağlanmış olacak.
+    if (elements.length > 0) {
+      this.undoForPenInsert(elements);
+      this.newPathInsert.emit({
+        // şimdilik son eklenen elementi alıyoruz. Çoklu çizim desteği için bunu array olarak göndermek gerekebilir.
+        svgElements: elements,
+        size: this.size(),
+        canvasParentElement: this.canvasWrap()!.nativeElement,
+        coordinates: elementsCoordinates
+      });
+    }
   }
 
-  private undoForPenInsert(lastEl: SVGElement) {
-    const originalD = lastEl.getAttribute('d') || '';
+  private undoForPenInsert(elements: SVGElement[]) {
+    const originalD = elements.map((el) => el.getAttribute('d') || '');
     this.undoRedoHelper.pushOperationQueue(
       {
         apply: async () => {
-          // parent.appendChild(lastEl!);
-          lastEl.setAttribute('d', originalD);
+          elements.forEach((el, index) =>
+            el.setAttribute('d', originalD[index])
+          );
         },
         revert: async () => {
-          // lastEl?.remove();
-          lastEl.setAttribute('d', '');
+          elements.forEach((el) => el.setAttribute('d', ''));
         },
       },
       true,
@@ -404,19 +437,22 @@ export class DrawableCanvasComponent
     );
   }
 
-  private undoForEraserInsert(target: SVGGeometryElement) {
-    const parent = target.parentElement;
-    const lastEl = target;
-    const originalD = lastEl.getAttribute('d') || '';
+  private undoForEraserInsert(elements: SVGElement[]) {
+    const originalD = elements.map((el) => el.getAttribute('d') || '');
     this.undoRedoHelper.pushOperationQueue(
       {
         apply: async () => {
-          // parent.appendChild(lastEl!);
-          lastEl.setAttribute('d', '');
+          elements.forEach((el) => el.setAttribute('d', ''));
+          this.pathRemoval.emit({
+            svgElements: elements,
+            size: this.size(),
+            canvasParentElement: this.canvasWrap()!.nativeElement,
+          });
         },
         revert: async () => {
-          // lastEl?.remove();
-          lastEl.setAttribute('d', originalD);
+          elements.forEach((el, index) =>
+            el.setAttribute('d', originalD[index])
+          );
         },
       },
       true,
@@ -424,33 +460,11 @@ export class DrawableCanvasComponent
     );
   }
 
-  determineTouch(e: TouchEvent): { x: any; y: any } {
+  determineTouch(e: TouchEvent): { x: number; y: number } {
     const touch = e.targetTouches[0];
-
-    const screenHeight = this.canvasWrap()!!.nativeElement.clientHeight,
-      screenWidth = this.canvasWrap()!!.nativeElement.clientWidth;
-
-    const rectx = this.canvasWrap()!?.nativeElement.getBoundingClientRect();
-    const offsetX = touch.clientX - window.scrollX - rectx!.left;
-    const offsetY = touch.clientY - window.scrollY - rectx!.top;
-    this.bc = offsetX + ' ' + offsetY;
-    // return {
-    //   x: (offsetX * this.canvasWidth) / screenWidth,
-    //   y: (offsetY * this.canvasHeight) / screenHeight,
-    // };
-    // console.debug(offsetX, offsetY);
-    return {
-      x: offsetX,
-      y: offsetY,
-    };
-  }
-
-  determineMouseDraw(e: MouseEvent): { x: any; y: any } {
-    const screenHeight = this.canvasWrap()!!.nativeElement.clientHeight,
-      screenWidth = this.canvasWrap()!!.nativeElement.clientWidth;
-
-    const offsetX = e.offsetX;
-    const offsetY = e.offsetY;
+    const rectx = this.canvasWrap()!.nativeElement.getBoundingClientRect();
+    const offsetX = touch.clientX - window.scrollX - rectx.left;
+    const offsetY = touch.clientY - window.scrollY - rectx.top;
     this.bc = offsetX + ' ' + offsetY;
 
     return {
@@ -459,25 +473,163 @@ export class DrawableCanvasComponent
     };
   }
 
-  private drawMove(e: TouchEvent | MouseEvent) {
-    if (this.ctx) {
-      const { x, y } =
-        e instanceof MouseEvent
-          ? this.determineMouseDraw(e)
-          : this.determineTouch(e);
+  determineMouseDraw(e: MouseEvent): { x: number; y: number } {
+    const rectx = this.canvasWrap()!.nativeElement.getBoundingClientRect();
+    const offsetX = e.clientX - window.scrollX - rectx.left;
+    const offsetY = e.clientY - window.scrollY - rectx.top;
+    this.bc = offsetX + ' ' + offsetY;
+    this.basicOverlay.alert(
+      this.bc ? `Coordinates: ${this.bc}` : 'Could not determine coordinates',
+      '',
+      'neutral'
+    );
+    return {
+      x: offsetX,
+      y: offsetY,
+    };
+  }
 
-      const pressure = this.determinePressure(e);
+  // PointerEvents için yeni metodlar - Samsung S Pen desteği
+  pointerStart(e: PointerEvent) {
+    this.colorSettingsOverlay()?.hide();
+    this.anyMotion = false;
+    this.uConsole.setValue(
+      'canvas draw',
+      `pointerStart - Type: ${e.pointerType}`
+    );
+    // Sadece kalem modunda sadece pen tipine izin ver
+    if (this.isPenOnly() && e.pointerType !== 'pen') {
+      return;
+    }
+
+    if (this.drawMode() === 'PEN') {
+      e.preventDefault();
+
+      const { x, y } = this.determinePointer(e);
       this.ac = x + 'x' + y;
       this.drawStart(x, y);
-      this.ctx.lineTo(x, y);
-      this.ctx.strokeStyle = this.getColorWithAlpha();
-
-      this.ctx.lineWidth = pressure;
-      this.ctx.stroke();
+    } else if (this.drawMode() === 'ERASER') {
+      this.drawStarted = true;
+      this.removeSvgThingFromIt(e, e.clientX, e.clientY);
     }
   }
-  determinePressure(e: TouchEvent | MouseEvent) {
-    // const press = (e as TouchEvent).touches?.[0].force || 0;
-    return this.size; // + this.size * press;
+
+  pointerMove(e: PointerEvent) {
+    if (
+      !this.drawStarted ||
+      (this.isPenOnly() && e.pointerType !== 'pen') ||
+      !this.ctx
+    ) {
+      return;
+    }
+
+    this.anyMotion = true;
+    this.uConsole.setValue(
+      'canvas draw',
+      `pointerMove - Type: ${e.pointerType}`
+    );
+    e.preventDefault();
+
+    if (this.drawMode() === 'PEN') {
+      this.drawMovePointer(e);
+      return;
+    }
+    if (this.drawMode() === 'ERASER') {
+      this.removeSvgThingFromIt(e, e.clientX, e.clientY);
+      return;
+    }
+  }
+
+  pointerUp(e: PointerEvent) {
+    this.drawStarted = false;
+
+    if (this.anyMotion) {
+      this.touchStop();
+    } else {
+      this.click.emit(e as any);
+    }
+    this.anyMotion = false;
+  }
+
+  determinePointer(e: PointerEvent): { x: number; y: number } {
+    const rectx = this.canvasWrap()!.nativeElement.getBoundingClientRect();
+    const offsetX = e.clientX - window.scrollX - rectx.left;
+    const offsetY = e.clientY - window.scrollY - rectx.top;
+    this.bc = offsetX + ' ' + offsetY;
+
+    return {
+      x: offsetX,
+      y: offsetY,
+    };
+  }
+
+  private drawMovePointer(e: PointerEvent) {
+    if (this.ctx && this.drawStarted) {
+      const { x, y } = this.determinePointer(e);
+      const pressure = Math.max(
+        e.pressure > 0 ? this.size() * e.pressure : this.size(),
+        this.size() / 5
+      );
+
+      this.ac = x + 'x' + y;
+      this.ctx.lineWidth = pressure;
+      // Basınç değişimini algıla ve yeni bir path başlat. Bu nedenle pathler kesikli kesikli görünmeyecek, tek bir path olarak görünecek. Ayrıca bu sayede undo işlemi de tek bir path üzerinden yapılabilecek.
+      if (
+        this.penPressureBefor &&
+        this.positionBefore &&
+        Math.abs(pressure - this.penPressureBefor) != 0
+      ) {
+        this.ctx.closePath();
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.positionBefore.x, this.positionBefore.y);
+      }
+      this.ctx.lineWidth = pressure;
+      this.ctx.lineTo(x, y);
+      this.ctx.strokeStyle = this.getColorWithAlpha();
+      this.ctx.stroke();
+      this.penPressureBefor = pressure;
+      this.positionBefore = { x, y };
+    }
+  }
+
+  togglePenOnlyMode() {
+    this.setPenOnlyMode(!this.isPenOnly());
+  }
+
+  setPenOnlyMode(value: boolean) {
+    this.isPenOnly.set(value);
+    localStorage.setItem('pen-only-mode', this.isPenOnly() ? 'true' : 'false');
+    console.info('Pen-Only Mode:', this.isPenOnly() ? 'ENABLED' : 'DISABLED');
+  }
+
+  openColorPicker() {
+    this.colorPickerInput()?.nativeElement.click();
+  }
+
+  toggleColorSettings(event: Event) {
+    this.colorSettingsOverlay()?.toggle(event);
+  }
+
+  toggleOverlaySettings(event: Event) {
+    this.overlaySettingsOverlay()?.toggle(event);
+  }
+
+  calculateSvgPathSizeAndPosition(path: SVGPathElement[]): { x: number; y: number; width: number; height: number } {
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    path.forEach((p, index) => {
+
+      const rect = p.getBoundingClientRect();
+      minX = Math.min(minX, rect.left);
+      minY = Math.min(minY, rect.top);
+      maxX = Math.max(maxX, rect.right);
+      maxY = Math.max(maxY, rect.bottom);
+    });
+
+    return {
+      x: minX,
+      y: minY,
+      width: maxX - minX,
+      height: maxY - minY
+    };
   }
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, of } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { FrontGlobalImagesModule } from '../front-global-images.module';
 export type FileVolatility = {
   name: string;
@@ -12,10 +12,11 @@ export type FileVolatility = {
   providedIn: 'root',
 })
 export class FileService {
+
   readonly fetchEntityUrl = '/api/file';
   readonly profileUploadUrl = '/api/users/user/current/profile-photo';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // public upload(name: string, file: Blob) {
   //   const fd = new FormData();
@@ -25,6 +26,12 @@ export class FileService {
   //     .put(`${this.entityUrl}`, fd, { responseType: 'string' as 'arraybuffer' })
   //     .pipe(map((a) => a as any as string));
   // }
+
+  hasFile(category: string, objectId: string): Observable<boolean> {
+    return this.http
+      .get<{ url: string }>(`/api/file/${category}/${objectId}/exist`)
+      .pipe(map((a) => a != null));
+  }
 
   public updateVolatilities(volatilities: FileVolatility[]) {
     if (volatilities.length > 0) {

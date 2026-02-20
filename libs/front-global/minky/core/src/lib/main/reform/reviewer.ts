@@ -33,14 +33,14 @@ export class Reviewer {
             validationsTotal = this.extractValidationsFromObject(
               value,
               meta,
-              `${propertyKey}.${index}`,
+              propertyKey + '.' + index,
               validationsTotal
             );
           });
         } else {
           let propertyKeyWithPrefix = propertyKey;
           if (prefix) {
-            propertyKeyWithPrefix = `${prefix}.${propertyKey}`;
+            propertyKeyWithPrefix = prefix + '.' + propertyKey;
           }
           validationsTotal = this.fillValiadtion(
             meta,

@@ -3701,14 +3701,14 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
   color: #ffffff;
 }
 .p-overlaypanel:after {
-  border: solid transparent;
+  /* border: solid transparent;
   border-color: var(--border-color);
-  border-bottom-color: var(--bg-1);
+  border-bottom-color: var(--bg-1); */
 }
 .p-overlaypanel:before {
-  border: solid transparent;
+  /* border: solid transparent;
   border-color: var(--border-color);
-  border-bottom-color: var(--bg-1);
+  border-bottom-color: var(--bg-1); */
 }
 .p-overlaypanel.p-overlaypanel-flipped:after {
   border-top-color: #ffffff;
@@ -4185,14 +4185,15 @@ textarea {
   }
 }
 
+.mona-card h1 {
+  margin-top: 0;
+}
+
 .mona-card {
   border: 1px solid var(--primary-color-text);
   border-radius: var(--border-radius);
   background-color: var(--primary-color-card-bg);
-  padding-left: 1.5rem !important;
-  padding-right: 1.5rem !important;
-  padding-bottom: 1rem !important;
-  padding-top: 1rem !important;
+  padding: .5rem 1rem 1rem;
 }
 .mona-card[severity='warn'] {
   border: 1px solid var(--orange-400);

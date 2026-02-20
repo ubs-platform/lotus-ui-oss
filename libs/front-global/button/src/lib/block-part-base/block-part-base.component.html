@@ -3,7 +3,7 @@
   <div class="flex align-items-center justify-content-center gap-2 w-full">
     <div *ngIf="iconPosition() == 'LEFT'">
       <lib-icon [iconClass]="iconClasses()" [iconContent]="iconContent()" [iconImageSource]="iconImageSource()"
-        iconSize="0.85rem"></lib-icon>
+        [iconSize]="iconSizeAuto()"></lib-icon>
     </div>
     <div class="btn-left" [class.flex-grow-1]="growLeft()">
       <ng-content select=".left"></ng-content>
@@ -16,7 +16,7 @@
     </div>
     <div *ngIf="iconPosition() == 'RIGHT'">
       <lib-icon [iconClass]="iconClasses()" [iconContent]="iconContent()" [iconImageSource]="iconImageSource()"
-        iconSize="0.85rem"></lib-icon>
+        [iconSize]="iconSizeAuto()"></lib-icon>
     </div>
   </div>
 </div>
