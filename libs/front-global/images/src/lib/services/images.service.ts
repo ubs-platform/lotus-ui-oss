@@ -12,11 +12,10 @@ export type FileVolatility = {
   providedIn: 'root',
 })
 export class FileService {
-
   readonly fetchEntityUrl = '/api/file';
   readonly profileUploadUrl = '/api/users/user/current/profile-photo';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   // public upload(name: string, file: Blob) {
   //   const fd = new FormData();
@@ -27,10 +26,14 @@ export class FileService {
   //     .pipe(map((a) => a as any as string));
   // }
 
+  downloadInNewTab(category: string, id: string) {
+    window.open(`${this.fetchEntityUrl}/${category}/${id}`, '_blank');
+  }
+
   hasFile(category: string, objectId: string): Observable<boolean> {
     return this.http
-      .get<{ url: string }>(`/api/file/${category}/${objectId}/exist`)
-      .pipe(map((a) => a != null));
+      .get<boolean>(`/api/file/${category}/${objectId}/exist`)
+      .pipe(map((a) => a ?? false));
   }
 
   public updateVolatilities(volatilities: FileVolatility[]) {

@@ -46,7 +46,7 @@ export class SearchableDataTableComponent implements AfterViewInit {
   );
   items = input<any[]>([]);
   pageFilterChange = output<{}>();
-
+  loading = signal(false);
   noDataTemplateDirective = contentChildren(EmptyDataDirective);
 
   constructor(
@@ -55,9 +55,8 @@ export class SearchableDataTableComponent implements AfterViewInit {
   ) {}
 
   decidedFilter() {
-
     if (this.reformFilter() != null) {
-      return {...this.otherFilter(), ...(this.reformFilter()?.value || {})};
+      return { ...this.otherFilter(), ...(this.reformFilter()?.value || {}) };
     } else {
       return this.otherFilter();
     }
@@ -86,6 +85,7 @@ export class SearchableDataTableComponent implements AfterViewInit {
   }
 
   loadData() {
+    this.loading.set(true);
     const o2qp = objectToQueryParameters({
       ...this.decidedFilter(),
       page: this.page(),
@@ -97,12 +97,19 @@ export class SearchableDataTableComponent implements AfterViewInit {
     this.http
       .get(`${this.url()}?${o2qp}`)
       .pipe(map((a) => a as SearchResult<any>))
-      .subscribe((a) => {
-        this.itemsFromResponse.set(a.content);
-        this.lastPage.set(a.lastPage);
-        this.firstPage.set(a.firstPage);
-        this.maxPage.set(a.maxPagesIndex + 1);
-        // this.page.set(a.page);
+      .subscribe({
+        next: (a) => {
+          this.itemsFromResponse.set(a.content);
+          this.lastPage.set(a.lastPage);
+          this.firstPage.set(a.firstPage);
+          this.maxPage.set(a.maxPagesIndex + 1);
+          // this.page.set(a.page);
+          this.loading.set(false);
+        },
+        error: (err) => {
+          console.error(err);
+          this.loading.set(false);
+        },
       });
   }
 

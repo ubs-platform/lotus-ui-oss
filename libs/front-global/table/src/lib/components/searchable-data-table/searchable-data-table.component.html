@@ -13,54 +13,61 @@
     ></block-button>
   </div>
   <div
-    class="flex-grow-1"
+    class="flex-grow-1 flex flex-column gap-2"
     [class.flex-grow-1]="cover()"
     [class.overflow-auto]="cover()"
     [style.height]="cover() ? '31px' : ''"
   >
-    <div>
-      <ubs-table-ngx [items]="itemsInternal()" [cover]="cover()">
-        @for (columnItem of columnsContent(); track $index) {
-        <column [name]="columnItem.name()">
-          @if (columnItem.head?.templateRef) {
-          <ng-template header>
-            <div *ngTemplateOutlet="columnItem.head!.templateRef"></div>
-          </ng-template>
-          } @if (columnItem.data?.templateRef) {
-          <ng-template data let-item="item">
-            <div
-              *ngTemplateOutlet="
-                columnItem.data!.templateRef;
-                context: { item: item }
-              "
-            ></div>
+    <div class="flex-grow-1 overflow-auto">
+      <div class="flex flex-column align-items-center gap-2 py-5">
+        @if (loading()) {
+        <i class="pi pi-spin pi-spinner text-4xl"></i>
+        <span>Yükleniyor...</span>
+        } @else {
+        <ubs-table-ngx [items]="itemsInternal()" [cover]="cover()">
+          @for (columnItem of columnsContent(); track $index) {
+          <column [name]="columnItem.name()">
+            @if (columnItem.head?.templateRef) {
+            <ng-template header>
+              <div *ngTemplateOutlet="columnItem.head!.templateRef"></div>
+            </ng-template>
+            } @if (columnItem.data?.templateRef) {
+            <ng-template data let-item="item">
+              <div
+                *ngTemplateOutlet="
+                  columnItem.data!.templateRef;
+                  context: { item: item }
+                "
+              ></div>
+            </ng-template>
+            }
+          </column>
+          } @if (noDataTemplateDirective()?.[0]?.templateRef != null) {
+          <ng-template empty-data>
+            <ng-container
+              *ngTemplateOutlet="noDataTemplateDirective()?.[0]!.templateRef!"
+            ></ng-container>
           </ng-template>
           }
-        </column>
-        } @if (noDataTemplateDirective()?.[0]?.templateRef != null) {
-        <ng-template empty-data>
-          <ng-container
-            *ngTemplateOutlet="noDataTemplateDirective()?.[0]!.templateRef!"
-          ></ng-container>
-        </ng-template>
+        </ubs-table-ngx>
         }
-      </ubs-table-ngx>
+      </div>
     </div>
-  </div>
-  <div class="w-full flex gap-1 align-items-center justify-content-center">
-    <block-button
-      (click)="back()"
-      stringContent="Geri"
-      iconClass="pi pi-chevron-left"
-      [disabled]="firstPage()"
-    ></block-button>
-    {{ pageHumanReadable() }} / {{ maxPage() }}
-    <block-button
-      (click)="next()"
-      [disabled]="lastPage()"
-      iconPosition="RIGHT"
-      stringContent="İleri"
-      iconClass="pi pi-chevron-right"
-    ></block-button>
+    <div class="w-full flex gap-1 align-items-center justify-content-center">
+      <block-button
+        (click)="back()"
+        stringContent="Geri"
+        iconClass="pi pi-chevron-left"
+        [disabled]="firstPage()"
+      ></block-button>
+      {{ pageHumanReadable() }} / {{ maxPage() }}
+      <block-button
+        (click)="next()"
+        [disabled]="lastPage()"
+        iconPosition="RIGHT"
+        stringContent="İleri"
+        iconClass="pi pi-chevron-right"
+      ></block-button>
+    </div>
   </div>
 </div>

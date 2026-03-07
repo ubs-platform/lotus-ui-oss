@@ -39,8 +39,12 @@ $transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
       flex-direction: column;
       height: 100%;
       width: 100%;
-      padding: 16px;
+      padding: .5rem;
       overflow: auto;
+
+      @media screen and (min-width: 768px) {
+        padding: 1rem;
+      }
 
       .content-header {
         flex-shrink: 0;

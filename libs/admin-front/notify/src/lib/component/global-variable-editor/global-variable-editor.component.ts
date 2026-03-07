@@ -143,7 +143,7 @@ export class GlobalVariableEditorComponent {
             const normalDto = jsonTemplates[index];
             Object.entries(normalDto.values || {}).forEach(([language, value]) => {
               if (normalDto.name.trim() === '' || value.trim() === '' || language.trim() === '') {
-                this.basicOverlay.alert('Hata', `İsim, dil veya değer boş olamaz! Atlanan değişken: ${JSON.stringify(normalDto)}`, "error");
+                this.basicOverlay.alert('Hata', 'İsim, dil veya değer boş olamaz! Atlanan değişken:' + JSON.stringify(normalDto), "error");
                 return;
               }
               globalVariableUpdateObservables.push(this.globalVarsService.edit({

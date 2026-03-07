@@ -96,7 +96,7 @@ export class TemplateListComponent {
           forkJoin(addObservables).subscribe({
             next: (results) => {
               this.isImporting.set(false);
-              alert(`${results.length} şablon başarıyla eklendi!`);
+              alert(results.length + ' şablon başarıyla eklendi!');
               this.reload();
             },
             error: (error) => {

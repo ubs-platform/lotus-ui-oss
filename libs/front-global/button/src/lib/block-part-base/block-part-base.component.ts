@@ -18,9 +18,6 @@ export class BlockPartBaseComponent implements OnInit {
   readonly cover = input(true);
   readonly iconPosition = input<'RIGHT' | 'LEFT' | 'NONE'>('LEFT');
   readonly iconSizeAuto = computed(() => {
-    if (this.iconClasses().includes('material-symbols')) {
-      debugger;
-    }
     return this.iconClasses().includes('material-symbols') ? "1.5rem" : "0.85rem";
   });
   constructor() { }
