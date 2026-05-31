@@ -1,0 +1,95 @@
+<ng-template #steeringConfig>
+  <div>
+    <toggle
+      label="Onbinlik"
+      [value]="moneyPrecision() === 4"
+      (valueChange)="setMoneyPrecision($event ? 4 : 2)"
+    ></toggle>
+  </div>
+  <div>
+    <sub>Eklenecek verinin sahibi</sub>
+    <lib-custom-select
+      minWidth="200px"
+      placeholder="Takım ya da kişisel hesap"
+      [options]="teamList()"
+      [selectedModel]="getActiveTeamId()"
+      (selectedModelChange)="setActiveTeamId($event)"
+    >
+    </lib-custom-select>
+  </div>
+</ng-template>
+
+<!-- <lib-webdialog [show]="true"></lib-webdialog> -->
+<p-toast [style]="{ maxWidth: '90%' }" [position]="'bottom-center'"></p-toast>
+
+<div class="flex flex-column" style="height: 100dvh; width: 100dvw">
+  <lotus-web-generic-app-header [customMenus]="menus()">
+    <!-- Aynı menüler sağ üst menüde de var zaten. Mobilde bunu açıp girebilirler -->
+    <div header-left class="hidden lg:flex gap-2 items-center">
+      <block-button
+        buttonClass="surface"
+        stringContent="Hesap yönetimi"
+        routerLink="/user/payment-accounts/account"
+      ></block-button>
+      <block-button
+        buttonClass="surface"
+        stringContent="Satış simülasyonu"
+        routerLink="/sale-simulation"
+      ></block-button>
+    </div>
+    <div header-right>
+      <div class="md:hidden">
+        <lib-webdialog [(show)]="showSteeringMenu">
+          <div *ngTemplateOutlet="steeringConfig"></div>
+        </lib-webdialog>
+        <block-button (click)="showSteeringMenu.set(!showSteeringMenu())" stringContent="İnce ayarlar"></block-button>
+      </div>
+      <div class="hidden md:flex gap-2 mb-2 justify-content-end">
+        <div *ngTemplateOutlet="steeringConfig"></div>
+      </div>
+    </div>
+    <ng-template appLogo>
+      <div class="px-3 pt-2">
+        <div class="app-logo" role="img" aria-label="Postral Logo"></div>
+        <div class="p-0 w-full text-right" style="font-size: 12px">
+          Core Beta
+        </div>
+      </div>
+    </ng-template>
+    <ng-template appFooter>
+      <h3>Postral Core</h3>
+      <p>© 2026 Tetakent (H.C.G). Tüm hakları saklıdır.</p>
+      <div
+        class="app-logo-with-tetakent"
+        role="img"
+        aria-label="Postral from Tetakent developments"
+      ></div>
+    </ng-template>
+  </lotus-web-generic-app-header>
+  <div class="flex-grow-1 overflow-auto m-1">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<!-- <ng-template #header>
+  <lotus-web-bar-app-normal></lotus-web-bar-app-normal>
+</ng-template> -->
+<lotus-web-fullscreen-loading-indicator>
+</lotus-web-fullscreen-loading-indicator>
+<!-- <div class="flex flex-column" style="height: 100dvh; width: 100dvw">
+  <div class="flex-grow-1">
+    <img
+      src="https://media.tenor.com/a5XWMHh6zCkAAAAM/car-bounce.gif"
+      height="100%"
+      width="100%"
+    />
+  </div>
+  <div class="flex-grow-0">
+    <input type="text" style="width: 100%" />
+  </div>
+</div> -->
+
+<lib-warning-watermark
+  title="postral.demo-server-warning"
+  message="postral.demo-server-warning-long"
+></lib-warning-watermark>

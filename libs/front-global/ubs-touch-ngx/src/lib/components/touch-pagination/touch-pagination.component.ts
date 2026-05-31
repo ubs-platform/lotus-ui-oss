@@ -130,7 +130,7 @@ export class TouchPaginationComponent implements OnInit {
       this.swipeRightPage.set(this.foreground()!);
       this.xPercent.set(this.maxSeconds());
       this.setDelay(this.maxSeconds());
-      this.setSwipeRotation(true);
+      // this.setSwipeRotation(true);
     }
   }
 

@@ -1,82 +1,87 @@
 <!-- <h1>{{ 'admin.users' | translate }}</h1> -->
-<block-button iconClass="pi pi-plus" [routerLink]="['new']"
-  >Yeni kullanıcı</block-button
->
+<div class="flex flex-column h-full w-full gap-1">
+  <div class="flex flex-row-reverse w-full gap-2 mb-2">
+    <block-button iconClass="pi pi-plus" [routerLink]="['new']"
+      >Yeni kullanıcı</block-button
+    >
+  </div>
 
-<searchable-data-table style="width: 100%" [url]="SEARCH_URL" [size]="10">
-  <column name="fullname">
-    <ng-template header> {{ 'fullname' | translate }}</ng-template>
-    <ng-template data let-item="item">
-      <div class="flex gap-2 align-items-center">
-        <img class="rounded" src="/api/file/PROFILE_PHOTO/{{ item.id }}" />
-        {{ item.name }} {{ item.surname }}
-      </div>
-    </ng-template>
-  </column>
-  <column name="roles">
-    <ng-template header>
-      {{ 'roles' | translate }}
-    </ng-template>
-    <ng-template data let-item="item">
-      {{ item.roles.join() }}
-    </ng-template>
-  </column>
-  <column name="status">
-    <ng-template header>
-      {{ 'status' | translate }}
-    </ng-template>
-    <ng-template data let-item="item">
-      {{ item.active ? 'AKTİF' : item.suspended ? 'YASAKLI' : 'ETKİN DEĞİL' }}
-    </ng-template>
-  </column>
-  <column name="username">
-    <ng-template header>
-      {{ 'username' | translate }}
-    </ng-template>
-    <ng-template data let-user="item">
-      {{ user.username }}
-    </ng-template>
-  </column>
-  <column name="primaryEmail">
-    <ng-template header>
-      {{ 'primaryEmail' | translate }}
-    </ng-template>
-    <ng-template data let-user="item">
-      {{ user.primaryEmail }}
-    </ng-template>
-  </column>
-  <column name="actions">
-    <ng-template header> Aksiyonlar </ng-template>
-    <ng-template data let-user="item">
-      <block-button
-        [hasContent]="false"
-        iconClass="pi pi-pencil"
-        [routerLink]="[user.id]"
-        buttonClass="primary m-1"
-        [pTooltip]="'edit' | translate"
-      ></block-button>
-      <block-button
-        [hasContent]="false"
-        iconClass="pi pi-trash"
-        buttonClass="bg-danger m-1"
-        *ngIf="!user.roles.includes('ADMIN')"
-        (click)="removeUser(user.id)"
-        >{{ 'remove' | translate }}</block-button
-      >
-      <block-button
-        [hasContent]="false"
-        iconClass="pi pi-talk"
-        buttonClass="border m-1"
-        *ngIf="!user.roles.includes('ADMIN')"
-        (click)="this.showSocialOptions(user)"
-        stringContent="Sosyal seçenekler"
-      ></block-button>
-    </ng-template>
-  </column>
-</searchable-data-table>
-
-
-
+  <div class="flex-grow-1">
+    <searchable-data-table style="width: 100%" [url]="SEARCH_URL" [size]="10" [cover]="true">
+      <column name="fullname">
+        <ng-template header> {{ 'fullname' | translate }}</ng-template>
+        <ng-template data let-item="item">
+          <div class="flex gap-2 align-items-center">
+            <img class="rounded" src="/api/file/PROFILE_PHOTO/{{ item.id }}" />
+            {{ item.name }} {{ item.surname }}
+          </div>
+        </ng-template>
+      </column>
+      <column name="roles">
+        <ng-template header>
+          {{ 'roles' | translate }}
+        </ng-template>
+        <ng-template data let-item="item">
+          {{ item.roles.join() }}
+        </ng-template>
+      </column>
+      <column name="status">
+        <ng-template header>
+          {{ 'status' | translate }}
+        </ng-template>
+        <ng-template data let-item="item">
+          {{
+            item.active ? 'AKTİF' : item.suspended ? 'YASAKLI' : 'ETKİN DEĞİL'
+          }}
+        </ng-template>
+      </column>
+      <column name="username">
+        <ng-template header>
+          {{ 'username' | translate }}
+        </ng-template>
+        <ng-template data let-user="item">
+          {{ user.username }}
+        </ng-template>
+      </column>
+      <column name="primaryEmail">
+        <ng-template header>
+          {{ 'primaryEmail' | translate }}
+        </ng-template>
+        <ng-template data let-user="item">
+          {{ user.primaryEmail }}
+        </ng-template>
+      </column>
+      <column name="actions">
+        <ng-template header> Aksiyonlar </ng-template>
+        <ng-template data let-user="item">
+          <block-button
+            [hasContent]="false"
+            iconClass="pi pi-pencil"
+            [routerLink]="[user.id]"
+            buttonClass="primary m-1"
+            [pTooltip]="'edit' | translate"
+          ></block-button>
+          <block-button
+            [hasContent]="false"
+            iconClass="pi pi-trash"
+            buttonClass="bg-danger m-1"
+            *ngIf="!user.roles.includes('ADMIN')"
+            (click)="removeUser(user.id)"
+            >{{ 'remove' | translate }}</block-button
+          >
+          <block-button
+            [hasContent]="true"
+            iconClass="pi pi-talk"
+            buttonClass="border m-1"
+            *ngIf="!user.roles.includes('ADMIN')"
+            (click)="this.showSocialOptions(user)"
+            stringContent="Sosyal seçenekler"
+          ></block-button>
+        </ng-template>
+      </column>
+    </searchable-data-table>
+  </div>
+</div>
 <!-- <p-table [value]="users" [tableStyle]="{ 'min-width': '50rem' }">
   <ng-template pTemplate="header">
     <tr>

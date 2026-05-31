@@ -72,9 +72,10 @@ export class AuthManagementService {
       }),
       map((a) => {
         if (a.suspended) {
+          sessionStorage.setItem('suspendReason', a.suspendReason ?? 'Unknown');
           this.router.navigate(['suspended'], {
             skipLocationChange: true,
-            state: { reason: a.suspendReason },
+            state: { suspendReason: a.suspendReason },
           });
           this.removeToken();
         } else {

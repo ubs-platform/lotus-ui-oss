@@ -1,0 +1,59 @@
+<lotus-web-data-list-layout>
+  <ng-template action>
+    <block-button
+      buttonClass="primary"
+      style="margin-bottom: 10px"
+      (click)="createItem()"
+      stringContent="Yeni Ürün Oluştur"
+      iconClass="pi pi-plus"
+    >
+    </block-button>
+  </ng-template>
+  <ng-container content>
+    <searchable-data-table
+      url="/service/payment/api/item/_search"
+      [otherFilter]="{ showOnlyUserOwned: !admin() }"
+      [cover]="true"
+      #table
+    >
+      <column name="id">
+        <ng-template header> Id </ng-template>
+        <ng-template data let-item="item">
+          {{ item.id }}
+        </ng-template>
+      </column>
+      <column name="name">
+        <ng-template header> Ürün İsmi </ng-template>
+        <ng-template data let-item="item">
+          {{ item.name }}
+        </ng-template>
+      </column>
+
+      <column name="actions">
+        <ng-template header> Aksiyonlar </ng-template>
+        <ng-template data let-item="item">
+          <div class="action-buttons">
+            <block-button
+              [hasContent]="false"
+              [routerLink]="['../item', item.id]"
+              buttonClass="border"
+              iconClass="material-symbols-outlined"
+              iconContent="info"
+              >Ürün bilgileri</block-button
+            >
+            <block-button
+              [hasContent]="false"
+              (click)="deleteItem(item.id)"
+              style="margin-left: 10px"
+              buttonClass="bg-danger"
+              iconClass="material-symbols-outlined"
+              iconContent="close"
+              >Ürünü Sil</block-button
+            >
+          </div>
+        </ng-template>
+      </column>
+
+    </searchable-data-table>
+  </ng-container>
+</lotus-web-data-list-layout>

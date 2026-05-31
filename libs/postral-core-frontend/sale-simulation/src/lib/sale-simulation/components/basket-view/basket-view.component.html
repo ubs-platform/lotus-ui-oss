@@ -1,0 +1,101 @@
+<div class="h-full w-full flex flex-column gap-2 px-1">
+  @if (orderManagement()) {
+  <div class="flex-grow-1 overflow-auto" style="height: 0px;">
+    <ubs-table-ngx
+      [cover]="true"
+      [items]="orderManagement()!.orders"
+      [forceDesktopMode]="true"
+    >
+      <column name="name">
+        <ng-template header> Ürün İsmi </ng-template>
+        <ng-template data let-item="item" let-index="index">
+          <div>
+            {{
+              orderManagement()!.getItemQuantity(item.itemId, item.variation)
+            }}
+            x
+            {{ item._itemName }}
+          </div>
+          <div>{{ item.variation }}</div>
+          <div>
+            <lib-money-display
+              [amount]="calculationResult()?.items?.[index]?.totalAmount"
+              [currency]="'TRY'"
+            ></lib-money-display>
+          </div>
+        </ng-template>
+      </column>
+      <column name="actions">
+        <ng-template header> Aksiyonlar </ng-template>
+        <ng-template data let-item="item">
+          <div class="w-full flex justify-content-end gap-2">
+            <block-button
+              iconClass="material-symbols-outlined"
+              [hasContent]="false"
+              iconContent="delete"
+              buttonClass="compact border"
+              (click)="
+                orderManagement()!.removeOrder(item.itemId, item.variation)
+              "
+              stringContent="Sepetten Kaldır"
+            >
+            </block-button>
+            <block-button
+              buttonClass="compact border"
+              iconClass="material-symbols-outlined"
+              iconContent="add"
+              (click)="
+                orderManagement()!.plusOneOrder(item.itemId, item.variation)
+              "
+            >
+            </block-button>
+            <block-button
+              buttonClass="compact border"
+              iconClass="material-symbols-outlined"
+              iconContent="remove"
+              (click)="
+                orderManagement()!.subtractOrder(item.itemId, item.variation)
+              "
+            >
+            </block-button>
+          </div>
+        </ng-template>
+      </column>
+    </ubs-table-ngx>
+  </div>
+  } @if (calculationResult()) {
+  <div class="flex flex-row justify-content-between">
+     <div>
+      <div>Kalem sayısı:</div>
+      <div>
+        {{
+          itemCount()
+        }}
+      </div>
+    </div>
+    <div>
+      <div>Toplam:</div>
+      <div>
+        <lib-money-display
+          [amount]="calculationResult()!.totalAmount"
+          [currency]="'TRY'"
+        ></lib-money-display>
+      </div>
+    </div>
+    <div>
+      <div>Vergi:</div>
+      <div>
+        <lib-money-display
+          [amount]="calculationResult()!.totalTaxAmount"
+          [currency]="'TRY'"
+        ></lib-money-display>
+      </div>
+    </div>
+  </div>
+  <div class="action-buttons">
+    <block-button buttonClass="primary" (click)="onCreatePaymentClick()">
+      Ödeme Oluştur
+    </block-button>
+  </div>
+  }
+</div>

@@ -1,0 +1,16 @@
+<div class="h-full w-full flex flex-column pt-2">
+  <div style="padding-top: 50px;">
+    <lib-tab-view
+      #tabView
+      [onlyButtons]="true"
+      [initialTab]="currentMenu()"
+      (tabSelected)="onTabSelected($event)"
+    >
+      <ng-template block-page="edit" title="Takım bilgileri"> </ng-template>
+      <ng-template block-page="members" title="Takım üyeleri"> </ng-template>
+    </lib-tab-view>
+  </div>
+  <div class="flex-grow-1 overflow-auto">
+    <router-outlet></router-outlet>
+  </div>
+</div>

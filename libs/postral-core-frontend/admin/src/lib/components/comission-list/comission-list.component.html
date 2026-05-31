@@ -1,0 +1,74 @@
+<lotus-web-data-list-layout>
+  <ng-template action action>
+    <block-button
+      buttonClass="btn btn-primary"
+      (click)="createComission()"
+    >
+      Yeni Komisyon Ekle
+    </block-button>
+  </ng-template>
+  <ng-container content>
+    <searchable-data-table
+      url="/service/payment/api/app-comission/_search"
+      [cover]="true"
+      #table
+    >
+      <!-- <column name="id">
+        <ng-template header> Id </ng-template>
+        <ng-template data let-item="item">
+          {{ item.id }}
+        </ng-template>
+      </column> -->
+      <column name="sellerAccountName">
+        <ng-template header> Satıcı hesap </ng-template>
+        <ng-template data let-item="item">
+          {{ item.sellerAccountName || 'Varsayılan' }}
+        </ng-template>
+      </column>
+      <column name="itemClass">
+        <ng-template header> Ürün Sınıfı </ng-template>
+        <ng-template data let-item="item">
+          {{ item.itemClass || 'Varsayılan' }}
+        </ng-template>
+      </column>
+      <column name="percent">
+        <ng-template header> Komisyon Oranı </ng-template>
+        <ng-template data let-item="item"> {{ item.percent }}% </ng-template>
+      </column>
+      <column name="createdAt">
+        <ng-template header> Oluşturulma Tarihi </ng-template>
+        <ng-template data let-item="item">
+          {{ item.createdAt | date : 'short' }}
+        </ng-template>
+      </column>
+      <column name="updatedAt">
+        <ng-template header> Güncellenme Tarihi </ng-template>
+        <ng-template data let-item="item">
+          {{ item.updatedAt | date : 'short' }}
+        </ng-template>
+      </column>
+
+      <column name="actions">
+        <ng-template header> Aksiyonlar </ng-template>
+        <ng-template data let-item="item">
+          <div class="action-buttons">
+            <block-button
+              (click)="removeComission(item.id)"
+              buttonClass="bg-danger"
+              iconClass="material-symbols-outlined"
+              iconContent="delete"
+              >Sil</block-button
+            >
+            <block-button
+              (click)="editComission(item)"
+              buttonClass="primary"
+              iconClass="material-symbols-outlined"
+              iconContent="edit"
+              >Düzenle</block-button
+            >
+          </div>
+        </ng-template>
+      </column>
+    </searchable-data-table>
+  </ng-container>
+</lotus-web-data-list-layout>

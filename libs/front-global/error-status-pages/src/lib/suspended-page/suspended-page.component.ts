@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'lotus-web-suspended-page',
@@ -7,10 +7,17 @@ import { ActivatedRoute, Router } from '@angular/router';
     styleUrls: ['./suspended-page.component.scss'],
     standalone: false
 })
-export class SuspendedPageComponent {
+export class SuspendedPageComponent implements OnInit {
   reason: string = 'Unknown';
 
-  constructor(private router: Router) {
-    this.reason = router.getCurrentNavigation()?.extras.state?.['reason'];
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    const navigationState =
+      this.router.getCurrentNavigation()?.extras?.state?.['suspendReason'];
+    const historyState = history.state?.['suspendReason'];
+    const sessionState = sessionStorage.getItem('suspendReason');
+
+    this.reason = navigationState ?? historyState ?? sessionState ?? 'Unknown';
   }
 }

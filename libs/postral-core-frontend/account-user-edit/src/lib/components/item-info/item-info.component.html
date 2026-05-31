@@ -1,0 +1,24 @@
+<div class="h-full w-full" style="display: block">
+  <lib-tab-view>
+    <ng-template block-page="information" title="Ürün bilgileri">
+      @if (instruction()) {
+      <div class="flex flex-column">
+        <div class="flex-grow-1 overflow-auto">
+          <lib-reform-data-edit
+            [formInstruction]="instruction()!"
+            saveButtonPosition="bottom"
+          ></lib-reform-data-edit>
+        </div>
+        <div>Bilgi: {{ unitDescription() }}</div>
+      </div>
+      } @else {
+      <p>Form talimatı yok</p>
+      }
+    </ng-template>
+    <ng-template block-page="pricing" title="Fiyat listesi">
+      @if (itemId()) {
+      <lib-item-price-list [itemId]="itemId()"></lib-item-price-list>
+      }
+    </ng-template>
+  </lib-tab-view>
+</div>

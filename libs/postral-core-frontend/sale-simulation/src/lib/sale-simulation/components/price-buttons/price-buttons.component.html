@@ -1,0 +1,7 @@
+<div class="flex flex-wrap gap-2" >
+  @for (price of prices(); track $index) {
+    <block-button buttonClass="compact border" (click)="onPriceSelected(price)">
+      {{ price.variation }}: {{ price.itemPrice }} {{ price.currency }}
+    </block-button>
+  }
+</div>

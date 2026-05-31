@@ -1,0 +1,35 @@
+<lotus-web-data-list-layout>
+  <ng-template action>
+    <block-button buttonClass="primary" style="margin-bottom: 10px" (click)="createAddress()"
+      stringContent="Yeni Adres Oluştur" iconClass="pi pi-plus">
+    </block-button>
+  </ng-template>
+  <ng-container content>
+    <searchable-data-table url="/service/payment/api/address/_search" [cover]="true" [otherFilter]="{ admin: admin() }" #table>
+      <column name="id">
+        <ng-template header> Id </ng-template>
+        <ng-template data let-item="item">
+          {{ item.id }}
+        </ng-template>
+      </column>
+      <column name="name">
+        <ng-template header> Adres İsmi </ng-template>
+        <ng-template data let-item="item">
+          {{ item.name }}
+        </ng-template>
+      </column>
+
+      <column name="actions">
+        <ng-template header> Aksiyonlar </ng-template>
+        <ng-template data let-item="item">
+          <div class="action-buttons">
+            <block-button [routerLink]="['../address', item.id]" iconClass="material-symbols-outlined"
+              iconContent="info">Adres bilgileri</block-button>
+            <block-button (click)="deleteAddress(item.id)" buttonClass="bg-danger" iconClass="material-symbols-outlined"
+              iconContent="close">Adresi Sil</block-button>
+          </div>
+        </ng-template>
+      </column>
+    </searchable-data-table>
+  </ng-container>
+</lotus-web-data-list-layout>

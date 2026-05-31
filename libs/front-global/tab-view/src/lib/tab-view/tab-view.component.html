@@ -1,13 +1,21 @@
-<div class="h-full w-full flex flex-column">
+<div class="w-full flex flex-column" [class.h-full]="!onlyButtons()">
   <div class="flex gap-2">
     @for (item of blockPages(); track $index) {
-    <block-button [buttonClass]="selectedTabName() === item.name() ? 'primary' : ''"
-      (click)="touchTabView.select(item.name())">
-      {{ item.title() }}</block-button>
+    <block-button
+      [buttonClass]="selectedTabName() === item.name() ? 'primary' : ''"
+      (click)="onTabHeaderClick(item.name())"
+    >
+      {{ item.title() }}</block-button
+    >
     }
   </div>
+  @if (!onlyButtons()) {
   <div class="flex-grow-1 overflow-hidden">
-    <ubs-touch-tab height="100%" width="100%" (pageSelected)="selectedTabName.set($event)" #touchTabView>
+    <ubs-touch-tab
+      [initialPage]="initialTab()"
+      (pageSelected)="onPageSelected($event)"
+      #touchTabView
+    >
       @for (item of blockPages(); track $index) {
       <ng-template [block-page]="item.name()">
         <div class="h-full w-full overflow-auto">
@@ -17,4 +25,5 @@
       }
     </ubs-touch-tab>
   </div>
+  }
 </div>

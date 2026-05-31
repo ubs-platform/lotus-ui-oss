@@ -10,7 +10,7 @@
 
   <main class="content-section" role="main">
     <div class="content-wrapper">
-      <header class="content-header">
+      <header class="content-header" [style.position]="headerAbsolutePosition() ? 'absolute' : 'relative'">
         <onpage-header
           [topMinimal]="title()"
           [content]="currentPathTitle()">

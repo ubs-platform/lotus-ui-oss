@@ -1,0 +1,94 @@
+<lotus-web-data-list-layout>
+  <ng-template action>
+    <block-button
+      stringContent="Yeni sorgu"
+      (click)="createItem()"
+    ></block-button>
+  </ng-template>
+  <ng-container content>
+    <searchable-data-table
+      url="/service/payment/api/report-query/_search"
+      [cover]="true"
+      [otherFilter]="{ admin: admin() }"
+      #table
+    >
+      <column name="id">
+        <ng-template header> Id </ng-template>
+        <ng-template data let-item="item">
+          {{ item.id }}
+        </ng-template>
+      </column>
+      <column name="reportType">
+        <ng-template header> Rapor Tipi </ng-template>
+        <ng-template data let-item="item">
+          {{ ("postral.report-type." + item.reportType) | translate}}
+        </ng-template>
+      </column>
+      <column name="name">
+        <ng-template header> Ad </ng-template>
+        <ng-template data let-item="item">
+          {{ item.name }}
+        </ng-template>
+      </column>
+      <column name="dateGrouping">
+        <ng-template header> Tarih Gruplaması </ng-template>
+        <ng-template data let-item="item">
+          {{ item.dateGrouping }}
+        </ng-template>
+      </column>
+      <!-- <column name="status">
+        <ng-template header> Durum </ng-template>
+        <ng-template data let-item="item">
+          {{ item.status }}
+        </ng-template>
+      </column> -->
+      <column name="createdAt">
+        <ng-template header> Oluşturulma Tarihi </ng-template>
+        <ng-template data let-item="item">
+          {{ item.createdAt | date : 'short' }}
+        </ng-template>
+      </column>
+      <column name="updatedAt">
+        <ng-template header> Güncellenme Tarihi </ng-template>
+        <ng-template data let-item="item">
+          {{ item.updatedAt | date : 'short' }}
+        </ng-template>
+      </column>
+      <column name="actions">
+        <ng-template header> İşlemler </ng-template>
+        <ng-template data let-item="item">
+          <div class="action-buttons">
+            <block-button
+              iconClass="pi pi-pencil"
+              stringContent="Sorguyu düzenle"
+              [hasContent]="false"
+              (click)="editItem(item)"
+            ></block-button>
+            <block-button
+              iconClass="pi pi-eye"
+              stringContent="Raporlara bak"
+              [hasContent]="false"
+              (click)="listReportsOf(item)"
+            ></block-button>
+            <block-button
+              iconClass="material-symbols-outlined"
+              iconContent="delete"
+              stringContent="Sil"
+              [hasContent]="false"
+              buttonClass="bg-danger"
+              (click)="deleteItem(item.id)"
+            ></block-button>
+          </div>
+          <!-- <block-button
+            stringContent="Düzenle"
+            (click)="editItem(item)"
+          ></block-button>
+          <block-button
+            stringContent="Sil"
+            (click)="deleteItem(item)"
+          ></block-button> -->
+        </ng-template>
+      </column>
+    </searchable-data-table>
+  </ng-container>
+</lotus-web-data-list-layout>

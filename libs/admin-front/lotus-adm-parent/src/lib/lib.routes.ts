@@ -25,6 +25,25 @@ export const frontGlobalAdminLotusRoutes: Route[] = [
             (a) => a.AdminFrontFeedbackModule
           ),
       },
+      {
+        path: 'comments',
+        data: {
+          adminMode: true,
+          headerless: true,
+
+        },
+        loadChildren: () =>
+          import('@lotus/lotus-frontend/book-comments').then(
+            (a) => a.BookCommentsModule
+          ),
+      },
+      {
+        path: 'publisher-teams',
+        loadChildren: () =>
+          import('@lotus/front-global/publisher-teams/pages').then(
+            (m) => m.PagesModule
+          ),
+      },
     ],
   },
 ];

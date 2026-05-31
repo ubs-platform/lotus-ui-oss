@@ -1,0 +1,251 @@
+<div
+  class="h-full w-full gap-4 flex flex-column-reverse lg:flex-row overflow-auto"
+>
+  <div class="flex flex-column gap-4 flex-grow-1">
+    @if (loading()) {
+    <div class="mona-card">
+      <p class="text-center">Yükleniyor...</p>
+    </div>
+    } @else if (error()) {
+    <div class="mona-card">
+      <p class="text-center text-danger">{{ error() }}</p>
+    </div>
+    } @else if (invoiceInfo()) {
+
+    <div class="invoice-info-section mona-card">
+      <h2 class="mb-2">Fatura Bilgileri</h2>
+      <div class="info-grid gap-3">
+        <div class="info-item">
+          <span class="label">Fatura ID:</span>
+          <span class="value">{{ invoiceInfo()!.id }}</span>
+        </div>
+        @if (invoiceInfo()!.invoiceNumber) {
+        <div class="info-item">
+          <span class="label">Fatura No:</span>
+          <span class="value">{{ invoiceInfo()!.invoiceNumber }}</span>
+        </div>
+        } @if (invoiceInfo()!.invoiceDate) {
+        <div class="info-item">
+          <span class="label">Fatura Tarihi:</span>
+          <span class="value">{{
+            invoiceInfo()!.invoiceDate | date : 'short'
+          }}</span>
+        </div>
+        }
+        <div class="info-item">
+          <span class="label">Kesinleştirildi:</span>
+          <lotus-web-status-badge
+            [color]="invoiceInfo()!.finalized ? 'green' : 'gray'"
+            [label]="invoiceInfo()!.finalized ? 'Kesinleştirildi' : 'Taslak'"
+          ></lotus-web-status-badge>
+        </div>
+        @if (invoiceInfo()!.paymentId) {
+        <div class="info-item">
+          <span class="label">Ödeme ID:</span>
+          <span class="value">{{ invoiceInfo()!.paymentId }}</span>
+        </div>
+        } @if (invoiceInfo()!.sellerPaymentOrderId) {
+        <div class="info-item">
+          <span class="label">Satıcı Sipariş ID:</span>
+          <span class="value">{{ invoiceInfo()!.sellerPaymentOrderId }}</span>
+        </div>
+        } @if (invoiceInfo()!.uploadedByUserId) {
+        <div class="info-item">
+          <span class="label">Yükleyen Kullanıcı:</span>
+          <span class="value">{{ invoiceInfo()!.uploadedByUserId }}</span>
+        </div>
+        } @if (invoiceInfo()!.notes) {
+        <div class="info-item">
+          <span class="label">Notlar:</span>
+          <span class="value">{{ invoiceInfo()!.notes }}</span>
+        </div>
+        }
+        <div class="info-item">
+          <span class="label">Oluşturma Tarihi:</span>
+          <span class="value">{{
+            invoiceInfo()!.createdAt | date : 'short'
+          }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Güncellenme Tarihi:</span>
+          <span class="value">{{
+            invoiceInfo()!.updatedAt | date : 'short'
+          }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex w-full flex-column lg:flex-row gap-2 items-start">
+      <!-- İşletmeci Bilgileri -->
+      <div class="lg:flex-grow-1 seller-section mona-card">
+        <h3 class="mb-2">İşletmeci Bilgileri</h3>
+        @if (getSellerAddress()) {
+        <div class="address-info mb-3">
+          <p class="font-semibold">Adres:</p>
+          <p class="text-sm">
+            {{ getSellerAddress()!.streetName }}
+            {{ getSellerAddress()!.buildingNumber }}
+          </p>
+          <p class="text-sm">
+            {{ getSellerAddress()!.district }}
+            {{ getSellerAddress()!.cityName }}/{{ getSellerAddress()!.country }}
+          </p>
+          @if (getSellerAddress()!.postalZone) {
+          <p class="text-sm">
+            Posta Kodu: {{ getSellerAddress()!.postalZone }}
+          </p>
+          }
+        </div>
+        } @if (getSellerAccount()) {
+        <div class="account-info">
+          <p class="font-semibold">Hesap Bilgileri:</p>
+          @if (getSellerAccount()!.name) {
+          <p class="text-sm">Hesap Adı: {{ getSellerAccount()!.name }}</p>
+          } @if (getSellerAccount()!.legalIdentity) {
+          <p class="text-sm">
+            {{
+              getSellerAccount()?.type == 'INDIVIDUAL'
+                ? 'TC Kimlik No'
+                : 'Vergi No'
+            }}: {{ getSellerAccount()!.legalIdentity }}
+          </p>
+          }
+          <!-- TODO: Bu bilgiler account ve invoice-accounta eklenecek -->
+          <!-- @if (getSellerAccount()!.iban) {
+        <p class="text-sm">IBAN: {{ getSellerAccount()!.iban }}</p>
+        } -->
+          <!-- @if (getSellerAccount()!.bankName) {
+        <p class="text-sm">Banka: {{ getSellerAccount()!.bankName }}</p>
+        } -->
+        </div>
+        }
+      </div>
+
+      <!-- Müşteri Bilgileri -->
+      <div class="lg:flex-grow-1 customer-section mona-card">
+        <h3 class="mb-2">Müşteri Bilgileri</h3>
+        @if (getCustomerAddress()) {
+        <div class="address-info mb-3">
+          <p class="font-semibold">Adres:</p>
+          <p class="text-sm">
+            {{ getCustomerAddress()!.streetName }}
+            {{ getCustomerAddress()!.buildingNumber }}
+          </p>
+          <p class="text-sm">
+            {{ getCustomerAddress()!.district }}
+            {{ getCustomerAddress()!.cityName }}/{{
+              getCustomerAddress()!.country
+            }}
+          </p>
+          @if (getCustomerAddress()!.postalZone) {
+          <p class="text-sm">
+            Posta Kodu: {{ getCustomerAddress()!.postalZone }}
+          </p>
+          }
+        </div>
+        } @if (getCustomerAccount()) {
+        <div class="account-info">
+          <p class="font-semibold">Hesap Bilgileri:</p>
+          @if (getCustomerAccount()!.name) {
+          <p class="text-sm">Hesap Adı: {{ getCustomerAccount()!.name }}</p>
+          } @if (getCustomerAccount()!.legalIdentity) {
+          <p class="text-sm">
+            {{
+              getCustomerAccount()?.type == 'INDIVIDUAL'
+                ? 'TC Kimlik No'
+                : 'Vergi No'
+            }}: {{ getCustomerAccount()!.legalIdentity }}
+          </p>
+          }
+          <!-- @if (getCustomerAccount()!.iban) {
+        <p class="text-sm">IBAN: {{ getCustomerAccount()!.iban }}</p>
+        }
+        @if (getCustomerAccount()!.bankName) {
+        <p class="text-sm">Banka: {{ getCustomerAccount()!.bankName }}</p>
+        } -->
+        </div>
+        }
+      </div>
+    </div>
+
+    @if (items().length > 0) {
+    <div class="payment-items-section flex-grow-1 mona-card">
+      <h2 class="mb-2">Ödeme Kalemleri</h2>
+      <lib-payment-item-list [items]="items()"></lib-payment-item-list>
+    </div>
+    }
+    <div class="payment-items-section flex-grow-1 mona-card">
+      <h2 class="mb-2">Ekstra notlar</h2>
+      <!-- Fatura Numarası ve ekstra başka notlar-->
+    </div>
+    <!-- İşlemler -->
+    <div class="actions-section mona-card">
+      <h3 class="mb-3">İşlemler</h3>
+      <div class="flex flex-column gap-2">
+        @if (invoiceInfo()!.finalized && hasInvoiceFile()) {
+        <block-button
+          stringContent="Fatura dosyasını indir"
+          buttonClass="border"
+          iconClass="pi pi-download"
+          (click)="downloadInvoiceFile()"
+        ></block-button>
+        } @if (!invoiceInfo()!.finalized) {
+        <div class="flex gap-2">
+          <block-button
+            stringContent="UBL XML İndir"
+            buttonClass="border"
+            iconClass="pi pi-code"
+            (click)="downloadUblFile()"
+          ></block-button>
+          @if (hasInvoiceFile()) {
+          <block-button
+            stringContent="Fatura dosyasını indir"
+            buttonClass="border"
+            iconClass="pi pi-download"
+            (click)="downloadInvoiceFile()"
+          ></block-button>
+          }
+          <block-button
+            buttonClass="border"
+            [stringContent]="
+              hasInvoiceFile()
+                ? 'Fatura Dosyasını Güncelle'
+                : 'Fatura Dosyası Yükle'
+            "
+            iconClass="pi pi-upload"
+            (click)="importInvoiceFile()"
+          ></block-button>
+        </div>
+        <div class="flex gap-2">
+          <block-button
+            buttonClass="primary"
+            stringContent="Faturayı kesinleştir"
+            iconClass="pi pi-check"
+            (click)="finalizeInvoice()"
+          >
+          </block-button>
+          <block-button
+            buttonClass="error"
+            iconClass="pi pi-delete"
+            stringContent="Faturayı sil"
+            (click)="deleteInvoice()"
+          >
+          </block-button>
+        </div>
+
+        } @else {
+        <div>
+          Kesinleştirilmiş bir faturaya dosya yüklenemez veya silinemez. Eğer
+          fatura değiştirilmesi gerekiyorsa iade edilip işlem tekrar
+          yapılmalıdır.
+        </div>
+        }
+      </div>
+    </div>
+    } @else {
+    <div class="mona-card">
+      <p class="text-center">Fatura bulunamadı</p>
+    </div>
+    }
+  </div>
+</div>

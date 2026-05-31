@@ -1,0 +1,28 @@
+<onpage-header
+  [title]="'Yayıncı ol'"
+></onpage-header>
+<div class="p-1" *ngIf="!sent">
+  <p>
+    Bir yayınevinde yetkili misiniz? Ya da soru hazırlayıp yayınlamak isteyen
+    bir öğretmen misiniz? Buradan bu formu doldurarak başvurabilirsiniz.
+  </p>
+  <minky-reform-prime *ngIf="reform" [reform]="reform">
+    <ng-template
+      input-link
+      [overrideDefault]="false"
+      path="message"
+      let-carrier="carrier"
+    >
+      <lotus-web-markdown-editor-input
+        [carrier]="carrier"
+      ></lotus-web-markdown-editor-input> </ng-template
+  ></minky-reform-prime>
+  <block-button (click)="submit()">Gönder</block-button>
+</div>
+<div *ngIf="sent">
+  <p-message
+    severity="success"
+    text="İsteğinizi aldık ve sizinle en kısa zaman içerisinde e-posta üzerinden iletişime geçeceğiz. İlginiz için teşekkür ederiz"
+  ></p-message>
+  <block-button routerLink="/">Ana sayfa</block-button>
+</div>

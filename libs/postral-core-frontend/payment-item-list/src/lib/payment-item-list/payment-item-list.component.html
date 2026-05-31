@@ -1,0 +1,81 @@
+<ubs-table-ngx [cover]="true" [items]="items()">
+  <column name="countUnit">
+    <ng-template header> Adet </ng-template>
+    <ng-template data let-item="item">
+      {{ item.quantity }}
+      {{ item.unit || 'adet' }}
+      <br />
+      <sub>
+        {{ unitDescriptionsByItemId()[item.itemId] || 'adet' }}
+      </sub>
+    </ng-template>
+  </column>
+
+  <column name="item">
+    <ng-template header> Ürün </ng-template>
+    <ng-template data let-item="item">
+      <div>{{ item.name }}</div>
+      @if (item.variation) {
+      <div class="text-sm text-muted">{{ item.variation }}</div>
+      } @if (showSellerPaymentId()) {
+      <div>{{ item.sellerAccountName || item.sellerAccountId }}</div>
+      }
+    </ng-template>
+  </column>
+
+  <column name="unitAmount">
+    <ng-template header> Birim Fiyat </ng-template>
+    <ng-template data let-item="item">
+      <lib-money-display
+        [amount]="item.unitAmount"
+        [currency]="currency()"
+      ></lib-money-display>
+    </ng-template>
+  </column>
+
+  <column name="amount">
+    <ng-template header> Toplam </ng-template>
+    <ng-template data let-item="item">
+      <lib-money-display
+        [amount]="item.totalAmount"
+        [currency]="currency()"
+      ></lib-money-display>
+    </ng-template>
+  </column>
+
+  <column name="taxAmount">
+    <ng-template header> Vergi/V.siz </ng-template>
+    <ng-template data let-item="item">
+      <lib-money-display
+        [amount]="item.taxAmount"
+        [currency]="currency()"
+      ></lib-money-display>
+      <br />
+      <lib-money-display
+        [amount]="item.unTaxAmount"
+        [currency]="currency()"
+      ></lib-money-display>
+      <br />
+      {{ item.taxPercent }} %
+    </ng-template>
+  </column>
+
+  @if (showComissions()) {
+  <column name="comissionRate">
+    <ng-template header> Komisyon Oranı </ng-template>
+    <ng-template data let-item="item">
+      {{ item.appComissionPercent }}
+    </ng-template>
+  </column>
+  <column name="comissionAmount">
+    <ng-template header> Komisyon Tutarı </ng-template>
+    <ng-template data let-item="item">
+      <lib-money-display
+        [amount]="item.appComissionAmount"
+        [currency]="currency()"
+      ></lib-money-display>
+    </ng-template>
+  </column>
+  }
+
+</ubs-table-ngx>

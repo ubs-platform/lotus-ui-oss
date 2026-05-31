@@ -1,6 +1,3 @@
-// type Primitive = number | string | Number | String;
-// type PrimitiveObject = {
-//   [key: string]: Primitive;
 
 import { isSignal } from '@angular/core';
 

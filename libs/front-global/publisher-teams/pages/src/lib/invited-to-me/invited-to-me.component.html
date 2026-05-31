@@ -1,0 +1,69 @@
+<div class="h-full w-full p-2">
+  <onpage-header [content]="'Takım Davetleri'"></onpage-header>
+
+  <ubs-table-ngx [items]="invitations()" [cover]="true">
+    <ng-template empty-data>
+      <div class="p-3 flex flex-column justify-content-center align-items-center">
+        <img src="assets/errors/nothing.webp" alt="No Teams" style="width: 200px; height: auto" />
+        <p class="text-align-center">
+          Yanlız kaldığınız için üzgünüz... Yeni takım oluşturmak için "Takımlar" sayfasına
+          gidebilirsiniz.
+        </p>
+        <div class="action-buttons">
+          <block-button stringContent="Takımlarım" iconClass="pi pi-users" routerLink=".."></block-button>
+        </div>
+      </div>
+    </ng-template>
+    <column name="invited-by">
+      <ng-template header> Davet Eden</ng-template>
+      <ng-template data let-item="item">
+        <div class="flex align-items-center">
+          <img [src]="'/api/file/PROFILE_PHOTO/' + item.invitedByUserId" class="rounded-full inline-block mr-2"
+            style="border-radius: 100%" height="50px" width="50px" />
+          <div>{{ item.invitedByUserName }}</div>
+        </div>
+      </ng-template>
+    </column>
+    <column name="name">
+      <ng-template header> İsim</ng-template>
+      <ng-template data let-item="item">
+        <div class="flex flex-column align-items-start sm:align-items-end lg:align-items-start">
+          <div style="font-size: 20px">{{ item.eogName }}</div>
+          <div style="text-align: left">{{ item.eogDescription }}</div>
+        </div>
+      </ng-template>
+    </column>
+
+    <column name="capability">
+      <ng-template header>İçerik Yetkisi</ng-template>
+      <ng-template data let-item="item">
+        <div class="flex flex-column align-items-start sm:align-items-end lg:align-items-start">
+          @for (item of item.entityCapabilities; track $index) {
+          <div>
+            <b>{{ item.entityGroup }}/{{ item.entityName }}</b>
+          </div>
+          <div>{{ item.capability }}</div>
+          }
+        </div>
+      </ng-template>
+    </column>
+    <column name="group-capability">
+      <ng-template header>Grup Yetkisi</ng-template>
+      <ng-template data let-item="item">
+        <div>{{ item.groupCapability }}</div>
+      </ng-template>
+    </column>
+
+    <column name="actions">
+      <ng-template header>Aksiyonlar </ng-template>
+      <ng-template data let-item="item">
+        <block-button stringContent="İptal Et" iconClass="pi pi-sign-out" buttonClass="bg-danger"
+          (click)="removeInvitation(item)"></block-button>
+        <block-button stringContent="Kabul Et" iconClass="pi pi-check" buttonClass="bg-success ml-2"
+          (click)="acceptInvitation(item)"></block-button>
+        <!-- <block-button stringContent="Kaldır" iconClass="pi pi-sign-out" buttonClass="bg-danger"
+          (click)="removeInvitation(item)"></block-button> -->
+      </ng-template>
+    </column>
+  </ubs-table-ngx>
+</div>

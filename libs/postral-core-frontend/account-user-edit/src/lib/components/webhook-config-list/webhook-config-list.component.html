@@ -1,0 +1,27 @@
+<lotus-web-data-list-layout>
+  <ng-container content>
+    <searchable-data-table
+      url="/service/payment/api/account/_search"
+      [otherFilter]="{ admin: false }"
+      [cover]="true"
+    >
+      <column name="name">
+        <ng-template header> Hesap İsmi </ng-template>
+        <ng-template data let-item="item">
+          {{ item.name }}
+        </ng-template>
+      </column>
+
+      <column name="actions">
+        <ng-template header> Aksiyonlar </ng-template>
+        <ng-template data let-item="item">
+          <block-button
+            [routerLink]="['../webhook', item.id]"
+            iconClass="pi pi-send"
+            stringContent="Webhook Ayarları"
+          ></block-button>
+        </ng-template>
+      </column>
+    </searchable-data-table>
+  </ng-container>
+</lotus-web-data-list-layout>

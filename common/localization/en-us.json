@@ -132,7 +132,7 @@
       "page-not-found": "The page you were looking for was not found",
       "page-not-found-desc": "The page you were looking for could not be found. The reason for the error may be that you entered the wrong page address or the address of the page you are trying to reach has changed. If you do not think the error is yours, please send us a feedback.",
       "home": "Home",
-      "suspended": "Unfortunately, because one or more actions were taken on this account that do not comply with the community rules, we have suspended your account for a period of time due to '{reason}'. If you think this is in error, please contact us at info[at]tetakent[dot]com.",
+      "suspended": "Unfortunately, because one or more actions were taken on this account that do not comply with the community rules, we have suspended your account for a period of time due to '{suspendReason}'. If you think this is in error, please contact us at info[at]tetakent[dot]com.",
       "feedback": "Feedback",
       "feedback-short": "Fbk.",
       "success-save": "Saved successfully",
@@ -153,12 +153,20 @@
   },
   {
     "stringMap": {
+      "COMPLETED": "Completed",
+      "WAITING": "Waiting",
+      "DIGESTING": "Digesting",
+      "UNKNOWN": "Unknown",
+      "COMPLETED_ARCHIVED": "Archived",
+      "WAITING_ARCHIVED": "Waiting Archived",
+      "DIGESTING_ARCHIVED": "Interrupted Archived",
+      "UNKNOWN_ARCHIVED": "Unknown Archived",
       "customerAccountId": "Customer Account ID",
       "sellerAccountId": "Seller Account ID",
       "sellerAccountIds": "Seller Account IDs",
       "dateFrom": "Date From",
       "dateTo": "Date To",
-      "paymentChannelId": "Payment Channel ID", 
+      "paymentChannelId": "Payment Channel ID",
       "save": "Save",
       "email-format": "Please enter a valid email address.",
       "min-length": "Please enter at least {intended} words",
@@ -294,6 +302,37 @@
     "prefix": "lotus",
     "stringMap": {
       "bu-kitap-bir-takm-tarafndan-yn": "This book is managed by a team."
+    }
+  },
+  {
+    "prefix": "postral",
+    "stringMap": {
+      "demo-server-warning": "DO NOT USE your Tetakent account",
+      "demo-server-warning-long": "This Postral Core instance is prepared for demo purposes and is not suitable for production use. Your data will be regularly deleted."
+    }
+  },
+  {
+    "prefix": "postral.report-type",
+    "stringMap": {
+      "key": "Expense key",
+      "value": "Expense value",
+      "SELLER": "Seller report",
+      "PLATFORM": "Platform report",
+      "PLATFORM_SELLER": "Platform-seller report",
+      "PLATFORM_FLOW": "Platform flow report"
+    }
+  },
+  {
+    "prefix": "postral.expense",
+    "stringMap": {
+      "key": "Expense key",
+      "value": "Expense value",
+      "ITEM_CLASS_COMISSION": "Platform commission for {itemClass} item class",
+      "PAYMENT_SERVICE_FEE": "Total fee to be paid to payment service providers",
+      "PLATFORM_COMISSION_TOTAL": "Total platform commission",
+      "REPORT_TOTAL": "Total report expense",
+      "SHAQ_ONEAL_ADVERTISEMENT_FEE": "Turkcell's fee for featuring Shaq O'neal in advertisements ( ͡° ͜ʖ ͡°)",
+      "KOBE_BRYANT_RESURRECTION_AND_ADVERTISEMENT_FEE": "Turkcell's fee for resurrecting Kobe Bryant and featuring him in advertisements ( ͡° ͜ʖ ͡°)"
     }
   }
 ]

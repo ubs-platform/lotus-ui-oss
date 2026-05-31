@@ -1,0 +1,32 @@
+{
+  "/api/exams": {
+    "target": "http://localhost:3333",
+    "secure": false
+  },
+  "/api/users": {
+    "target": "http://localhost:3000",
+    "pathRewrite": { "^/api/users": "/api" },
+    "secure": false
+  },
+  "/api/file": {
+    "target": "http://localhost:3000",
+    "secure": false
+  },
+  "/api/feedback": {
+    "target": "http://localhost:3000",
+    "pathRewrite": { "^/api/feedback": "/api" },
+    "secure": false
+  },
+  "/api/social": {
+    "target": "http://localhost:3000",
+    "pathRewrite": { "^/api/social": "/api" },
+    "secure": false
+  },
+  "/service/payment": {
+    "target": "http://localhost:3767",
+    "pathRewrite": {
+      "^/service/payment": ""
+    },
+    "secure": false
+  }
+}

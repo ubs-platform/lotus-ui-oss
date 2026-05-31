@@ -47,7 +47,7 @@ import { ApplicationLogoDirective } from '../application-logo.directive';
 import { ApplicationFooterDirective } from '../application-footer.directive';
 import { WebdialogHandler } from 'libs/front-global/webdialog/src/lib/webdialog/webdialog-handler.service';
 import { CommonModule } from '@angular/common';
-
+import { screenTypeStatus } from '@lotus/front-global/mona-mobile-experience-ng';
 @Component({
   standalone: true,
   imports: [CommonModule],
@@ -81,6 +81,9 @@ export class KyleBroflovski implements OnInit {
     @Inject(WEBDIALOG_CONFIG)
     public config: IWebDialogConfig<'HUMANKITE' | 'ELFKING' | 'DAILY', void>
   ) {}
+
+
+
   ngOnInit() {
     setTimeout(() => (this.testo = NaN), 1000);
   }
@@ -110,12 +113,12 @@ export class GenericAppHeaderComponent
   logoSrc = input('');
   showHomepageMenu = input(true);
   showIcon = input(true);
-
+  onMobile = signal(false);
   programaticPagination = viewChild<BPaginationProgrammaticComponent>(
     'programaticPagination'
   );
-  customMenus = input<Array<PaginationItem | null>>([]);
-  helpMenu = input<Array<PaginationItem | null>>([]);
+  customMenus = input<Array<PaginationItem>>([]);
+  helpMenu = input<Array<PaginationItem>>([]);
   // @Input() hideMainMenu = false;
   scrollingParentElement = input<String | HTMLElement | ElementRef>();
   subjectHideTrack = new Subject<boolean>();
@@ -167,7 +170,9 @@ export class GenericAppHeaderComponent
         this.user.set(a);
       });
     }
-
+    screenTypeStatus.subscribe((status) => {
+      this.onMobile.set(status === 'mobile');
+    });
     // this.initializeTheme();
   }
 
@@ -180,9 +185,6 @@ export class GenericAppHeaderComponent
   }
 
 
-  get onMobile() {
-    return innerWidth < 768;
-  }
 
   logout() {
     this.secOverlay

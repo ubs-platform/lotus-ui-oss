@@ -1,0 +1,6 @@
+  <div class="flex flex-row justify-content-end align-items-center gap-1">
+    <block-button *ngIf="reformFilter()"  (click)="showFilter()"
+      stringContent="Filtreleme seçenekleri"></block-button>
+    <block-button *ngIf="reformFilter()"  (click)="clearFilter()" iconClass="pi pi-times"
+      stringContent="Filtreyi temizle"></block-button>
+  </div>

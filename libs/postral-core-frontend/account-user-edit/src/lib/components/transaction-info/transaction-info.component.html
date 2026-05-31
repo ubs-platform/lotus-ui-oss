@@ -1,0 +1,116 @@
+<div
+  class="h-full w-full gap-4 flex flex-column-reverse lg:flex-row overflow-auto"
+>
+  <div class="flex flex-column gap-4 flex-grow-1">
+    @if (transactionInfo()) {
+    <div class="payment-info-section mona-card">
+      <h2 class="mb-2">Ödeme Bilgileri</h2>
+      <div class="info-grid gap-3">
+        <div class="info-item">
+          <span class="label">Satıcı Sipariş ID:</span>
+          <span class="value">{{ transactionInfo()!.id }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Payment ID:</span>
+          <span class="value">{{ transactionInfo()!.paymentId }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Para Birimi:</span>
+          <span class="value">{{ transactionInfo()!.currency }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Tutar:</span>
+          <span class="value">
+            <lib-money-display
+              [amount]="transactionInfo()!.amount"
+              [currency]="transactionInfo()!.currency"
+            ></lib-money-display>
+          </span>
+        </div>
+        <div class="info-item">
+          <span class="label">İşlem Tipi:</span>
+          <span class="value">{{ transactionInfo()!.transactionType }}</span>
+        </div>
+
+        <div class="info-item">
+          <span class="label">Alıcı hesap</span>
+          <span class="value">
+            <!-- 
+export type SellerPaymentOrderType = "CREDIT_TO_SELLER" | "DEBIT_FROM_SELLER";
+            
+            -->
+
+            {{
+              transactionInfo()!.transactionType == 'CREDIT_TO_SELLER'
+                ? transactionInfo()!.targetAccountName
+                : transactionInfo()!.sourceAccountName
+            }}
+          </span>
+        </div>
+        <div class="info-item">
+          <span class="label">Gönderici hesap</span>
+          <span class="value">
+            {{
+              transactionInfo()!.transactionType == 'CREDIT_TO_SELLER'
+                ? transactionInfo()!.sourceAccountName
+                : transactionInfo()!.targetAccountName
+            }}
+          </span>
+        </div>
+      </div>
+    </div>
+    } @if (paymentItems().length > 0) {
+    <div class="payment-items-section flex-grow-1 mona-card">
+      <h2 class="mb-2">Ödeme Kalemleri</h2>
+      <lib-payment-item-list
+        [items]="paymentItems()"
+        [showSellerPaymentId]="true"
+        [currency]="transactionInfo()?.currency || 'TRY'"
+      ></lib-payment-item-list>
+    </div>
+    }
+  </div>
+  <div class="flex flex-column gap-4 side-minimal">
+    <div class="payment-info-section mona-card">
+      <h2 class="mb-2">Faturalar</h2>
+      <div class="info-grid flex flex-column gap-3">
+        <lib-invoice-list-minimal
+          [sellerPaymentOrderId]="sellerPaymentOrderId"
+          #invoiceListMinimal
+        ></lib-invoice-list-minimal>
+        @if (invoiceHasBeenFinalized()) {
+        <div class="text-sm text-muted">
+          Bir fatura zaten kesinleştirilmiş. Yeni bir fatura oluşturmak için
+          önce iade işlemi yapılmalıdır
+        </div>
+        } @else {
+        <block-button
+          (click)="createInvoice()"
+          [cover]="true"
+          stringContent="Yeni fatura oluştur"
+          iconClass="pi pi-plus"
+        ></block-button>
+        }
+      </div>
+    </div>
+
+    <div class="payment-info-section mona-card">
+      <h2 class="mb-2">İşlemler</h2>
+      <div class="info-grid flex flex-column gap-3">
+        @if (paymentInfo()?.openPayment && paymentInfo()?.paymentStatus === 'WAITING') {
+        <block-button
+          (click)="confirmOpenPayment()"
+          [cover]="true"
+          stringContent="Açık Faturayı Onayla"
+          iconClass="pi pi-check"
+        ></block-button>
+        }
+        <block-button
+          [cover]="true"
+          stringContent="İtiraz Et"
+          iconClass="pi pi-exclamation-triangle"
+        ></block-button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+{
+  "name": "forms",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/postral-core-frontend/forms/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/postral-core-frontend/forms",
+        "rootDir": ".",
+        "main": "libs/postral-core-frontend/forms/src/index.ts",
+        "tsConfig": "libs/postral-core-frontend/forms/tsconfig.lib.json",
+        "assets": ["libs/postral-core-frontend/forms/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/postral-core-frontend/forms/jest.config.ts"
+      }
+    }
+  }
+}

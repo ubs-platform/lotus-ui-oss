@@ -43,25 +43,11 @@ export class UserGeneralForm implements UserGeneralInfoDTO {
     inputType: 'select',
     widthRatio: '50%',
     selectItems: () => [
-      { text: 'male', value: 'M' },
-      { text: 'female', value: 'F' },
-      { text: 'walmart-bag', value: 'WALMART_BAG' },
-      { text: 'KDE Plasma 5.27 LTS', value: 'KDE_PLASMA_5_27_LTS' },
-      {
-        text: 'RTX 4080 Ti',
-        value: 'RTX_4080_TI',
-      },
-      {
-        text: 'Renault Kangoo 2007 Multix Authentique 1.5 DCi',
-        value: 'KANGOO_2007_MULTIX_A_1.5',
-      },
-      {
-        text: 'Volkan Konak',
-        value: 'Merhaba ben volkan konak',
-      },
+      { text: 'male', value: 'MALE' },
+      { text: 'female', value: 'FEMALE' },
       {
         text: 'other',
-        value: 'O',
+        value: 'OTHER',
       },
       {
         text: 'i-dont-want-to-tell',

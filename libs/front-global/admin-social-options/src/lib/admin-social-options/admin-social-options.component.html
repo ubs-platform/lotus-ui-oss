@@ -1,6 +1,6 @@
   <div class="flex flex-column gap-1 flex-wrap" *ngIf="socialDialogUser()">
     <block-button
-      [hasContent]="false"
+      [hasContent]="true"
       iconClass="pi pi-trash"
       buttonClass="bg-danger"
       *ngIf="!userIsAdmin()"
@@ -8,7 +8,7 @@
       >Yorumlarını temizle</block-button
     >
     <block-button
-      [hasContent]="false"
+      [hasContent]="true"
       iconClass="pi pi-ban"
       buttonClass="bg-danger"
       *ngIf="
@@ -20,7 +20,7 @@
     >
 
     <block-button
-      [hasContent]="false"
+      [hasContent]="true"
       iconClass="pi pi-check"
       buttonClass="bg-danger"
       *ngIf="

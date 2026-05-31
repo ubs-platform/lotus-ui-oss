@@ -16,7 +16,6 @@ import { Reform } from '@lotus/front-global/minky/core';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { SearchResult } from '@ubs-platform/crud-base-common';
 import { EmptyDataDirective } from '../../directives/empty-data.directive';
-
 @Component({
   selector: 'searchable-data-table',
   standalone: false,
@@ -29,6 +28,7 @@ export class SearchableDataTableComponent implements AfterViewInit {
   maxPage = signal(0);
   pageHumanReadable = computed(() => this.page() + 1);
   cover = input(false);
+  forceDesktopMode = input(false);
 
   url = input('');
   // sortBy = input('');
@@ -48,11 +48,11 @@ export class SearchableDataTableComponent implements AfterViewInit {
   pageFilterChange = output<{}>();
   loading = signal(false);
   noDataTemplateDirective = contentChildren(EmptyDataDirective);
-
+  fetched = output<SearchResult<any>>();
   constructor(
     private http: HttpClient,
     private basicOverlay: BasicOverlayService
-  ) {}
+  ) { }
 
   decidedFilter() {
     if (this.reformFilter() != null) {
@@ -100,6 +100,7 @@ export class SearchableDataTableComponent implements AfterViewInit {
       .subscribe({
         next: (a) => {
           this.itemsFromResponse.set(a.content);
+          this.fetched.emit(a);
           this.lastPage.set(a.lastPage);
           this.firstPage.set(a.firstPage);
           this.maxPage.set(a.maxPagesIndex + 1);
@@ -128,6 +129,5 @@ export class SearchableDataTableComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.info(this.columnsContent());
   }
 }

@@ -1,0 +1,38 @@
+<lotus-web-data-list-layout>
+  <ng-template action>
+    <lotus-web-searchable-data-table-filter-config-holder [searchableDataTableComponent]="dataTable">
+
+    </lotus-web-searchable-data-table-filter-config-holder>
+  </ng-template>
+  <ng-container content>
+    <div class="div flex flex-column h-full w-full gap-2">
+      <div class="mona-card">
+        Yeni bir fatura oluşturmak için işlem detaylarından "Fatura oluştur" butonuna tıklayabilirsiniz.
+      </div>
+      <div class="flex-grow-1">
+        <searchable-data-table url="/service/payment/api/invoice/_search"
+          [otherFilter]="{ searchSide: historySearchSide() }" [cover]="true" [reformFilter]="reform()" #dataTable>
+          <column name="id">
+            <ng-template header> ID </ng-template>
+            <ng-template data let-item="item"> {{ item.id }} </ng-template>
+          </column>
+          <column name="paymentId">
+            <ng-template header> Ödeme ID </ng-template>
+            <ng-template data let-item="item"> {{ item.paymentId }} </ng-template>
+          </column>
+          <column name="finalized">
+            <ng-template header> Durum </ng-template>
+            <ng-template data let-item="item"> {{ item.finalized ? 'Kesinleştirilmiş' : 'Beklemede' }} </ng-template>
+          </column>
+          <column name="actions">
+            <ng-template header> İşlemler </ng-template>
+            <ng-template data let-item="item">
+              <block-button buttonClass="secondary" [routerLink]="['..', item.id]" stringContent="Detay"
+                iconClass="pi pi-eye">
+              </block-button> </ng-template>
+          </column>
+        </searchable-data-table>
+      </div>
+    </div>
+  </ng-container>
+</lotus-web-data-list-layout>

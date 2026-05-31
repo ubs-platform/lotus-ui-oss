@@ -1,0 +1,75 @@
+<lotus-web-data-list-layout>
+  <ng-template action>
+    <block-button
+      buttonClass="primary"
+      style="margin-bottom: 10px"
+      (click)="createAccount()"
+      stringContent="Yeni Hesap Oluştur"
+      iconClass="pi pi-plus"
+    >
+    </block-button>
+  </ng-template>
+  <ng-container content>
+    <searchable-data-table
+      url="/service/payment/api/account/_search"
+      [otherFilter]="{ admin: admin() }"
+      [cover]="true"
+      #table
+    >
+      <column name="id">
+        <ng-template header> Veritabanı kimliği </ng-template>
+        <ng-template data let-item="item">
+          {{ item.id }}
+        </ng-template>
+      </column>
+      <column name="name">
+        <ng-template header> Hesap İsmi </ng-template>
+        <ng-template data let-item="item">
+          {{ item.name }}
+        </ng-template>
+      </column>
+      <column name="legalIdentity">
+        <ng-template header> TCKN / VKN </ng-template>
+        <ng-template data let-item="item">
+          {{ item.legalIdentity }}
+        </ng-template>
+      </column>
+
+      <column name="type">
+        <ng-template header> Hesap Tipi </ng-template>
+        <ng-template data let-item="item">
+          {{ item.type == 'INDIVIDUAL' ? 'Bireysel' : 'Kurumsal' }}
+        </ng-template>
+      </column>
+
+      <column name="actions">
+        <ng-template header> Aksiyonlar </ng-template>
+        <ng-template data let-item="item">
+          <div class="action-buttons" >
+            <block-button
+              [hasContent]="false"
+              stringContent="Hesap bilgileri"
+              buttonClass="border"
+              iconClass="material-symbols-outlined"
+              iconContent="info"
+              [routerLink]="['../account', item.id]"
+            ></block-button>
+            <block-button
+              (click)="deactivateAccount(item.id)"
+              buttonClass="bg-danger"
+              iconClass="material-symbols-outlined"
+              iconContent="close"
+              stringContent="Hesabı devre dışı bırak"
+              [hasContent]="false"
+            ></block-button>
+            <!-- @if (admin()) {
+        <block-button [routerLink]="['../account', item.id, 'suspend']"
+          >Hesabı askıya al</block-button
+        >
+        } -->
+          </div>
+        </ng-template>
+      </column>
+    </searchable-data-table>
+  </ng-container>
+</lotus-web-data-list-layout>

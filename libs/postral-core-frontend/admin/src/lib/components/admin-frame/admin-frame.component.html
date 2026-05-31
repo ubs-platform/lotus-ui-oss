@@ -1,0 +1,8 @@
+<div class="h-full w-full">
+  <lotus-web-sidebar [currentPath]="currentNavigationItem" (currentPathChange)="changeCurrent($event)"
+    [items]="navigationItemList"
+    [headerAbsolutePosition]="true">
+    <router-outlet></router-outlet>
+  </lotus-web-sidebar>
+
+</div>

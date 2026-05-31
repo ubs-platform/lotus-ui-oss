@@ -132,7 +132,7 @@
       "page-not-found": "Aradığınız sayfa bulunamadı",
       "page-not-found-desc": "Aradığınız sayfaya ulaşılamadı. Hatanın nedeni yanlış sayfa adresi girmeniz yada ulaşmaya çalıştığınız sayfanın adresinin değişmesi olabilir. Eğer hatanın sizden kaynaklı olduğunu düşünmüyorsanız lütfen bize geri bildirimde bulunun.",
       "home": "Ana sayfa",
-      "suspended": "Maalesef bu hesap üzerinde bir ya da birden fazla topluluk kurallarına uymayan eylem yapıldığı için, '{reason}' nedeniyle hesabınızı bir süreliğine askıya aldık.  Bunun yanlışıkla olduğunu düşünüyorsanız, lütfen info[at]tetakent[nokta]com üzerinden bizimle iletişime geçin.",
+      "suspended": "Maalesef bu hesap üzerinde bir ya da birden fazla topluluk kurallarına uymayan eylem yapıldığı için, '{suspendReason}' nedeniyle hesabınızı bir süreliğine askıya aldık.  Bunun yanlışıkla olduğunu düşünüyorsanız, lütfen info[at]tetakent[nokta]com üzerinden bizimle iletişime geçin.",
       "feedback": "Geri bildirim",
       "feedback-short": "GBl",
       "save": "Kaydet",
@@ -154,12 +154,20 @@
   },
   {
     "stringMap": {
+      "COMPLETED": "Tamamlandı",
+      "WAITING": "Beklemede",
+      "DIGESTING": "İşleniyor",
+      "UNKNOWN": "Bilinmeyen",
+      "COMPLETED_ARCHIVED": "Arşiv",
+      "WAITING_ARCHIVED": "Beklemede kalmış arşiv",
+      "DIGESTING_ARCHIVED": "Yarıda kesilmiş arşiv",
+      "UNKNOWN_ARCHIVED": "Bilinmeyen arşiv",
       "customerAccountId": "Müşteri Hesap ID'si",
       "sellerAccountId": "Satıcı Hesap ID'si",
       "sellerAccountIds": "Satıcı Hesap ID'leri",
       "dateFrom": "Başlangıç Tarihi",
       "dateTo": "Bitiş Tarihi",
-      "paymentChannelId": "Ödeme Kanalı ID'si", 
+      "paymentChannelId": "Ödeme Kanalı ID'si",
       "save": "Kaydet",
       "email-format": "Lütfen geçerli bir e-posta adresi giriniz.",
       "min-length": "Lütfen en az {intended} kelime giriniz",
@@ -295,6 +303,37 @@
     "prefix": "lotus",
     "stringMap": {
       "bu-kitap-bir-takm-tarafndan-yn": "Bu kitap bir takım tarafından yönetilmektedir."
+    }
+  },
+  {
+    "prefix": "postral",
+    "stringMap": {
+      "demo-server-warning": "Tetakent hesabınızı KULLANMAYINIZ",
+      "demo-server-warning-long": "Bu postral core örneği, demo için hazırlanmıştır ve nihai kullanım için uygun değildir. Verileriniz düzenli olarak silinecektir. "
+    }
+  },
+  {
+    "prefix": "postral.report-type",
+    "stringMap": {
+      "key": "Gider anahtarı",
+      "value": "Gider değeri",
+      "SELLER": "Satıcı raporu",
+      "PLATFORM": "Platform raporu",
+      "PLATFORM_SELLER": "Platform-satıcı raporu",
+      "PLATFORM_FLOW": "Platform akış raporu"
+    }
+  },
+  {
+    "prefix": "postral.expense",
+    "stringMap": {
+      "key": "Gider anahtarı",
+      "value": "Gider değeri",
+      "ITEM_CLASS_COMISSION": "{itemClass} ürün sınıfı için ödenecek platform komisyonu",
+      "PLATFORM_COMISSION_TOTAL": "Toplam platform komisyonu",
+      "REPORT_TOTAL": "Rapor toplam gideri",
+      "PAYMENT_SERVICE_FEE": "Ödeme hizmeti sağlayıcılarına ödenecek toplam ücret",
+      "SHAQ_ONEAL_ADVERTISEMENT_FEE": "Turkcell'in reklamlarda Shaq O'neal'i  oynatma ücreti ( ͡° ͜ʖ ͡°)",
+      "KOBE_BRYANT_RESURRECTION_AND_ADVERTISEMENT_FEE": "Turkcell'in Kobe Bryant'ı mezardan diriltip reklamlarında oynatma ücreti ( ͡° ͜ʖ ͡°)"
     }
   }
 ]

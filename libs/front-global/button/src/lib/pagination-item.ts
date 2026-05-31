@@ -11,7 +11,6 @@ export interface ToggleButtonValues extends IIcon {
   iconImageSource?: string;
 }
 
-export type LudicString = string | Observable<string>;
 
 export interface PaginationItem extends IIcon {
   _pageKey?: string;
@@ -22,7 +21,7 @@ export interface PaginationItem extends IIcon {
   fontClass?: string[];
   fontStyle?: string[];
   show?: Observable<boolean>;
-  text?: LudicString;
+  text?: string;
   templateContentName?: string;
   customTemplate?: TemplateRef<any>;
 

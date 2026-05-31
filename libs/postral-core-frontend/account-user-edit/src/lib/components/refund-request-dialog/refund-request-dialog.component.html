@@ -1,0 +1,80 @@
+<lib-webdialog [(show)]="visible" position="center" title="İade talebi oluştur">
+  <div class="flex flex-column gap-3">
+    <p class="text-sm text-color-secondary">
+      Lütfen iade etmek istediğiniz kalemleri ve adetlerini seçiniz.
+      Seçtiğiniz kalemler için iade talebi oluşturulacak ve ilgili birimler iade sürecine dahil edilecektir.
+    </p>
+  </div>
+  <lib-custom-select [options]="sellerAccounts()" [(ngModel)]="selectedAccountId" placeholder="Lütfen satıcı hesabı seçin"></lib-custom-select>
+  <div class="flex flex-column gap-3 mt-3">
+    @if (items().length === 0) {
+    <div class="text-center p-3 text-muted">
+      İade edilebilecek kalem bulunamadı.
+    </div>
+    } @else {
+    <div class="flex flex-column gap-3">
+      @for (item of items(); track item.id; let i = $index) {
+      <div
+        class="flex align-items-center justify-content-between border-1 border-round p-3 surface-border"
+      >
+        <div class="flex flex-column">
+          <span class="font-bold">{{ item.name }}</span>
+          <span class="text-sm text-color-secondary">
+            Adet: {{ item.quantity }} | İade Edilmiş:
+            {{ item.refundCount || 0 }}
+          </span>
+        </div>
+        <div class="flex align-items-center gap-2">
+          <label for="refundCount{{ i }}" class="font-medium text-sm"
+            >İade Adedi</label
+          >
+          <p-inputNumber
+            [(ngModel)]="refundSelections[item.id!]"
+            [showButtons]="true"
+            buttonLayout="horizontal"
+            [min]="0"
+            [max]="item.quantity - (item.refundCount || 0)"
+            inputStyleClass="w-3rem text-center"
+          >
+          </p-inputNumber>
+        </div>
+      </div>
+      }
+    </div>
+    <div class="action-buttons">
+      <!-- <p-button
+        label="İptal"
+        severity="secondary"
+        icon="pi pi-times"
+        styleClass="mr-2"
+        (click)="close()"
+      >
+      </p-button> -->
+      <block-button
+        stringContent="İptal"
+        iconClass="pi pi-times"
+        buttonClass="surface border"
+        (click)="close()"
+      >
+      </block-button>
+
+      <block-button
+        stringContent="İade İsteğini Gönder"
+        iconClass="pi pi-check"
+        buttonClass="primary"
+        (click)="submitRefundRequest()"
+      >
+      </block-button>
+      <!-- <p-button
+        label="İade İsteğini Gönder"
+        severity="primary"
+        icon="pi pi-check"
+        [loading]="submitting()"
+        [disabled]="!hasSelectedAny()"
+        (click)="submitRefundRequest()"
+      >
+      </p-button> -->
+    </div>
+    }
+  </div>
+</lib-webdialog>

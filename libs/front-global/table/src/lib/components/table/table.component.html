@@ -5,10 +5,11 @@
 } @else {
 <div class="h-full overflow-hidden">
   <!-- Mobilde sütunlar alt alta görünür, yanlarında da değerleri gelir -->
-  <div *ngIf="isOnMobile | async; else desktopView">
-    <div class="mobile-item" *ngFor="let item of items()">
+  <div *ngIf="(isOnMobile | async) && !forceDesktopMode(); else desktopView">
+    @for (item of items(); track $index) {
+    <div class="mobile-item">
+      @for (key of colsKeys(); track $index) {
       <div
-        *ngFor="let key of colsKeys(); let index = index"
         class="mobile-field-item w-full flex flex-column sm:flex-row sm:align-items-center sm:justify-content-between p-1"
       >
         <div *ngIf="cols()[key]?.[0]?.head; let head">
@@ -19,17 +20,21 @@
         <div [class.sm:text-right]="cols()[key]?.[0]?.head">
           <ng-container *ngIf="cols()[key]?.[0]?.data; let d">
             <div
-              *ngTemplateOutlet="d.templateRef; context: { item: item, index: index }"
+              *ngTemplateOutlet="
+                d.templateRef;
+                context: { item: item, index: $index }
+              "
             ></div>
           </ng-container>
         </div>
       </div>
+      }
     </div>
+    <div class="mobile-item"></div>
+    }
   </div>
   <ng-template #desktopView>
-    <table
-      class="table w-full h-full"
-    >
+    <table class="table w-full h-full">
       <tr>
         <th
           *ngFor="let key of colsKeys()"
@@ -47,7 +52,10 @@
           <ng-container *ngIf="cols()[key]?.[0]?.data; let d">
             <div class="p-1">
               <div
-                *ngTemplateOutlet="d.templateRef; context: { item: item, index: index }"
+                *ngTemplateOutlet="
+                  d.templateRef;
+                  context: { item: item, index: index }
+                "
               ></div>
             </div>
           </ng-container>

@@ -27,7 +27,13 @@ export class SidebarComponent implements OnInit {
   readonly title = input('');
   readonly items = input<SidebarItem[]>([]);
   readonly currentPathChange = output<string>();
-
+  
+  /**
+   * Header kısmının absolute mi yoksa normal mi olduğunu belirler. Absolute ise, header sayfanın geri kalanından bağımsız olarak hareket eder ve sayfanın üstünde kalır. 
+   * Normal ise, header sayfanın geri kalanıyla birlikte hareket eder ve sayfanın akışına göre konumlanır.
+   * Bunu da aksiyon butonlarıyla beraber boşa giden alandan tasarruf etmek için kullanıyoruz. Absolute olduğunda, header'ın yüksekliği sayfanın geri kalanına dahil edilmez, bu da özellikle mobil cihazlarda daha fazla içerik alanı sağlar.
+   */
+  readonly headerAbsolutePosition = input(false);
   constructor() {
     // React to currentPath changes
     effect(() => {

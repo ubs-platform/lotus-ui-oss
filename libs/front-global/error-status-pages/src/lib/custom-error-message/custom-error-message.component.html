@@ -3,7 +3,7 @@
 >
   <img *ngIf="imgPath()" src="{{ imgPath() }}" />
   <i
-    *ngIf="primeIcons()"
+    *ngIf="!imgPath() && primeIcons()"
     [class]="'pi ' + primeIcons()"
     style="font-size: 10em"
   ></i>
@@ -12,4 +12,7 @@
   <!-- <block-button routerLink="/" iconClass="pi pi-home">{{
     'mona.home' | translate
   }}</block-button> -->
+  <div class="custom-error-message-actions">
+    <ng-content></ng-content>
+  </div>
 </div>

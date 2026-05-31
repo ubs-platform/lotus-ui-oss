@@ -1,0 +1,59 @@
+<div class="h-full w-full flex flex-column">
+  <div class="flex flex-row-reverse w-full gap-2 mb-2">
+    <block-button stringContent="Yeni takım oluştur" iconClass="pi pi-plus" (click)="createNewTeam()"></block-button>
+  </div>
+  <div class="flex-grow-1">
+    <searchable-data-table url="/api/users/entity-ownership-group/_search" [cover]="true"
+      [otherFilter]="{admin: adminMode()}" #dataTable>
+      <ng-template empty-data>
+        <div class="p-3 flex flex-column justify-content-center align-items-center">
+          <img src="assets/errors/nothing.webp" alt="No Teams" style="width: 200px; height: auto;" />
+          <p class="text-align-center">Yeni bir takım oluşturmak için oluştur butonunu kullanabilir, ya da davetlerinize
+            bakabilirsiniz.</p>
+          <div class="action-buttons">
+            <block-button stringContent="Yeni takım oluştur" iconClass="pi pi-plus"
+              (click)="createNewTeam()"></block-button>
+            <block-button stringContent="Davetlerim" iconClass="pi pi-inbox"
+              routerLink="invitations-for-me"></block-button>
+          </div>
+        </div>
+      </ng-template>
+      <column name="name" width="70%">
+        <ng-template header> İsim</ng-template>
+        <ng-template data let-item="item">
+          <div class="flex flex-column align-items-start sm:align-items-end lg:align-items-start">
+            <div style="font-size: 20px;">{{ item.name }}</div>
+            <div>{{ item.description }}</div>
+          </div>
+        </ng-template>
+      </column>
+
+      <column name="actions" width="30%">
+        <ng-template header>Aksiyonlar </ng-template>
+        <ng-template data let-item="item">
+          <div>
+            <div class="action-buttons">
+              <block-button stringContent="Düzenle" iconClass="pi pi-pencil"
+                [routerLink]="[item.id, 'edit']"></block-button>
+              <block-button stringContent="Üyeler" iconClass="pi pi-users"
+                [routerLink]="[item.id, 'members']"></block-button>
+              <!-- <block-button stringContent="Gruptan ayrıl" iconClass="pi pi-sign-out"></block-button> -->
+              <block-button stringContent="Sil" iconClass="pi pi-trash" (click)="deleteTeam(item)"></block-button>
+              @if (adminMode()) {
+              @if(eogTrusted()[item.id] != null) {
+              @if (eogTrusted()[item.id]) {
+              <block-button stringContent="Takıma güvenmeyi bırak"
+                (click)="setEogTrusted(item.id, false)"></block-button>
+              } @else {
+              <block-button stringContent="Takıma güven" (click)="setEogTrusted(item.id, true)"></block-button>
+              }
+              }
+              }
+
+            </div>
+          </div>
+        </ng-template>
+      </column>
+    </searchable-data-table>
+  </div>
+</div>

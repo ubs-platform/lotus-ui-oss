@@ -1,0 +1,29 @@
+{
+  "name": "consts",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/lotus-common/consts/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/lotus-common/consts",
+        "main": "libs/lotus-common/consts/src/index.ts",
+        "tsConfig": "libs/lotus-common/consts/tsconfig.lib.json",
+        "assets": ["libs/lotus-common/consts/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/lotus-common/consts/jest.config.ts"
+      }
+    }
+  }
+}

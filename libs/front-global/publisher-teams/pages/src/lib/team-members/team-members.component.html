@@ -1,0 +1,103 @@
+<div class="h-full w-full p-2">
+  <block-button stringContent="Kişi ekle" iconClass="pi pi-plus" (click)="addAccountShow()"></block-button>
+  <ubs-table-ngx [items]="userCapabilities()" [cover]="true">
+    <column name="name" width="50%">
+      <ng-template header> İsim</ng-template>
+      <ng-template data let-item="item">
+        <div class="flex align-items-center">
+          <img [src]="'/api/file/PROFILE_PHOTO/' + item.userId" class="rounded-full inline-block mr-2"
+            style="border-radius: 100%" height="50px" width="50px" />
+          <div>{{ item.userFullName }}</div>
+        </div>
+      </ng-template>
+    </column>
+    <column name="capability">
+      <ng-template header>İçerik Yetkisi</ng-template>
+      <ng-template data let-item="item">
+        <div class="flex flex-column align-items-start sm:align-items-end lg:align-items-start">
+          @for (item of item.entityCapabilities; track $index) {
+          <div><b>{{ item.entityGroup }}/{{ item.entityName }}</b></div>
+          <div>{{ item.capability }}</div>
+          }
+
+        </div>
+
+      </ng-template>
+    </column>
+    <column name="group-capability">
+      <ng-template header>Grup Yetkisi</ng-template>
+      <ng-template data let-item="item">
+        <div>{{ item.groupCapability }}</div>
+      </ng-template>
+    </column>
+    <column name="actions">
+      <ng-template header>Aksiyonlar </ng-template>
+      <ng-template data let-item="item">
+        <div class="action-buttons">
+          <block-button stringContent="Kaldır" iconClass="pi pi-sign-out" buttonClass="bg-danger"
+            (click)="removeUserShow(item)"></block-button>
+
+          <block-button stringContent="Yetkileri düzenle" iconClass="pi pi-pencil" buttonClass="border"
+            (click)="editUserShow(item)"></block-button>
+        </div>
+
+      </ng-template>
+    </column>
+    <!-- <column name="actions">
+            <ng-template header>Aksiyonlar </ng-template>
+            <ng-template data let-item="item">
+                <div style="width: 500px;">
+                    <block-button stringContent="Düzenle" iconClass="pi pi-pencil"
+                        [routerLink]="[item._id, 'edit']"></block-button>
+                    <block-button stringContent="Üyeler" iconClass="pi pi-users"
+                        [routerLink]="[item._id, 'members']"></block-button>
+                    <block-button stringContent="Gruptan ayrıl" iconClass="pi pi-sign-out"></block-button>
+                    <block-button stringContent="Sil" iconClass="pi pi-trash" (click)="deleteTeam(item)"></block-button>
+                </div>
+            </ng-template>
+
+        </column> -->
+  </ubs-table-ngx>
+  @if (userCapabilityInvitations()?.length) {
+  <h3 class="my-1">Takıma davet edilenler</h3>
+  <div>Davet ettiğiniz kişi kabul ettiği anda <strong>üye listesinde görünecektir</strong>.</div>
+  <ubs-table-ngx [items]="userCapabilityInvitations()" [cover]="true">
+    <column name="name" width="50%">
+      <ng-template header> İsim</ng-template>
+      <ng-template data let-item="item">
+        <div class="flex align-items-center">
+          <img [src]="'/api/file/PROFILE_PHOTO/' + item.userId" class="rounded-full inline-block mr-2"
+            style="border-radius: 100%" height="50px" width="50px" />
+          <div>{{ item.userName }}</div>
+        </div>
+      </ng-template>
+    </column>
+    <column name="capability">
+      <ng-template header>İçerik Yetkisi</ng-template>
+      <ng-template data let-item="item">
+        <div class="flex flex-column align-items-start sm:align-items-end lg:align-items-start">
+          @for (item of item.entityCapabilities; track $index) {
+          <div><b>{{ item.entityGroup }}/{{ item.entityName }}</b></div>
+          <div>{{ item.capability }}</div>
+          }
+
+        </div>
+      </ng-template>
+    </column>
+    <column name="group-capability">
+      <ng-template header>Grup Yetkisi</ng-template>
+      <ng-template data let-item="item">
+        <div>{{ item.groupCapability }}</div>
+      </ng-template>
+    </column>
+    <column name="actions">
+      <ng-template header>Aksiyonlar </ng-template>
+      <ng-template data let-item="item">
+        <block-button stringContent="Kaldır" iconClass="pi pi-sign-out" buttonClass="bg-danger"
+          (click)="removeInvitation(item)"></block-button>
+      </ng-template>
+    </column>
+
+  </ubs-table-ngx>
+  }
+</div>

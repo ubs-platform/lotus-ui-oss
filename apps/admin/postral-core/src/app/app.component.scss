@@ -1,0 +1,33 @@
+.app-logo {
+  height: 50px;
+  width: 145px;
+  background-color: var(--primary-color);
+  mask-image: url('/assets/logo.svg');
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-image: url('/assets/logo.svg');
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
+
+.app-logo-with-tetakent {
+  height: 50px;
+  width: 200px;
+  background-color: var(--primary-color);
+  mask-image: url('/assets/logo-with-tetakent.svg');
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-image: url('/assets/logo-with-tetakent.svg');
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
+
+// [theme='dark'] .app-logo {
+//   background-color: white;
+// }
+
+// @media (prefers-color-scheme: dark) {
+//   :not([theme='light']) .app-logo {
+//     background-color: white;
+//   }
+// }

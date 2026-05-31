@@ -1,0 +1,7 @@
+.holder {
+  @media screen and (min-width: 768px) {
+    min-height: 80px;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}

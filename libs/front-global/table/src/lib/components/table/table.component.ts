@@ -36,7 +36,7 @@ export class TableComponent implements AfterViewInit {
   isOnMobile = DialogInformation.onMobileAsync;
   cover = input(false);
   noDataTemplateDirective = contentChildren(EmptyDataDirective);
-
+  forceDesktopMode = input(false);
 
   ngAfterViewInit(): void { }
 

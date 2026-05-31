@@ -1,0 +1,85 @@
+<lotus-web-data-list-layout>
+  <ng-template action>
+    <lotus-web-searchable-data-table-filter-config-holder [searchableDataTableComponent]="dataTable">
+
+    </lotus-web-searchable-data-table-filter-config-holder>
+  </ng-template>
+  <ng-container content>
+    <searchable-data-table
+      url="/service/payment/api/payment/_search"
+      [otherFilter]="{ searchSide: historySearchSide() }"
+      [cover]="true"
+      [reformFilter]="reform()"
+      #dataTable
+    >
+      <!-- <column name="id">
+        <ng-template header> Id </ng-template>
+        <ng-template data let-item="item">
+          {{ item.id }}
+        </ng-template>
+      </column> -->
+      <column name="paymentDate">
+        <ng-template header> Ödeme Tarihi </ng-template>
+        <ng-template data let-item="item">
+          {{ item.createdAt | date : 'short' }}
+        </ng-template>
+      </column>
+      <column name="type">
+        <ng-template header> Ödeme Türü </ng-template>
+        <ng-template data let-item="item">
+          {{ item.type === 'PURCHASE' ? 'Satın Alma' : 'İade' }}
+        </ng-template>
+      </column>
+      <column name="amount">
+        <ng-template header> Tutar </ng-template>
+        <ng-template data let-item="item">
+          <lib-money-display
+            [amount]="item.totalAmount"
+            [currency]="item.currency"
+          ></lib-money-display>
+        </ng-template>
+      </column>
+      <column name="status">
+        <ng-template header> Durum </ng-template>
+        <ng-template data let-item="item">
+          <!-- {{ item.paymentStatus }} <br />
+          {{ item.errorStatus }} -->
+          <lotus-web-status-badge
+            [color]="
+              item.paymentStatus == 'COMPLETED'
+                ? 'green'
+                : (item.paymentStatus == 'WAITING' || item.paymentStatus == 'INITIATED')
+                ? 'gray'
+                : 'gray'
+            "
+            [label]="
+              item.paymentStatus == 'COMPLETED'
+                ? 'Başarılı'
+                : (item.paymentStatus == 'WAITING' || item.paymentStatus == 'INITIATED')
+                ? 'Beklemede'
+                : 'Başarısız'
+            "
+          ></lotus-web-status-badge>
+        </ng-template>
+      </column>
+      <column name="customerId">
+        <ng-template header> Müşteri </ng-template>
+        <ng-template data let-item="item">
+          {{ item.customerAccountName || item.customerId }}
+        </ng-template>
+      </column>
+      <column name="actions">
+        <ng-template header> İşlemler </ng-template>
+        <ng-template data let-item="item">
+          <block-button
+            buttonClass="secondary"
+            (click)="goPaymentInfo(item.id)"
+            stringContent="Detay"
+            iconClass="pi pi-eye"
+          >
+          </block-button>
+        </ng-template>
+      </column>
+    </searchable-data-table>
+  </ng-container>
+</lotus-web-data-list-layout>

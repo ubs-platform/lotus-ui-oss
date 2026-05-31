@@ -1,0 +1,44 @@
+<div class="h-full w-full p-4 gap-2 flex flex-column-reverse lg:flex-row">
+  <div class="orders flex-grow-1 flex-shrink-0 lg:flex-grow-0 lg:flex-shrink-0">
+    <div class="h-full w-full flex flex-column overflow-hidden">
+      <h2>Sepet</h2>
+
+      <div class="flex-grow-1">
+        <basket [orderManagement]="orderManagement()"></basket>
+      </div>
+    </div>
+  </div>
+  <div class="all-items flex-grow-1 flex-shrink-0 lg:flex-grow-1 lg:flex-shrink-1">
+    <div class="flex flex-column h-full w-full">
+      <h2>Tüm Ürünler</h2>
+      <div class="flex-grow-1">
+        <searchable-data-table
+          url="/service/payment/api/item/_search"
+          [cover]="true"
+          [forceDesktopMode]="true"
+        >
+          <column name="name">
+            <ng-template header> Ürün İsmi </ng-template>
+            <ng-template data let-item="item">
+              {{ item.name }}
+            </ng-template>
+          </column>
+
+          <column name="actions">
+            <ng-template header> Aksiyonlar </ng-template>
+            <ng-template data let-item="item">
+              <div class="w-full flex justify-content-end">
+                <price-buttons
+                  [itemId]="item.id"
+                  (selectedPrice)="
+                    orderManagement().addOrder(item, $event.variation)
+                  "
+                ></price-buttons>
+              </div>
+            </ng-template>
+          </column>
+        </searchable-data-table>
+      </div>
+    </div>
+  </div>
+</div>

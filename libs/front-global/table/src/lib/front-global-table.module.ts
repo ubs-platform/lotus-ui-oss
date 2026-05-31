@@ -9,6 +9,7 @@ import { SearchableDataTableComponent } from './components/searchable-data-table
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import { FrontGlobalPromptOverlaysModule } from '../../../prompt-overlays/src/lib/front-global-prompt-overlays.module';
 import { EmptyDataDirective } from './directives/empty-data.directive';
+import { SearchableDataTableFilterConfigHolderComponent } from './components/searchable-data-table-filter-config-holder/searchable-data-table-filter-config-holder.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { EmptyDataDirective } from './directives/empty-data.directive';
     DataDirective,
     HeaderDirective,
     SearchableDataTableComponent,
-    EmptyDataDirective
+    EmptyDataDirective,
+    SearchableDataTableFilterConfigHolderComponent,
   ],
   exports: [
     TableComponent,
@@ -31,7 +33,8 @@ import { EmptyDataDirective } from './directives/empty-data.directive';
     DataDirective,
     HeaderDirective,
     SearchableDataTableComponent,
-    EmptyDataDirective
+    EmptyDataDirective,
+    SearchableDataTableFilterConfigHolderComponent
   ],
 })
 export class FrontGlobalTableModule {}

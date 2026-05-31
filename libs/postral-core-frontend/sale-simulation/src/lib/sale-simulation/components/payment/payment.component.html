@@ -1,0 +1,130 @@
+<div class="h-full w-full p-4 gap-4 flex flex-row">
+  <div class="flex flex-column gap-4 flex-grow-1">
+    @if (paymentInfo()) {
+    <div class="payment-info-section mona-card">
+      <h2 class="mb-2">Ödeme Bilgileri</h2>
+      <div class="info-grid gap-3">
+        <div class="info-item">
+          <span class="label">Ödeme ID:</span>
+          <span class="value">{{ paymentInfo()!.id }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Para Birimi:</span>
+          <span class="value">{{ paymentInfo()!.currency }}</span>
+        </div>
+        <!-- <div class="info-item">
+        <span class="label">Satış Modu:</span>
+        <span class="value">{{ paymentInfo()!.saleMode }}</span>
+      </div> -->
+        <div class="info-item">
+          <span class="label">Tip:</span>
+          <span class="value">{{ paymentInfo()!.type }}</span>
+        </div>
+        @if (paymentInfo()!.customerAccountId) {
+        <div class="info-item">
+          <span class="label">Müşteri Hesap:</span>
+          <span class="value">{{
+            paymentInfo()!.customerAccountName ||
+              paymentInfo()!.customerAccountId
+          }}</span>
+        </div>
+        }
+      </div>
+    </div>
+    } @if (paymentItems().length > 0) {
+    <div class="payment-items-section flex-grow-1 mona-card">
+      <h2 class="mb-2">Ödeme Kalemleri</h2>
+      <lib-payment-item-list
+        [items]="paymentItems()"
+        [currency]="paymentInfo()?.currency || 'TRY'"
+      ></lib-payment-item-list>
+    </div>
+    } @if (taxes().length > 0) {
+    <div class="taxes-section mona-card">
+      <h3 class="mb-2">Vergiler</h3>
+      <ubs-table-ngx [cover]="true" [items]="taxes()">
+        <column name="taxInfo">
+          <ng-template header> Vergi Bilgisi </ng-template>
+          <ng-template data let-tax="item">
+            {{ tax.taxName || 'Vergi' }} <br />
+            <span class="text-sm text-muted"> Oran: {{ tax.percent }} </span>
+          </ng-template>
+        </column>
+
+        <column name="taxAmount">
+          <ng-template header> Vergi tutarı </ng-template>
+          <ng-template data let-tax="item">
+            <lib-money-display
+              [amount]="tax.taxAmount"
+              [currency]="paymentInfo()?.currency || 'TRY'"
+            ></lib-money-display>
+          </ng-template>
+        </column>
+
+        <column name="untaxAmount">
+          <ng-template header> Vergisiz tutar </ng-template>
+          <ng-template data let-tax="item">
+            <lib-money-display
+              [amount]="tax.untaxAmount"
+              [currency]="paymentInfo()?.currency || 'TRY'"
+            ></lib-money-display>
+          </ng-template>
+        </column>
+      </ubs-table-ngx>
+    </div>
+    } @if (paymentInfo()) {
+    <div class="payment-summary mona-card">
+      <div
+        class="flex flex-row justify-content-between align-items-center gap-4"
+      >
+        <div class="summary-item">
+          <span class="label">Toplam Tutar:</span>
+          <span class="value total">
+            <lib-money-display
+              [amount]="paymentInfo()!.totalAmount"
+              [currency]="paymentInfo()?.currency || 'TRY'"
+            ></lib-money-display>
+          </span>
+        </div>
+        <div class="summary-item">
+          <span class="label">Toplam Vergi:</span>
+          <span class="value">
+            <lib-money-display
+              [amount]="paymentInfo()!.taxAmount"
+              [currency]="paymentInfo()?.currency || 'TRY'"
+            ></lib-money-display>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-buttons flex flex-column gap-2">
+      @if (paymentInfo()!.paymentStatus === 'COMPLETED' ||
+      paymentInfo()!.paymentStatus === 'FAILED') { @if
+      (paymentInfo()!.paymentStatus === 'COMPLETED') {
+      <div class="mona-card" severity="success">
+        Ödeme başarıyla tamamlandı. Afiyet olsun!
+      </div>
+      } @else {
+      <div class="mona-card" severity="error">
+        Ödeme başarısız oldu. Lütfen tekrar deneyiniz.
+      </div>
+      } } @else { @for (pc of paymentChannels(); track $index) {
+      <block-button
+        buttonClass="primary"
+        [stringContent]="pc.name + ' ile öde'"
+        (click)="startPayment(pc)"
+      >
+      </block-button>
+      }
+      <div>
+        Ödeme şimdilik test ortamında gerçekleşecektir. Gerçek bir ödeme
+        entegrasyonu yoktur.
+      </div>
+      <block-button buttonClass="secondary border" stringContent="İptal">
+      </block-button>
+      }
+    </div>
+    }
+  </div>
+</div>

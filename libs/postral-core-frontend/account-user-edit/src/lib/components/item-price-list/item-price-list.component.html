@@ -1,0 +1,102 @@
+<div class="price-list-container">
+  @if (selectedPage() === 'list') {
+  <div class="list-view">
+    <ubs-table-ngx [items]="prices()">
+      <column name="variation">
+        <ng-template header> Varyasyon </ng-template>
+        <ng-template data let-item="item">
+          {{ item.variation }}
+        </ng-template>
+      </column>
+      <column name="itemPrice">
+        <ng-template header> Fiyat </ng-template>
+        <ng-template data let-item="item">
+          {{ item.itemPrice }}
+        </ng-template>
+      </column>
+      <column name="currency">
+        <ng-template header> Para Birimi </ng-template>
+        <ng-template data let-item="item">
+          {{ item.currency }}
+        </ng-template>
+      </column>
+      <!-- <column name="taxPercent">
+          <ng-template header> Vergi % </ng-template>
+          <ng-template data let-item="item">
+            {{ item.taxPercent }}
+          </ng-template>
+        </column> -->
+      <column name="region">
+        <ng-template header> Bölge </ng-template>
+        <ng-template data let-item="item">
+          {{ item.region }}
+        </ng-template>
+      </column>
+      <column name="activityOrder">
+        <ng-template header> Öncelik </ng-template>
+        <ng-template data let-item="item">
+          {{ item.activityOrder }}
+        </ng-template>
+      </column>
+
+      <column name="actions">
+        <ng-template header> Aksiyonlar </ng-template>
+        <ng-template data let-item="item">
+          <div class="action-buttons">
+            <block-button
+              (click)="editPrice(item)"
+              iconClass="material-symbols-outlined"
+              iconContent="edit"
+              buttonClass="bg-info"
+            >
+              Düzenle
+            </block-button>
+            <block-button
+              (click)="deletePrice(item.id)"
+              style="margin-left: 10px"
+              buttonClass="bg-danger"
+              iconClass="material-symbols-outlined"
+              iconContent="close"
+            >
+              Sil
+            </block-button>
+          </div>
+        </ng-template>
+      </column>
+    </ubs-table-ngx>
+    <block-button
+      (click)="createPrice()"
+      iconClass="material-symbols-outlined"
+      iconContent="add"
+      buttonClass="primary"
+    >
+      Yeni Fiyat Ekle
+    </block-button>
+  </div>
+  } @else if (selectedPage() === 'form') {
+  <div class="form-view">
+    <div class="form-header">
+      <block-button
+        (click)="backToList()"
+        iconClass="material-symbols-outlined"
+        iconContent="arrow_back"
+        buttonClass="bg-secondary"
+      >
+        Geri
+      </block-button>
+      <h3>
+        {{
+          instruction()?.form?.value?.id ? 'Fiyat Düzenle' : 'Yeni Fiyat Ekle'
+        }}
+      </h3>
+    </div>
+
+    @if (instruction()) {
+    <lib-reform-data-edit
+      [formInstruction]="instruction()!"
+      saveButtonPosition="bottom"
+    ></lib-reform-data-edit>
+    }
+  </div>
+  }
+</div>

@@ -1,0 +1,37 @@
+@if (loading()) {
+<div class="flex justify-content-center">
+  <lib-icon iconClass="pi pi-spin pi-spinner"></lib-icon>
+</div>
+
+} @else if (invoices().length > 0) {
+<div class="flex flex-column gap-2">
+  @for (invoice of invoices(); track invoice.id) {
+  <div class="flex flex-row justify-content-between align-items-center">
+    <div class="flex flex-column">
+      <span class="invoice-number">{{ invoice.invoiceNumber }}</span>
+      <span class="invoice-date">{{ invoice.invoiceDate | date }}</span>
+    </div>
+    <div class="flex flex-row gap-2">
+      <block-button
+        stringContent="İncele"
+        iconClass="pi pi-eye"
+        (click)="goToInformation(invoice)"
+      ></block-button>
+      @if(billingExistance()[invoice.id]) {
+      <block-button
+        stringContent="İndir"
+        iconClass="pi pi-download"
+        (click)="downloadInvoice(invoice)"
+      ></block-button>
+      }
+    </div>
+  </div>
+  }
+</div>
+
+} @else {
+<div class="flex flex-column align-items-center gap-3 py-5">
+  <lib-icon iconClass="pi pi-file" styleClass="text-4xl"></lib-icon>
+  <span class="text-lg">Henüz fatura bulunmamaktadır.</span>
+</div>
+}

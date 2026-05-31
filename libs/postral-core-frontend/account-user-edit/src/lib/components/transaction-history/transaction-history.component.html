@@ -1,0 +1,128 @@
+<lotus-web-data-list-layout>
+  <ng-template action>
+    <lotus-web-searchable-data-table-filter-config-holder [searchableDataTableComponent]="dataTable">
+
+    </lotus-web-searchable-data-table-filter-config-holder>
+  </ng-template>
+  <ng-container content>
+    <searchable-data-table
+      url="/service/payment/api/seller-payment-order/_search"
+      [otherFilter]="{ searchSide: historySearchSide() }"
+      [cover]="true"
+      [reformFilter]="reform()"
+      #dataTable
+    >
+      <column name="createdAt">
+        <ng-template header> Ödeme Tarihi </ng-template>
+        <ng-template data let-item="item">
+          {{ item.createdAt | date : 'short' }}
+        </ng-template>
+      </column>
+      <column name="amount">
+        <ng-template header> Tutar </ng-template>
+        <ng-template data let-item="item">
+          <lib-money-display
+            [amount]="item.amount"
+            [currency]="item.currency"
+          ></lib-money-display>
+        </ng-template>
+      </column>
+      <column name="taxAmount">
+        <ng-template header> Vergilendirme tutarı </ng-template>
+        <ng-template data let-item="item">
+          <lib-money-display
+            [amount]="item.taxAmount"
+            [currency]="item.currency"
+          ></lib-money-display>
+        </ng-template>
+      </column>
+      <column name="invoiceCount">
+        <ng-template header> Fatura Sayısı </ng-template>
+        <ng-template data let-item="item">
+          <lotus-web-status-badge
+            [color]="
+              item.hasFinalizedInvoice
+                ? 'green'
+                : item.invoiceCount > 0
+                ? 'yellow'
+                : 'gray'
+            "
+            [label]="
+              item.hasFinalizedInvoice
+                ? 'Kesinleştirildi'
+                : item.invoiceCount > 0
+                ? item.invoiceCount + ' Taslak'
+                : 'Fatura yok'
+            "
+          ></lotus-web-status-badge>
+          <!-- <div
+            class="value status"
+            [class.status-finalized]="item.hasFinalizedInvoice"
+            [class.status-draft]="item.invoiceCount > 0"
+            [class.status-no-invoice]="item.invoiceCount == 0"
+          >
+            {{
+              item.hasFinalizedInvoice
+                ? 'Kesinleştirildi'
+                : item.invoiceCount > 0
+                ? item.invoiceCount + ' Taslak'
+                : 'Fatura yok'
+            }}
+          </div> -->
+        </ng-template>
+      </column>
+
+      <column name="status">
+        <ng-template header> Durum </ng-template>
+        <ng-template data let-item="item">
+          <lotus-web-status-badge
+            [color]="
+              item.paymentStatus == 'COMPLETED'
+                ? 'green'
+                : item.paymentStatus == 'WAITING'
+                ? 'yellow'
+                : 'red'
+            "
+            [label]="
+              item.paymentStatus == 'COMPLETED'
+                ? 'Başarılı'
+                : item.paymentStatus == 'WAITING'
+                ? 'Beklemede'
+                : 'Başarısız'
+            "
+          ></lotus-web-status-badge>
+          <!-- {{ item.paymentStatus }} <br />
+          {{ item.errorStatus }} <br />
+          {{ item.operationNote }} -->
+        </ng-template>
+      </column>
+
+      <column name="sourceAccountId">
+        <ng-template header> Hesap iletişimi </ng-template>
+        <ng-template data let-item="item">
+          {{ item.sourceAccountName }}
+          <span
+            style="font-size: 0.5em; line-height: 0.5em"
+            class="pi"
+            [class.pi-chevron-right]="item.transactionType == 'CREDIT_TO_SELLER'"
+            [class.pi-chevron-left]="item.transactionType == 'DEBIT_FROM_SELLER'"
+          ></span>
+          {{ item.targetAccountName }}
+          <br />
+          {{ item.transactionType == 'DEBIT_FROM_SELLER' ? 'Satıcıdan Müşteriye' : 'Müşteriden Satıcıya' }}
+        </ng-template>
+      </column>
+      <column name="actions">
+        <ng-template header> İşlemler </ng-template>
+        <ng-template data let-item="item">
+          <block-button
+            buttonClass="secondary"
+            [routerLink]="['..', item.id]"
+            stringContent="Detay"
+            iconClass="pi pi-eye"
+          >
+          </block-button> </ng-template
+      ></column>
+    </searchable-data-table>
+  </ng-container>
+</lotus-web-data-list-layout>

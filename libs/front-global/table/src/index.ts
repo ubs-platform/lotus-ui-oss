@@ -6,3 +6,4 @@ export * from './lib/directives/header.drective';
 export * from './lib/directives/empty-data.directive';
 
 export * from './lib/components/searchable-data-table/searchable-data-table.component';
+export * from './lib/components/searchable-data-table-filter-config-holder/searchable-data-table-filter-config-holder.component';

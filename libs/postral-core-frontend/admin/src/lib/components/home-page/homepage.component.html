@@ -1,0 +1,81 @@
+<div class="sidebar-content">
+  <div class="mona-card mb-4">
+    <h1>Postral Core Alfa Önizlemesine Hoş Geldiniz</h1>
+    <div>
+      Bu postral örneği, Lotus ve Tetakent hizmetlerinden bağımsız olarak çalışır. Bu nedenle, Tetakent hesabınızla giriş yapmanız mümkün değildir ve bu demo ortamında oluşturduğunuz veriler düzenli olarak silinecektir. 
+      Bu nedenle aşağıdaki örnek hesaplar ile tırnak kullanmadan giriş yapabilirsiniz:
+      <ul>
+        <li>Kullanıcı Adı: "omori", Şifre: "Tetakent123."</li>
+        <li>Kullanıcı Adı: "frisk", Şifre: "Tetakent123."</li>
+      </ul>
+      Postral Core'un arka uç altyapısı, Github üzerinde ücretsiz ve açık kaynak olarak dağıtılmaktadır. Kendi sunucunuzda çalıştırmak ve verilerinizi korumak için lütfen github.com/ubs-platform/postral-core adresini ziyaret edin. Tetakent hesabınızı bu demo ortamında kullanmamanızı önemle tavsiye ederiz.
+    </div>
+  </div>
+  <div class="flex sm:flex-row flex-column gap-4 items-center">
+    <img src="assets/intro-tr.gif" height="300px" />
+    <div>
+      <h2>Postral Core'a hoş geldiniz</h2>
+      <p>
+        Postral Core sistemi, UBS Mona platformu ile uyumlu çalışan, güçlü bir
+        ödeme altyapısıdır. Bu ödeme altyapısı, çeşitli ödeme yöntemlerini
+        destekler ve esnek çözümler sunar.
+      </p>
+      <ul>
+        <li>
+          Stripe, İyizico ya da Paytr gibi e-ticaret ödeme sağlayıcıları ile
+          entegrasyon sağlama imkanı. Eğer yeterli gelmezse, kendi
+          entegrasyonunuzu Engine5 ile geliştirebilirsiniz
+        </li>
+        <li>
+          Gelişmiş ödeme yönetimi özellikleri, kullanıcıların ödeme hesaplarını
+          kolayca yönetmelerine olanak tanır.
+        </li>
+        <li>
+          Güvenli ödeme işlemleri, kullanıcıların finansal bilgilerini korumak
+          için en son güvenlik standartlarına uygun olarak tasarlanmıştır.
+        </li>
+        <li>
+          Esnek API yapısı, geliştiricilerin ihtiyaçlarına göre
+          özelleştirilebilir ve genişletilebilir bir ödeme altyapısı sunar.
+        </li>
+      </ul>
+      <div>
+        Postral Core altyapısı, kendi ihtiyaçlarınıza göre özelleştirilebilir ve
+        genişletilebilir. Eğer sunduğumuz API'ler yeterli gelmezse, kendi özel
+        çözümlerinizi sisteme dilediğiniz gibi ekleyip düzenleyebilirsiniz.
+        Postral Core'un arka uç altyapısı, Github üzerinde ücretsiz ve açık
+        kaynak olarak dağıtılmaktadır.
+      </div>
+      <block-button
+        buttonClass="primary mt-4"
+        stringContent="Postral Core Github Sayfası (Arka uç)"
+        target="_blank"
+        iconClass="pi pi-github"
+        iconPosition="LEFT"
+        (click)="openGithub()"
+      ></block-button>
+      <div>
+        Ayrıca yaşadığınız sorunları bize yazmaktan lütfen çekinmeyin. Postral
+        Core'u sizin ihtiyaçlarınıza göre şekillendirmek istiyoruz!
+      </div>
+    </div>
+  </div>
+  <p>Aşağıdaki bağlantılarla başlayabilirsiniz:</p>
+  <div class="flex flex-column gap-2">
+    <block-button
+      buttonClass="primary"
+      stringContent="Giriş yapan kullanıcı ödeme hesabı paneli"
+      [routerLink]="'../user/payment-accounts/account'"
+    ></block-button>
+    <block-button
+      buttonClass="primary"
+      stringContent="Ödeme hesapları (admin)"
+    ></block-button>
+    <block-button
+      buttonClass="primary"
+      stringContent="Ödeme hesapları (Kullanıcı)"
+    ></block-button>
+    <block-button buttonClass="primary" stringContent="Ürünler"></block-button>
+    <block-button buttonClass="primary" stringContent="Fiyatlar"></block-button>
+  </div>
+</div>

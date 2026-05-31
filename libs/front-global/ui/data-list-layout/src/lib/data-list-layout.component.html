@@ -2,7 +2,7 @@
   class="flex flex-column"
   style="height: 100%; width: 100%; box-sizing: border-box"
 >
-  <div class="flex gap-1">
+  <div class="holder flex gap-1">
     @for (item of actionItems(); track $index) {
         <ng-container *ngTemplateOutlet="item.templateRef"></ng-container>
     }

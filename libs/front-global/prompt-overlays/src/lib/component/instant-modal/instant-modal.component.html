@@ -1,5 +1,5 @@
-<div #parent>
-  <div *ngIf="!closed">
+<div class="h-full w-full" #parent>
+  <div *ngIf="!closed" class="h-full w-full">
     <div *ngIf="data?.templateRef" style="height: 100%; width: 100%">
       <div
         *ngTemplateOutlet="data!.templateRef!; context: { dialog: dial }"

@@ -1,0 +1,32 @@
+@if (createdEventKey()) {
+<p-messages severity="warn">
+  <ng-template pTemplate>
+    <span>
+      Event Key yalnızca bir kez gösterilir. Lütfen bu bilgiyi güvenli bir yerde
+      saklayın. Oluşturulan Event Key:
+      <strong>{{ createdEventKey() }}</strong>
+      <block-button
+        buttonClass="border"
+        style="margin-left: 10px"
+        (click)="copyEventKey()"
+        stringContent="Kopyala"
+        iconClass="pi pi-copy"
+      ></block-button>
+    </span>
+  </ng-template>
+</p-messages>
+} @if (instruction()) {
+<lib-reform-data-edit [formInstruction]="instruction()!"></lib-reform-data-edit>
+@if (existingId()) {
+<div class="mt-2">
+  <block-button
+    buttonClass="border text-danger"
+    style="margin-left: 10px"
+    (click)="deleteConfig()"
+    stringContent="Webhook konfigürasyonunu sil"
+    iconClass="pi pi-trash"
+  ></block-button>
+</div>
+} } @else {
+<p>Yükleniyor...</p>
+}

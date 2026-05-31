@@ -3,14 +3,13 @@ import { Reform } from '@lotus/front-global/minky/core';
 import { PasswordChangeForm } from '../../../forms/password-change.form';
 import { AuthService, UserService } from '@lotus/front-global/auth';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
-import { DialogService } from 'primeng/dynamicdialog';
 import { EmailForm } from '../../../forms/email.form';
 
 @Component({
-    selector: 'lotus-web-change-password',
-    templateUrl: './change-password.component.html',
-    styleUrls: ['./change-password.component.scss'],
-    standalone: false
+  selector: 'lotus-web-change-password',
+  templateUrl: './change-password.component.html',
+  styleUrls: ['./change-password.component.scss'],
+  standalone: false,
 })
 export class ChangePasswordComponent {
   reform!: Reform<PasswordChangeForm>;
@@ -19,7 +18,7 @@ export class ChangePasswordComponent {
     private authService: AuthService,
     private userService: UserService,
     private basicOverlay: BasicOverlayService,
-    private dialogService: DialogService
+    private dialogService: BasicOverlayService
   ) {
     this.initReform();
   }

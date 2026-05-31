@@ -1,0 +1,92 @@
+
+@import "placeholders";
+// Invoice Info Component Styles
+:host {
+  @extend %page-host;
+}
+
+.invoice-info-section,
+.seller-section,
+.customer-section,
+.actions-section {
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+}
+
+
+
+.address-info,
+.account-info {
+  p {
+    margin: 0.5rem 0;
+    
+    &.font-semibold {
+      font-weight: 600;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    &.text-sm {
+      font-size: 0.875rem;
+      opacity: 0.8;
+    }
+  }
+}
+
+.actions-section {
+  .btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+
+    &.btn-primary {
+      background-color: #3b82f6;
+      color: white;
+
+      &:hover {
+        background-color: #2563eb;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+      }
+    }
+
+    &.btn-danger {
+      background-color: #ef4444;
+      color: white;
+
+      &:hover {
+        background-color: #dc2626;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+      }
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .actions-section {
+    .flex {
+      flex-direction: column;
+
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+}

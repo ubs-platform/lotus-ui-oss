@@ -10,10 +10,15 @@
   'users.information' | translate
 }}</lotus-web-h1> -->
 <!-- [showBackButton]="true" -->
-<onpage-header
-  [title]="'users.information' | translate"
-></onpage-header>
-<div>
-  <minky-reform-prime [reform]="reform"></minky-reform-prime>
+<div class="h-full w-full flex flex-column gap-4">
+  <div
+    class="flex flex-row-reverse align-items-between gap-2 mb-2"
+  >
+    <!-- <onpage-header [title]="'users.information' | translate"></onpage-header> -->
+
+    <block-button iconClass="pi pi-save" (click)="save()">Kaydet</block-button>
+  </div>
+  <div class="flex-grow-1 overflow-auto">
+    <minky-reform-prime [reform]="reform"></minky-reform-prime>
+  </div>
 </div>
-<block-button iconClass="pi pi-save" (click)="save()">Kaydet</block-button>

@@ -1,0 +1,11 @@
+// Reusable placeholder selectors — use with @extend in component SCSS files.
+// Requires stylePreprocessorOptions.includePaths to include this directory.
+
+%page-host {
+  padding-top: 40px;
+  @media screen and (min-width: 768px) {
+    padding-top: 80px;
+    display: block;
+    position: relative;
+  }
+}

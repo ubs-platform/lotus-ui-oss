@@ -32,7 +32,10 @@ export class RequestInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    const cachedUrlKey = request.urlWithParams;
+    const token = this.tokenGetter.getToken();
+
+
+    const cachedUrlKey = request.urlWithParams + ' token:' + token;
     const isGet = request.method.toUpperCase() === 'GET';
     if (isGet && RequestInterceptor.inflightGetMap.has(cachedUrlKey)) {
       return RequestInterceptor.inflightGetMap.get(cachedUrlKey)!;
@@ -49,7 +52,6 @@ export class RequestInterceptor implements HttpInterceptor {
       );
     }
 
-    const token = this.tokenGetter.getToken();
 
     const authorizedRequest = request.clone({
       headers: request.headers.set('Authorization', `Bearer ${token}`),

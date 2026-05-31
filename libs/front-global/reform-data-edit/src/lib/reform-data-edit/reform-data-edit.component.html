@@ -1,7 +1,31 @@
 @if (formInstruction()) {
-<div>
+<div class="flex flex-column h-full w-full">
+  @if (saveButtonPosition() === 'top-right') {
+  <div
+    class="flex flex-row justify-content-end align-items-center gap-2 mb-3"
+    style="min-height: 60px"
+  >
+    <block-button
+      buttonClass="primary"
+      iconClass="material-symbols-outlined"
+      iconContent="save"
+      stringContent="Kaydet"
+      (click)="saveForm()"
+    ></block-button>
+  </div>
+  }
+  <div class="flex-grow-1" style="overflow: auto">
     <minky-reform-prime [reform]="formInstruction()!.form"></minky-reform-prime>
-    <block-button buttonClass="primary" iconClass="material-symbols-outlined" iconContent="save" stringContent="Kaydet" (click)="saveForm()"></block-button>
+  </div>
+  @if (saveButtonPosition() === 'bottom') {
+  <block-button
+    buttonClass="primary"
+    iconClass="material-symbols-outlined"
+    iconContent="save"
+    stringContent="Kaydet"
+    (click)="saveForm()"
+  ></block-button>
+  }
 </div>
 } @else {
 <div>Form yükleniyor...</div>

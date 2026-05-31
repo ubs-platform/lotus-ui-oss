@@ -1,0 +1,25 @@
+<div class="flex flex-column h-full">
+  <!-- <onpage-header topMinimal="Yayıncı araçları" content="Yorumlar"></onpage-header> -->
+  <div class="p-2 flex-shrink-1 flex-grow-1">
+    <div style="height: 100%; overflow: hidden">
+      <searchable-data-table [url]="url" [size]="10" [cover]="true" [reformFilter]="searchReform" #commentsTable>
+        <column name="commentContent">
+          <ng-template data let-item="item">
+            <div class="text-left">
+              <div *ngIf="!deleted[item._id]">
+                <lib-single-comment [item]="item" (commentRemoval)="deleted[item._id] = true"></lib-single-comment>
+                <block-button buttonClass="primary" iconClass="pi pi-external-link"
+                  stringContent="Yorum kaynağını yeni sekmede aç" (click)="goToQuestion(item)"></block-button>
+                <block-button *ngIf="adminMode()" buttonClass="secondary" iconClass="pi pi-comments"
+                  stringContent="Admin sosyal seçenekler" (click)="socialOptions(item)"></block-button>
+              </div>
+              <div *ngIf="deleted[item._id]">
+                <i>Yorum silindi</i>
+              </div>
+            </div>
+          </ng-template>
+        </column>
+      </searchable-data-table>
+    </div>
+  </div>
+</div>

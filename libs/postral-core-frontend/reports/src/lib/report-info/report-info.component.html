@@ -1,0 +1,282 @@
+<div class="h-full w-full gap-4 flex flex-column overflow-auto">
+  @if (loading()) {
+  <div class="mona-card">
+    <p class="text-center">Yükleniyor...</p>
+  </div>
+  } @else if (error()) {
+  <div class="mona-card">
+    <p class="text-center text-danger">{{ error() }}</p>
+  </div>
+  } @else if (reportInfo()) {
+
+  <div class="report-info-section mona-card">
+    <h2 class="mb-2">Rapor Bilgileri</h2>
+    <div class="info-grid gap-3">
+      <div class="info-item">
+        <span class="label">Rapor ID:</span>
+        <span class="value">{{ reportInfo()!.id }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Hesap:</span>
+        <span class="value">{{
+          reportInfo()!.accountName || reportInfo()!.accountId
+        }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Rapor tipi:</span>
+        <span class="value">{{ reportInfo()!.reportType }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Dönem:</span>
+        <span class="value">{{ reportInfo()!.periodLabel }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Para Birimi:</span>
+        <span class="value">{{ reportInfo()!.currency }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Arşivlendi:</span>
+        <lotus-web-status-badge
+          [color]="reportInfo()!.archived ? 'gray' : 'green'"
+          [label]="reportInfo()!.archived ? 'Arşivlendi' : 'Aktif'"
+        ></lotus-web-status-badge>
+      </div>
+      @if (reportInfo()!.createdAt) {
+      <div class="info-item">
+        <span class="label">Oluşturma Tarihi:</span>
+        <span class="value">{{
+          reportInfo()!.createdAt | date : 'dd MMMM yyyy, HH:mm:ss'
+        }}</span>
+      </div>
+      } @if (reportInfo()!.lastDigestedAt) {
+      <div class="info-item">
+        <span class="label">Son İşlenen Tarih:</span>
+        <span class="value">{{
+          reportInfo()!.lastDigestedAt | date : 'dd MMMM yyyy, HH:mm:ss'
+        }}</span>
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="report-summary-section mona-card">
+    <h2 class="mb-2">Özet</h2>
+    <div class="info-grid gap-3">
+      <div class="info-item">
+        <span class="label">Ödeme Sayısı:</span>
+        <span class="value">{{ reportInfo()!.paymentCount }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Toplam Satış:</span>
+        <span class="value">
+          <lib-money-display
+            [amount]="reportInfo()!.totalSaleAmount"
+            [currency]="reportInfo()!.currency"
+          ></lib-money-display>
+        </span>
+      </div>
+      <div class="info-item">
+        <span class="label">Toplam İade:</span>
+        <span class="value">
+          <lib-money-display
+            [amount]="reportInfo()!.totalRefundAmount"
+            [currency]="reportInfo()!.currency"
+          ></lib-money-display>
+        </span>
+      </div>
+      <div class="info-item">
+        <span class="label">Net Satış:</span>
+        <span class="value">
+          <lib-money-display
+            [amount]="reportInfo()!.netSaleAmount"
+            [currency]="reportInfo()!.currency"
+          ></lib-money-display>
+        </span>
+      </div>
+      <div class="info-item">
+        <span class="label">Toplam Satış Vergisi:</span>
+        <span class="value">
+          <lib-money-display
+            [amount]="reportInfo()!.totalSaleTaxAmount"
+            [currency]="reportInfo()!.currency"
+          ></lib-money-display>
+        </span>
+      </div>
+      <div class="info-item">
+        <span class="label">Toplam İade Vergisi:</span>
+        <span class="value">
+          <lib-money-display
+            [amount]="reportInfo()!.totalRefundTaxAmount"
+            [currency]="reportInfo()!.currency"
+          ></lib-money-display>
+        </span>
+      </div>
+      <div class="info-item">
+        <span class="label">Net Vergi:</span>
+        <span class="value">
+          <lib-money-display
+            [amount]="reportInfo()!.netTaxAmount"
+            [currency]="reportInfo()!.currency"
+          ></lib-money-display>
+        </span>
+      </div>
+      <div class="info-item">
+        <span class="label">Vergisiz Gelir:</span>
+        <span class="value">
+          <lib-money-display
+            [amount]="reportInfo()!.netRevenue"
+            [currency]="reportInfo()!.currency"
+          ></lib-money-display>
+        </span>
+      </div>
+
+      <div class="info-item">
+        <span class="label">Masraflar olmadan net gelir:</span>
+        <span class="value">
+          <lib-money-display
+            [amount]="reportInfo()!.netRevenueWithoutExpense"
+            [currency]="reportInfo()!.currency"
+          ></lib-money-display>
+        </span>
+      </div>
+      <div class="info-item">
+        <span class="label">Masraflar:</span>
+        <span class="value">
+          <lib-money-display
+            [amount]="reportInfo()!.totalExpense"
+            [currency]="reportInfo()!.currency"
+          ></lib-money-display>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  @if (reportInfo()!.taxGroups && reportInfo()!.taxGroups.length > 0) {
+  <div class="tax-groups-section mona-card">
+    <h2 class="mb-2">Vergi Grupları</h2>
+    <div class="flex flex-column gap-3">
+      @for (group of reportInfo()!.taxGroups; track group.taxGroupName) {
+      <div class="tax-group-item">
+        <h3 class="mb-2">{{ group.taxGroupName }} (%{{ group.taxPercent }})</h3>
+        <div class="info-grid gap-2">
+          <div class="info-item">
+            <span class="label">Ödeme Sayısı:</span>
+            <span class="value">{{ group.paymentCount }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Toplam Satış:</span>
+            <span class="value"
+              ><lib-money-display
+                [amount]="group.totalSaleAmount"
+                [currency]="reportInfo()!.currency"
+              ></lib-money-display
+            ></span>
+          </div>
+          <div class="info-item">
+            <span class="label">Toplam İade:</span>
+            <span class="value"
+              ><lib-money-display
+                [amount]="group.totalRefundAmount"
+                [currency]="reportInfo()!.currency"
+              ></lib-money-display
+            ></span>
+          </div>
+          <div class="info-item">
+            <span class="label">Net Satış:</span>
+            <span class="value"
+              ><lib-money-display
+                [amount]="group.netSaleAmount"
+                [currency]="reportInfo()!.currency"
+              ></lib-money-display
+            ></span>
+          </div>
+          <div class="info-item">
+            <span class="label">Toplam Satış Vergisi:</span>
+            <span class="value"
+              ><lib-money-display
+                [amount]="group.totalSaleTaxAmount"
+                [currency]="reportInfo()!.currency"
+              ></lib-money-display
+            ></span>
+          </div>
+          <div class="info-item">
+            <span class="label">Toplam İade Vergisi:</span>
+            <span class="value"
+              ><lib-money-display
+                [amount]="group.totalRefundTaxAmount"
+                [currency]="reportInfo()!.currency"
+              ></lib-money-display
+            ></span>
+          </div>
+          <div class="info-item">
+            <span class="label">Net Vergi:</span>
+            <span class="value"
+              ><lib-money-display
+                [amount]="group.netTaxAmount"
+                [currency]="reportInfo()!.currency"
+              ></lib-money-display
+            ></span>
+          </div>
+          <div class="info-item">
+            <span class="label">Vergisiz Gelir:</span>
+            <span class="value"
+              ><lib-money-display
+                [amount]="group.netRevenue"
+                [currency]="reportInfo()!.currency"
+              ></lib-money-display
+            ></span>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+  } @if (reportInfo()!.expenses && reportInfo()!.expenses.length > 0) {
+  <div class="expenses-section mona-card">
+    <h2 class="mb-2">Giderler</h2>
+    <div class="flex flex-column gap-3">
+      @for (expense of reportInfo()!.expenses; track expense.expenseKey) {
+      <div class="expense-item">
+        <h3 class="mb-2">
+          {{
+            'postral.expense.' + expense.expenseKey.split(':')[0]
+              | translate : { itemClass: expense.expenseKey.split(':')[1] }
+          }}
+        </h3>
+        <div class="info-grid gap-2">
+          <div class="info-item">
+            <span class="label">Miktar:</span>
+            <span class="value"
+              ><lib-money-display
+                [amount]="expense.expenseAmount"
+                [currency]="reportInfo()!.currency"
+              ></lib-money-display
+            ></span>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+  }
+
+  <div class="actions-section mona-card">
+    <h3 class="mb-3">İşlemler</h3>
+    <div class="flex flex-column gap-2">
+      @if (!reportInfo()!.archived) {
+      <block-button
+        buttonClass="border"
+        stringContent="Raporu tekrar oluştur"
+        iconClass="pi pi-refresh"
+        (click)="reconstructReport()"
+      ></block-button>
+      }
+    </div>
+  </div>
+
+  } @else {
+  <div class="mona-card">
+    <p class="text-center">Rapor bulunamadı</p>
+  </div>
+  }
+</div>

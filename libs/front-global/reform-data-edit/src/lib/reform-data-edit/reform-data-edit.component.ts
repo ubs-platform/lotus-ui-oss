@@ -1,19 +1,20 @@
 import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MinkyReformNgxPrimeModule } from '@lotus/front-global/minky/reform-ngx-prime';
 import { FormEditInstruction } from '../util/form-edit-instruction';
 import { from, Observable, of } from 'rxjs';
+import { MinkyReformNgxPrimeModule } from '@lotus/front-global/minky/reform-ngx-prime';
 import { FrontGlobalButtonModule } from "@lotus/front-global/button";
 
 @Component({
   selector: 'lib-reform-data-edit',
   imports: [CommonModule, FormsModule, MinkyReformNgxPrimeModule, FrontGlobalButtonModule],
   templateUrl: './reform-data-edit.component.html',
-  styleUrl: './reform-data-edit.component.css',
+  styleUrls: ['./reform-data-edit.component.css'],
 })
 export class ReformDataEditComponent {
 
+  saveButtonPosition = input<'top-right' | 'bottom'>('top-right');
   formInstruction = input<FormEditInstruction>();
 
   toObservableThing<T>(data: T | Promise<T> | Observable<T>): Observable<T> {

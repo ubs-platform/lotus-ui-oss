@@ -1,0 +1,42 @@
+<lotus-web-data-list-layout [class.tayyip]="tayyip()">
+  <ng-template action>
+    <block-button buttonClass="primary" style="margin-bottom: 10px" (click)="createItemTax()"
+      stringContent="Yeni Vergi Oluştur" iconClass="pi pi-plus">
+    </block-button>
+  </ng-template>
+  <ng-container content>
+    <searchable-data-table url="/service/payment/api/item-tax/_search" [cover]="true"
+      [otherFilter]="{ admin: admin() }">
+      <column name="name">
+        <ng-template header> Vergi İsmi </ng-template>
+        <ng-template data let-item="item">
+          {{ item.taxName }}
+          @if (item.isPublic) {
+            <div><i>Herkese açık</i></div>
+          }
+        </ng-template>
+      </column>
+      <column name="rates">
+        <ng-template header> Vergi Oranları </ng-template>
+        <ng-template data let-item="item">
+          @for (item of item.variations; track $index) {
+          <div>
+            <b>{{ item.taxMode }}</b> {{ item.taxRate }}%
+          </div>
+          }
+        </ng-template>
+      </column>
+      <column name="actions">
+        <ng-template header> Aksiyonlar </ng-template>
+        <ng-template data let-item="item">
+          <div class="action-buttons">
+            <block-button [hasContent]="false" [routerLink]="['../tax', item.id]" borderClass="border"
+              iconClass="material-symbols-outlined" iconContent="info">Vergi bilgileri</block-button>
+            <block-button [hasContent]="false" (click)="deleteItem(item.id)" buttonClass="bg-danger"
+              iconClass="material-symbols-outlined" iconContent="close">Vergiyi Sil</block-button>
+          </div>
+        </ng-template>
+      </column>
+    </searchable-data-table>
+  </ng-container>
+</lotus-web-data-list-layout>

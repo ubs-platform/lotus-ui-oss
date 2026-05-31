@@ -1,0 +1,134 @@
+<lotus-web-data-list-layout>
+  <ng-template action>
+    <div>
+      <div class="flex justify-content-end mb-2">
+        <block-button [hasContent]="false" [iconClass]="hideArchived() ? 'pi pi-eye' : 'pi pi-eye-slash'"
+          (click)="toggleHideArchived()" [stringContent]="
+            hideArchived() ? 'Arşivlenenleri Göster' : 'Arşivlenenleri Gizle'
+          "></block-button>
+      </div>
+    </div>
+  </ng-template>
+  <ng-container content>
+    <div class="flex flex-column h-full w-full">
+      @if (queryId() && query()) {
+      <div class="mona-card mb-3">
+        <h2 class="mb-2">{{ query()!.name }} raporları</h2>
+        <div class="info-grid gap-3">
+          <div class="info-item">
+            <span class="label">Periyod</span>
+            <span class="value"> {{ query()!.dateGrouping }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Hesap ismi</span>
+            <span class="value"> {{ query()!.ownerAccountId }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Para birimi</span>
+            <span class="value"> {{ query()!.currency }}</span>
+          </div>
+        </div>
+      </div>
+      }
+      <div class="flex-grow-1">
+        <searchable-data-table #reportTable [url]="reportSearchUrl" [otherFilter]="reportOtherFilter()" [cover]="true"
+          (fetched)="onReportsFetched($event)">
+          <column name="reportType">
+            <ng-template header> Rapor Türü </ng-template>
+            <ng-template data let-item="item">
+              {{ 'postral.report-type.' + item.reportType | translate }}
+            </ng-template>
+          </column>
+          <column name="periodLabel">
+            <ng-template header> Dönem </ng-template>
+            <ng-template data let-item="item">
+              {{ item.periodLabel }}
+            </ng-template>
+          </column>
+          <column name="paymentCount">
+            <ng-template header> Ödeme<br>Sayısı </ng-template>
+            <ng-template data let-item="item">
+              {{ item.paymentCount }}
+            </ng-template>
+          </column>
+          <column name="totalSaleAmount">
+            <ng-template header> Toplam Satış </ng-template>
+            <ng-template data let-item="item">
+              <lib-money-display
+                [amount]="item.totalSaleAmount"
+                [currency]="item.currency || query()?.currency"
+              ></lib-money-display>
+            </ng-template>
+          </column>
+          <column name="totalRefundAmount">
+            <ng-template header> Toplam İade </ng-template>
+            <ng-template data let-item="item">
+              <lib-money-display
+                [amount]="item.totalRefundAmount"
+                [currency]="item.currency || query()?.currency"
+              ></lib-money-display>
+            </ng-template>
+          </column>
+          <column name="netSaleAmount">
+            <ng-template header> Net Satış </ng-template>
+            <ng-template data let-item="item">
+              <lib-money-display
+                [amount]="item.netSaleAmount"
+                [currency]="item.currency || query()?.currency"
+              ></lib-money-display>
+            </ng-template>
+          </column>
+
+          <column name="netTaxAmount">
+            <ng-template header> Net Vergi </ng-template>
+            <ng-template data let-item="item">
+              <lib-money-display
+                [amount]="item.netTaxAmount"
+                [currency]="item.currency || query()?.currency"
+              ></lib-money-display>
+            </ng-template>
+          </column>
+          <column name="netRevenue">
+            <ng-template header> Satış Net </ng-template>
+            <ng-template data let-item="item">
+              <lib-money-display
+                [amount]="item.netRevenue"
+                [currency]="item.currency || query()?.currency"
+              ></lib-money-display>
+            </ng-template>
+          </column>
+
+          <column name="createdAt">
+            <ng-template header> Oluşturulma/Son güncelleme </ng-template>
+            <ng-template data let-item="item">
+              {{ item.createdAt | date : 'dd MMMM yyyy, HH:mm:ss' }}<br />
+              {{ item.lastDigestedAt | date : 'dd MMMM yyyy, HH:mm:ss' }}
+
+            </ng-template>
+          </column>
+
+          <column name="digestionStatus">
+            <ng-template header> İşleme Durumu </ng-template>
+            <ng-template data let-item="item">
+              <lotus-web-status-badge [label]="reportProgress()[item.id] || 'UNKNOWN'"
+                [color]="reportProgressColor()[item.id] || 'gray'"></lotus-web-status-badge>
+            </ng-template>
+          </column>
+          <column name="actions">
+            <ng-template header> Aksiyonlar </ng-template>
+            <ng-template data let-item="item">
+              <div class="action-buttons">
+                @if (!item.archived) {
+                <block-button [hasContent]="false" iconClass="pi pi-refresh" (click)="reconstructReport(item.id)"
+                  stringContent="Raporu tekrar oluştur"></block-button>
+                }
+                <block-button [hasContent]="false" buttonClass="border" iconClass="material-symbols-outlined"
+                  iconContent="info" (click)="viewReport(item.id)">Rapor Detayları</block-button>
+              </div>
+            </ng-template>
+          </column>
+        </searchable-data-table>
+      </div>
+    </div>
+  </ng-container>
+</lotus-web-data-list-layout>
