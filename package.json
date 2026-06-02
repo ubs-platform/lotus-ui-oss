@@ -63,6 +63,7 @@
     "@primeng/themes": "^19.0.5",
     "@storybook/addon-interactions": "^8.5.3",
     "@swc/helpers": "0.5.12",
+    "@tk-postral/payment-common": "^1.0.2",
     "@ubs-platform/crud-base": "^6.4.2",
     "@ubs-platform/crud-base-common": "6.4.2",
     "@ubs-platform/dynamic-queue": "6.4.2",
