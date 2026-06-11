@@ -1,11 +1,14 @@
 import {
   Component,
+  DestroyRef,
+  ElementRef,
   EventEmitter,
   Input,
   Output,
   TemplateRef,
   computed,
   forwardRef,
+  inject,
   input,
   model,
   output,
@@ -36,6 +39,9 @@ export type Option = {
   imports: [CommonModule, UbsTranslatorNgxModule],
 })
 export class CustomSelectComponent implements ControlValueAccessor {
+  private elementRef = inject(ElementRef);
+  private destroyRef = inject(DestroyRef);
+
   // Model inputs/outputs (public API)
   options = model<Array<Option>>([]);
   optionValuesTemplate = input<TemplateRef<any> | null>(null);
@@ -51,6 +57,21 @@ export class CustomSelectComponent implements ControlValueAccessor {
   // Internal state signals
   mouseEntered = signal<boolean>(false);
   optionsShow = signal<boolean>(false);
+  dropdownStyle = signal<Record<string, string>>({});
+
+  constructor() {
+    const updatePosition = () => {
+      if (this.optionsShow()) {
+        this.updateDropdownPosition();
+      }
+    };
+    document.addEventListener('scroll', updatePosition, true);
+    window.addEventListener('resize', updatePosition);
+    this.destroyRef.onDestroy(() => {
+      document.removeEventListener('scroll', updatePosition, true);
+      window.removeEventListener('resize', updatePosition);
+    });
+  }
   optionsMapped = computed<Map<any, Option>>(() => {
     return new Map(this.options().map((o) => [o.value, o]));
   });
@@ -100,8 +121,40 @@ export class CustomSelectComponent implements ControlValueAccessor {
 
   toggleOptionsShow(): void {
     if (this.enabled()) {
-      this.optionsShow.update(show => !show);
+      const newShow = !this.optionsShow();
+      this.optionsShow.set(newShow);
+      if (newShow) {
+        this.updateDropdownPosition();
+      }
     }
+  }
+
+  private updateDropdownPosition(): void {
+    const el = this.elementRef.nativeElement as HTMLElement;
+    const rect = el.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const maxDropdownHeight = 300;
+    const spaceBelow = viewportHeight - rect.bottom;
+    const spaceAbove = rect.top;
+
+    const style: Record<string, string> = {
+      position: 'fixed',
+      left: `${rect.left}px`,
+      width: `${rect.width}px`,
+      zIndex: '9999',
+      maxHeight: `${maxDropdownHeight}px`,
+      overflowY: 'auto',
+    };
+
+    if (spaceBelow >= maxDropdownHeight || spaceBelow >= spaceAbove) {
+      style['top'] = `${rect.bottom}px`;
+      style['bottom'] = 'auto';
+    } else {
+      style['bottom'] = `${viewportHeight - rect.top}px`;
+      style['top'] = 'auto';
+    }
+
+    this.dropdownStyle.set(style);
   }
 
   selectVal(option: Option): void {

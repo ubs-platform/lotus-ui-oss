@@ -1,6 +1,6 @@
 .costum-selection {
   position: relative;
-  height: 40px;
+  // height: 40px;
   user-select: none;
   cursor: pointer;
   border-radius: 4px;
@@ -52,19 +52,22 @@
 
   .head {
     border-color: var(--border-color);
-    border-bottom: none;
     &.error {
       border-color: #FF0000 !important;
     }
   }
   .items{
     display: block;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-surface);
+    // box-shadow: 0px 4px 12px 0px #0000002A;
+    border-radius: 0px 0px var(--border-radius) var(--border-radius);
     // box-shadow:  0px 1px 4px 0px #0000004D;
     .item{
       padding: 8px 15px;
 
-      border: 1px solid var(--border-color);
-      border-bottom: none;
+      // border: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
       background-color: var(--bg-surface);
       font-size: 16px;
       &.error {

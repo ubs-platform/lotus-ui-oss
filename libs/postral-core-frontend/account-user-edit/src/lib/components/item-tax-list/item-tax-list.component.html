@@ -6,7 +6,7 @@
   </ng-template>
   <ng-container content>
     <searchable-data-table url="/service/payment/api/item-tax/_search" [cover]="true"
-      [otherFilter]="{ admin: admin() }">
+      [otherFilter]="{ admin: admin() }" #table>
       <column name="name">
         <ng-template header> Vergi İsmi </ng-template>
         <ng-template data let-item="item">

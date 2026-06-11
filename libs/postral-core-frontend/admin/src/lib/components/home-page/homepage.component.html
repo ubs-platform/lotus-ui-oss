@@ -1,20 +1,8 @@
 <div class="sidebar-content">
-  <div class="mona-card mb-4">
-    <h1>Postral Core Alfa Önizlemesine Hoş Geldiniz</h1>
-    <div>
-      Bu postral örneği, Lotus ve Tetakent hizmetlerinden bağımsız olarak çalışır. Bu nedenle, Tetakent hesabınızla giriş yapmanız mümkün değildir ve bu demo ortamında oluşturduğunuz veriler düzenli olarak silinecektir. 
-      Bu nedenle aşağıdaki örnek hesaplar ile tırnak kullanmadan giriş yapabilirsiniz:
-      <ul>
-        <li>Kullanıcı Adı: "omori", Şifre: "Tetakent123."</li>
-        <li>Kullanıcı Adı: "frisk", Şifre: "Tetakent123."</li>
-      </ul>
-      Postral Core'un arka uç altyapısı, Github üzerinde ücretsiz ve açık kaynak olarak dağıtılmaktadır. Kendi sunucunuzda çalıştırmak ve verilerinizi korumak için lütfen github.com/ubs-platform/postral-core adresini ziyaret edin. Tetakent hesabınızı bu demo ortamında kullanmamanızı önemle tavsiye ederiz.
-    </div>
-  </div>
   <div class="flex sm:flex-row flex-column gap-4 items-center">
     <img src="assets/intro-tr.gif" height="300px" />
     <div>
-      <h2>Postral Core'a hoş geldiniz</h2>
+      <h2>Postral Core'un Beta sürümüne hoş geldiniz</h2>
       <p>
         Postral Core sistemi, UBS Mona platformu ile uyumlu çalışan, güçlü bir
         ödeme altyapısıdır. Bu ödeme altyapısı, çeşitli ödeme yöntemlerini
@@ -53,6 +41,14 @@
         iconClass="pi pi-github"
         iconPosition="LEFT"
         (click)="openGithub()"
+      ></block-button>
+      <block-button
+        buttonClass="primary mt-4"
+        stringContent="Postral Core Github Sayfası (Ön uç)"
+        target="_blank"
+        iconClass="pi pi-github"
+        iconPosition="LEFT"
+        (click)="openGithubFrontend()"
       ></block-button>
       <div>
         Ayrıca yaşadığınız sorunları bize yazmaktan lütfen çekinmeyin. Postral

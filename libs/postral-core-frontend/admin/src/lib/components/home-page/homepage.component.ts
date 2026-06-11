@@ -8,10 +8,14 @@ import { Component } from '@angular/core';
 })
 export class HomepageComponent {
 
-    constructor() {
-    }
+  constructor() {
+  }
 
-    openGithub() {
-      window.open('https://www.github.com/ubs-platform/postral-core', '_blank');
-    }
+  openGithub() {
+    window.open('https://www.github.com/ubs-platform/postral-core', '_blank');
+  }
+  
+  openGithubFrontend() {
+    window.open('https://www.github.com/ubs-platform/lotus-ui-oss', '_blank');
+  }
 }

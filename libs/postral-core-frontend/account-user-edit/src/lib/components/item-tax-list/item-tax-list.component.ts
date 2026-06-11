@@ -77,38 +77,6 @@ export class ItemTaxListComponent implements OnInit, OnDestroy {
   }
 
   createItemTax() {
-    this.itemTaxService
-      .create({
-        id: '',
-        taxName: 'Yeni Vergi',
-        variations: [
-          {
-            taxMode: 'DEFAULT',
-            taxRate: 18,
-          },
-        ],
-      } as ItemTaxDTO)
-      .subscribe((item) => {
-        // Navigate to the item edit page
-        // this.router.navigate([`item/${item.id}`], {
-        //   relativeTo: this.activatedRoute.parent,
-        // });
-      });
-    // this.addressService
-    //   .create({
-    //     name: 'Yeni adres',
-    //     country: "TURKIYE",
-    //     cityName: "İSTANBUL",
-    //     citySubdivisionName: "BAHÇELİEVLER",
-    //     postalZone: "34180",
-    //     streetName: "Deneme Sokak",
-    //     buildingNumber: "42",
-    //     floor: "3",
-    //     room: "5"
-    //   } as AccountAddressDto)
-    //   .subscribe((address) => {
-    //     // Navigate to the address edit page
-    //     this.router.navigate([`address/${address.id}`], {relativeTo: this.activatedRoute.parent})
-    //   });
+    this.router.navigate(['new'], { relativeTo: this.activatedRoute });
   }
 }
