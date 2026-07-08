@@ -2,34 +2,9 @@
   {{ item?.text | translate }}
 </ng-template>
 
-<div
-  (mouseenter)="mouseEntered.set(true)"
-  (mouseleave)="mouseEntered.set(false)"
-  (window:click)="handleWindowClick()"
-  [style.minWidth]="minWidth()"
->
-  <div class="costum-selection" [ngClass]="containerClasses()">
-    <div
-      class="head flex flex-row flex-align-center justify-content-between"
-      [ngClass]="headClasses()"
-      (click)="toggleOptionsShow(); handleElementClick()"
-    >
-      <div class="text">
-        {{ displayText() }}
-        <ng-container
-          *ngTemplateOutlet="
-            optionValuesTemplate() || defaultOptionText;
-            context: { $implicit: selected(), item: selected() }
-          "
-        >
-        </ng-container>
-      </div>
-      <div class="flex align-items-center justify-content-center pr-1">
-        <i class="pi pi-chevron-down" style="height: 0; line-height: 0;"></i>
-      </div>
-    </div>
-
-    <div class="items" [ngStyle]="optionsShow() ? dropdownStyle() : null">
+<ng-template #dropdownTemplate>
+  <div class="costum-selection expanded">
+    <div class="items">
       @for (option of options(); track trackByValue($index, option)) { @if
       (!isSelected(option.value) || !hideSelectedItem()) {
       <div
@@ -47,6 +22,31 @@
         </ng-container>
       </div>
       } }
+    </div>
+  </div>
+</ng-template>
+
+<div [style.minWidth]="minWidth()">
+  <div class="costum-selection" [ngClass]="containerClasses()">
+    <div
+      #trigger
+      class="head flex flex-row flex-align-center justify-content-between"
+      [ngClass]="headClasses()"
+      (click)="toggleOptionsShow(); handleElementClick()"
+    >
+      <div class="text">
+        {{ displayText() }}
+        <ng-container
+          *ngTemplateOutlet="
+            optionValuesTemplate() || defaultOptionText;
+            context: { $implicit: selected(), item: selected() }
+          "
+        >
+        </ng-container>
+      </div>
+      <div class="flex align-items-center justify-content-center pr-1">
+        <i class="material-symbols-outlined" style="height: 0; line-height: 0">expand_more</i>
+      </div>
     </div>
   </div>
 </div>

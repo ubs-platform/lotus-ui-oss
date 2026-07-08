@@ -1,6 +1,6 @@
 // ...existing code...
 @import 'material-symbols';
-@import 'primeicons/primeicons.css';
+// primeicons removed — migrated to material-symbols
 @import 'primeng/resources/primeng.min.css';
 @import 'libs/front-global/base-style/theme.css';
 @import 'primeflex/primeflex.css';
@@ -14,6 +14,15 @@
 @import '@fontsource/jetbrains-mono/400-italic.css';
 @import '@fontsource/jetbrains-mono/700.css';
 @import '@fontsource/jetbrains-mono/700-italic.css';
+
+// Material Symbols spin animation (replaces pi-spin)
+@keyframes mi-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.mi-spin {
+  animation: mi-spin 1s linear infinite;
+}
 
 // ...existing code...
 

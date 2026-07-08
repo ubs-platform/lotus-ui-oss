@@ -1,3 +1,5 @@
+import { PI_TO_MATERIAL_MAP, MATERIAL_FALLBACK } from './pi-to-material-map';
+
 export interface IIcon {
   iconClass?: string;
   iconContent?: string;
@@ -11,15 +13,17 @@ export const fromMaterialSymbol = (iconContent: string): IIcon => {
   };
 }
 
+/**
+ * @deprecated Use fromMaterialSymbol() instead. This function now internally
+ * converts PrimeIcon names to Material Symbols equivalents.
+ */
 export const fromPrimeIcon = (primeIcon: string): IIcon => {
-  if (!primeIcon.startsWith('pi-')) {
-    primeIcon = 'pi-' + primeIcon;
+  // Normalize: extract the pi-xxx part
+  const match = primeIcon.match(/pi-([\w-]+)/);
+  if (match) {
+    const piName = 'pi-' + match[1];
+    const materialName = PI_TO_MATERIAL_MAP[piName] || MATERIAL_FALLBACK;
+    return fromMaterialSymbol(materialName);
   }
-
-  if (!primeIcon.startsWith('pi ')) {
-    primeIcon = 'pi ' + primeIcon;
-  }
-  return {
-    iconClass: primeIcon,
-  };
+  return fromMaterialSymbol(MATERIAL_FALLBACK);
 }

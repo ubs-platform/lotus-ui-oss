@@ -1,13 +1,22 @@
-<ng-container *ngIf="iconImageSource()">
-  <img [src]="iconImageSource()" style="height: 1em" />
-</ng-container>
+@if (internalIconSource()) {
+<img
+  [src]="internalIconSource()"
+  [style.height]="internalIconSize()"
+  [style.width]="internalIconSize()"
+  style="object-fit: contain; display: block"
+/>
 
+} @else {
 <ng-container>
   <i
-    style="font-style: normal"
-    [ngClass]="iconClass()"
-    [style.fontSize]="iconSize()"
+    style="font-style: normal; line-height: 1; vertical-align: middle"
+    [class]="resolvedClasses()"
+    [style.fontSize]="internalIconSize()"
+    [style.fontVariationSettings]="
+      iconClass() === 'material-symbols-outlined' ? '\'opsz\' 24' : null
+    "
   >
     {{ iconContent() }}</i
   >
 </ng-container>
+}

@@ -31,10 +31,10 @@ export class BlockPartBaseButtonComponent implements OnInit {
   readonly btnTabindex = input<string>();
   readonly hideContentAtLowScr = input(false);
   readonly contentClass = input('');
-  readonly iconSizeAuto = computed(() => {
-    if (this.iconClass() == null) return "0.85rem";
-    return this.iconClass().includes('material-symbols') ? ".95rem" : "0.85rem";
-  });
+  // readonly iconSizeAuto = computed(() => {
+  //   if (this.iconClass() == null) return "0.85rem";
+  //   return this.iconClass().includes('material-symbols') ? "1.40rem" : "0.85rem";
+  // });
 
   contentClassSys = computed(
     () =>

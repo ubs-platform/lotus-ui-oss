@@ -1,24 +1,16 @@
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import {
   Component,
-  ComponentFactoryResolver,
   ComponentRef,
   computed,
   ElementRef,
-  EventEmitter,
-  input,
-  Input,
   model,
   OnChanges,
   OnDestroy,
-  output,
-  Output,
   signal,
   SimpleChanges,
   TemplateRef,
   viewChild,
-  ViewChild,
-  ViewContainerRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OnLoadDirective } from '@lotus/front-global/ui-element-utils';
@@ -48,9 +40,9 @@ import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
   standalone: true,
 })
 export class WebdialogComponent implements OnChanges, OnDestroy {
- show = model(false);
+  show = model(false);
   padding = model(true);
-  showChange = output<boolean>();
+  // showChange = output<boolean>();
   animationState = signal<'HIDE' | 'BEGIN' | 'HOLD' | 'OUT'>('HIDE');
   viewStateBool = computed(
     () => this.animationState() == 'BEGIN' || this.animationState() == 'HOLD'
@@ -145,7 +137,9 @@ export class WebdialogComponent implements OnChanges, OnDestroy {
   }
 
   showDialogByReference(emit = false) {
-    emit && this.showChange.emit(true);
+    if (emit || !this.show()) {
+      this.show.set(true);
+    }
     this.dialogMobileRef = generateMobileOptimizedDialogHideController<void>(
       () => {
         this.close();
@@ -173,7 +167,8 @@ export class WebdialogComponent implements OnChanges, OnDestroy {
         this.swipeListener.setLot(0);
       }
 
-      emitShowChange && this.showChange.emit(false);
+      emitShowChange && this.show.set(false);
+      // emitShowChange && this.showChange.emit(false);
 
       clearTimeout(this.beginTimeout);
       this.animationState.set('OUT');

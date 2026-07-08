@@ -4,19 +4,18 @@
   <img  />
   <h1 class="text-center">{{ 'mona.page-not-found' | translate }}</h1>
   <span class="text-center">{{ 'mona.page-not-found-desc' | translate }}</span>
-  <block-button routerLink="/" iconClass="pi pi-home">{{
+  <block-button routerLink="/" iconClass="material-symbols-outlined" iconContent="home">{{
     'mona.home' | translate
   }}</block-button>
 </div> -->
 <lotus-web-custom-error-message
   [title]="'mona.page-not-found' | translate"
   [desc]="'mona.page-not-found-desc' | translate"
-  primeIcons="pi-exclamation-triangle"
+  iconContent="warning"
 >
   <block-button
-    pButton
     routerLink="/"
-    icon="pi pi-home"
+    iconClass="material-symbols-outlined" iconContent="home"
     stringContent="{{ 'mona.home' | translate }}"
   ></block-button>
 </lotus-web-custom-error-message>

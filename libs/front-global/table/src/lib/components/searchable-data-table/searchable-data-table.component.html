@@ -4,7 +4,7 @@
     <div class="flex-grow-1 overflow-auto">
       <div class="flex flex-column align-items-center gap-2 py-3">
         @if (loading()) {
-        <i class="pi pi-spin pi-spinner text-4xl"></i>
+        <i class="material-symbols-outlined mi-spin text-4xl">progress_activity</i>
         <span>Yükleniyor...</span>
         } @else {
         <ubs-table-ngx [items]="itemsInternal()" [cover]="cover()" [forceDesktopMode]="forceDesktopMode()">
@@ -33,11 +33,11 @@
       </div>
     </div>
     <div class="w-full flex gap-1 align-items-center justify-content-center">
-      <block-button (click)="back()" stringContent="Geri" iconClass="pi pi-chevron-left"
+      <block-button (click)="back()" stringContent="Geri" iconClass="material-symbols-outlined" iconContent="chevron_left"
         [disabled]="firstPage()"></block-button>
       {{ pageHumanReadable() }} / {{ maxPage() }}
       <block-button (click)="next()" [disabled]="lastPage()" iconPosition="RIGHT" stringContent="İleri"
-        iconClass="pi pi-chevron-right"></block-button>
+        iconClass="material-symbols-outlined" iconContent="chevron_right"></block-button>
     </div>
   </div>
 </div>

@@ -1,6 +1,4 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ConfirmationService } from 'primeng/api';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import {
   IWebDialogConfig,
   WEBDIALOG_CONFIG,
@@ -25,7 +23,7 @@ export class ConfirmDialogComponent implements OnInit {
     // this.confirmationService.confirmPrime({
     //   message: ,
     //   header: 'Confirmation',
-    //   icon: 'pi pi-exclamation-triangle',
+    //   icon: 'material-symbols-outlined', iconContent: 'warning',
     //   accept: () => {},
     //   reject: (type) => {},
     // });

@@ -1,10 +1,5 @@
 import { AfterViewInit, Component, Inject, viewChild, ViewChild } from '@angular/core';
 import { Reform } from '@lotus/front-global/minky/core';
-import {
-  DynamicDialogRef,
-  DynamicDialogConfig,
-  DialogService,
-} from 'primeng/dynamicdialog';
 import { EmailChangeApproveForm } from '../../../forms/email-change-approve.form';
 import { AuthService, UserService } from '@lotus/front-global/auth';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
@@ -26,15 +21,12 @@ export class EmailChangeStepTwoComponent implements AfterViewInit {
     // public config: DynamicDialogConfig<{ approveId: string }>,
     private ref: WebdialogReference<string>,
     @Inject(WEBDIALOG_CONFIG)
-    private config: IWebDialogConfig<
+    config: IWebDialogConfig<
       { approveId: string },
       string
     >,
-    private authService: AuthService,
     private userService: UserService,
-    private basicOverlay: BasicOverlayService,
-    private dialogService: DialogService
-  ) {
+    private basicOverlay: BasicOverlayService  ) {
     console.log(JSON.stringify(config.data));
     this.approveId = config.data?.approveId!;
     this.reform = new Reform(EmailChangeApproveForm, { code: '' });

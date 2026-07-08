@@ -1,13 +1,10 @@
 import {
   Component,
-  Input,
   OnInit,
   OnChanges,
   SimpleChanges,
-  ViewChild,
   AfterViewInit,
   OnDestroy,
-  TemplateRef,
   ChangeDetectorRef,
   ContentChild,
   ElementRef,
@@ -15,12 +12,9 @@ import {
   signal,
   computed,
   input,
-  Inject,
 } from '@angular/core';
 import { UserDTO } from '@ubs-platform/users-common';
 import { AuthManagementService } from '@lotus/front-global/auth';
-import { PrimeIcons, MenuItem } from 'primeng/api';
-import { DialogService } from 'primeng/dynamicdialog';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { Router } from '@angular/router';
 import {
@@ -38,62 +32,60 @@ import {
   LoadingIndicatorState,
 } from '@lotus/front-global/user-service-wraps';
 import { ThemeManager } from '@lotus/front-global/theme-management';
-import {
-  DialogVisibilityReference,
-  IWebDialogConfig,
-  WEBDIALOG_CONFIG,
-} from '@lotus/front-global/webdialog';
 import { ApplicationLogoDirective } from '../application-logo.directive';
 import { ApplicationFooterDirective } from '../application-footer.directive';
 import { WebdialogHandler } from 'libs/front-global/webdialog/src/lib/webdialog/webdialog-handler.service';
-import { CommonModule } from '@angular/common';
 import { screenTypeStatus } from '@lotus/front-global/mona-mobile-experience-ng';
-@Component({
-  standalone: true,
-  imports: [CommonModule],
-  template: ` <img
-      *ngIf="config.data == 'HUMANKITE'"
-      (click)="alert()"
-      style="width: 100%;"
-      src="https://imagedelivery.net/LBWXYQ-XnKSYxbZ-NuYGqQ/13d5e2da-2984-46bc-623c-0d18ce309800/banner"
-    />
-    <img
-      *ngIf="config.data == 'ELFKING'"
-      (click)="alert()"
-      style="width: 100%;"
-      src="https://m.media-amazon.com/images/I/61A8804S72L.jpg"
-    />
-    <img
-      *ngIf="config.data == 'DAILY'"
-      (click)="alert()"
-      style="width: 100%;"
-      src="/api/file/BOOK_THUMB/66eb2f1a35a0867abc8dc265"
-    />
-
-    <div>{{ testo }}</div>`,
-})
-export class KyleBroflovski implements OnInit {
-  testo = 0;
-  /**
-   *
-   */
-  constructor(
-    @Inject(WEBDIALOG_CONFIG)
-    public config: IWebDialogConfig<'HUMANKITE' | 'ELFKING' | 'DAILY', void>
-  ) {}
+import { fromMaterialSymbol } from '@lotus/front-global/icon-type';
 
 
+// tarihi eser diyalog testi
+// @Component({
+//   standalone: true,
+//   imports: [CommonModule],
+//   template: ` <img
+//       *ngIf="config.data == 'HUMANKITE'"
+//       (click)="alert()"
+//       style="width: 100%;"
+//       src="https://imagedelivery.net/LBWXYQ-XnKSYxbZ-NuYGqQ/13d5e2da-2984-46bc-623c-0d18ce309800/banner"
+//     />
+//     <img
+//       *ngIf="config.data == 'ELFKING'"
+//       (click)="alert()"
+//       style="width: 100%;"
+//       src="https://m.media-amazon.com/images/I/61A8804S72L.jpg"
+//     />
+//     <img
+//       *ngIf="config.data == 'DAILY'"
+//       (click)="alert()"
+//       style="width: 100%;"
+//       src="/api/file/BOOK_THUMB/66eb2f1a35a0867abc8dc265"
+//     />
 
-  ngOnInit() {
-    setTimeout(() => (this.testo = NaN), 1000);
-  }
+//     <div>{{ testo }}</div>`,
+// })
+// export class KyleBroflovski implements OnInit {
+//   testo = 0;
+//   /**
+//    *
+//    */
+//   constructor(
+//     @Inject(WEBDIALOG_CONFIG)
+//     public config: IWebDialogConfig<'HUMANKITE' | 'ELFKING' | 'DAILY', void>
+//   ) { }
 
-  alert() {
-    alert("don't");
-    alert('touch');
-    alert('me!!!!');
-  }
-}
+
+
+//   ngOnInit() {
+//     setTimeout(() => (this.testo = NaN), 1000);
+//   }
+
+//   alert() {
+//     alert("don't");
+//     alert('touch');
+//     alert('me!!!!');
+//   }
+// }
 
 @Component({
   selector: 'lotus-web-generic-app-header',
@@ -102,8 +94,7 @@ export class KyleBroflovski implements OnInit {
   standalone: false,
 })
 export class GenericAppHeaderComponent
-  implements OnInit, OnChanges, OnDestroy, AfterViewInit
-{
+  implements OnInit, OnChanges, OnDestroy, AfterViewInit {
   @ContentChild(ApplicationLogoDirective) appLogo?: ApplicationLogoDirective;
   @ContentChild(ApplicationFooterDirective)
   appFooter?: ApplicationFooterDirective;
@@ -126,7 +117,6 @@ export class GenericAppHeaderComponent
   darkTheme = signal(false);
   // constantMenuItems = signal<Array<PaginationItem | null>>([]);
   isInFirstPage = signal(true);
-  accountMenu = signal<MenuItem[]>([]);
   user = signal<UserDTO | null | undefined>(null);
   enableUserMenu = computed(
     () => this.enableUserLoginOperations() && this.user()
@@ -153,13 +143,10 @@ export class GenericAppHeaderComponent
     private secOverlay: BasicOverlayService,
     private router: Router,
     private kvWin: DebugKeyValueViewComponentService,
-    private swipeListener: DocumentSwipeListener,
     private feedbackDialog: FeedbackDialogService,
     private loadingIndication: LoadingIndicationService,
     private themeManager: ThemeManager,
-    private changeDetector: ChangeDetectorRef,
-    private webDialogHandler: WebdialogHandler
-  ) {
+    private changeDetector: ChangeDetectorRef  ) {
 
   }
 
@@ -201,7 +188,7 @@ export class GenericAppHeaderComponent
       });
   }
 
-  ngOnChanges(changes: SimpleChanges) {}
+  ngOnChanges(changes: SimpleChanges) { }
 
   // hideMenu() {
   //   this.mainMenuDialogVisibility?.closeManually();
@@ -238,54 +225,43 @@ export class GenericAppHeaderComponent
     this.subjectHideTrack.next(true);
   }
 
-  fish() {
-    const a = ['HUMANKITE', 'ELFKING', 'DAILY'][Math.ceil(Math.random() * 2)];
-    this.webDialogHandler.open(KyleBroflovski, {
-      data: a,
-      title: a,
-      position: 'bottom-center',
-      width: '500px',
-      defaultOutValue: null,
-    });
-  }
-
   loadMenus() {
     const userAuthMenu = this.enableUserLoginOperations()
       ? [
-          {
-            templateContentName: 'logged-user',
-            iconClass: 'pi-chevron-right',
-            childPageContents: [
-              {
-                text: 'mona.account-settings',
-                iconClass: PrimeIcons.USER_EDIT,
-                action: () => {
-                  //FIXME settimeout is not a nice pratic for waiting end of DOM ops.
-                  setTimeout(() => {
-                    this.router.navigate(['account', 'information']);
-                  }, 350);
-                  return true;
-                },
+        {
+          templateContentName: 'logged-user',
+          ...fromMaterialSymbol('account_circle'),
+          childPageContents: [
+            {
+              text: 'mona.account-settings',
+              ...fromMaterialSymbol('settings'),
+              action: () => {
+                //FIXME settimeout is not a nice pratic for waiting end of DOM ops.
+                setTimeout(() => {
+                  this.router.navigate(['account', 'information']);
+                }, 350);
+                return true;
               },
-              {
-                text: 'mona.logout',
-                iconClass: PrimeIcons.SIGN_OUT,
-                action: () => {
-                  this.logout();
-                  return true;
-                },
+            },
+            {
+              text: 'mona.logout',
+              ...fromMaterialSymbol('logout'),
+              action: () => {
+                this.logout();
+                return true;
               },
-            ],
-          },
-          {
-            templateContentName: 'unsigned-user-view',
-            childPageContents: [
-              {
-                templateContentName: 'login-view',
-              },
-            ],
-          },
-        ]
+            },
+          ],
+        },
+        {
+          templateContentName: 'unsigned-user-view',
+          childPageContents: [
+            {
+              templateContentName: 'login-view',
+            },
+          ],
+        },
+      ]
       : [];
     const constantMenuItems = [
       ...userAuthMenu,
@@ -294,22 +270,22 @@ export class GenericAppHeaderComponent
         childPageContents: [
           {
             text: 'mona.dark-theme-normal',
-            iconClass: PrimeIcons.MOON,
+            ...fromMaterialSymbol('dark_mode'),
             action: () => this.themeManager.setTheme('dark'),
           },
           {
             text: 'mona.dark-theme-oled',
-            iconClass: PrimeIcons.MOON,
+            ...fromMaterialSymbol('dark_mode'),
             action: () => this.themeManager.setTheme('dark', true),
           },
           {
             text: 'mona.light-theme',
-            iconClass: PrimeIcons.SUN,
+            ...fromMaterialSymbol('light_mode'),
             action: () => this.themeManager.setTheme('light'),
           },
           {
             text: 'mona.system-theme',
-            iconClass: PrimeIcons.SYNC,
+            ...fromMaterialSymbol('sync'),
             action: () => this.themeManager.setTheme(),
           },
         ],
@@ -354,7 +330,7 @@ export class GenericAppHeaderComponent
               );
               return true;
             },
-            iconClass: 'pi pi-sliders-v',
+            ...fromMaterialSymbol('tune'),
           },
           {
             text: 'Jenerik mesaj',
@@ -367,11 +343,11 @@ export class GenericAppHeaderComponent
               );
               return true;
             },
-            iconClass: 'pi pi-sliders-v',
+            iconClass: 'material-symbols-outlined', iconContent: 'tune',
           },
           {
             text: 'Key-Value view',
-            iconClass: 'pi pi-times',
+            iconClass: 'material-symbols-outlined', iconContent: 'close',
             action: () => {
               this.kvWin.showDialog();
               return true;
@@ -383,21 +359,21 @@ export class GenericAppHeaderComponent
     const postMenus: Array<PaginationItem | null> = [
       {
         text: 'Uygulama hakkında',
-        iconClass: PrimeIcons.QUESTION,
+        ...fromMaterialSymbol('help'),
         childPageContents: [
           ...(this.appFooter?.template
             ? [
-                {
-                  templateContentName: 'footer',
-                },
-              ]
+              {
+                templateContentName: 'footer',
+              },
+            ]
             : []),
 
           ...(this.helpMenu() || []),
 
           {
             text: 'tetakent.support.feedback',
-            iconClass: PrimeIcons.REPLY,
+            ...fromMaterialSymbol('reply'),
             action: () => {
               this.feedbackDialog.show();
               return true;
@@ -407,13 +383,13 @@ export class GenericAppHeaderComponent
       },
       this.showHomepageMenu()
         ? {
-            text: 'mona.home',
-            iconClass: PrimeIcons.HOME,
-            action: (a) => {
-              this.router.navigate(['']);
-              return true;
-            },
-          }
+          text: 'mona.home',
+          ...fromMaterialSymbol('home'),
+          action: () => {
+            this.router.navigate(['']);
+            return true;
+          },
+        }
         : null,
     ];
     return [

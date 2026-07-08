@@ -1,13 +1,13 @@
 <div *ngIf="carrier()">
   <block-button
     *ngIf="!sourceEditor()"
-    iconClass="pi pi-code"
+    iconClass="material-symbols-outlined" iconContent="code"
     (click)="sourceEditor.set(!sourceEditor())"
     >Kaynağı düzenle</block-button
   >
   <block-button
     *ngIf="sourceEditor()"
-    iconClass="pi pi-earth"
+    iconClass="material-symbols-outlined" iconContent="public"
     (click)="sourceEditor.set(!sourceEditor())"
     >WYSIWYG</block-button
   >

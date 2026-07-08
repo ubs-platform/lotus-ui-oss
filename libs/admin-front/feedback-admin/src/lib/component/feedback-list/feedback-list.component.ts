@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, viewChild } from '@angular/core';
 import { UserMessageService } from '@lotus/front-global/feedback-front';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import {
@@ -8,6 +8,7 @@ import {
 import { Reform } from '@lotus/front-global/minky/core';
 import { OverlayService } from 'primeng/api';
 import { UserMessageSearchForm } from '../../forms/user-message-search.form';
+import { SearchableDataTableComponent } from '@lotus/front-global/table';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class FeedbackListComponent {
   showFilter = false;
   readonly fetchUrl: string;
   reform!: Reform<IUserMessageSearch>;
+  @ViewChild("table") table?: SearchableDataTableComponent;
   constructor(
     private userMessageService: UserMessageService,
     private overlay: BasicOverlayService
@@ -58,7 +60,8 @@ export class FeedbackListComponent {
       .subscribe((a) => {
         if (a) {
           this.userMessageService.delete(id).subscribe(() => {
-            this.userMessages = this.userMessages.filter((a) => a._id != id);
+            // this.userMessages = this.userMessages.filter((a) => a._id != id);
+            this.table?.loadData();
           });
         }
       });

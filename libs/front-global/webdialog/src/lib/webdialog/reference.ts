@@ -27,7 +27,7 @@ export class WebdialogReference<OUT_VALUE> {
     this.assertNotCompleted();
     this.closeSubscription?.unsubscribe();
     this._dialogComponent = wd;
-    this.closeSubscription = wd.showChange.subscribe((a) => {
+    this.closeSubscription = wd.show.subscribe((a) => {
       if (!a) {
         this.closeSubject.next(this.currentValue);
         this.closeSubject.complete();

@@ -34,9 +34,9 @@
               [ngModel]="carrier.value" (ngModelChange)="carrier.setValue($event)" (blur)="carrier.setTouched(true)"
               [class.ng-invalid]="carrier.validationErrors?.length" [class.ng-dirty]="carrier.isTouched" />
           </div>
-          <block-button [disabled]="carrier.disable" iconClass="pi {{
-              showPasswordMap[carrier.path] ? 'pi-eye-slash' : 'pi-eye'
-            }}" (click)="
+          <block-button [disabled]="carrier.disable" iconClass="material-symbols-outlined" [iconContent]="
+              showPasswordMap[carrier.path] ? 'visibility_off' : 'visibility'
+            " (click)="
               showPasswordMap[carrier.path] = !showPasswordMap[carrier.path]
             "></block-button>
         </div>
@@ -136,9 +136,15 @@
           carrier.title | translate
         " [iconClass]="
           carrier.title == 'insert'
-            ? 'pi pi-plus'
+            ? 'material-symbols-outlined'
             : carrier.title == 'remove'
-            ? 'pi pi-minus'
+            ? 'material-symbols-outlined'
+            : ''
+        " [iconContent]="
+          carrier.title == 'insert'
+            ? 'add'
+            : carrier.title == 'remove'
+            ? 'remove'
             : ''
         "></block-button>
     </ng-template>

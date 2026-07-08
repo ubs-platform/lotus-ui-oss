@@ -1,6 +1,6 @@
 @if (loading()) {
 <div class="flex justify-content-center">
-  <lib-icon iconClass="pi pi-spin pi-spinner"></lib-icon>
+  <lib-icon iconClass="material-symbols-outlined" iconContent="progress_activity"></lib-icon>
 </div>
 
 } @else if (invoices().length > 0) {
@@ -14,13 +14,13 @@
     <div class="flex flex-row gap-2">
       <block-button
         stringContent="İncele"
-        iconClass="pi pi-eye"
+        iconClass="material-symbols-outlined" iconContent="visibility"
         (click)="goToInformation(invoice)"
       ></block-button>
       @if(billingExistance()[invoice.id]) {
       <block-button
         stringContent="İndir"
-        iconClass="pi pi-download"
+        iconClass="material-symbols-outlined" iconContent="download"
         (click)="downloadInvoice(invoice)"
       ></block-button>
       }
@@ -31,7 +31,7 @@
 
 } @else {
 <div class="flex flex-column align-items-center gap-3 py-5">
-  <lib-icon iconClass="pi pi-file" styleClass="text-4xl"></lib-icon>
+  <lib-icon iconClass="material-symbols-outlined" iconContent="description" styleClass="text-4xl"></lib-icon>
   <span class="text-lg">Henüz fatura bulunmamaktadır.</span>
 </div>
 }

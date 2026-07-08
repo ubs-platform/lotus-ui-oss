@@ -16,6 +16,7 @@
     style="width: 100%"
     [url]="fetchUrl"
     [reformFilter]="reform"
+    #table
   >
     <column name="type">
       <ng-template header>Tip</ng-template>
@@ -49,13 +50,13 @@
       <ng-template data let-item="item">
         <block-button
           buttonClass="primary"
-          iconClass="pi pi-eye"
+          iconClass="material-symbols-outlined" iconContent="visibility"
           routerLink="./{{ item._id }}"
           >Detaylar</block-button
         >
         <block-button
           buttonClass="error"
-          iconClass="pi pi-times"
+          iconClass="material-symbols-outlined" iconContent="close"
           (click)="remove(item._id)"
           >Sil</block-button
         >

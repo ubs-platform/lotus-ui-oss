@@ -1,9 +1,9 @@
 <div style="margin-bottom: 1rem;">
-  <block-button buttonClass="primary" iconClass="pi pi-plus" routerLink="new"
+  <block-button buttonClass="primary" iconClass="material-symbols-outlined" iconContent="add" routerLink="new"
     >Yeni</block-button>
   <block-button 
     buttonClass="secondary" 
-    iconClass="pi pi-upload" 
+    iconClass="material-symbols-outlined" iconContent="upload" 
     (click)="importFromJson()"
     [disabled]="isImporting()"
     style="margin-left: 0.5rem;">
@@ -34,13 +34,13 @@
     <ng-template data let-item="item">
       <block-button
         buttonClass="primary"
-        iconClass="pi pi-pencil"
+        iconClass="material-symbols-outlined" iconContent="edit"
         routerLink="{{ item._id }}"
         >Düzenle</block-button
       >
       <block-button
         buttonClass="bg-danger"
-        iconClass="pi pi-trash"
+        iconClass="material-symbols-outlined" iconContent="delete"
         (click)="remove(item._id)"
         >Kaldır</block-button
       >

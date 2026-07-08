@@ -9,4 +9,3 @@ export * from './lib/component/feedback-details/feedback-details.component';
 
 export * from './lib/component/feedback-filter/feedback-filter.component';
 
-export * from './lib/component/resolve-dialog/resolve-dialog.component';

@@ -88,7 +88,7 @@ export type SellerPaymentOrderType = "CREDIT_TO_SELLER" | "DEBIT_FROM_SELLER";
           (click)="createInvoice()"
           [cover]="true"
           stringContent="Yeni fatura oluştur"
-          iconClass="pi pi-plus"
+          iconClass="material-symbols-outlined" iconContent="add"
         ></block-button>
         }
       </div>
@@ -102,13 +102,13 @@ export type SellerPaymentOrderType = "CREDIT_TO_SELLER" | "DEBIT_FROM_SELLER";
           (click)="confirmOpenPayment()"
           [cover]="true"
           stringContent="Açık Faturayı Onayla"
-          iconClass="pi pi-check"
+          iconClass="material-symbols-outlined" iconContent="check"
         ></block-button>
         }
         <block-button
           [cover]="true"
           stringContent="İtiraz Et"
-          iconClass="pi pi-exclamation-triangle"
+          iconClass="material-symbols-outlined" iconContent="warning"
         ></block-button>
       </div>
     </div>

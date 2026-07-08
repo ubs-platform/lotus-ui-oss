@@ -89,7 +89,7 @@ export class AdminSettingsForm extends AdminSettingsDto {
         inputType: "array",
         arrayItemInputType: "number",
         validators: [new MinValidator(2), new MaxValidator(28)],
-        label: "Faturalama günleri (2-28 arası)",
+        label: 'postral.billing-dates',
     })
     override billingDays?: number[] | undefined;
 

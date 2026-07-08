@@ -1,5 +1,5 @@
 <div class="h-full w-full p-2">
-  <block-button stringContent="Kişi ekle" iconClass="pi pi-plus" (click)="addAccountShow()"></block-button>
+  <block-button stringContent="Kişi ekle" iconClass="material-symbols-outlined" iconContent="add" (click)="addAccountShow()"></block-button>
   <ubs-table-ngx [items]="userCapabilities()" [cover]="true">
     <column name="name" width="50%">
       <ng-template header> İsim</ng-template>
@@ -34,10 +34,10 @@
       <ng-template header>Aksiyonlar </ng-template>
       <ng-template data let-item="item">
         <div class="action-buttons">
-          <block-button stringContent="Kaldır" iconClass="pi pi-sign-out" buttonClass="bg-danger"
+          <block-button stringContent="Kaldır" iconClass="material-symbols-outlined" iconContent="logout" buttonClass="bg-danger"
             (click)="removeUserShow(item)"></block-button>
 
-          <block-button stringContent="Yetkileri düzenle" iconClass="pi pi-pencil" buttonClass="border"
+          <block-button stringContent="Yetkileri düzenle" iconClass="material-symbols-outlined" iconContent="edit" buttonClass="border"
             (click)="editUserShow(item)"></block-button>
         </div>
 
@@ -47,12 +47,12 @@
             <ng-template header>Aksiyonlar </ng-template>
             <ng-template data let-item="item">
                 <div style="width: 500px;">
-                    <block-button stringContent="Düzenle" iconClass="pi pi-pencil"
+                    <block-button stringContent="Düzenle" iconClass="material-symbols-outlined" iconContent="edit"
                         [routerLink]="[item._id, 'edit']"></block-button>
-                    <block-button stringContent="Üyeler" iconClass="pi pi-users"
+                    <block-button stringContent="Üyeler" iconClass="material-symbols-outlined" iconContent="group"
                         [routerLink]="[item._id, 'members']"></block-button>
-                    <block-button stringContent="Gruptan ayrıl" iconClass="pi pi-sign-out"></block-button>
-                    <block-button stringContent="Sil" iconClass="pi pi-trash" (click)="deleteTeam(item)"></block-button>
+                    <block-button stringContent="Gruptan ayrıl" iconClass="material-symbols-outlined" iconContent="logout"></block-button>
+                    <block-button stringContent="Sil" iconClass="material-symbols-outlined" iconContent="delete" (click)="deleteTeam(item)"></block-button>
                 </div>
             </ng-template>
 
@@ -93,7 +93,7 @@
     <column name="actions">
       <ng-template header>Aksiyonlar </ng-template>
       <ng-template data let-item="item">
-        <block-button stringContent="Kaldır" iconClass="pi pi-sign-out" buttonClass="bg-danger"
+        <block-button stringContent="Kaldır" iconClass="material-symbols-outlined" iconContent="logout" buttonClass="bg-danger"
           (click)="removeInvitation(item)"></block-button>
       </ng-template>
     </column>

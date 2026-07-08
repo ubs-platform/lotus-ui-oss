@@ -18,7 +18,7 @@
         class="pr-2"
         buttonClass="surface text-black-alpha-90 border"
         (click)="imageUploader.click()"
-        iconClass="pi pi-plus"
+        iconClass="material-symbols-outlined" iconContent="add"
         >Gözat</block-button
       >
       <block-button
@@ -26,7 +26,7 @@
         [cover]="false"
         buttonClass="surface text-black-alpha-90 border"
         (click)="removeImage($event)"
-        iconClass="pi pi-times"
+        iconClass="material-symbols-outlined" iconContent="close"
         >Temizle</block-button
       >
     </div>
@@ -49,7 +49,7 @@
       </ng-container>
       <ng-template #emptyState>
         <div class="empty">
-          <i class="pi pi-image"></i>
+          <i class="material-symbols-outlined">image</i>
           <span>Henüz görsel yok</span>
           <span class="hint">Gözat ile seç</span>
         </div>

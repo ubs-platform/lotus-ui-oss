@@ -7,6 +7,7 @@ import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
 import { SuspendedPageComponent } from './suspended-page/suspended-page.component';
 import { MessageModule } from 'primeng/message';
 import { CustomErrorMessageComponent } from './custom-error-message/custom-error-message.component';
+import { IconComponent } from "@lotus/front-global/icon";
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { CustomErrorMessageComponent } from './custom-error-message/custom-error
     RouterModule,
     UbsTranslatorNgxModule,
     MessageModule,
-  ],
+    IconComponent
+],
   declarations: [
     CustomErrorMessageComponent,
     NotFoundPageComponent,

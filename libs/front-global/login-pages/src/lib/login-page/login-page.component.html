@@ -55,7 +55,7 @@
 
     <block-button
       [cover]="true"
-      iconClass="pi pi-user-edit"
+      iconClass="material-symbols-outlined" iconContent="manage_accounts"
       iconPosition="RIGHT"
       routerLink="/account/information"
       >Hesap ayarları</block-button
@@ -63,14 +63,14 @@
 
     <block-button
       [cover]="true"
-      iconClass="pi pi-sign-out"
+      iconClass="material-symbols-outlined" iconContent="logout"
       iconPosition="RIGHT"
       (click)="logout()"
       >Çıkış yap ve ya farklı bir hesapla devam et</block-button
     >
     <block-button
       [cover]="true"
-      iconClass="pi pi-home"
+      iconClass="material-symbols-outlined" iconContent="home"
       iconPosition="RIGHT"
       [buttonClass]="!redirectTo || redirectTo == '/' ? 'primary' : ''"
       routerLink="/"
@@ -79,7 +79,7 @@
     <block-button
       *ngIf="redirectTo && redirectTo != '/'"
       [cover]="true"
-      iconClass="pi pi-arrow-up-right"
+      iconClass="material-symbols-outlined" iconContent="north_east"
       iconPosition="RIGHT"
       buttonClass="primary"
       (click)="successLogin()"

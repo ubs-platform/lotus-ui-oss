@@ -15,7 +15,6 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { FrontGlobalMarkdownEditorModule } from '@lotus/front-global/markdown-editor';
 
 import { MessageModule } from 'primeng/message';
-import { ResolveDialogComponent } from './component/resolve-dialog/resolve-dialog.component';
 import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
 import { FrontGlobalMinkyReformNgxMonaModule } from '@lotus/front-global/minky/reform-ngx-mona';
 
@@ -39,13 +38,11 @@ import { FrontGlobalMinkyReformNgxMonaModule } from '@lotus/front-global/minky/r
     FeedbackListComponent,
     FeedbackDetailsComponent,
     FeedbackFilterComponent,
-    ResolveDialogComponent,
   ],
   exports: [
     FeedbackListComponent,
     FeedbackDetailsComponent,
     FeedbackFilterComponent,
-    ResolveDialogComponent,
   ],
 })
 export class AdminFrontFeedbackModule {}

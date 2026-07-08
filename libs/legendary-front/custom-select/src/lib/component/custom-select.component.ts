@@ -6,6 +6,9 @@ import {
   Input,
   Output,
   TemplateRef,
+  ViewChild,
+  ViewContainerRef,
+  ViewEncapsulation,
   computed,
   forwardRef,
   inject,
@@ -17,6 +20,8 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
 
 export type Option = {
   textPrefix?: string;
@@ -36,11 +41,17 @@ export type Option = {
   selector: 'lib-custom-select',
   templateUrl: './custom-select.component.html',
   styleUrls: ['./custom-select.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   imports: [CommonModule, UbsTranslatorNgxModule],
 })
 export class CustomSelectComponent implements ControlValueAccessor {
   private elementRef = inject(ElementRef);
   private destroyRef = inject(DestroyRef);
+  private overlay = inject(Overlay);
+  private viewContainerRef = inject(ViewContainerRef);
+
+  @ViewChild('trigger') triggerEl!: ElementRef<HTMLElement>;
+  @ViewChild('dropdownTemplate') dropdownTemplate!: TemplateRef<any>;
 
   // Model inputs/outputs (public API)
   options = model<Array<Option>>([]);
@@ -55,21 +66,13 @@ export class CustomSelectComponent implements ControlValueAccessor {
   selectedChange = output<any>();
 
   // Internal state signals
-  mouseEntered = signal<boolean>(false);
   optionsShow = signal<boolean>(false);
-  dropdownStyle = signal<Record<string, string>>({});
+
+  private overlayRef: OverlayRef | null = null;
 
   constructor() {
-    const updatePosition = () => {
-      if (this.optionsShow()) {
-        this.updateDropdownPosition();
-      }
-    };
-    document.addEventListener('scroll', updatePosition, true);
-    window.addEventListener('resize', updatePosition);
     this.destroyRef.onDestroy(() => {
-      document.removeEventListener('scroll', updatePosition, true);
-      window.removeEventListener('resize', updatePosition);
+      this.closeDropdown();
     });
   }
   optionsMapped = computed<Map<any, Option>>(() => {
@@ -121,40 +124,58 @@ export class CustomSelectComponent implements ControlValueAccessor {
 
   toggleOptionsShow(): void {
     if (this.enabled()) {
-      const newShow = !this.optionsShow();
-      this.optionsShow.set(newShow);
-      if (newShow) {
-        this.updateDropdownPosition();
+      if (this.optionsShow()) {
+        this.closeDropdown();
+      } else {
+        this.openDropdown();
       }
     }
   }
 
-  private updateDropdownPosition(): void {
-    const el = this.elementRef.nativeElement as HTMLElement;
-    const rect = el.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    const maxDropdownHeight = 300;
-    const spaceBelow = viewportHeight - rect.bottom;
-    const spaceAbove = rect.top;
+  private openDropdown(): void {
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(this.triggerEl)
+      .withPositions([
+        {
+          originX: 'start',
+          originY: 'bottom',
+          overlayX: 'start',
+          overlayY: 'top',
+        },
+        {
+          originX: 'start',
+          originY: 'top',
+          overlayX: 'start',
+          overlayY: 'bottom',
+        },
+      ])
+      .withPush(false);
 
-    const style: Record<string, string> = {
-      position: 'fixed',
-      left: `${rect.left}px`,
-      width: `${rect.width}px`,
-      zIndex: '9999',
-      maxHeight: `${maxDropdownHeight}px`,
-      overflowY: 'auto',
-    };
+    this.overlayRef = this.overlay.create({
+      positionStrategy,
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+      width: this.triggerEl.nativeElement.offsetWidth,
+    });
 
-    if (spaceBelow >= maxDropdownHeight || spaceBelow >= spaceAbove) {
-      style['top'] = `${rect.bottom}px`;
-      style['bottom'] = 'auto';
-    } else {
-      style['bottom'] = `${viewportHeight - rect.top}px`;
-      style['top'] = 'auto';
+    this.overlayRef.outsidePointerEvents().subscribe((event) => {
+      if (!this.elementRef.nativeElement.contains(event.target as Node)) {
+        this.closeDropdown();
+      }
+    });
+
+    const portal = new TemplatePortal(this.dropdownTemplate, this.viewContainerRef);
+    this.overlayRef.attach(portal);
+    this.optionsShow.set(true);
+  }
+
+  private closeDropdown(): void {
+    if (this.overlayRef) {
+      this.overlayRef.detach();
+      this.overlayRef.dispose();
+      this.overlayRef = null;
     }
-
-    this.dropdownStyle.set(style);
+    this.optionsShow.set(false);
   }
 
   selectVal(option: Option): void {
@@ -170,13 +191,7 @@ export class CustomSelectComponent implements ControlValueAccessor {
     this.onChange?.(newValue);
     
     // Close dropdown
-    this.optionsShow.set(false);
-  }
-
-  handleWindowClick(): void {
-    if (!this.mouseEntered()) {
-      this.optionsShow.set(false);
-    }
+    this.closeDropdown();
   }
 
   handleElementClick(): void {

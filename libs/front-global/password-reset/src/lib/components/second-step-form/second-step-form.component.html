@@ -1,16 +1,16 @@
 <h1>Parola sıfırlama</h1>
 <div *ngIf="requestSent">
   <div class="flex align-items-center flex-column">
-    <i class="success-tik text-green-400 pi pi-check"></i>
+    <i class="success-tik text-green-400 material-symbols-outlined">check</i>
 
     <h3>Parola sıfırlama tamamlandı</h3>
     <p class="block text-align-center">
       Artık sisteme yeni parolanız ile giriş yapabilirsiniz.
     </p>
-    <!-- <block-button iconClass="pi pi-home" (click)="navigateHome()"
+    <!-- <block-button iconClass="material-symbols-outlined" iconContent="home" (click)="navigateHome()"
       >Ana sayfa</block-button
     >
-    <block-button iconClass="pi pi-chevron-left" (click)="navigateBack()"
+    <block-button iconClass="material-symbols-outlined" iconContent="chevron_left" (click)="navigateBack()"
       >Geri</block-button
     > -->
   </div>
@@ -28,7 +28,7 @@
       stringContent="İleri"
       iconPosition="RIGHT"
       buttonClass="primary"
-      iconClass="pi pi-chevron-right"
+      iconClass="material-symbols-outlined" iconContent="chevron_right"
     ></block-button>
   </div>
 </div>

@@ -7,7 +7,7 @@ import {
   computed
 } from '@angular/core';
 import { SidebarItem } from '../../../models';
-import { fromPrimeIcon } from '@lotus/front-global/icon-type';
+import { fromMaterialSymbol } from '@lotus/front-global/icon-type';
 
 @Component({
   selector: 'lotus-web-sidebar-menu',
@@ -17,7 +17,7 @@ import { fromPrimeIcon } from '@lotus/front-global/icon-type';
 })
 export class SidebarMenuComponent {
   // Constants
-  readonly primeIconQuestion = fromPrimeIcon('pi pi-question');
+  readonly primeIconQuestion = fromMaterialSymbol('help');
   readonly MOBILE_BREAKPOINT = 768;
 
   // Inputs & Models

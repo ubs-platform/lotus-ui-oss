@@ -57,13 +57,13 @@
       <!-- <block-button
       *ngIf="developar && !notBot"
       (click)="notBot = true"
-      iconClass="pi pi-bot"
+      iconClass="material-symbols-outlined" iconContent="smart_toy"
       >Sanane benim robot olup olmadığımdan 🅰️ ırkçısı seni!</block-button
     > -->
     </div>
     <div class="action-buttons">
       <block-button
-        iconClass="pi pi-chevron-right"
+        iconClass="material-symbols-outlined" iconContent="chevron_right"
         [disabled]="!(agreed && notBot)"
         (click)="nextStep(null)"
         buttonClass="primary"

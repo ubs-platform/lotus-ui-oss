@@ -8,9 +8,9 @@
             <div class="text-left">
               <div *ngIf="!deleted[item._id]">
                 <lib-single-comment [item]="item" (commentRemoval)="deleted[item._id] = true"></lib-single-comment>
-                <block-button buttonClass="primary" iconClass="pi pi-external-link"
+                <block-button buttonClass="primary" iconClass="material-symbols-outlined" iconContent="open_in_new"
                   stringContent="Yorum kaynağını yeni sekmede aç" (click)="goToQuestion(item)"></block-button>
-                <block-button *ngIf="adminMode()" buttonClass="secondary" iconClass="pi pi-comments"
+                <block-button *ngIf="adminMode()" buttonClass="secondary" iconClass="material-symbols-outlined" iconContent="forum"
                   stringContent="Admin sosyal seçenekler" (click)="socialOptions(item)"></block-button>
               </div>
               <div *ngIf="deleted[item._id]">

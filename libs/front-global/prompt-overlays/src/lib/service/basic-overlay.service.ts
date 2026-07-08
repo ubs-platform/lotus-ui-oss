@@ -117,31 +117,7 @@ export class BasicOverlayService {
         } as ConfirmConfig,
       })
       .onClose();
-    // // this.insertBackButtonFlag();
-    // return new Observable((subscriber) => {
-    //   const next = (b: boolean) => {
-    //     subscriber.next(b);
-    //     subscriber.complete();
-    //   };
-    //   const dialRef = this.insertBackButtonFlag((value) => {
-    //     next(value);
-    //     this.confirmationService.close();
-    //   });
-    //   this.confirmationService.confirm({
-    //     message: this.translator.getString(msg),
-    //     header: this.translator.getString(header),
-    //     acceptLabel: this.translator.getString('mona.yes'),
-    //     rejectLabel: this.translator.getString('mona.no'),
 
-    //     icon: 'pi pi-exclamation-triangle',
-    //     accept: () => {
-    //       dialRef.closeMainAction(true, !navigationOnAccept);
-    //     },
-    //     reject: () => {
-    //       dialRef.closeMainAction(false, !navigationOnReject);
-    //     },
-    //   });
-    // });
   }
 
   alert(

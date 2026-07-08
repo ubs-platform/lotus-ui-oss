@@ -10,7 +10,7 @@
           gidebilirsiniz.
         </p>
         <div class="action-buttons">
-          <block-button stringContent="Takımlarım" iconClass="pi pi-users" routerLink=".."></block-button>
+          <block-button stringContent="Takımlarım" iconClass="material-symbols-outlined" iconContent="group" routerLink=".."></block-button>
         </div>
       </div>
     </ng-template>
@@ -57,11 +57,11 @@
     <column name="actions">
       <ng-template header>Aksiyonlar </ng-template>
       <ng-template data let-item="item">
-        <block-button stringContent="İptal Et" iconClass="pi pi-sign-out" buttonClass="bg-danger"
+        <block-button stringContent="İptal Et" iconClass="material-symbols-outlined" iconContent="logout" buttonClass="bg-danger"
           (click)="removeInvitation(item)"></block-button>
-        <block-button stringContent="Kabul Et" iconClass="pi pi-check" buttonClass="bg-success ml-2"
+        <block-button stringContent="Kabul Et" iconClass="material-symbols-outlined" iconContent="check" buttonClass="bg-success ml-2"
           (click)="acceptInvitation(item)"></block-button>
-        <!-- <block-button stringContent="Kaldır" iconClass="pi pi-sign-out" buttonClass="bg-danger"
+        <!-- <block-button stringContent="Kaldır" iconClass="material-symbols-outlined" iconContent="logout" buttonClass="bg-danger"
           (click)="removeInvitation(item)"></block-button> -->
       </ng-template>
     </column>

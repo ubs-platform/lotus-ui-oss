@@ -8,7 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { SidebarItem } from '../../models/sidebar-item.model';
-import { fromPrimeIcon, IIcon } from '@lotus/front-global/icon-type';
+import { fromMaterialSymbol, IIcon } from '@lotus/front-global/icon-type';
 
 @Component({
   selector: 'lotus-web-sidebar',
@@ -20,7 +20,7 @@ export class SidebarComponent implements OnInit {
   // Signals for reactive state management
   readonly categorizerDisplaying = signal(false);
   readonly currentPathTitle = signal('');
-  readonly menuIcon = signal<IIcon>(fromPrimeIcon('pi pi-question'));
+  readonly menuIcon = signal<IIcon>(fromMaterialSymbol('help'));
 
   // Inputs & Outputs
   readonly currentPath = input('');
@@ -61,7 +61,7 @@ export class SidebarComponent implements OnInit {
     const item = this.items().find(item => item.path === path);
     if (item) {
       this.currentPathTitle.set(item.title || '');
-      this.menuIcon.set(item.icon || fromPrimeIcon('pi pi-question'));
+      this.menuIcon.set(item.icon || fromMaterialSymbol('help'));
     }
   }
 }

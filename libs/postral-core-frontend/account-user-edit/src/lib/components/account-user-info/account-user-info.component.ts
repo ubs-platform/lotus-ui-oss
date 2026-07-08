@@ -32,7 +32,7 @@ export class AccountUserInfoComponent {
     private basicOverlay: BasicOverlayService,
     private addressService: AddressControllerService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
@@ -70,7 +70,7 @@ export class AccountUserInfoComponent {
       afterSaveSuccess: (out, data) => {
         this.basicOverlay.alert(
           'Success',
-          'Account information updated successfully.',
+          'postral.account-information-updated-su',
           'success'
         );
         if (this.accountId() === 'new') {
@@ -86,7 +86,7 @@ export class AccountUserInfoComponent {
           return a;
         });
       },
-      afterSaveError: (error, data) => {},
+      afterSaveError: (error, data) => { },
     } as FormEditInstruction<AccountDTO, AccountDTO>);
   }
 }

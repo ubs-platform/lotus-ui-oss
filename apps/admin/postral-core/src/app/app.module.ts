@@ -1,5 +1,5 @@
 import { FrontGlobalPromptOverlaysModule } from '@lotus/front-global/prompt-overlays';
-import { NgModule, isDevMode } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -17,7 +17,6 @@ import {
   AuthService,
   RoleService,
 } from '@lotus/front-global/auth';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {
   LANGUAGE_JSON_URL,
   TranslatorRepositoryService,
@@ -28,19 +27,15 @@ import {
   CustomHeaderHolderService,
   FrontGlobalUiPageContainerModule,
 } from '@lotus/front-global/ui/page-container';
-import { RouterModule } from '@angular/router';
 import { LoadingIndicatorModule } from '@lotus/front-global/loading-indicator';
 import { FrontGlobalMobileGesturesUtilModule } from '@lotus/front-global/mobile-gestures-util';
 import {
   FrontGlobalFeedbackDialogModule,
-  FeedbackDialogService,
 } from '@lotus/front-global/feedback-dialog';
 import { FrontGlobalUserServiceWrapsModule } from '@lotus/front-global/user-service-wraps';
 import { registerLocaleData } from '@angular/common';
 import turkish from '@angular/common/locales/tr';
-import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 // its vertical im dumb
-import { ServiceWorkerModule } from '@angular/service-worker';
 import { IndexAutoLoader } from '@lotus/front-global/ngx-index-auto-load';
 import { ThemeManager } from '@lotus/front-global/theme-management';
 import { MarkdownFileVolatilityService } from '@lotus/front-global/markdown-editor';
@@ -50,11 +45,9 @@ import { MinkyReformNgxPrimeModule } from '@lotus/front-global/minky/reform-ngx-
 import { FrontGlobalAppEssentialModule } from '../../../../../libs/front-global/app-essential/src/lib/front-global-app-essential.module';
 
 import { FrontGlobalSidebarModule } from "@lotus/front-global/sidebar";
-import { FrontGlobalTableModule } from "@lotus/front-global/table"
 import { PostralCoreAdminModule } from '@lotus/postral-core-frontend/admin';
 import { WarningWatermarkComponent } from '@lotus/front-global/warning-watermark';
 import { CustomSelectComponent } from '@lotus/legendary-front/custom-select';
-import { PublisherTeamClientModule } from '@lotus/front-global/publisher-teams/client';
 import { ToggleComponent } from "@lotus/front-global/input/toggle";
 EnvironmentController.getEnvironmentController('tr-tr', true);
 registerLocaleData(turkish);
@@ -70,7 +63,6 @@ registerLocaleData(turkish);
     AppRoutingModule,
     ToastModule,
     AuthModule,
-    ConfirmDialogModule,
     FrontGlobalUiPageContainerModule,
     LoadingIndicatorModule,
     FrontGlobalMobileGesturesUtilModule,

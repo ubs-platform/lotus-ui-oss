@@ -30,7 +30,7 @@ export class PriceButtonsComponent implements OnInit {
       return;
     }
     this.itemService.getLatestPrices(this.itemId()!).subscribe((prices) => {
-      console.log('Latest prices:', prices);
+      console.log('postral.latest-prices', prices);
       this.prices.set(prices);
     });
   }

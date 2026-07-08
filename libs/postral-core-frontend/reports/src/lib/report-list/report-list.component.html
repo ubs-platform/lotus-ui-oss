@@ -2,7 +2,7 @@
   <ng-template action>
     <div>
       <div class="flex justify-content-end mb-2">
-        <block-button [hasContent]="false" [iconClass]="hideArchived() ? 'pi pi-eye' : 'pi pi-eye-slash'"
+        <block-button [hasContent]="false" iconClass="material-symbols-outlined" [iconContent]="hideArchived() ? 'visibility' : 'visibility_off'"
           (click)="toggleHideArchived()" [stringContent]="
             hideArchived() ? 'Arşivlenenleri Göster' : 'Arşivlenenleri Gizle'
           "></block-button>
@@ -119,7 +119,7 @@
             <ng-template data let-item="item">
               <div class="action-buttons">
                 @if (!item.archived) {
-                <block-button [hasContent]="false" iconClass="pi pi-refresh" (click)="reconstructReport(item.id)"
+                <block-button [hasContent]="false" iconClass="material-symbols-outlined" iconContent="refresh" (click)="reconstructReport(item.id)"
                   stringContent="Raporu tekrar oluştur"></block-button>
                 }
                 <block-button [hasContent]="false" buttonClass="border" iconClass="material-symbols-outlined"

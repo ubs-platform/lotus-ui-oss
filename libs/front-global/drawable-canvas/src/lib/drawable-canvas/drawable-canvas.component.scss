@@ -17,25 +17,34 @@
   right: 0;
   left: 0;
   position: absolute;
+
+  .canvas-parent.top {
+    top: var(--canvas-safe-area-top);
+   
+  }
 }
 
 .draw-tools {
   position: fixed;
-  // overflow: auto;
   display: flex;
-  gap: 1em;
+  gap: 0.5rem;
   flex-wrap: nowrap;
   background-color: var(--bg-1);
-  padding: 0.2em;
+  padding: 0.35rem 0.5rem;
   align-items: center;
   justify-content: center;
 
   &.bottom {
     bottom: 0px;
+    left: 0;
+    right: 0;
     width: 100%;
   }
 
   &.top {
+    top: var(--canvas-safe-area-top);
+    left: 0;
+    right: 0;
     width: 100%;
   }
 
@@ -43,7 +52,7 @@
     flex-direction: column;
     top: var(--canvas-safe-area-top);
     bottom: 0px;
-    width: 50px;
+    width: 56px;
     right: 0px;
   }
 
@@ -52,9 +61,54 @@
     top: var(--canvas-safe-area-top);
 
     bottom: 0px;
-    width: 50px;
+    width: 56px;
     left: 0px;
   }
+}
+
+.tool-group {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.mode-color-group {
+  flex: 1 1 auto;
+  justify-content: center;
+}
+
+.mode-color-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.colors-scroll {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+  max-width: min(44vw, 360px);
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px;
+  scrollbar-width: thin;
+
+  &.vertical {
+    max-width: none;
+    max-height: 40vh;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
+.size-indicator {
+  font-family: monospace;
+  min-width: 2ch;
+  text-align: center;
 }
 
 input.color-ball[type="color"] {
@@ -69,6 +123,7 @@ input.color-ball[type="color"] {
 }
 
 button.color-ball {
+  flex: 0 0 auto;
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -92,4 +147,17 @@ button.color-ball {
   width: 1px;
   height: 24px;
   background-color: var(--bg-2);
+}
+
+@media (max-width: 768px) {
+  .draw-tools.bottom,
+  .draw-tools.top {
+    gap: 0.35rem;
+    padding: 0.3rem 0.4rem;
+  }
+
+  .draw-tools.bottom .colors-scroll,
+  .draw-tools.top .colors-scroll {
+    max-width: min(58vw, 260px);
+  }
 }

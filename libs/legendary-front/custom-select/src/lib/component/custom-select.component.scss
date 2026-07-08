@@ -63,6 +63,8 @@
     // box-shadow: 0px 4px 12px 0px #0000002A;
     border-radius: 0px 0px var(--border-radius) var(--border-radius);
     // box-shadow:  0px 1px 4px 0px #0000004D;
+    max-height: 300px;
+    overflow-y: auto;
     .item{
       padding: 8px 15px;
 

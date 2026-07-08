@@ -3,27 +3,27 @@
     <block-button
       *ngIf="existCommentAbility?.canRemove"
       buttonClass="compact border"
-      iconClass="pi pi-trash"
+      iconClass="material-symbols-outlined" iconContent="delete"
       (click)="deleteComment()"
       pTooltip="Yorumu sil"
     ></block-button>
     <block-button
       *ngIf="existCommentAbility?.canEdit"
       buttonClass="compact border"
-      iconClass="pi pi-pencil"
+      iconClass="material-symbols-outlined" iconContent="edit"
       (click)="editComment()"
     ></block-button>
     <block-button
       *ngIf="existCommentAbility?.userCommentAdmin && !item()!?.userBanned"
       buttonClass="compact border"
-      iconClass="pi pi-ban"
+      iconClass="material-symbols-outlined" iconContent="block"
       pTooltip="Kullanıcının bu alanda yorum işlevini kapat"
       (click)="this.blockUser()"
     ></block-button>
     <block-button
       *ngIf="existCommentAbility?.userCommentAdmin && item()!?.userBanned"
       buttonClass="compact border"
-      iconClass="pi pi-check"
+      iconClass="material-symbols-outlined" iconContent="check"
       pTooltip="Kullanıcının bu alanda yorum işlevini kapatır"
       (click)="this.unblockUser()"
     ></block-button>
@@ -65,7 +65,7 @@
             [buttonClass]="
               'compact ' + (item()!.userUpVoted ? 'primary' : 'border')
             "
-            iconClass="pi pi-chevron-up"
+            iconClass="material-symbols-outlined" iconContent="expand_less"
             (click)="upvote()"
             pTooltip="Olumlu olarak oyla"
           ></block-button>
@@ -74,7 +74,7 @@
             [buttonClass]="
               'compact ' + (item()!.userDownVoted ? 'primary' : 'border')
             "
-            iconClass="pi pi-chevron-down"
+            iconClass="material-symbols-outlined" iconContent="expand_more"
             (click)="downvote()"
             pTooltip="Olumsuz olarak oyla"
           ></block-button>
@@ -83,7 +83,7 @@
             [buttonClass]="
               'compact ' + (item()!.childCommentsCount ? 'primary' : 'border')
             "
-            iconClass="pi pi-comment"
+            iconClass="material-symbols-outlined" iconContent="comment"
             (click)="toggleChildren()"
           >
             <div *ngIf="!showAnswers">
@@ -96,7 +96,7 @@
             *ngIf="!item()!.isChild && !item()!.childCommentsCount"
             [hasContent]="false"
             buttonClass="compact border"
-            iconClass="pi pi-comment"
+            iconClass="material-symbols-outlined" iconContent="comment"
             (click)="showAddAnswerDialogForThatComment()"
           >
           </block-button>
@@ -105,14 +105,14 @@
         <div class="flex flex-wrap gap-2 py-1">
           <block-button
             buttonClass="compact border"
-            iconClass="pi pi-flag"
+            iconClass="material-symbols-outlined" iconContent="flag"
             pTooltip="Yorumu bildir"
             (click)="flag()"
           ></block-button>
           <block-button
             buttonClass="compact border"
             (click)="toggleExistCommentAbilities($event)"
-            iconClass="pi pi-ellipsis-h"
+            iconClass="material-symbols-outlined" iconContent="more_horiz"
           ></block-button>
         </div>
       </div>

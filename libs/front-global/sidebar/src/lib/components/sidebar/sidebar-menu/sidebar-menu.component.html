@@ -12,7 +12,12 @@
     [attr.aria-label]="open() ? 'Collapse menu' : 'Expand menu'"
   >
     <span class="toggle-icon">
-      <i class="pi pi-chevron-right" aria-hidden="true"></i>
+      <lib-icon
+        iconSize="25px"
+        [iconClass]="open() ? 'material-symbols-outlined' : 'material-symbols-outlined'"
+        [iconContent]="open() ? 'chevron_left' : 'chevron_right'"
+        attr.aria-hidden="true"
+      ></lib-icon>
     </span>
   </button>
 
@@ -33,18 +38,18 @@
     [attr.aria-current]="item.path === currentPath() ? 'page' : null"
     [attr.aria-label]="item.title"
   >
-    <span class="item-icon">
+    <div class="item-icon">
       <lib-icon
-        iconSize="20px"
-        [iconClass]="item.icon?.iconClass || 'pi pi-question'"
+        iconSize="25px"
+        [iconClass]="item.icon?.iconClass || 'material-symbols-outlined'" [iconContent]="item.icon?.iconClass || 'help'"
         [iconContent]="item.icon?.iconContent || ''"
         attr.aria-hidden="true"
       >
       </lib-icon>
-    </span>
-    <span class="item-title" [class.hidden]="!open()">
+    </div>
+    <div class="item-title" [class.hidden]="!open()">
       {{ item.title | translate }}
-    </span>
+    </div>
   </button>
   } }
   <ng-container *ngFor="let item of items(); trackBy: trackByPath">

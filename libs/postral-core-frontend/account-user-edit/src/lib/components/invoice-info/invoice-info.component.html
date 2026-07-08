@@ -4,7 +4,7 @@
   <div class="flex flex-column gap-4 flex-grow-1">
     @if (loading()) {
     <div class="mona-card">
-      <p class="text-center">Yükleniyor...</p>
+      <p class="text-center">{{ 'loading' | translate }}</p>
     </div>
     } @else if (error()) {
     <div class="mona-card">
@@ -186,7 +186,7 @@
         <block-button
           stringContent="Fatura dosyasını indir"
           buttonClass="border"
-          iconClass="pi pi-download"
+          iconClass="material-symbols-outlined" iconContent="download"
           (click)="downloadInvoiceFile()"
         ></block-button>
         } @if (!invoiceInfo()!.finalized) {
@@ -194,14 +194,14 @@
           <block-button
             stringContent="UBL XML İndir"
             buttonClass="border"
-            iconClass="pi pi-code"
+            iconClass="material-symbols-outlined" iconContent="code"
             (click)="downloadUblFile()"
           ></block-button>
           @if (hasInvoiceFile()) {
           <block-button
             stringContent="Fatura dosyasını indir"
             buttonClass="border"
-            iconClass="pi pi-download"
+            iconClass="material-symbols-outlined" iconContent="download"
             (click)="downloadInvoiceFile()"
           ></block-button>
           }
@@ -212,7 +212,7 @@
                 ? 'Fatura Dosyasını Güncelle'
                 : 'Fatura Dosyası Yükle'
             "
-            iconClass="pi pi-upload"
+            iconClass="material-symbols-outlined" iconContent="upload"
             (click)="importInvoiceFile()"
           ></block-button>
         </div>
@@ -220,13 +220,13 @@
           <block-button
             buttonClass="primary"
             stringContent="Faturayı kesinleştir"
-            iconClass="pi pi-check"
+            iconClass="material-symbols-outlined" iconContent="check"
             (click)="finalizeInvoice()"
           >
           </block-button>
           <block-button
             buttonClass="error"
-            iconClass="pi pi-delete"
+            iconClass="material-symbols-outlined" iconContent="delete"
             stringContent="Faturayı sil"
             (click)="deleteInvoice()"
           >

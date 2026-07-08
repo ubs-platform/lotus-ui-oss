@@ -1,7 +1,7 @@
 <!-- <h1>{{ 'admin.users' | translate }}</h1> -->
 <div class="flex flex-column h-full w-full gap-1">
   <div class="flex flex-row-reverse w-full gap-2 mb-2">
-    <block-button iconClass="pi pi-plus" [routerLink]="['new']"
+    <block-button iconClass="material-symbols-outlined" iconContent="add" [routerLink]="['new']"
       >Yeni kullanıcı</block-button
     >
   </div>
@@ -56,14 +56,14 @@
         <ng-template data let-user="item">
           <block-button
             [hasContent]="false"
-            iconClass="pi pi-pencil"
+            iconClass="material-symbols-outlined" iconContent="edit"
             [routerLink]="[user.id]"
             buttonClass="primary m-1"
             [pTooltip]="'edit' | translate"
           ></block-button>
           <block-button
             [hasContent]="false"
-            iconClass="pi pi-trash"
+            iconClass="material-symbols-outlined" iconContent="delete"
             buttonClass="bg-danger m-1"
             *ngIf="!user.roles.includes('ADMIN')"
             (click)="removeUser(user.id)"
@@ -71,7 +71,7 @@
           >
           <block-button
             [hasContent]="true"
-            iconClass="pi pi-talk"
+            iconClass="material-symbols-outlined" iconContent="chat"
             buttonClass="border m-1"
             *ngIf="!user.roles.includes('ADMIN')"
             (click)="this.showSocialOptions(user)"

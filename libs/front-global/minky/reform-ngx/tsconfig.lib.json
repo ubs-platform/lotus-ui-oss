@@ -5,7 +5,8 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": []
+    "types": [],
+    "rootDir": "../../../.."
   },
   "exclude": [
     "src/test-setup.ts",
@@ -13,5 +14,8 @@
     "jest.config.ts",
     "**/*.test.ts"
   ],
-  "include": ["**/*.ts", "../core/src/lib/main/reform/carriers/input-link-carrier.ts"]
+  "include": [
+    "**/*.ts",
+    "../core/src/lib/main/reform/carriers/input-link-carrier.ts"
+  ]
 }

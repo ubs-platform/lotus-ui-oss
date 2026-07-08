@@ -15,8 +15,7 @@
     <div *ngIf="
         iconPosition() == 'LEFT' && (iconClass() || iconContent() || iconImageSource())
       ">
-      <lib-icon [iconClass]="iconClass()" [iconContent]="iconContent()" [iconImageSource]="iconImageSource()"
-        [iconSize]="iconSizeAuto()"></lib-icon>
+      <lib-icon [iconClass]="iconClass()" [iconContent]="iconContent()" [iconImageSource]="iconImageSource()"></lib-icon>
     </div>
     <div class="btn-left" [class.flex-grow-1]="growLeft()">
       <ng-content select=".left"></ng-content>
@@ -30,8 +29,7 @@
     <div *ngIf="
         iconPosition() == 'RIGHT' && (iconClass() || iconContent() || iconImageSource())
       ">
-      <lib-icon [iconClass]="iconClass()" [iconContent]="iconContent()" [iconImageSource]="iconImageSource()"
-        [iconSize]="iconSizeAuto()"></lib-icon>
+      <lib-icon [iconClass]="iconClass()" [iconContent]="iconContent()" [iconImageSource]="iconImageSource()"></lib-icon>
     </div>
   </div>
 </button>

@@ -6,7 +6,7 @@
     <div class="header flex align-items-center justify-content-between" *ngIf="displayHeader()">
       <h2 class="my-1 w-full text-center">{{ title() | translate }}</h2>
       @if (displayCloseButton()) {
-      <block-button *ngIf="displayCloseButton" iconClass="pi pi-times"
+      <block-button *ngIf="displayCloseButton" iconClass="material-symbols-outlined" iconContent="close"
         (click)="closeDialogByReference()"></block-button>
       }
 

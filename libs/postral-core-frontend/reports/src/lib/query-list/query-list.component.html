@@ -59,13 +59,13 @@
         <ng-template data let-item="item">
           <div class="action-buttons">
             <block-button
-              iconClass="pi pi-pencil"
+              iconClass="material-symbols-outlined" iconContent="edit"
               stringContent="Sorguyu düzenle"
               [hasContent]="false"
               (click)="editItem(item)"
             ></block-button>
             <block-button
-              iconClass="pi pi-eye"
+              iconClass="material-symbols-outlined" iconContent="visibility"
               stringContent="Raporlara bak"
               [hasContent]="false"
               (click)="listReportsOf(item)"

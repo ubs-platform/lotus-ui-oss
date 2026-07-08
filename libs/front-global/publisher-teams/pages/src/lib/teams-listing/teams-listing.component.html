@@ -1,6 +1,6 @@
 <div class="h-full w-full flex flex-column">
   <div class="flex flex-row-reverse w-full gap-2 mb-2">
-    <block-button stringContent="Yeni takım oluştur" iconClass="pi pi-plus" (click)="createNewTeam()"></block-button>
+    <block-button stringContent="Yeni takım oluştur" iconClass="material-symbols-outlined" iconContent="add" (click)="createNewTeam()"></block-button>
   </div>
   <div class="flex-grow-1">
     <searchable-data-table url="/api/users/entity-ownership-group/_search" [cover]="true"
@@ -11,9 +11,9 @@
           <p class="text-align-center">Yeni bir takım oluşturmak için oluştur butonunu kullanabilir, ya da davetlerinize
             bakabilirsiniz.</p>
           <div class="action-buttons">
-            <block-button stringContent="Yeni takım oluştur" iconClass="pi pi-plus"
+            <block-button stringContent="Yeni takım oluştur" iconClass="material-symbols-outlined" iconContent="add"
               (click)="createNewTeam()"></block-button>
-            <block-button stringContent="Davetlerim" iconClass="pi pi-inbox"
+            <block-button stringContent="Davetlerim" iconClass="material-symbols-outlined" iconContent="inbox"
               routerLink="invitations-for-me"></block-button>
           </div>
         </div>
@@ -33,12 +33,12 @@
         <ng-template data let-item="item">
           <div>
             <div class="action-buttons">
-              <block-button stringContent="Düzenle" iconClass="pi pi-pencil"
+              <block-button stringContent="Düzenle" iconClass="material-symbols-outlined" iconContent="edit"
                 [routerLink]="[item.id, 'edit']"></block-button>
-              <block-button stringContent="Üyeler" iconClass="pi pi-users"
+              <block-button stringContent="Üyeler" iconClass="material-symbols-outlined" iconContent="group"
                 [routerLink]="[item.id, 'members']"></block-button>
-              <!-- <block-button stringContent="Gruptan ayrıl" iconClass="pi pi-sign-out"></block-button> -->
-              <block-button stringContent="Sil" iconClass="pi pi-trash" (click)="deleteTeam(item)"></block-button>
+              <!-- <block-button stringContent="Gruptan ayrıl" iconClass="material-symbols-outlined" iconContent="logout"></block-button> -->
+              <block-button stringContent="Sil" iconClass="material-symbols-outlined" iconContent="delete" (click)="deleteTeam(item)"></block-button>
               @if (adminMode()) {
               @if(eogTrusted()[item.id] != null) {
               @if (eogTrusted()[item.id]) {

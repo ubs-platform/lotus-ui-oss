@@ -1,7 +1,7 @@
 <div class="flex flex-column">
   <div class="flex align-items-center gap-3 mb-3">
     <div>
-      <i class="pi pi-exclamation-triangle" style="font-size: 2rem"></i>
+      <i class="material-symbols-outlined" style="font-size: 2rem">warning</i>
     </div>
     <div>
       {{ config.data!.message | translate }}
@@ -11,12 +11,12 @@
     <block-button
       (click)="decision(true)"
       stringContent="mona.yes"
-      iconClass="pi pi-check"
+      iconClass="material-symbols-outlined" iconContent="check"
       buttonClass="border"
     ></block-button>
     <block-button
       (click)="decision(false)"
-      iconClass="pi pi-times"
+      iconClass="material-symbols-outlined" iconContent="close"
       stringContent="mona.no"
       buttonClass="border"
     ></block-button>

@@ -6,15 +6,13 @@ import {
   HttpInterceptor,
   HttpResponse,
 } from '@angular/common/http';
-import { Observable, catchError, map, of, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { bearerTokenInterceptorGetReady as bearerTokenInterceptorGetReady } from './bearer-token-ready';
 import { TokenGetter } from '../common/token-getter';
 import {
   LoadingData,
   LoadingIndicationService,
 } from '@lotus/front-global/user-service-wraps';
-import { OverlayService } from 'primeng/api';
-import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {

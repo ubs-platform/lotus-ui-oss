@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { fromPrimeIcon } from '@lotus/front-global/icon-type';
+import { fromMaterialSymbol } from '@lotus/front-global/icon-type';
 import { SidebarItem } from '@lotus/front-global/sidebar';
-import { PrimeIcons } from 'primeng/api';
-import { of } from 'rxjs';
 
 @Component({
     selector: 'lotus-web-main-view',
@@ -21,9 +19,9 @@ export class MainViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.menuItems = [
-      new SidebarItem('thumb-photo', 'Profil fotoğrafı', fromPrimeIcon('pi pi-image')),
-      new SidebarItem('information', 'Hesap bilgileri', fromPrimeIcon('pi pi-user')),
-      new SidebarItem('security', 'Güvenlik', fromPrimeIcon('pi pi-lock')),
+      new SidebarItem('thumb-photo', 'Profil fotoğrafı', fromMaterialSymbol('image')),
+      new SidebarItem('information', 'Hesap bilgileri', fromMaterialSymbol('person')),
+      new SidebarItem('security', 'Güvenlik', fromMaterialSymbol('lock')),
     ];
   }
 

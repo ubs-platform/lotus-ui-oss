@@ -1,7 +1,7 @@
   <div class="flex flex-column gap-1 flex-wrap" *ngIf="socialDialogUser()">
     <block-button
       [hasContent]="true"
-      iconClass="pi pi-trash"
+      iconClass="material-symbols-outlined" iconContent="delete"
       buttonClass="bg-danger"
       *ngIf="!userIsAdmin()"
       (click)="clearComments(socialDialogUser()!)"
@@ -9,7 +9,7 @@
     >
     <block-button
       [hasContent]="true"
-      iconClass="pi pi-ban"
+      iconClass="material-symbols-outlined" iconContent="block"
       buttonClass="bg-danger"
       *ngIf="
         !socialDialogUserSocialRestriction() &&
@@ -21,7 +21,7 @@
 
     <block-button
       [hasContent]="true"
-      iconClass="pi pi-check"
+      iconClass="material-symbols-outlined" iconContent="check"
       buttonClass="bg-danger"
       *ngIf="
         socialDialogUserSocialRestriction() &&

@@ -20,7 +20,7 @@
         <!-- <lotus-web-logo-area></lotus-web-logo-area> -->
       </div>
     </div>
-    <div class="flex p-2">
+    <div class="flex py-2">
       <ng-content select="[header-left]"></ng-content>
       <!-- TODO:Şimdilik menüleri postralde manuel eklemek daha doğru olacak gibi -->
       <!-- @if (!onMobile()) {
@@ -31,7 +31,7 @@
           pRipple
           buttonClass="surface border"
           [iconPosition]="item.childPageContents ? 'RIGHT' : 'NONE'"
-          [iconClass]="item.childPageContents ? 'pi pi-chevron-down' : ''"
+          [iconClass]="item.childPageContents ? 'material-symbols-outlined' : ''" [iconContent]="item.childPageContents ? 'expand_more' : ''"
           [stringContent]="item?.text! | translate"
         >
         </block-button>
@@ -125,7 +125,7 @@
       <div style="margin-right: 16px; margin-top: 16px">
         <block-button
           type="button"
-          iconClass="pi pi-caret-left"
+          iconClass="material-symbols-outlined" iconContent="arrow_left"
           (click)="hideMenuRaw()"
         ></block-button>
       </div>
@@ -172,13 +172,13 @@
         <ng-template custom-item="unsigned-user-view">
           <lotus-web-block-part-base-button
             *ngIf="!user()"
-            iconClass="pi pi-chevron-right"
+            iconClass="material-symbols-outlined" iconContent="chevron_right"
             otherClass="login-opener"
             buttonClass="light-1"
             iconPosition="RIGHT"
           >
             <div class="left p-3">
-              <i class="pi pi-user" style="font-size: 60px"></i>
+              <i class="material-symbols-outlined" style="font-size: 60px">person</i>
             </div>
             <div class="part-content">
               <div style="font-size: 20px">

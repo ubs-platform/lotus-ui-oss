@@ -35,10 +35,17 @@
             !item.customTemplate &&
             !item.iconContent &&
             !item.iconImageSource)
-            ? 'pi pi-chevron-right'
+            ? 'material-symbols-outlined'
             : item.iconClass
+        " [iconContent]="
+          item.childPaginationItems ||
+          (!item.iconClass &&
+            !item.customTemplate &&
+            !item.iconContent &&
+            !item.iconImageSource)
+            ? 'chevron_right'
+            : item.iconContent
         "
-        [iconContent]="item.iconContent"
         [iconImageSource]="item.iconImageSource"
         [buttonClass]="item.buttonClass || 'surface'"
         iconPosition="RIGHT"
@@ -51,7 +58,7 @@
     </ng-container>
   </ng-container>
   <block-button
-    iconClass="pi pi-chevron-left"
+    iconClass="material-symbols-outlined" iconContent="chevron_left"
     *ngIf="showBackButton"
     [cover]="true"
     buttonClass="surface"
