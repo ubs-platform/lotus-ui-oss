@@ -98,18 +98,21 @@
       </column>
 
       <column name="sourceAccountId">
-        <ng-template header> Hesap iletişimi </ng-template>
+        <ng-template header> Müşteri </ng-template>
         <ng-template data let-item="item">
           {{ item.sourceAccountName }}
-          <span
-            style="font-size: 0.5em; line-height: 0.5em"
-            class="pi"
-            [class.pi-chevron-right]="item.transactionType == 'CREDIT_TO_SELLER'"
-            [class.pi-chevron-left]="item.transactionType == 'DEBIT_FROM_SELLER'"
-          ></span>
+        </ng-template>
+      </column>
+      <column name="transactionType">
+        <ng-template header> Yön </ng-template>
+        <ng-template data let-item="item">
+          {{ item.transactionType == 'DEBIT_FROM_SELLER' ? '<-' : '->' }}
+        </ng-template>
+      </column>
+      <column name="targetAccountId">
+        <ng-template header> Satıcı </ng-template>
+        <ng-template data let-item="item">
           {{ item.targetAccountName }}
-          <br />
-          {{ item.transactionType == 'DEBIT_FROM_SELLER' ? 'Satıcıdan Müşteriye' : 'Müşteriden Satıcıya' }}
         </ng-template>
       </column>
       <column name="actions">

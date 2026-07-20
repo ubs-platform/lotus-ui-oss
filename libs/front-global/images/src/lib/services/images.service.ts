@@ -69,4 +69,14 @@ export class FileService {
       .put(url, fd)
       .pipe(map((a) => a as { category: string; name: string }));
   }
+
+  public proxyExternalImageUrl(
+    url: string,
+    category = 'GENERAL',
+  ): import('rxjs').Observable<{ category: string; name: string }> {
+    return this.http.post<{ category: string; name: string }>(
+      `${this.fetchEntityUrl}/proxy-url`,
+      { url, category },
+    );
+  }
 }

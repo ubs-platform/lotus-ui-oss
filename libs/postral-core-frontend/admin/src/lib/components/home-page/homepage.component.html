@@ -1,6 +1,6 @@
 <div class="sidebar-content">
   <div class="flex sm:flex-row flex-column gap-4 items-center">
-    <img src="assets/intro-tr.gif" height="300px" />
+    <!-- <img src="assets/intro-tr.gif" height="300px" /> -->
     <div>
       <h2>Postral Core'un Beta sürümüne hoş geldiniz</h2>
       <p>
@@ -34,22 +34,17 @@
         Postral Core'un arka uç altyapısı, Github üzerinde ücretsiz ve açık
         kaynak olarak dağıtılmaktadır.
       </div>
-      <block-button
-        buttonClass="primary mt-4"
-        stringContent="Postral Core Github Sayfası (Arka uç)"
-        target="_blank"
-        iconClass="material-symbols-outlined" iconContent="priority_high"
-        iconPosition="LEFT"
-        (click)="openGithub()"
-      ></block-button><br />
-      <block-button
-        buttonClass="primary mt-4"
-        stringContent="Postral Core Github Sayfası (Ön uç)"
-        target="_blank"
-        iconClass="material-symbols-outlined" iconContent="priority_high"
-        iconPosition="LEFT"
-        (click)="openGithubFrontend()"
-      ></block-button>
+      <div class="flex gap-1">
+        <block-button buttonClass="primary mt-4" stringContent="Postral Core Github Sayfası (Arka uç)" target="_blank"
+          iconClass="material-symbols-outlined" iconContent="priority_high" iconPosition="LEFT"
+          (click)="openGithub()"></block-button>
+        <block-button buttonClass="primary mt-4" stringContent="Postral Core Github Sayfası (Ön uç)" target="_blank"
+          iconClass="material-symbols-outlined" iconContent="priority_high" iconPosition="LEFT"
+          (click)="openGithubFrontend()"></block-button>
+        <block-button buttonClass="primary mt-4" stringContent="Tanıtım videosu" target="_blank"
+          iconClass="material-symbols-outlined" iconContent="priority_high" iconPosition="LEFT"
+          (click)="openIntroductionVideo()"></block-button>
+      </div>
       <div>
         Ayrıca yaşadığınız sorunları bize yazmaktan lütfen çekinmeyin. Postral
         Core'u sizin ihtiyaçlarınıza göre şekillendirmek istiyoruz!
@@ -58,19 +53,10 @@
   </div>
   <p>Aşağıdaki bağlantılarla başlayabilirsiniz:</p>
   <div class="flex flex-column gap-2">
-    <block-button
-      buttonClass="primary"
-      stringContent="Giriş yapan kullanıcı ödeme hesabı paneli"
-      [routerLink]="'../user/payment-accounts/account'"
-    ></block-button>
-    <block-button
-      buttonClass="primary"
-      stringContent="Ödeme hesapları (admin)"
-    ></block-button>
-    <block-button
-      buttonClass="primary"
-      stringContent="Ödeme hesapları (Kullanıcı)"
-    ></block-button>
+    <block-button buttonClass="primary" stringContent="Giriş yapan kullanıcı ödeme hesabı paneli"
+      [routerLink]="'../user/payment-accounts/account'"></block-button>
+    <block-button buttonClass="primary" stringContent="Ödeme hesapları (admin)"></block-button>
+    <block-button buttonClass="primary" stringContent="Ödeme hesapları (Kullanıcı)"></block-button>
     <block-button buttonClass="primary" stringContent="Ürünler"></block-button>
     <block-button buttonClass="primary" stringContent="Fiyatlar"></block-button>
   </div>

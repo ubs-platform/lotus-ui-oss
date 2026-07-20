@@ -1,0 +1,85 @@
+<input
+  type="file"
+  accept=".png,.jpg,.jpeg,.webp"
+  class="hidden"
+  (change)="afterImageSelected()"
+  #fileInput
+/>
+
+<div class="relative">
+  <div
+    #editorContainer
+    class="lexical-editor-parent"
+    [class.readonly]="!allowWrite()"
+    [class.focused]="isEditorFocused()"
+    (focus)="isEditorFocused.set(true)"
+    (blur)="isEditorFocused.set(false)"
+  ></div>
+</div>
+
+<div class="formatbtns overflow-hidden" [class.active]="isEditorFocused()" [class.inactive]="!isEditorFocused()" *ngIf="allowWrite() && showToolbar()">
+  <div class="flex w-full gap-1 align-items-center overflow-auto">
+    <block-button
+      iconClass="material-symbols-outlined"
+      iconContent="format_bold"
+      [hasContent]="false"
+      (mousedown)="keepFocus($event)"
+      (click)="makeBold()"
+    ></block-button>
+    <block-button
+      iconClass="material-symbols-outlined"
+      iconContent="format_italic"
+      [hasContent]="false"
+      (mousedown)="keepFocus($event)"
+      (click)="makeItalic()"
+    ></block-button>
+    <block-button
+      *ngIf="category()"
+      iconClass="material-symbols-outlined"
+      iconContent="image"
+      [hasContent]="false"
+      (mousedown)="keepFocus($event)"
+      (click)="showInsertImg()"
+    ></block-button>
+    <div ubs-document-swipe="disable" class="flex w-full gap-1 align-items-center overflow-x-auto" style="scroll-snap-type: x mandatory;">
+      <div class="p-1 block shrink-0" style="scroll-snap-align: start;">
+        <lib-icon
+          iconClass="material-symbols-outlined"
+          iconContent="functions"
+        ></lib-icon>
+      </div>
+      <block-button
+        iconClass="material-symbols-outlined"
+        iconContent="line_end"
+        [hasContent]="false"
+        (mousedown)="keepFocus($event)"
+        [stringContent]="'Satır içi matematik'"
+        (click)="insertInlineMath()"
+        style="scroll-snap-align: start; flex-shrink: 0;"
+      ></block-button>
+      <block-button
+        iconClass="material-symbols-outlined"
+        iconContent="table"
+        [hasContent]="false"
+        [stringContent]="'Blok matematik'"
+        (mousedown)="keepFocus($event)"
+        (click)="insertBlockMath()"
+        style="scroll-snap-align: start; flex-shrink: 0;"
+      ></block-button>
+    </div>
+    <block-button
+      iconClass="material-symbols-outlined"
+      iconContent="undo"
+      [hasContent]="false"
+      [stringContent]="'undo'"
+      (click)="undo()"
+    ></block-button>
+    <block-button
+      iconClass="material-symbols-outlined"
+      iconContent="redo"
+      [hasContent]="false"
+      [stringContent]="'redo'"
+      (click)="redo()"
+    ></block-button>
+  </div>
+</div>

@@ -18,4 +18,7 @@ export class HomepageComponent {
   openGithubFrontend() {
     window.open('https://www.github.com/ubs-platform/lotus-ui-oss', '_blank');
   }
+  openIntroductionVideo() {
+    window.open('https://www.youtube.com/watch?v=JGH5RflwFqk', '_blank');
+  }
 }

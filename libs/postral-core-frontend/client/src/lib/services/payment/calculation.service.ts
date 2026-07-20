@@ -3,7 +3,9 @@ import { Injectable } from "@angular/core";
 import { ItemListCalculationInputDto, ItemListCalculationDto } from "@tk-postral/payment-common";
 import { Observable } from "rxjs";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class CalculationService {
     readonly baseUrl = '/service/payment/api/calculation';
     

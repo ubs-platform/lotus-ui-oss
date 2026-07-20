@@ -16,6 +16,7 @@ import {
   WebDialogUtils,
   WebdialogHandler,
   IWebDialogConfig,
+  WebdialogReference,
 } from '@lotus/front-global/webdialog';
 import { ConfirmDialogComponent } from '../component/confirm-dialog/confirm-dialog.component';
 import { ConfirmConfig } from '../model/confirm-config.model';
@@ -104,8 +105,24 @@ export class BasicOverlayService {
    */
   confirm(
     header: TranslatorText,
-    msg: TranslatorText
+    msg: TranslatorText,
+
   ): Observable<boolean | null | undefined> {
+    return this.confirmWithDialogReference(header, msg)
+      .onClose();
+
+  }
+
+  /**
+ * @param header
+ * @param msg
+ * @returns
+ */
+  confirmWithDialogReference(
+    header: TranslatorText,
+    msg: TranslatorText,
+
+  ): WebdialogReference<boolean> {
     return this.webdialogHandler
       .open(ConfirmDialogComponent, {
         title: header,
@@ -115,8 +132,7 @@ export class BasicOverlayService {
         data: {
           message: msg,
         } as ConfirmConfig,
-      })
-      .onClose();
+      });
 
   }
 

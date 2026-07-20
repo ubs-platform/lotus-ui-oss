@@ -8,10 +8,10 @@ import { NgxMonacoEditorConfig } from 'ngx-monaco-editor-v2';
 import { EmailTemplateDTO } from '@ubs-platform/notify-common';
 
 @Component({
-    selector: 'lotus-web-template-editor',
-    templateUrl: './template-editor.component.html',
-    styleUrls: ['./template-editor.component.scss'],
-    standalone: false
+  selector: 'lotus-web-template-editor',
+  templateUrl: './template-editor.component.html',
+  styleUrls: ['./template-editor.component.scss'],
+  standalone: false
 })
 export class TemplateEditorComponent {
   id?: string;
@@ -22,12 +22,12 @@ export class TemplateEditorComponent {
     private activeRoute: ActivatedRoute,
     private router: Router,
     private overlay: BasicOverlayService
-  ) {}
+  ) { }
 
   @HostListener('document:keydown', ['$event'])
   keydownOp($event: KeyboardEvent) {
     // windows and generic linux for now
-    if ($event.ctrlKey && $event.key == 's') {
+    if (($event.ctrlKey || $event.metaKey) && $event.key == 's') {
       $event.preventDefault();
       this.save(false);
     }
