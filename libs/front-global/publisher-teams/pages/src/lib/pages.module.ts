@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
 import { TeamsListingComponent } from './teams-listing/teams-listing.component';
 import { TeamsEditComponent } from './teams-edit/teams-edit.component';
 import { ReformDataEditComponent } from '@lotus/front-global/reform-data-edit';
@@ -15,10 +17,16 @@ import { InvitedToMeComponent } from './invited-to-me/invited-to-me.component';
 import { OnpageHeaderComponent } from "@lotus/front-global/dynamic-headers";
 import { UbsTouchNgxModule } from "@lotus/front-global/ubs-touch-ngx";
 import { TabViewComponent } from '@lotus/front-global/tab-view';
+import { EntityCapabilityGroupSelectorComponent } from './team-members/entity-capability-group-selector/entity-capability-group-selector.component';
+import { TeamMemberCapabilityDialogComponent } from './team-members/team-member-capability-dialog/team-member-capability-dialog.component';
+import { FrontGlobalStatusBadgeModule } from '@lotus/front-global/status-badge';
+import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    InputTextModule,
     ReformDataEditComponent,
     FrontGlobalTableModule,
     FrontGlobalButtonModule,
@@ -28,6 +36,8 @@ import { TabViewComponent } from '@lotus/front-global/tab-view';
     OnpageHeaderComponent,
     UbsTouchNgxModule,
     TabViewComponent,
+    FrontGlobalStatusBadgeModule,
+    UbsTranslatorNgxModule
   ],
   declarations: [
     TeamsListingComponent,
@@ -35,6 +45,8 @@ import { TabViewComponent } from '@lotus/front-global/tab-view';
     TeamsEditWrapComponent,
     TeamMembersComponent,
     InvitedToMeComponent,
+    EntityCapabilityGroupSelectorComponent,
+    TeamMemberCapabilityDialogComponent,
   ],
   exports: [
     TeamsListingComponent,
@@ -45,3 +57,4 @@ import { TabViewComponent } from '@lotus/front-global/tab-view';
   ],
 })
 export class PagesModule { }
+

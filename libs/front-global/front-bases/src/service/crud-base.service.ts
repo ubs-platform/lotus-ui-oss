@@ -2,6 +2,7 @@ import { inject, Injectable, Optional } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { finalize, shareReplay } from 'rxjs/operators';
+import { SearchResult } from '@ubs-platform/crud-base-common';
 
 // const baseUrl = 'http://localhost:8080/api/tutorials';
 export const CrudBaseServiceGenerator = <READ, WRITE, SEARCH extends Object>(
@@ -39,9 +40,9 @@ export const CrudBaseServiceGenerator = <READ, WRITE, SEARCH extends Object>(
       return request$;
     }
 
-    search(s: SEARCH): Observable<READ> {
+    search(s: SEARCH): Observable<SearchResult<READ>> {
       const search = this.queryToString(s);
-      return this.http.get<READ>(`${_baseUrl}/_search` + search);
+      return this.http.get<SearchResult<READ>>(`${_baseUrl}/_search` + search);
     }
 
     get(id: any): Observable<READ> {

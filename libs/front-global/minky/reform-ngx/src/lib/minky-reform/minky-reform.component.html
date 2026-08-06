@@ -10,6 +10,7 @@
   </label>
 </ng-template>
 
+
 <ng-template input-link let-carrier="carrier">
   <div
     *ngIf="carrier.inputType != 'checkbox'"
@@ -21,27 +22,16 @@
     }}</label>
     <span *ngIf="carrier.validators?.includes('RequiredValidator')">*</span>
   </div>
-  <!-- <ng-container *ngIf="carrier.inputType == 'select'; else notSelect">
-    <p-dropdown
-      *ngIf="carrier.inputType != 'file'"
-      [ngModel]="carrier.value"
-      (ngModelChange)="carrier.setValue($event)"
-      (blur)="carrier.setTouched(true)"
-      [attr.name]="carrier.name"
-      optionLabel="text"
-      optionValue="value"
-    >
-    </p-dropdown>
-  </ng-container>
-  <ng-template #notSelect> -->
+ 
   <input
     *ngIf="carrier.inputType != 'file'"
     [type]="carrier.inputType"
-    [ngModel]="carrier.value"
-    (ngModelChange)="carrier.setValue($event)"
+    [value]="carrier.value"
+    (valueChange)="carrier.setValue($event)"
     (blur)="carrier.setTouched(true)"
     [attr.name]="carrier.name"
   />
+  
   <input
     *ngIf="carrier.inputType == 'file'"
     type="file"

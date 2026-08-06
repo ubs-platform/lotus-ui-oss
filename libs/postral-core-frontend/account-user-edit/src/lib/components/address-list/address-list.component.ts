@@ -2,8 +2,7 @@ import { Component, signal, viewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { SearchableDataTableComponent } from '@lotus/front-global/table';
-import { AccountControllerService, AccountUserControllerService, AddressControllerService } from '@lotus/postral-core-frontend/client';
-import { AccountDTO, AccountAddressDto } from '@tk-postral/payment-common';
+import { AddressControllerService } from '@lotus/postral-core-frontend/client';
 import { PublisherTeamService } from '@lotus/front-global/publisher-teams/client';
 @Component({
   selector: 'lib-address-list',

@@ -1,28 +1,56 @@
 <div class="h-full w-full flex flex-column">
   <div class="flex flex-row-reverse w-full gap-2 mb-2">
-    <block-button stringContent="Yeni takım oluştur" iconClass="material-symbols-outlined" iconContent="add" (click)="createNewTeam()"></block-button>
+    <block-button
+      stringContent="Yeni takım oluştur"
+      iconClass="material-symbols-outlined"
+      iconContent="add"
+      (click)="createNewTeam()"
+    ></block-button>
   </div>
   <div class="flex-grow-1">
-    <searchable-data-table url="/api/users/entity-ownership-group/_search" [cover]="true"
-      [otherFilter]="{admin: adminMode()}" #dataTable>
+    <searchable-data-table
+      url="/api/users/entity-ownership-group/_search"
+      [cover]="true"
+      (fetched)="fetchEogTrustStatusByTeams($event)"
+      [otherFilter]="{ admin: adminModeString() }"
+      #dataTable
+    >
       <ng-template empty-data>
-        <div class="p-3 flex flex-column justify-content-center align-items-center">
-          <img src="assets/errors/nothing.webp" alt="No Teams" style="width: 200px; height: auto;" />
-          <p class="text-align-center">Yeni bir takım oluşturmak için oluştur butonunu kullanabilir, ya da davetlerinize
-            bakabilirsiniz.</p>
+        <div
+          class="p-3 flex flex-column justify-content-center align-items-center"
+        >
+          <img
+            src="assets/errors/nothing.webp"
+            alt="No Teams"
+            style="width: 200px; height: auto"
+          />
+          <p class="text-align-center">
+            Yeni bir takım oluşturmak için oluştur butonunu kullanabilir, ya da
+            davetlerinize bakabilirsiniz.
+          </p>
           <div class="action-buttons">
-            <block-button stringContent="Yeni takım oluştur" iconClass="material-symbols-outlined" iconContent="add"
-              (click)="createNewTeam()"></block-button>
-            <block-button stringContent="Davetlerim" iconClass="material-symbols-outlined" iconContent="inbox"
-              routerLink="invitations-for-me"></block-button>
+            <block-button
+              stringContent="Yeni takım oluştur"
+              iconClass="material-symbols-outlined"
+              iconContent="add"
+              (click)="createNewTeam()"
+            ></block-button>
+            <block-button
+              stringContent="Davetlerim"
+              iconClass="material-symbols-outlined"
+              iconContent="inbox"
+              routerLink="invitations-for-me"
+            ></block-button>
           </div>
         </div>
       </ng-template>
       <column name="name" width="70%">
         <ng-template header> İsim</ng-template>
         <ng-template data let-item="item">
-          <div class="flex flex-column align-items-start sm:align-items-end lg:align-items-start">
-            <div style="font-size: 20px;">{{ item.name }}</div>
+          <div
+            class="flex flex-column align-items-start sm:align-items-end lg:align-items-start"
+          >
+            <div style="font-size: 20px">{{ item.name }}</div>
             <div>{{ item.description }}</div>
           </div>
         </ng-template>
@@ -33,23 +61,41 @@
         <ng-template data let-item="item">
           <div>
             <div class="action-buttons">
-              <block-button stringContent="Düzenle" iconClass="material-symbols-outlined" iconContent="edit"
-                [routerLink]="[item.id, 'edit']"></block-button>
-              <block-button stringContent="Üyeler" iconClass="material-symbols-outlined" iconContent="group"
-                [routerLink]="[item.id, 'members']"></block-button>
+              <block-button
+                stringContent="Düzenle"
+                iconClass="material-symbols-outlined"
+                iconContent="edit"
+                [routerLink]="[item.id, 'edit']"
+              ></block-button>
+              <block-button
+                stringContent="Üyeler"
+                iconClass="material-symbols-outlined"
+                iconContent="group"
+                [routerLink]="[item.id, 'members']"
+              ></block-button>
               <!-- <block-button stringContent="Gruptan ayrıl" iconClass="material-symbols-outlined" iconContent="logout"></block-button> -->
-              <block-button stringContent="Sil" iconClass="material-symbols-outlined" iconContent="delete" (click)="deleteTeam(item)"></block-button>
-              @if (adminMode()) {
-              @if(eogTrusted()[item.id] != null) {
-              @if (eogTrusted()[item.id]) {
-              <block-button stringContent="Takıma güvenmeyi bırak"
-                (click)="setEogTrusted(item.id, false)"></block-button>
+              <block-button
+                stringContent="Sil"
+                iconClass="material-symbols-outlined"
+                iconContent="delete"
+                (click)="deleteTeam(item)"
+              ></block-button>
+              @if (adminMode()) { @if(eogTrusted()[item.id] != null) { @if
+              (eogTrusted()[item.id]) {
+              <block-button
+                stringContent="Takıma güvenmeyi bırak"
+                iconContent="heart_broken"
+                iconClass="material-symbols-outlined"
+                (click)="setEogTrusted(item.id, false)"
+              ></block-button>
               } @else {
-              <block-button stringContent="Takıma güven" (click)="setEogTrusted(item.id, true)"></block-button>
-              }
-              }
-              }
-
+              <block-button
+                iconClass="material-symbols-outlined"
+                iconContent="verified"
+                stringContent="Takıma güven"
+                (click)="setEogTrusted(item.id, true)"
+              ></block-button>
+              } } }
             </div>
           </div>
         </ng-template>

@@ -13,16 +13,16 @@ import {
 } from '@ubs-platform/translator-core';
 
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
-    selector: 'block-button',
-    templateUrl: './b-button.component.html',
-    styleUrls: ['./b-button.component.scss'],
-    standalone: false
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: 'block-button',
+  templateUrl: './b-button.component.html',
+  styleUrls: ['./b-button.component.scss'],
+  standalone: false
 })
 export class BButtonComponent {
-  readonly iconClass = input('');
-  readonly iconContent = input('');
-  readonly iconImageSource = input('');
+  readonly iconClass = input<string | null | undefined>(undefined);
+  readonly iconContent = input<string | null | undefined>(undefined);
+  readonly iconImageSource = input<string | null | undefined>(undefined);
   readonly buttonClass = input('surface');
 
   readonly growRight = input(false);
@@ -34,6 +34,6 @@ export class BButtonComponent {
   readonly hasContent = input(true);
   readonly stringContent = input<string | TranslatorText>();
   readonly hideContentAtLowScr = input(false);
-  readonly contentClass = input('');
+  readonly contentClass = input<string | undefined>(undefined);
   contentClassSys = '';
 }

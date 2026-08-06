@@ -26,9 +26,7 @@ export class Reform<T = any> {
   structureRootMeta?: RootPropertyMeta<T>;
   private _value: any;
   private _initialValue: any;
-  // revert ReplaySubject back when any error
   valueUpdate = new Subject<T>();
-  // revert ReplaySubject back when any error
   valueBigUpdate = new Subject<T>();
   touchMap = new TouchMap();
   allErrorsRevealed: boolean = false;
@@ -36,9 +34,6 @@ export class Reform<T = any> {
   fileMap: Map<string, File[]> = new Map();
   appEnv?: ApplicationEnvironment;
   private _parameters = new Map<string, any>();
-
-  // private selectFeeders: Map<string, ListFunction> = new Map();
-
 
   constructor(
     private metaKey: MetaKey,
@@ -57,7 +52,6 @@ export class Reform<T = any> {
       throw `MINKY REFORM: unable to find related structural meta ${metaKey} with 'fallbackConstruction', it is required for construct baseObject properly`;
     }
 
-    // Store initial value as deep copy
     this._initialValue = JSON.parse(JSON.stringify(this._value));
 
     this.carrierManager = new CarrierManager({
@@ -68,33 +62,33 @@ export class Reform<T = any> {
       currentPropertyMetas: () => this.propertyMetas,
       touchMap: () => this.touchMap,
       value: () => this.value,
-      emitUpdate: (val) => {
-        this.valueUpdate.next(val);
-      },
+      emitUpdate: (val) => this.valueUpdate.next(val),
       setFileByPath: (p, file) => this.setFileByPath(p, file),
       getFeeder: (path) => {
-
         const meta = this.getPropertyMeta(path);
         if (meta && typeof meta.selectItems === 'function') {
           return () =>
             meta.selectItems?.({
               app: this.appEnv,
               parameters: this._parameters,
-              state: {
-                formValue: this._value,
-              },
+              state: { formValue: this._value },
             }) || [];
         }
         console.warn('MINKY: Unable to find related meta for select items');
         return () => [];
       },
+      combinedEnvironment: () => ({
+        app: this.appEnv,
+        parameters: this._parameters,
+        state: { formValue: this._value },
+      }),
     });
   }
 
   patchValue(value: Partial<T>) {
-    Object.keys(value).forEach((key) => {
+    for (const key of Object.keys(value)) {
       this.setValueByPath(key, (value as any)[key]);
-    });
+    }
     this.valueBigUpdate.next(this.value);
   }
 
@@ -127,33 +121,19 @@ export class Reform<T = any> {
     const keys = this.destructPath(path);
     let relatedMeta: PropertyMeta | undefined;
     let currentPropertyMeta = this.propertyMetas;
-    let currentRootMeta = this.structureRootMeta;
+    let arrayStage = 0;
 
-    let arrayStage: number = 0;
-
-    for (let index = 0; index < keys.length; index++) {
-      const key = keys[index];
-
-      if (arrayStage != 1) {
-        relatedMeta = currentPropertyMeta.find((a) => a.name == key);
+    for (const key of keys) {
+      if (arrayStage !== 1) {
+        relatedMeta = currentPropertyMeta.find((a) => a.name === key);
       }
-
       if (!relatedMeta) {
         console.warn('MINKY: Unable to reach related meta');
         break;
       }
       arrayStage = this.decideArrayChange(relatedMeta, arrayStage);
-
-      //after operation, if there is nested a object, meta gonna be changed
-      if (relatedMeta.subObjectKey) {
-        if (arrayStage != 1) {
-          currentPropertyMeta = getPropertyMetaHolder().getMetas(
-            relatedMeta.subObjectKey
-          );
-          currentRootMeta = getStructureRootMetaHolder().getMetas(
-            relatedMeta.subObjectKey
-          );
-        }
+      if (relatedMeta.subObjectKey && arrayStage !== 1) {
+        currentPropertyMeta = getPropertyMetaHolder().getMetas(relatedMeta.subObjectKey);
       }
     }
     return relatedMeta;
@@ -164,65 +144,37 @@ export class Reform<T = any> {
     let currentValue: any = this.value;
     let relatedMeta: PropertyMeta | undefined;
     let currentPropertyMeta = this.propertyMetas;
-    let currentRootMeta = this.structureRootMeta;
+    let arrayStage = 0;
 
-    let arrayStage: number = 0;
-
-    for (let index = 0; index < keys.length; index++) {
-      const key = keys[index];
-
-      if (arrayStage != 1) {
-        relatedMeta = currentPropertyMeta.find((a) => a.name == key);
+    for (const key of keys) {
+      if (arrayStage !== 1) {
+        relatedMeta = currentPropertyMeta.find((a) => a.name === key);
       }
-
-      if (relatedMeta) {
-        currentValue = this.nullSafeValueGetter(
-          currentValue,
-          key,
-          arrayStage == 1,
-          relatedMeta
-        );
-      } else {
+      if (!relatedMeta) {
         console.warn('MINKY: Unable to reach related meta');
         break;
       }
+      currentValue = this.nullSafeValueGetter(currentValue, key, arrayStage === 1, relatedMeta);
       arrayStage = this.decideArrayChange(relatedMeta, arrayStage);
-
-      //after operation, if there is nested a object, meta gonna be changed
-      if (relatedMeta.subObjectKey) {
-        if (arrayStage != 1) {
-          currentPropertyMeta = getPropertyMetaHolder().getMetas(
-            relatedMeta.subObjectKey
-          );
-          currentRootMeta = getStructureRootMetaHolder().getMetas(
-            relatedMeta.subObjectKey
-          );
-        }
+      if (relatedMeta.subObjectKey && arrayStage !== 1) {
+        currentPropertyMeta = getPropertyMetaHolder().getMetas(relatedMeta.subObjectKey);
       }
     }
     return currentValue;
   }
 
-  initializeValueByPath(path: string): void {
-    let otherKeys = this.destructPath(path);
-    const latestKey = otherKeys[otherKeys.length - 1];
-  }
+  initializeValueByPath(path: string): void {}
 
   setValueByPath(path: string, value: any): void {
-    let otherKeys = this.destructPath(path);
-    let currentValue: any = this.value;
-    if (otherKeys.length == 1) {
-      currentValue[otherKeys[0]] = value;
-      this.valueUpdate.next(this.value);
+    const keys = this.destructPath(path);
+    if (keys.length === 1) {
+      // @ts-ignore
+      this.value[keys[0] as string] = value;
     } else {
-      const latestKey = otherKeys[otherKeys.length - 1];
-      otherKeys = otherKeys.slice(0, otherKeys.length - 1);
-      if (otherKeys.length >= 1) {
-        const valueRef = this.getValueByPath(this.buildPath(...otherKeys));
-        valueRef[latestKey] = value;
-        this.valueUpdate.next(this.value);
-      }
+      const parent = this.getValueByPath(this.buildPath(...keys.slice(0, -1)));
+      parent[keys[keys.length - 1]] = value;
     }
+    this.valueUpdate.next(this.value);
   }
 
   setFileByPath(path: string, file: File[]): void {
@@ -230,41 +182,21 @@ export class Reform<T = any> {
   }
 
   getFiles() {
-    const fileList: { key: string; files: File[] }[] = [];
-
-    this.fileMap.forEach((files, key) => {
-      fileList.push({ key, files });
-    });
-    return fileList;
+    return Array.from(this.fileMap, ([key, files]) => ({ key, files }));
   }
 
-  private decideArrayChange(
-    relatedMeta: PropertyMeta<any> | undefined,
-    stge: number
-  ) {
-    if (relatedMeta?.inputType == 'array') {
-      if (stge == 0) stge = 1;
-      else if (stge == 1) stge = 2;
-      else if (stge == 2) stge = 1;
-    } else {
-      stge = 0;
-    }
-    return stge;
+  private decideArrayChange(relatedMeta: PropertyMeta<any> | undefined, stage: number): number {
+    if (relatedMeta?.inputType !== 'array') return 0;
+    return stage === 0 ? 1 : stage === 1 ? 2 : 1;
   }
 
   private nullSafeValueGetter(
     parentObject: any,
     key: string,
     excludeArray: boolean,
-    keyPropertyMeta?: PropertyMeta<T> | undefined
+    keyPropertyMeta?: PropertyMeta<T>
   ) {
-    let childObject = parentObject[key];
-    childObject = this.tryToTurnNonNullIfIt(
-      childObject,
-      keyPropertyMeta,
-      excludeArray
-    );
-    // it is set just in case of set operation situations
+    const childObject = this.tryToTurnNonNullIfIt(parentObject[key], keyPropertyMeta, excludeArray);
     parentObject[key] = childObject;
     return childObject;
   }
@@ -274,54 +206,28 @@ export class Reform<T = any> {
     keyPropertyMeta: PropertyMeta<T> | undefined,
     excludeArray: boolean
   ) {
-    if (childObject == null) {
-      // Primitive types auto-construction
-      if (!excludeArray && keyPropertyMeta?.inputType == 'array') {
-        childObject = [];
-      } else if (keyPropertyMeta?.inputType == 'checkbox') {
-        childObject = false;
-      } else if (keyPropertyMeta?.inputType == 'number') {
-        childObject = 0;
-      } else if (keyPropertyMeta?.inputType == 'text') {
-        childObject = '';
-      }
-      //fallback construction
-      else if (keyPropertyMeta?.defaultValueConstructor) {
-        childObject = keyPropertyMeta.defaultValueConstructor();
-      }
-
-      //structure root construction
-      else if (keyPropertyMeta?.subObjectKey) {
-        const rootMeta = getStructureRootMetaHolder().getMetas(
-          keyPropertyMeta.subObjectKey
-        );
-        if (rootMeta?.fallbackConstruction) {
-          childObject = rootMeta.fallbackConstruction();
-        }
-      }
+    if (childObject != null) return childObject;
+    if (!excludeArray && keyPropertyMeta?.inputType === 'array') return [];
+    if (keyPropertyMeta?.inputType === 'checkbox') return false;
+    if (keyPropertyMeta?.inputType === 'number') return 0;
+    if (keyPropertyMeta?.inputType === 'text') return '';
+    if (keyPropertyMeta?.defaultValueConstructor) return keyPropertyMeta.defaultValueConstructor();
+    if (keyPropertyMeta?.subObjectKey) {
+      const rootMeta = getStructureRootMetaHolder().getMetas(keyPropertyMeta.subObjectKey);
+      if (rootMeta?.fallbackConstruction) return rootMeta.fallbackConstruction();
     }
     return childObject;
   }
 
-  getAllMetasPaths(
-    propertyMetas = this.propertyMetas,
-    prefix = ''
-  ): MetaPath[] {
-    let metapaths: MetaPath[] = [];
-    for (let index = 0; index < propertyMetas.length; index++) {
-      const propertyMeta = propertyMetas[index];
+  getAllMetasPaths(propertyMetas = this.propertyMetas, prefix = ''): MetaPath[] {
+    const metapaths: MetaPath[] = [];
+    for (const propertyMeta of propertyMetas) {
       const path = this.buildPath(prefix, propertyMeta.name);
-
-      if (propertyMeta.inputType == 'array') {
-        const lenth = (this.getValueByPath(path) as Array<any>).length;
+      if (propertyMeta.inputType === 'array') {
+        const length = (this.getValueByPath(path) as Array<any>).length;
         for (let arrayIndex = 0; arrayIndex < length; arrayIndex++) {
           if (propertyMeta.subObjectKey) {
-            metapaths.push(
-              ...this.subObjectMetaPaths(
-                propertyMeta,
-                this.buildPath(path, arrayIndex)
-              )
-            );
+            metapaths.push(...this.subObjectMetaPaths(propertyMeta, this.buildPath(path, arrayIndex)));
           } else {
             metapaths.push({ meta: propertyMeta, path });
           }
@@ -340,26 +246,18 @@ export class Reform<T = any> {
   }
 
   allValidationErrors() {
-    const validations: ValidatorResult[] = [];
-    const paths = this.getAllMetasPaths();
-    for (let index = 0; index < paths.length; index++) {
-      const path = paths[index];
-      validations.push(...this.validationErrorByPath(path));
-    }
-    return validations;
+    //@ts-ignore işim gücüm yok bir de bin tane tsconfig'te lib'leri ayarlayacağım. hay amk ya
+    return this.getAllMetasPaths().flatMap((path) => this.validationErrorByPath(path));
   }
 
   validationErrorByPath(path: MetaPath) {
-    let value: any = null;
-    if (path.meta.inputType == 'file') {
-      value = this.getFiles()?.find((a) => a.key == path.path)?.files[0];
-    } else {
-      value = this.getValueByPath(path.path);
-    }
+    const value = path.meta.inputType === 'file'
+      ? this.getFiles().find((a) => a.key === path.path)?.files[0]
+      : this.getValueByPath(path.path);
     const validations: ValidatorResult[] = [];
-    path.meta.validators?.forEach((a) => {
-      const validation = a.validate(value, this, path.meta);
-      if (!validation.valid) validations.push(validation);
+    path.meta.validators?.forEach((validator) => {
+      const result = validator.validate(value, this, path.meta);
+      if (!result.valid) validations.push(result);
     });
     return validations;
   }

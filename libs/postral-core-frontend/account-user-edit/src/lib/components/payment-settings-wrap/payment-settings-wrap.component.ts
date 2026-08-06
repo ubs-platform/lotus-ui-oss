@@ -2,7 +2,21 @@ import { Component, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SidebarItem } from '@lotus/front-global/sidebar';
 import { fromMaterialSymbol } from 'libs/front-global/icon-type/src/lib/icon-type';
-import { from, of } from 'rxjs';
+import { of } from 'rxjs';
+
+export type PaymentMode = 'seller' | 'customer';
+
+// Müşteri modunda görünür olan path'lar
+const CUSTOMER_VISIBLE_PATHS = new Set([
+  'address',
+  'account',
+  'payment/history',
+  'refund/requests',
+  'invoice/history',
+]);
+
+// Müşteri modunda görünür olan kategori başlıkları
+const CUSTOMER_VISIBLE_CATEGORIES = new Set(['Genel', 'Ödeme kayıtları']);
 
 @Component({
   selector: 'lib-payment-settings-wrap',
@@ -12,7 +26,10 @@ import { from, of } from 'rxjs';
 })
 export class PaymentSettingsWrapComponent {
   currentMenu = signal<string>('');
-  menuItems: SidebarItem[] = [
+  paymentMode: PaymentMode = 'seller';
+  menuItems: SidebarItem[] = [];
+
+  private readonly allMenuItems: SidebarItem[] = [
     {
       title: 'Genel',
       type: 'category',
@@ -89,13 +106,13 @@ export class PaymentSettingsWrapComponent {
       icon: fromMaterialSymbol('settings'),
     },
     {
-      title: "Rapor sorguları",
+      title: 'Rapor sorguları',
       path: 'report-query',
       hidden: of(false),
       icon: fromMaterialSymbol('search'),
     },
     {
-      title: "Tüm Raporlar",
+      title: 'Tüm Raporlar',
       path: 'reports',
       hidden: of(false),
       icon: fromMaterialSymbol('show_chart'),
@@ -115,16 +132,39 @@ export class PaymentSettingsWrapComponent {
     },
   ];
 
-  /**
-   */
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
-    // this.currentMenu.set(activatedRoute.snapshot.firstChild?.url[0].path!);
-  }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
-    // url'in son segmentini atanacak böylece sidebar'da aktif olan menü işaretlenir
-    const currentPath = this.activatedRoute.snapshot.firstChild?.url?.[0].path;
-    this.currentMenu.set(currentPath || '');
+    // tüm url segmentleri birleştirilerek tam path elde ediliyor (örn: 'refund/requests')
+    const segments = this.activatedRoute.snapshot.firstChild?.url;
+    const currentPath = segments?.map((s) => s.path).join('/') ?? '';
+    this.currentMenu.set(currentPath);
+
+    // Üst route'lardan paymentMode datasını oku (default: 'seller')
+    let route = this.activatedRoute.parent;
+    while (route) {
+      const mode = route.snapshot.data['paymentMode'] as PaymentMode | undefined;
+      if (mode) {
+        this.paymentMode = mode;
+        break;
+      }
+      route = route.parent ?? null;
+    }
+
+    this.menuItems = this.buildMenuItems(this.paymentMode);
+  }
+
+  private buildMenuItems(mode: PaymentMode): SidebarItem[] {
+    if (mode === 'seller') {
+      return this.allMenuItems;
+    }
+    return this.allMenuItems.map((item) => {
+      const isCategory = item.type === 'category';
+      const hidden = isCategory
+        ? !CUSTOMER_VISIBLE_CATEGORIES.has(item.title)
+        : !CUSTOMER_VISIBLE_PATHS.has(item.path);
+      return { ...item, hidden: of(hidden) };
+    });
   }
 
   navigateTo(path: string) {

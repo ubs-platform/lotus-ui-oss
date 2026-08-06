@@ -1,6 +1,5 @@
 export * from "./lib/postral-core-frontend-client.module"
 export * from "./lib/services/payment/account-controller.service"
-export * from "./lib/services/payment/account-user-controller.service"
 export * from './lib/services/refund/refund-controller.service';
 export * from "./lib/services/payment/app-comission-controller.service"
 export * from "./lib/services/payment/item-seller-controller.service"

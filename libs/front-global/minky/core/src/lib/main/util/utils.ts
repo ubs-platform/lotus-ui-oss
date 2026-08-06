@@ -1,8 +1,11 @@
 export const randomVal = () => {
-  return (Math.random() * 10).toString(36).substring(3);
+  return (Math.random() * 10 + 1).toString(36).substring(3);
 };
 
-export const tagTheKlassIfNot = (f: Object | Function) => {
+export const tagTheKlassIfNot = (f: string | String | Object | Function) => {
+  if (f instanceof String || typeof f == 'string') {
+    return;
+  }
   if (typeof f == 'object') {
     const ob = (f.constructor as any)['_reform_root_tag'];
     if (!ob)

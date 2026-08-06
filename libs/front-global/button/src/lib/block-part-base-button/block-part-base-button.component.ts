@@ -17,9 +17,9 @@ import { IIcon } from '@lotus/front-global/icon-type';
   standalone: false,
 })
 export class BlockPartBaseButtonComponent implements OnInit {
-  readonly iconClass = input('');
-  readonly iconContent = input('');
-  readonly iconImageSource = input('');
+  readonly iconClass = input<string | null | undefined>(undefined);
+  readonly iconContent = input<string | null | undefined>(undefined);
+  readonly iconImageSource = input<string | null | undefined>(undefined);
   // @Input() iconType: 'class-name' | 'content' = 'class-name';
   readonly buttonClass = input('surface');
   readonly growRight = input(false);
@@ -30,7 +30,7 @@ export class BlockPartBaseButtonComponent implements OnInit {
   readonly iconPosition = input<'RIGHT' | 'LEFT' | 'NONE'>('LEFT');
   readonly btnTabindex = input<string>();
   readonly hideContentAtLowScr = input(false);
-  readonly contentClass = input('');
+  readonly contentClass = input<string | null | undefined>(undefined);
   // readonly iconSizeAuto = computed(() => {
   //   if (this.iconClass() == null) return "0.85rem";
   //   return this.iconClass().includes('material-symbols') ? "1.40rem" : "0.85rem";

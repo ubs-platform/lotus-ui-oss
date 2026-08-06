@@ -217,7 +217,9 @@
       "roles": "Roller",
       "status": "Durum",
       "edit": "Düzenle",
-      "suspendReason": "Yasaklanma sebebi"
+      "suspendReason": "Yasaklanma sebebi",
+      "no-form-instructions": "Form talimatı yok",
+      "loading": "Yükleniyor..."
     }
   },
   {
@@ -309,7 +311,10 @@
     "prefix": "postral",
     "stringMap": {
       "demo-server-warning": "Tetakent hesabınızı KULLANMAYINIZ",
-      "demo-server-warning-long": "Bu postral core örneği, demo için hazırlanmıştır ve nihai kullanım için uygun değildir. Verileriniz düzenli olarak silinecektir. "
+      "demo-server-warning-long": "Bu postral core örneği, demo için hazırlanmıştır ve nihai kullanım için uygun değildir. Verileriniz düzenli olarak silinecektir. ",
+      "billing-dates": "Faturalama günleri (2-28 arası)",
+      "account-information-updated-su": "Account information updated successfully.",
+      "latest-prices": "Latest prices:"
     }
   },
   {
@@ -334,6 +339,29 @@
       "PAYMENT_SERVICE_FEE": "Ödeme hizmeti sağlayıcılarına ödenecek toplam ücret",
       "SHAQ_ONEAL_ADVERTISEMENT_FEE": "Turkcell'in reklamlarda Shaq O'neal'i  oynatma ücreti ( ͡° ͜ʖ ͡°)",
       "KOBE_BRYANT_RESURRECTION_AND_ADVERTISEMENT_FEE": "Turkcell'in Kobe Bryant'ı mezardan diriltip reklamlarında oynatma ücreti ( ͡° ͜ʖ ͡°)"
+    }
+  },
+  {
+    "prefix": "capability.item",
+    "stringMap": {
+      "EOG_ADJUST_CAPABILITIES": "Takımın yeteneklerini düzenleyebilir",
+      "EOG_ADJUST_MEMBERS": "Takım üyelerini ekleyebilir veya çıkarabilir",
+      "EOG_EDIT_METADATA": "Sadece metaveri düzenleme yetkisine sahip olabilir",
+      "EDIT": "Düzenleyebilir",
+      "VIEW": "Görüntüleyebilir",
+      "ADD": "Ekleyebilir",
+      "DELETE": "Silebilir",
+      "OWNER": "Sahip"
+    }
+  },
+  {
+    "prefix": "capability.entity",
+    "stringMap": {
+      "LOTUS_QB/QUESTION_BOOK": "Soru kitabı",
+      "POSTRAL/ACCOUNT": "Hesap",
+      "POSTRAL/ADDRESS": "Adres",
+      "POSTRAL/TAX": "Vergi",
+      "POSTRAL/ITEM": "Ürün"
     }
   }
 ]

@@ -1,7 +1,5 @@
 import { minky, minkyRoot } from '../../decorations/decorators';
 import { RequiredValidator } from './validators/required';
-import { Reviewer } from './reviewer';
-import { getPropertyMetaHolder, PropertyMetaHolder } from '../property-holder';
 import { Reform } from './reform';
 
 @minkyRoot({
@@ -81,7 +79,7 @@ const CHANNEL = 'Comedy Central';
 
 describe('Reform Instance', () => {
   beforeAll(async () => {
-    reform = new Reform('FictionalCharacter');
+    reform = new Reform(FictionalCharacter, {});
   });
 
   describe('Reform Getters value', () => {

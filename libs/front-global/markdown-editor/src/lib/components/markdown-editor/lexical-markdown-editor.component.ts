@@ -606,39 +606,35 @@ export class LexicalMarkdownEditorComponent
 
     public updateImageVolatilities(): void {
         const urls = this.collectImageUrls();
+        if (urls.length === 0 && this.imageUrlsSnapshot?.length === 0) {
+            return;
+        }
+        const volatilities: FileVolatility[] = [];
         const removedUrls = this.imageUrlsSnapshot?.filter((url) => !urls.includes(url)) ?? [];
         const addedUrls = urls.filter((url) => !this.imageUrlsSnapshot?.includes(url)) ?? [];
-
         if (addedUrls.length > 0) {
-            const volatilities: FileVolatility[] = addedUrls.map((url) => {
+            addedUrls.forEach((url) => {
                 const parts = url.split('/');
-                return { category: parts[3], name: parts[4], volatile: false };
-            });
-            this.fileService.updateVolatilities(volatilities).subscribe({
-                next: () => {
-                    console.log('[LexicalMarkdownEditor] Added volatilities:', volatilities);
-                },
-                error: (err) => {
-                    console.warn('[LexicalMarkdownEditor] Failed to update volatilities:', err);
-                },
+                volatilities.push({ category: parts[3], name: parts[4], volatile: false });
             });
         }
 
         if (removedUrls.length > 0) {
-            const volatilities: FileVolatility[] = removedUrls.map((url) => {
+            removedUrls.forEach((url) => {
                 const parts = url.split('/');
-                return { category: parts[3], name: parts[4], volatile: true };
-            });
-            this.fileService.updateVolatilities(volatilities).subscribe({
-                next: () => {
-                    console.log('[LexicalMarkdownEditor] Removed volatilities:', volatilities);
-                },
-                error: (err) => {
-                    console.warn('[LexicalMarkdownEditor] Failed to update volatilities:', err);
-                },
+                volatilities.push({ category: parts[3], name: parts[4], volatile: true, duration: 60 * 60 * 24 * 2 }); // 2 gün boyunca bekletilir ve tekrar yüklenirse silinmez. (2 gün boyunca kullanılmazsa silinir)
             });
         }
-        this.imageUrlsSnapshot = urls;
+
+        this.fileService.updateVolatilities(volatilities).subscribe({
+            next: () => {
+                console.log('[LexicalMarkdownEditor] Added volatilities:', volatilities);
+                this.imageUrlsSnapshot = urls;
+            },
+            error: (err) => {
+                console.warn('[LexicalMarkdownEditor] Failed to update volatilities:', err);
+            },
+        });
 
     }
 

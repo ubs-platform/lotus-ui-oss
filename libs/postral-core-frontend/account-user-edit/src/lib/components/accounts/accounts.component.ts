@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { AccountDTO } from '@tk-postral/payment-common';
 import {
   AccountControllerService,
-  AccountUserControllerService,
 } from '@lotus/postral-core-frontend/client';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
@@ -24,9 +23,7 @@ export class AccountsComponent {
     private accountAdminService: AccountControllerService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private basicOverlay: BasicOverlayService,
-    private teamService: PublisherTeamService
-  ) {}
+    private basicOverlay: BasicOverlayService  ) {}
 
   deactivateAccount(arg0: any) {
     this.basicOverlay

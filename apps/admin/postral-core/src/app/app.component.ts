@@ -120,14 +120,7 @@ export class AppComponent implements AfterViewInit, OnInit {
           this.router.navigate(["publisher-teams/invitations-for-me"]);
           return true;
         }
-      }, {
-        text: 'Admin paneli',
-
-        action: () => {
-          this.router.navigate(["admin", "payment-accounts"]);
-          return true;
-        }
-      },
+      }, 
       {
         text: "Satış simülasyonu",
         action: () => {

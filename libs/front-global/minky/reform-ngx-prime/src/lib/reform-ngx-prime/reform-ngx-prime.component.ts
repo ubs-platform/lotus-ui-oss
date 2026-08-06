@@ -1,19 +1,19 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
-  ContentChild,
+  contentChild,
   contentChildren,
-  ContentChildren,
-  Inject,
-  OnInit,
-  QueryList,
-  viewChild,
-  ViewChild,
-  ViewEncapsulation,
-  input,
+  EventEmitter,
   Injector,
+  input,
   OnChanges,
+  OnInit,
+  Output,
   SimpleChanges,
+  ViewEncapsulation,
+  viewChild,
+  computed,
 } from '@angular/core';
 import {
   FeederItem,
@@ -21,11 +21,9 @@ import {
   LinkCarrier,
   Reform,
 } from '@lotus/front-global/minky/core';
-
-import { InputFieldLinkDirective } from 'libs/front-global/minky/reform-ngx/src/lib/input-field-link/input-field-link.directive';
-import { MinkyReformComponent } from 'libs/front-global/minky/reform-ngx/src/lib/minky-reform/minky-reform.component';
-import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
-import { DropdownFilterEvent } from 'primeng/dropdown';
+import { InputFieldLinkDirective } from '../input-field-link/input-field-link.directive';
+import { ButtonFieldLinkDirective } from '../button-field-link/button-field-link.directive';
+import { GroupLabelFieldLinkDirective } from '../group-label-field-link/group-label-field-link.directive';
 import { lastValueFrom, Observable } from 'rxjs';
 
 @Component({
@@ -35,64 +33,86 @@ import { lastValueFrom, Observable } from 'rxjs';
   encapsulation: ViewEncapsulation.None,
   standalone: false,
 })
-export class ReformNgxPrimeComponent implements OnInit, OnChanges {
+export class ReformNgxPrimeComponent implements OnInit, AfterViewInit, OnChanges {
   readonly reform = input<Reform<any>>();
-  showPasswordMap: { [key: string]: boolean | null | undefined } = {};
-  customInputTemplates = contentChildren(InputFieldLinkDirective);
+  readonly gap = input(10);
 
+  @Output() afterCarrierInitialized = new EventEmitter<LinkCarrier[]>();
+
+  customInputTemplates = contentChildren(InputFieldLinkDirective);
+  customButtonTemplate = contentChild(ButtonFieldLinkDirective);
+  customGroupLabelTemplate = contentChild(GroupLabelFieldLinkDirective);
+  defaultInputTemplate = viewChild(InputFieldLinkDirective);
+  defaultButtonTemplate = viewChild(ButtonFieldLinkDirective);
+  defaultGroupLabelTemplate = viewChild(GroupLabelFieldLinkDirective);
+
+  decideButtonTemplate = computed(
+    () => this.customButtonTemplate() || this.defaultButtonTemplate()
+  );
+  decideGroupLabelTemplate = computed(
+    () => this.customGroupLabelTemplate() || this.defaultGroupLabelTemplate()
+  );
+
+  showPasswordMap: { [key: string]: boolean | null | undefined } = {};
   feeds: { [key: string]: Promise<FeederItem[]> } = {};
   selectCarriers: InputLinkCarrier[] = [];
-  feedsAutoComplete: { [key: string]: { text: string; value: any }[] } = {};
+
+  viewInit = false;
+  carriers: LinkCarrier[] = [];
 
   constructor(
-    // @Inject(TITLE_TRANSFORM)
-    // public labelTransformation: TitleTransform
+    private changeDetector: ChangeDetectorRef,
     private injector: Injector
-  ) { }
+  ) {}
 
-  ngOnChanges(ch: SimpleChanges): void {
-    if (ch['reform'] && this.reform()) {
-      this.reform()!.setApplicationEnvironment({
-        injector: this.injector,
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['reform']?.currentValue) {
+      this.reform()!.setApplicationEnvironment({ injector: this.injector });
+      this.updateReformPaths();
+      this.reform()?.valueBigUpdate.subscribe(() => {
+        this.updateReformPaths();
       });
     }
   }
 
-  selectRegisterFeeders($event: LinkCarrier[]) {
-    const allCariersCirculated: LinkCarrier[] = [...$event],
-      inputCarriers: InputLinkCarrier[] = [];
-    while (allCariersCirculated.length > 0) {
-      const carrier = allCariersCirculated.shift()!;
-      if (carrier.carrierType == 'INPUT' && carrier.feeder) {
+  ngAfterViewInit(): void {
+    this.viewInit = true;
+    this.updateReformPaths();
+  }
+
+  updateReformPaths() {
+    this.carriers = this.reform()?.generateInputCarriers() || [];
+    this.afterCarrierInitialized.emit(this.carriers);
+    this.processSelectFeeders(this.carriers);
+    this.changeDetector.detectChanges();
+  }
+
+  getRelatedInputTemplate(carrier: InputLinkCarrier): InputFieldLinkDirective {
+    const customs = this.customInputTemplates() || [];
+    return (
+      customs.find((a) => a.path() == carrier.path) ||
+      customs.find((a) => a.overrideDefault()) ||
+      this.defaultInputTemplate()
+    )!;
+  }
+
+  private processSelectFeeders(carriers: LinkCarrier[]) {
+    const queue: LinkCarrier[] = [...carriers];
+    const inputCarriers: InputLinkCarrier[] = [];
+    while (queue.length > 0) {
+      const carrier = queue.shift()!;
+      if (carrier.carrierType === 'INPUT' && carrier.feeder) {
         inputCarriers.push(carrier);
-      } else if (carrier.carrierType == 'GROUP' && carrier.items) {
-        allCariersCirculated.push(...carrier.items);
+      } else if (carrier.carrierType === 'GROUP' && carrier.items) {
+        queue.push(...carrier.items);
       }
     }
-
     this.selectCarriers = inputCarriers;
     this.feedAllSelects();
   }
 
-  autoCompleteForTextInput(path: string, $event: AutoCompleteCompleteEvent) {
-    // this.feedsAutoComplete[path] = this.feeds[path].filter(
-    //   (a) => a.value?.includes?.($event.query) || a.text.includes($event.query)
-    // );
-    // $event.
-  }
-  feedAllSelects(excludedPath?: string) {
-    this.selectCarriers.forEach((a) => {
-      if (a.carrierType == 'INPUT') {
-        this.feedSelectInputs(a);
-        // document.addEventListener('resize', () => {
-        //   this.feedSelectInputs(a);
-        // });
-      }
-    });
-  }
-
-  findCustoms() {
-    return this.customInputTemplates().filter((a) => !a.overrideDefault());
+  feedAllSelects() {
+    this.selectCarriers.forEach((a) => this.feedSelectInputs(a));
   }
 
   async feedSelectInputs(carrier: InputLinkCarrier) {
@@ -109,6 +129,13 @@ export class ReformNgxPrimeComponent implements OnInit, OnChanges {
         this.feeds[carrier.path] = Promise.resolve(result);
       }
     }
+  }
+
+  toggleArrayValue(carrier: InputLinkCarrier, value: any, checked: boolean) {
+    const current: any[] = carrier.value ?? [];
+    carrier.setValue(
+      checked ? [...current, value] : current.filter((v) => v !== value)
+    );
   }
 
   ngOnInit(): void { }

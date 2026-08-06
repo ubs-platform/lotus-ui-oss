@@ -1,6 +1,97 @@
 
 /* PRİMENG İLE ALAKALI FARKLI COMPONENT EKLENİRSE THEME-ORIGINAL.CSS'DEN ALINABİLİR */
 
+/* Hide default browser checkbox appearance */
+input[type="checkbox"]:not(.toggle-style) {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: #ffffff;
+  margin: 0;
+  width: 25px;
+  height: 25px;
+  border: 2px solid var(--primary-color);
+  border-radius: var(--border-radius);
+  display: grid;
+  place-content: center;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Create the checkmark vector using a pseudo-element */
+input[type="checkbox"]:not(.toggle-style)::before {
+  content: "";
+  width: 15px;
+  height: 15px;
+  transform: scale(0);
+  transition: transform 0.15s ease-in-out;
+  background-color: #ffffff;
+  /* Forms a checkmark shape using a clipping path */
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+/* Checked state color shifts */
+input[type="checkbox"]:not(.toggle-style):checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* Reveal the checkmark on checked state */
+input[type="checkbox"]:not(.toggle-style):checked::before {
+  transform: scale(1);
+}
+
+/* Keyboard accessibility focus ring */
+ input[type="checkbox"]:not(.toggle-style):focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Disabled state handling */
+input[type="checkbox"]:not(.toggle-style):disabled {
+  background-color: #e0e0e0;
+  border-color: #b0b0b0;
+  cursor: not-allowed;
+}
+
+
+input[type="checkbox"].toggle-style {
+  cursor: pointer;
+  margin: 0 0 -.1em;
+  position: relative;
+  width: 2.5rem;
+  height: 1.5rem;
+  border-radius: 25px;
+  outline: none;
+  border: 1px solid var(--fg);
+
+}
+input[type="checkbox"].toggle-style::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+  border: 0;
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+  background-color: #868686;
+  
+  transition: left 0.3s;
+}
+
+input[type="checkbox"].toggle-style:checked {
+  background-color: var(--primary-color);
+  border: none;
+
+}
+
+input[type="checkbox"].toggle-style:checked::after {
+  left: 70%;
+  background-color: white;
+}
+
+
+
 h1 {
   margin: 0.25rem 0 !important;
 }

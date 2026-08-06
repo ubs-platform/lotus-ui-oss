@@ -1,28 +1,19 @@
 import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
-  AccountControllerService,
-  AccountUserControllerService,
-  AddressControllerService,
   ItemCrudService,
-  ItemTaxControllerService,
 } from '@lotus/postral-core-frontend/client';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormEditInstruction } from '@lotus/front-global/reform-data-edit';
 import { Reform } from '@lotus/front-global/minky/core';
 import {
-  AccountForm,
-  AddressForm,
   ItemForm,
 } from '@lotus/postral-core-frontend/forms';
 import {
-  AccountDTO,
-  AccountAddressDto,
   UNIT_TYPES_MAPPED,
   ItemDTO,
 } from '@tk-postral/payment-common';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
-import { lastValueFrom, map } from 'rxjs';
+import { map } from 'rxjs';
 @Component({
   selector: 'lib-account-user-info',
   standalone: false,

@@ -1,11 +1,12 @@
-import { Component, signal, viewChild } from '@angular/core';
+import { Component, computed, signal, viewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthManagementService } from '@lotus/front-global/auth';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { SearchableDataTableComponent } from '@lotus/front-global/table';
 import { PublisherTeamService } from '@lotus/front-global/publisher-teams/client';
 import { Optional } from '@ubs-platform/crud-base-common/utils';
-import { EntityOwnershipGroupCommonDTO, UserDTO } from '@ubs-platform/users-common';
+import { Capability, EntityOwnershipGroupCommonDTO, UserDTO } from '@ubs-platform/users-common';
+import { SearchResult } from '@ubs-platform/crud-base-common';
 @Component({
   selector: 'lib-teams-listing',
   standalone: false,
@@ -14,7 +15,8 @@ import { EntityOwnershipGroupCommonDTO, UserDTO } from '@ubs-platform/users-comm
 })
 export class TeamsListingComponent {
 
-  adminMode = signal<'true' | 'false'>('false');
+  adminMode = signal<boolean>(false);
+  adminModeString = computed(() => (this.adminMode() ? 'true' : 'false'));
   teams = signal<EntityOwnershipGroupCommonDTO[]>([]);
   dataTable = viewChild<SearchableDataTableComponent>('dataTable');
   eogTrusted = signal<{ [eogId: string]: boolean }>({});
@@ -35,7 +37,7 @@ export class TeamsListingComponent {
 
   ngOnInit() {
     this.activatedRoute.data.subscribe((data) => {
-      this.adminMode.set(data['admin'] ? 'true' : 'false');
+      this.adminMode.set(data['admin']);
       // this.publisherTeamService.getAll({}).subscribe((data) => {
       //   this.teams.set(data);
       // });
@@ -63,11 +65,13 @@ export class TeamsListingComponent {
                 entityGroup: 'LOTUS_QB',
                 entityName: 'QUESTION_BOOK',
                 capability: 'OWNER',
+                capabilities: [Capability.OWNER]
               },
               {
                 entityGroup: 'POSTRAL',
                 entityName: 'ACCOUNT',
                 capability: 'OWNER',
+                capabilities: [Capability.OWNER]
               },
             ],
           })
@@ -99,15 +103,22 @@ export class TeamsListingComponent {
       });
   }
 
-  fetchEogTrustStatus(eogId: string) {
-    this.publisherTeamService.getEogTrustedStatus(eogId).subscribe({
-      next: (status) => {
-        this.setEogTrustStatus(eogId, status);
-      },
-      error: (err) => {
-        console.error('Error fetching EOG trust status:', err);
-      }
-    });
+  fetchEogTrustStatusByTeams(eogs: SearchResult<EntityOwnershipGroupCommonDTO>) {
+    const eogIds = eogs.content.map((team) => team.id!);
+    this.fetchEogTrustStatus(eogIds);
+  }
+
+  fetchEogTrustStatus(eogIds: string[]) {
+    for (const eogId of eogIds) {
+      this.publisherTeamService.getEogTrustedStatus(eogId).subscribe({
+        next: (status) => {
+          this.setEogTrustStatus(eogId, status);
+        },
+        error: (err) => {
+          console.error('Error fetching EOG trust status:', err);
+        }
+      });
+    }
   }
   private setEogTrustStatus(eogId: string, status: boolean) {
     this.eogTrusted.set({

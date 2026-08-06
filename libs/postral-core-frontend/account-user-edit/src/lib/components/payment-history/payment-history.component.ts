@@ -2,8 +2,6 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   AccountControllerService,
-  AccountUserControllerService,
-  AddressControllerService,
   ItemCrudService,
   ItemTaxControllerService,
   PaymentControllerService,
@@ -44,12 +42,8 @@ export class PaymentHistoryComponent {
    *
    */
   constructor(
-    private itemService: ItemCrudService,
     private activatedRoute: ActivatedRoute,
-    private basicOverlay: BasicOverlayService,
     private accountService: AccountControllerService,
-    private itemTaxService: ItemTaxControllerService,
-    private paymentService: PaymentControllerService,
     private router: Router
   ) { }
 
@@ -76,7 +70,7 @@ export class PaymentHistoryComponent {
 
   fetchAccountById(id: string) {
     return this.accountService.get(id).pipe(
-      catchError((e: any, caught) => {
+      catchError((e: any) => {
         console.error(`Failed to fetch account with id ${id}:`, e);
         return of({ name: 'Bilinmiyor ' + id, id } as any as AccountDTO); // Return a fallback account object with the ID as the name
       })

@@ -109,6 +109,7 @@ export class GenericAppHeaderComponent
     'programaticPagination'
   );
   customMenus = input<Array<PaginationItem>>([]);
+  userExtraMenu = input<Array<PaginationItem>>([]);
   helpMenu = input<Array<PaginationItem>>([]);
   // @Input() hideMainMenu = false;
   scrollingParentElement = input<String | HTMLElement | ElementRef>();
@@ -251,6 +252,7 @@ export class GenericAppHeaderComponent
                 return true;
               },
             },
+            ...this.userExtraMenu(),
           ],
         },
         {

@@ -1,6 +1,17 @@
 import { Component, Input } from '@angular/core';
 
-export type StatusBadgeColor = 'red' | 'yellow' | 'blue' | 'green' | 'gray';
+export type StatusBadgeColor =
+  | 'red'
+  | 'yellow'
+  | 'blue'
+  | 'green'
+  | 'gray'
+  | 'orange'
+  | 'teal'
+  | 'indigo'
+  | 'violet'
+  | 'pink'
+  | 'primary';
 
 @Component({
   selector: 'lotus-web-status-badge',
@@ -11,4 +22,5 @@ export type StatusBadgeColor = 'red' | 'yellow' | 'blue' | 'green' | 'gray';
 export class StatusBadgeComponent {
   @Input() label = '';
   @Input() color: StatusBadgeColor = 'gray';
+  @Input() customClass = '';
 }

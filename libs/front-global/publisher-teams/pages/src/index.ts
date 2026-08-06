@@ -9,3 +9,5 @@ export * from "./lib/pages-router.module"
 export * from './lib/teams-edit-wrap/teams-edit-wrap.component';
 
 export * from './lib/team-members/team-members.component';
+
+export * from './lib/team-members/entity-capability-group-config';

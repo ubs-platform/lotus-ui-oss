@@ -1,30 +1,44 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EntityOwnershipGroupControllerService } from '@lotus/front-global/entity-ownership';
 import {
+  Capability,
   EOGUserCapabilityDTO,
   EOGUserCapabilityInvitationDTO,
-  UserAuth,
-  UserDTO,
+  UserDTO, EOGUserEntityCapabilityDTO
 } from '@ubs-platform/users-common';
 import { ActivatedRoute } from '@angular/router';
 import { PublisherTeamService } from '@lotus/front-global/publisher-teams/client';
 import { forkJoin, mergeMap } from 'rxjs';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { AuthManagementService, AuthService } from '@lotus/front-global/auth';
-import { Reform } from '@lotus/front-global/minky/core';
-import { EntityOwnershipInvitationForm } from './entity-ownership-invitation.form';
-import { EntityOwnershipMemberEditForm } from './entity-ownership-member-role-edit.form';
 import {
-  ENTITY_GROUP_LOTUS,
-  ENTITY_GROUP_POSTRAL,
-  ENTITY_NAME_POSTRAL_ACCOUNT,
-  ENTITY_NAME_POSTRAL_ADDRESS,
-  ENTITY_NAME_POSTRAL_ITEM,
-  ENTITY_NAME_POSTRAL_TAX,
-  ENTITY_NAME_QUESTION,
-  ENTITY_NAME_QUESTION_BOOK,
-} from '@lotus/lotus-common/consts';
+  TeamMemberCapabilityDialogComponent,
+  TeamMemberCapabilityDialogData,
+  TeamMemberCapabilityDialogResult,
+} from './team-member-capability-dialog/team-member-capability-dialog.component';
+import {
+  DEFAULT_ENTITY_CAPABILITY_GROUPS,
+  ENTITY_CAPABILITY_GROUPS_DATA_KEY,
+  EntityCapabilityGroupConfig,
+} from './entity-capability-group-config';
+import { collectAncestorRouteData } from './route-data.util';
+import { groupCapabilities } from './common-form-options';
+import { StatusBadgeColor } from '@lotus/front-global/status-badge';
+
+interface CapabilityBadge {
+  label: string;
+  color: StatusBadgeColor;
+}
+
+interface CapabilityCarrier {
+  capabilities?: number[];
+}
+
+interface GroupCapabilityCarrier {
+  groupCapabilities?: number[];
+  capabilities?: number[];
+}
 @Component({
   selector: 'team-members',
   standalone: false,
@@ -34,8 +48,58 @@ import {
 export class TeamMembersComponent {
   userCapabilities = signal<EOGUserCapabilityDTO[]>([]);
   userCapabilityInvitations = signal<EOGUserCapabilityInvitationDTO[]>([]);
+  currentUserId = signal<string | undefined>(undefined);
   publisherTeamId = '';
   currentUser?: UserDTO;
+  capabilityGroups: EntityCapabilityGroupConfig[] = DEFAULT_ENTITY_CAPABILITY_GROUPS;
+  canAdjustMembers = computed(() => {
+    const userId = this.currentUserId();
+    if (!userId) {
+      return false;
+    }
+
+    const me = this.userCapabilities().find((u) => u.userId === userId);
+    const groupCaps = me?.groupCapabilities ?? [];
+    return (
+      groupCaps.includes(Capability.EOG_ADJUST_MEMBERS) ||
+      groupCaps.includes(Capability.OWNER)
+    );
+  });
+  private readonly capabilityLabelByValue = new Map<number, string>(
+    groupCapabilities.map((cap) => [cap.value, cap.text])
+  );
+
+  private getCurrentUserCapabilityEntry(): EOGUserCapabilityDTO | undefined {
+    const userId = this.currentUserId();
+    if (!userId) {
+      return undefined;
+    }
+    return this.userCapabilities().find((u) => u.userId === userId);
+  }
+
+  private getDialogPermissionContext(): {
+    allowAllCapabilities: boolean;
+    allowedGroupCapabilities?: number[];
+    allowedEntityCapabilities?: EOGUserEntityCapabilityDTO[];
+  } {
+    const me = this.getCurrentUserCapabilityEntry();
+    const groupCaps = me?.groupCapabilities ?? [];
+    const allowAllCapabilities = groupCaps.includes(Capability.OWNER);
+
+    if (allowAllCapabilities) {
+      return { allowAllCapabilities };
+    }
+
+    return {
+      allowAllCapabilities: false,
+      allowedGroupCapabilities: [...groupCaps],
+      allowedEntityCapabilities: (me?.entityCapabilities ?? []).map((ec) => ({
+        entityGroup: ec.entityGroup,
+        entityName: ec.entityName,
+        capabilities: [...(ec.capabilities ?? [])],
+      })),
+    };
+  }
 
   constructor(
     private eog: EntityOwnershipGroupControllerService,
@@ -43,7 +107,7 @@ export class TeamMembersComponent {
     private service: PublisherTeamService,
     private overlay: BasicOverlayService,
     private auth: AuthManagementService
-  ) {}
+  ) { }
 
   removeUserShow(item: EOGUserCapabilityDTO) {
     let userMessage;
@@ -74,7 +138,7 @@ export class TeamMembersComponent {
               this.overlay.alert(
                 'Hata',
                 'Kullanıcıyı kaldırırken bir hata oluştu: ' +
-                  error.error.message,
+                error.error.message,
                 'error'
               );
               console.error('Error removing user:', error);
@@ -87,7 +151,14 @@ export class TeamMembersComponent {
   ngOnInit(): void {
     this.auth.userChange().subscribe((info) => {
       this.currentUser = info!;
+      this.currentUserId.set(info?.id);
     });
+
+    this.capabilityGroups =
+      (collectAncestorRouteData(this.route)[
+        ENTITY_CAPABILITY_GROUPS_DATA_KEY
+      ] as EntityCapabilityGroupConfig[] | undefined) ??
+      DEFAULT_ENTITY_CAPABILITY_GROUPS;
 
     this.route.parent!.paramMap.subscribe((params) => {
       const id = params.get('id');
@@ -111,155 +182,94 @@ export class TeamMembersComponent {
   }
 
   addAccountShow() {
-    const reform = this.inviteForm();
-
+    const permissionContext = this.getDialogPermissionContext();
     this.overlay
-      .reformDialog(reform, 'Takıma Üye Ekle')
-      .subscribe((formResult) => {
-        if (formResult) {
-          const form = reform.value as EntityOwnershipInvitationForm;
-          this.eog
-            .addUserToEntityOwnership(this.publisherTeamId, {
-              userLogin: form.anyLogin,
-              entityCapabilities: [
-                {
-                  entityGroup: ENTITY_GROUP_LOTUS,
-                  entityName: ENTITY_NAME_QUESTION_BOOK,
-                  capability: form.contentCapability,
-                },
-                {
-                  entityGroup: ENTITY_GROUP_POSTRAL,
-                  entityName: ENTITY_NAME_POSTRAL_ACCOUNT,
-                  capability: form.accountManagementCapability,
-                },
-                {
-                  entityGroup: ENTITY_GROUP_POSTRAL,
-                  entityName: ENTITY_NAME_POSTRAL_ADDRESS,
-                  capability: form.addressManagementCapability,
-                },
-              ],
-              groupCapability: form.groupCapability,
-            })
-            .subscribe(() => {
-              this.overlay.alert(
-                'Kişi davet edildi',
-                'Eğer davet ettiğiniz kişi kabul ederse, takım üyeleri arasında görünecektir.',
-                'info'
-              );
-            });
+      .showComponentAsDialog<TeamMemberCapabilityDialogData, TeamMemberCapabilityDialogResult | null>(
+        TeamMemberCapabilityDialogComponent,
+        {
+          title: 'Takıma Üye Ekle',
+          defaultOutValue: null,
+          data: {
+            groups: this.capabilityGroups,
+            allowAllCapabilities: permissionContext.allowAllCapabilities,
+            allowedGroupCapabilities: permissionContext.allowedGroupCapabilities,
+            allowedEntityCapabilities: permissionContext.allowedEntityCapabilities,
+          },
         }
+      )
+      .onClose()
+      .subscribe((result) => {
+        if (!result) {
+          return;
+        }
+        this.eog
+          .addUserToEntityOwnership(this.publisherTeamId, {
+            userLogin: result.anyLogin!,
+            entityCapabilities: result.entityCapabilities,
+            capabilities: result.groupCapabilities,
+          })
+          .subscribe(() => {
+            this.overlay.alert(
+              'Kişi davet edildi',
+              'Eğer davet ettiğiniz kişi kabul ederse, takım üyeleri arasında görünecektir.',
+              'info'
+            );
+          });
       });
   }
 
 
   editUserShow(item: EOGUserCapabilityDTO) {
-    let bookRole = '', postralAccountRole = '', postralAddressRole = '', postralTaxRole = '', postralItemRole = '';
-    for (let index = 0; index < item.entityCapabilities.length; index++) {
-      const entityCapability = item.entityCapabilities[index];
-      if (entityCapability.entityGroup === ENTITY_GROUP_LOTUS) {
-        switch (entityCapability.entityName) {
-          case ENTITY_NAME_QUESTION_BOOK:
-            bookRole = entityCapability.capability;
-            break;
-        }
-      } else if (entityCapability.entityGroup === ENTITY_GROUP_POSTRAL) {
-        switch (entityCapability.entityName) {
-          case ENTITY_NAME_POSTRAL_ACCOUNT:
-            postralAccountRole = entityCapability.capability;
-            break;
-          case ENTITY_NAME_POSTRAL_ADDRESS:
-            postralAddressRole = entityCapability.capability;
-            break;
-          case ENTITY_NAME_POSTRAL_TAX:
-            postralTaxRole = entityCapability.capability;
-            break;
-          case ENTITY_NAME_POSTRAL_ITEM:
-            postralItemRole = entityCapability.capability;
-            break;
-        }
-
-      }
-    }
-
-    const reform = new Reform(EntityOwnershipMemberEditForm, {
-      contentCapability: bookRole,
-      accountManagementCapability: postralAccountRole,
-      addressManagementCapability: postralAddressRole,
-      taxManagementCapability: postralTaxRole,
-      itemManagementCapability: postralItemRole,
-      groupCapability: item.groupCapability,
-    } as EntityOwnershipMemberEditForm);
-
+    const permissionContext = this.getDialogPermissionContext();
     this.overlay
-      .reformDialog(reform, 'Üye Yetkilerini Düzenle')
-      .subscribe((formResult) => {
-        if (formResult) {
-          const form = reform.value as EntityOwnershipMemberEditForm;
-          this.eog
-            .editUserCapabilityEntityOwnership(this.publisherTeamId, {
-              userId: item.userId,
-              userFullName: item.userFullName,
-              // userCapabilityTemplateName: item.userCapabilityTemplateName,
-              entityCapabilities: [
-                {
-                  entityGroup: ENTITY_GROUP_LOTUS,
-                  entityName: ENTITY_NAME_QUESTION_BOOK,
-                  capability: form.contentCapability,
-                },
-                {
-                  entityGroup: ENTITY_GROUP_POSTRAL,
-                  entityName: ENTITY_NAME_POSTRAL_ACCOUNT,
-                  capability: form.accountManagementCapability,
-                },
-                {
-                  entityGroup: ENTITY_GROUP_POSTRAL,
-                  entityName: ENTITY_NAME_POSTRAL_ADDRESS,
-                  capability: form.addressManagementCapability,
-                },
-                {
-                  entityGroup: ENTITY_GROUP_POSTRAL,
-                  entityName: ENTITY_NAME_POSTRAL_TAX,
-                  capability: form.taxManagementCapability,
-                },
-                {
-                  entityGroup: ENTITY_GROUP_POSTRAL,
-                  entityName: ENTITY_NAME_POSTRAL_ITEM,
-                  capability: form.itemManagementCapability,
-                },
-              ],
-              groupCapability: form.groupCapability,
-            })
-            .subscribe({
-              next: (updatedItem) => {
-                this.reloadLists();
-                this.overlay.alert(
-                  'Başarılı',
-                  'Üye yetkileri başarıyla güncellendi.',
-                  'success'
-                );
-              },
-              error: (err) => {
-                this.overlay.alert(
-                  'Hata',
-                  'Üye yetkileri güncellenirken bir hata oluştu. ' +
-                    err.error.message,
-                  'error'
-                );
-                console.error('Error updating member capabilities:', err);
-              },
-            });
+      .showComponentAsDialog<TeamMemberCapabilityDialogData, TeamMemberCapabilityDialogResult | null>(
+        TeamMemberCapabilityDialogComponent,
+        {
+          title: 'Üye Yetkilerini Düzenle',
+          defaultOutValue: null,
+          height: "100dvh",
+          maxHeight: "600px",
+          data: {
+            groups: this.capabilityGroups,
+            existing: item,
+            allowAllCapabilities: permissionContext.allowAllCapabilities,
+            allowedGroupCapabilities: permissionContext.allowedGroupCapabilities,
+            allowedEntityCapabilities: permissionContext.allowedEntityCapabilities,
+          },
         }
+      )
+      .onClose()
+      .subscribe((result) => {
+        if (!result) {
+          return;
+        }
+        this.eog
+          .editUserCapabilityEntityOwnership(this.publisherTeamId, {
+            userId: item.userId,
+            userFullName: item.userFullName,
+            entityCapabilities: result.entityCapabilities,
+            groupCapabilities: result.groupCapabilities,
+          })
+          .subscribe({
+            next: () => {
+              this.reloadLists();
+              this.overlay.alert(
+                'Başarılı',
+                'Üye yetkileri başarıyla güncellendi.',
+                'success'
+              );
+            },
+            error: (err) => {
+              this.overlay.alert(
+                'Hata',
+                'Üye yetkileri güncellenirken bir hata oluştu. ' +
+                err.error.message,
+                'error'
+              );
+              console.error('Error updating member capabilities:', err);
+            },
+          });
       });
-  }
-
-  inviteForm() {
-    const reform = new Reform(EntityOwnershipInvitationForm);
-    // invitationFormSelectFeeders(
-    //   reform,
-    //   this.bookRoleOptionsFetcher,
-    //   this.postralRoleOptionsFetcher
-    // );
-    return reform;
   }
 
   removeInvitation(item: EOGUserCapabilityInvitationDTO) {
@@ -296,5 +306,75 @@ export class TeamMembersComponent {
           console.error('Error removing invitation:', error);
         },
       });
+  }
+
+  getEntityCapabilityBadges(item: CapabilityCarrier): CapabilityBadge[] {
+    const numericCaps = this.normalizeNumberCapabilities(item.capabilities);
+    if (numericCaps.length > 0) {
+      return numericCaps.map((cap) => this.toCapabilityBadge(cap));
+    }
+
+    return [];
+  }
+
+  getGroupCapabilityBadges(item: GroupCapabilityCarrier): CapabilityBadge[] {
+    const fromGroupCapabilities = this.normalizeNumberCapabilities(item.groupCapabilities);
+    const numericCaps =
+      fromGroupCapabilities.length > 0
+        ? fromGroupCapabilities
+        : this.normalizeNumberCapabilities(item.capabilities);
+
+    if (numericCaps.length > 0) {
+      return numericCaps.map((cap) => this.toCapabilityBadge(cap));
+    }
+
+    return [];
+  }
+
+  private normalizeNumberCapabilities(raw: unknown): number[] {
+    if (!Array.isArray(raw)) {
+      return [];
+    }
+
+    return [...new Set(raw.filter((value): value is number => typeof value === 'number'))];
+  }
+
+  private toCapabilityBadge(capability: number): CapabilityBadge {
+    const label = this.capabilityLabelByValue.get(capability) ?? this.fallbackCapabilityName(capability);
+    return {
+      label,
+      color: this.capabilityColor(capability),
+    };
+  }
+
+  private fallbackCapabilityName(capability: number): string {
+    const capabilityName = Capability[capability as number];
+    if (typeof capabilityName === 'string') {
+      return capabilityName;
+    }
+    return `Capability ${capability}`;
+  }
+
+  private capabilityColor(capability: number): StatusBadgeColor {
+    switch (capability) {
+      case Capability.OWNER:
+        return 'red';
+      case Capability.DELETE:
+        return 'pink';
+      case Capability.EDIT:
+        return 'orange';
+      case Capability.VIEW:
+        return 'blue';
+      case Capability.ADD:
+        return 'green';
+      case Capability.EOG_ADJUST_MEMBERS:
+        return 'violet';
+      case Capability.EOG_ADJUST_CAPABILITIES:
+        return 'indigo';
+      case Capability.EOG_EDIT_METADATA:
+        return 'teal';
+      default:
+        return 'gray';
+    }
   }
 }

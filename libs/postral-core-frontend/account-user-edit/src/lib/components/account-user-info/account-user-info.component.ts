@@ -2,7 +2,6 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   AccountControllerService,
-  AccountUserControllerService,
   AddressControllerService,
 } from '@lotus/postral-core-frontend/client';
 import { ActivatedRoute, Router } from '@angular/router';

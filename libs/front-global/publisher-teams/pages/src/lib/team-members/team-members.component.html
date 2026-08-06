@@ -1,12 +1,24 @@
 <div class="h-full w-full p-2">
-  <block-button stringContent="Kişi ekle" iconClass="material-symbols-outlined" iconContent="add" (click)="addAccountShow()"></block-button>
+  @if (canAdjustMembers()) {
+  <block-button
+    stringContent="Kişi ekle"
+    iconClass="material-symbols-outlined"
+    iconContent="add"
+    (click)="addAccountShow()"
+  ></block-button>
+  }
   <ubs-table-ngx [items]="userCapabilities()" [cover]="true">
-    <column name="name" width="50%">
+    <column name="name">
       <ng-template header> İsim</ng-template>
       <ng-template data let-item="item">
         <div class="flex align-items-center">
-          <img [src]="'/api/file/PROFILE_PHOTO/' + item.userId" class="rounded-full inline-block mr-2"
-            style="border-radius: 100%" height="50px" width="50px" />
+          <img
+            [src]="'/api/file/PROFILE_PHOTO/' + item.userId"
+            class="rounded-full inline-block mr-2"
+            style="border-radius: 100%"
+            height="50px"
+            width="50px"
+          />
           <div>{{ item.userFullName }}</div>
         </div>
       </ng-template>
@@ -14,33 +26,72 @@
     <column name="capability">
       <ng-template header>İçerik Yetkisi</ng-template>
       <ng-template data let-item="item">
-        <div class="flex flex-column align-items-start sm:align-items-end lg:align-items-start">
-          @for (item of item.entityCapabilities; track $index) {
-          <div><b>{{ item.entityGroup }}/{{ item.entityName }}</b></div>
-          <div>{{ item.capability }}</div>
+        <div
+          class="flex flex-column align-items-start sm:align-items-end lg:align-items-start"
+          style="max-width: 400px !important"
+        >
+          @for (entityCapability of item.entityCapabilities; track $index) {
+          <div>
+            <b>{{
+              'capability.entity.' +
+                entityCapability.entityGroup +
+                '/' +
+                entityCapability.entityName | translate
+            }}</b>
+          </div>
+          <div class="flex flex-wrap gap-1 mt-1 mb-2">
+            @for (badge of getEntityCapabilityBadges(entityCapability); track
+            badge.label + '-' + $index) {
+            <lotus-web-status-badge
+              [label]="badge.label"
+              [color]="badge.color"
+            ></lotus-web-status-badge>
+            } @if (!getEntityCapabilityBadges(entityCapability).length) {
+            <span>-</span>
+            }
+          </div>
           }
-
         </div>
-
       </ng-template>
     </column>
     <column name="group-capability">
       <ng-template header>Grup Yetkisi</ng-template>
       <ng-template data let-item="item">
-        <div>{{ item.groupCapability }}</div>
+        <div class="flex flex-wrap gap-1" style="max-width: 400px !important">
+          @for (badge of getGroupCapabilityBadges(item); track badge.label + '-'
+          + $index) {
+          <lotus-web-status-badge
+            [label]="badge.label"
+            [color]="badge.color"
+          ></lotus-web-status-badge>
+          } @if (!getGroupCapabilityBadges(item).length) {
+          <span>-</span>
+          }
+        </div>
       </ng-template>
     </column>
     <column name="actions">
       <ng-template header>Aksiyonlar </ng-template>
       <ng-template data let-item="item">
         <div class="action-buttons">
-          <block-button stringContent="Kaldır" iconClass="material-symbols-outlined" iconContent="logout" buttonClass="bg-danger"
-            (click)="removeUserShow(item)"></block-button>
+          @if (canAdjustMembers()) {
+          <block-button
+            stringContent="Kaldır"
+            iconClass="material-symbols-outlined"
+            iconContent="logout"
+            buttonClass="bg-danger"
+            (click)="removeUserShow(item)"
+          ></block-button>
+          }
 
-          <block-button stringContent="Yetkileri düzenle" iconClass="material-symbols-outlined" iconContent="edit" buttonClass="border"
-            (click)="editUserShow(item)"></block-button>
+          <block-button
+            stringContent="Yetkileri düzenle"
+            iconClass="material-symbols-outlined"
+            iconContent="edit"
+            buttonClass="border"
+            (click)="editUserShow(item)"
+          ></block-button>
         </div>
-
       </ng-template>
     </column>
     <!-- <column name="actions">
@@ -58,16 +109,24 @@
 
         </column> -->
   </ubs-table-ngx>
-  @if (userCapabilityInvitations()?.length) {
+  @if (userCapabilityInvitations().length) {
   <h3 class="my-1">Takıma davet edilenler</h3>
-  <div>Davet ettiğiniz kişi kabul ettiği anda <strong>üye listesinde görünecektir</strong>.</div>
+  <div>
+    Davet ettiğiniz kişi kabul ettiği anda
+    <strong>üye listesinde görünecektir</strong>.
+  </div>
   <ubs-table-ngx [items]="userCapabilityInvitations()" [cover]="true">
     <column name="name" width="50%">
       <ng-template header> İsim</ng-template>
       <ng-template data let-item="item">
         <div class="flex align-items-center">
-          <img [src]="'/api/file/PROFILE_PHOTO/' + item.userId" class="rounded-full inline-block mr-2"
-            style="border-radius: 100%" height="50px" width="50px" />
+          <img
+            [src]="'/api/file/PROFILE_PHOTO/' + item.userId"
+            class="rounded-full inline-block mr-2"
+            style="border-radius: 100%"
+            height="50px"
+            width="50px"
+          />
           <div>{{ item.userName }}</div>
         </div>
       </ng-template>
@@ -75,29 +134,64 @@
     <column name="capability">
       <ng-template header>İçerik Yetkisi</ng-template>
       <ng-template data let-item="item">
-        <div class="flex flex-column align-items-start sm:align-items-end lg:align-items-start">
-          @for (item of item.entityCapabilities; track $index) {
-          <div><b>{{ item.entityGroup }}/{{ item.entityName }}</b></div>
-          <div>{{ item.capability }}</div>
+        <div
+          class="flex flex-column align-items-start sm:align-items-end lg:align-items-start"
+          style="max-width: 400px"
+        >
+          @for (entityCapability of item.entityCapabilities; track $index) {
+          <div>
+            <b>{{
+              'capability.entity.' +
+                entityCapability.entityGroup +
+                '/' +
+                entityCapability.entityName | translate
+            }}</b>
+          </div>
+          <div class="flex flex-wrap gap-1 mt-1 mb-2">
+            @for (badge of getEntityCapabilityBadges(entityCapability); track
+            badge.label + '-' + $index) {
+            <lotus-web-status-badge
+              [label]="badge.label"
+              [color]="badge.color"
+            ></lotus-web-status-badge>
+            } @if (!getEntityCapabilityBadges(entityCapability).length) {
+            <span>-</span>
+            }
+          </div>
           }
-
         </div>
       </ng-template>
     </column>
     <column name="group-capability">
       <ng-template header>Grup Yetkisi</ng-template>
       <ng-template data let-item="item">
-        <div>{{ item.groupCapability }}</div>
+        <div class="flex flex-wrap gap-1" style="max-width: 400px !important">
+          @for (badge of getGroupCapabilityBadges(item); track badge.label + '-'
+          + $index) {
+          <lotus-web-status-badge
+            [label]="badge.label"
+            [color]="badge.color"
+          ></lotus-web-status-badge>
+          } @if (!getGroupCapabilityBadges(item).length) {
+          <span>-</span>
+          }
+        </div>
       </ng-template>
     </column>
     <column name="actions">
       <ng-template header>Aksiyonlar </ng-template>
       <ng-template data let-item="item">
-        <block-button stringContent="Kaldır" iconClass="material-symbols-outlined" iconContent="logout" buttonClass="bg-danger"
-          (click)="removeInvitation(item)"></block-button>
+        @if (canAdjustMembers()) {
+        <block-button
+          stringContent="Kaldır"
+          iconClass="material-symbols-outlined"
+          iconContent="logout"
+          buttonClass="bg-danger"
+          (click)="removeInvitation(item)"
+        ></block-button>
+        }
       </ng-template>
     </column>
-
   </ubs-table-ngx>
   }
 </div>

@@ -216,7 +216,9 @@
       "roles": "Roles",
       "status": "Status",
       "edit": "Edit",
-      "suspendReason": "Suspend Reason"
+      "suspendReason": "Suspend Reason",
+      "no-form-instructions": "Form talimatı yok",
+      "loading": "Yükleniyor..."
     }
   },
   {
@@ -308,7 +310,10 @@
     "prefix": "postral",
     "stringMap": {
       "demo-server-warning": "DO NOT USE your Tetakent account",
-      "demo-server-warning-long": "This Postral Core instance is prepared for demo purposes and is not suitable for production use. Your data will be regularly deleted."
+      "demo-server-warning-long": "This Postral Core instance is prepared for demo purposes and is not suitable for production use. Your data will be regularly deleted.",
+      "billing-dates": "Faturalama günleri (2-28 arası)",
+      "account-information-updated-su": "Account information updated successfully.",
+      "latest-prices": "Latest prices:"
     }
   },
   {
@@ -333,6 +338,29 @@
       "REPORT_TOTAL": "Total report expense",
       "SHAQ_ONEAL_ADVERTISEMENT_FEE": "Turkcell's fee for featuring Shaq O'neal in advertisements ( ͡° ͜ʖ ͡°)",
       "KOBE_BRYANT_RESURRECTION_AND_ADVERTISEMENT_FEE": "Turkcell's fee for resurrecting Kobe Bryant and featuring him in advertisements ( ͡° ͜ʖ ͡°)"
+    }
+  },
+  {
+    "prefix": "capability.item",
+    "stringMap": {
+      "EOG_ADJUST_CAPABILITIES": "Can adjust the team's capabilities",
+      "EOG_ADJUST_MEMBERS": "Can add or remove team members",
+      "EOG_EDIT_METADATA": "Can only edit metadata",
+      "EDIT": "Can edit",
+      "VIEW": "Can view",
+      "ADD": "Can add",
+      "DELETE": "Can delete",
+      "OWNER": "Owner"
+    }
+  },
+  {
+    "prefix": "capability.entity",
+    "stringMap": {
+      "LOTUS_QB/QUESTION_BOOK": "Question Book",
+      "POSTRAL/ACCOUNT": "Account",
+      "POSTRAL/ADDRESS": "Address",
+      "POSTRAL/TAX": "Tax",
+      "POSTRAL/ITEM": "Item"
     }
   }
 ]

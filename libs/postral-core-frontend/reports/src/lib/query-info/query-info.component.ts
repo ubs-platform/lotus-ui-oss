@@ -1,21 +1,15 @@
 import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
-  AccountControllerService,
-  AccountUserControllerService,
-  AddressControllerService,
   ReportQueryControllerService,
 } from '@lotus/postral-core-frontend/client';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormEditInstruction } from '@lotus/front-global/reform-data-edit';
 import { Reform } from '@lotus/front-global/minky/core';
 import {
-  AccountForm,
   ReportQueryForm,
 } from '@lotus/postral-core-frontend/forms';
-import { AccountDTO, ReportQueryDTO } from '@tk-postral/payment-common';
+import { ReportQueryDTO } from '@tk-postral/payment-common';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
-import { lastValueFrom, map, merge, mergeMap } from 'rxjs';
 @Component({
   selector: 'lib-query-info',
   standalone: false,

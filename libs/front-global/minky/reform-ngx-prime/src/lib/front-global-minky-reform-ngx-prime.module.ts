@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReformNgxPrimeComponent } from './reform-ngx-prime/reform-ngx-prime.component';
-import { MinkyReformNgxModule } from '@lotus/front-global/minky/reform-ngx';
+import { InputFieldLinkDirective } from './input-field-link/input-field-link.directive';
+import { ButtonFieldLinkDirective } from './button-field-link/button-field-link.directive';
+import { GroupLabelFieldLinkDirective } from './group-label-field-link/group-label-field-link.directive';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -20,7 +22,6 @@ import { ToggleComponent } from '@lotus/front-global/input/toggle';
 @NgModule({
   imports: [
     CommonModule,
-    MinkyReformNgxModule,
     InputTextModule,
     FormsModule,
     ReactiveFormsModule,
@@ -36,9 +37,20 @@ import { ToggleComponent } from '@lotus/front-global/input/toggle';
     FrontGlobalButtonModule,
     CustomSelectComponent,
     UbsTranslatorNgxModule,
-    ToggleComponent
+    ToggleComponent,
+    FrontGlobalMinkyReformNgxMonaModule,
   ],
-  declarations: [ReformNgxPrimeComponent],
-  exports: [ReformNgxPrimeComponent],
+  declarations: [
+    ReformNgxPrimeComponent,
+    InputFieldLinkDirective,
+    ButtonFieldLinkDirective,
+    GroupLabelFieldLinkDirective,
+  ],
+  exports: [
+    ReformNgxPrimeComponent,
+    InputFieldLinkDirective,
+    ButtonFieldLinkDirective,
+    GroupLabelFieldLinkDirective,
+  ],
 })
 export class MinkyReformNgxPrimeModule {}

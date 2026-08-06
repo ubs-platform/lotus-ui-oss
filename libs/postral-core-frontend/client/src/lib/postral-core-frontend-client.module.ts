@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { AccountControllerService } from "./services/payment/account-controller.service";
-import { AccountUserControllerService } from "./services/payment/account-user-controller.service";
 import { AppComissionControllerService } from "./services/payment/app-comission-controller.service";
 import { PaymentControllerService } from "./services/payment/payment-controller.service";
 import { ItemAdminControllerService } from "./services/payment/item-admin-controller.service";
@@ -10,6 +9,6 @@ import { CalculationService } from "./services/payment/calculation.service";
 
 @NgModule({
     imports: [],
-    providers: [AccountControllerService, AccountUserControllerService, AppComissionControllerService, PaymentControllerService, ItemAdminControllerService, ItemCrudService, CalculationService],
+    providers: [AccountControllerService, AppComissionControllerService, PaymentControllerService, ItemAdminControllerService, ItemCrudService, CalculationService],
 })
 export class PostralCoreFrontendClientModule { }

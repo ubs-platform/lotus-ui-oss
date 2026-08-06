@@ -5,6 +5,8 @@ import {
   FlexyPageContainerComponent,
   PageContainerComponent,
 } from '@lotus/front-global/ui/page-container';
+import { EntityCapabilityGroupConfig } from 'libs/front-global/publisher-teams/pages/src/lib/team-members/entity-capability-group-config';
+import { ENTITY_GROUP_LOTUS, ENTITY_GROUP_POSTRAL, ENTITY_NAME_POSTRAL_ACCOUNT, ENTITY_NAME_POSTRAL_ADDRESS, ENTITY_NAME_QUESTION_BOOK, LotusCapability } from 'libs/lotus-common/consts/src/lib/consts';
 
 const routes: Routes = [
   {
@@ -21,14 +23,7 @@ const routes: Routes = [
   },
   {
     path: 'user/payment-accounts',
-    loadChildren: () =>
-      import('@lotus/postral-core-frontend/account-user-edit').then(
-        (m) => m.AccountUserEditModule
-      ),
-  },
-  {
-    path: 'postral/account',
-    component: FlexyPageContainerComponent,
+    data: { paymentMode: 'seller' },
     loadChildren: () =>
       import('@lotus/postral-core-frontend/account-user-edit').then(
         (m) => m.AccountUserEditModule
@@ -48,7 +43,7 @@ const routes: Routes = [
         (m) => m.FrontGlobalAccountSettingPagesModule
       ),
   },
- {
+  {
     path: 'sale-simulation',
     loadChildren: () =>
       import('@lotus/postral-core-frontend/sale-simulation').then(
@@ -70,7 +65,20 @@ const routes: Routes = [
     loadChildren: () =>
       import('@lotus/front-global/publisher-teams/pages').then(
         (m) => m.PagesModule
-      ),
+      ), data: {
+        entityCapabilityGroups: [
+          {
+            entityGroup: ENTITY_GROUP_POSTRAL,
+            entityName: ENTITY_NAME_POSTRAL_ACCOUNT,
+            label: 'Hesap yönetimi yetkisi',
+          },
+          {
+            entityGroup: ENTITY_GROUP_POSTRAL,
+            entityName: ENTITY_NAME_POSTRAL_ADDRESS,
+            label: 'Adres yönetimi yetkisi',
+          },
+        ] satisfies EntityCapabilityGroupConfig[],
+      },
   },
   // {
   //   component: FlexyPageContainerComponent,

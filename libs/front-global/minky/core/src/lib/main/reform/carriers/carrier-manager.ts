@@ -13,27 +13,22 @@ import {
 } from './input-link-carrier';
 
 export class CarrierManager<T extends any> {
-  constructor(private bridge: ICarrierBridge) {}
+  constructor(private bridge: ICarrierBridge) { }
 
   generateInputCarriers(
     propertyMetas = this.bridge.currentPropertyMetas(),
     prefix = ''
   ): Array<LinkCarrier> {
-    let carriers: Array<LinkCarrier> = [];
-    for (let index = 0; index < propertyMetas.length; index++) {
-      const propertyMeta = propertyMetas[index];
-      if (!propertyMeta.hide) {
-        const name = this.buildPath(prefix, propertyMeta.name);
-
-        if (propertyMeta.inputType == 'array') {
-          this.generateArrayCarriers(name, propertyMeta, carriers);
-        } else if (propertyMeta.subObjectKey) {
-          // this.includeSectionTitle(carriers, propertyMeta, name);
-          this.generateSubObjectCarrier(propertyMeta, carriers, name);
-        } else if (propertyMeta.name) {
-          const baseObject = this.generateSingularCarrier(prefix, propertyMeta);
-          carriers.push(baseObject);
-        }
+    const carriers: Array<LinkCarrier> = [];
+    for (const propertyMeta of propertyMetas) {
+      if (propertyMeta.hide) continue;
+      const name = this.buildPath(prefix, propertyMeta.name);
+      if (propertyMeta.inputType === 'array') {
+        this.generateArrayCarriers(name, propertyMeta, carriers);
+      } else if (propertyMeta.subObjectKey) {
+        this.generateSubObjectCarrier(propertyMeta, carriers, name);
+      } else if (propertyMeta.name) {
+        carriers.push(this.generateSingularCarrier(prefix, propertyMeta));
       }
     }
     return carriers;
@@ -78,21 +73,17 @@ export class CarrierManager<T extends any> {
     };
 
     carrierLink.setValue = (value) => {
-      if (propertyMeta.inputType == 'file') {
-        const valueAsFileList = value as FileList;
-        const fakeFileList = [];
-        for (let index = 0; index < valueAsFileList.length; index++) {
-          const file = valueAsFileList[index];
-          fakeFileList.push(file);
-        }
-        this.bridge.setFileByPath(path, fakeFileList);
+      if (propertyMeta.inputType === 'file') {
+        this.bridge.setFileByPath(path, Array.from(value as FileList));
         carrierLink.value = value;
-        // carrierLink.validationErrors = this.bridge.validationErrorByPath({
-        //   path,
-        //   meta: propertyMeta,
-        // });
       } else {
-        this.bridge.setValueByPath(path, value);
+        const overrideValue = propertyMeta.onValueChange?.(
+          value,
+          this.bridge.getValueByPath(path),
+          this.bridge.combinedEnvironment()
+        );
+        this.bridge.setValueByPath(path, overrideValue !== undefined ? overrideValue : value);
+        // Son değeri direkt formdan alıp carrier'a set ediyoruz. Çünkü validator'lar çalıştıktan sonra value değişmiş olabilir.
         carrierLink.value = this.bridge.getValueByPath(path);
         carrierLink.validationErrors = this.bridge.validationErrorByPath({
           path,
@@ -108,27 +99,26 @@ export class CarrierManager<T extends any> {
     propertyMeta: PropertyMeta<T>,
     carriers: Array<LinkCarrier>
   ) {
-    if (!propertyMeta.hide) {
-      const groupItems = [] as LinkCarrier[];
-      const length = (this.bridge.getValueByPath(name) as [])?.length || 0;
-      for (let index = 0; index < length; index++) {
-        const arrayPrefix = this.buildPath(name, index);
+    const groupItems: LinkCarrier[] = [];
+    const length = (this.bridge.getValueByPath(name) as [])?.length ?? 0;
+    for (let index = 0; index < length; index++) {
+      const arrayPrefix = this.buildPath(name, index);
 
-        if (
-          propertyMeta.arrayItemInputType == 'sub-object' ||
-          propertyMeta.subObjectKey
-        ) {
-          this.generateSubObjectCarrier(propertyMeta, groupItems, arrayPrefix);
-        } else {
-          const baseObject = this.generateSingularCarrier(arrayPrefix, {
-            name: undefined,
-            inputType: propertyMeta.arrayItemInputType,
-          });
-          groupItems.push(baseObject);
-        }
+      if (
+        propertyMeta.arrayItemInputType === 'sub-object' ||
+        propertyMeta.subObjectKey
+      ) {
+        this.generateSubObjectCarrier(propertyMeta, groupItems, arrayPrefix);
+      } else {
+        groupItems.push(this.generateSingularCarrier(arrayPrefix, {
+          name: undefined,
+          inputType: propertyMeta.arrayItemInputType,
+        }));
+      }
+
+      if (propertyMeta.allowUserAddAndRemoveItem !== false) {
         groupItems.push({
           carrierType: 'ACTION',
-          // inputType: 'action',
           title: 'remove',
           depth: this.calculateDepth(name),
           action: () => {
@@ -138,17 +128,17 @@ export class CarrierManager<T extends any> {
         });
       }
 
-      this.addNewActionArray(name, propertyMeta, groupItems);
-      const grp = {
-        carrierType: 'GROUP',
-        title: propertyMeta.name,
-        items: groupItems,
-        depth: this.calculateDepth(name),
-        widthRatio: propertyMeta.widthRatio,
-        propertyMeta,
-      } as GroupedLinkCarrier;
-      carriers.push(grp);
     }
+
+    this.addNewActionArray(name, propertyMeta, groupItems);
+    carriers.push({
+      carrierType: 'GROUP',
+      title: propertyMeta.name,
+      items: groupItems,
+      depth: this.calculateDepth(name),
+      widthRatio: propertyMeta.widthRatio,
+      propertyMeta,
+    } as GroupedLinkCarrier);
   }
 
   private calculateDepth(name: string): number {
@@ -157,26 +147,22 @@ export class CarrierManager<T extends any> {
 
   private addNewActionArray(
     name: string,
-    propertMeta: PropertyMeta,
+    propertyMeta: PropertyMeta,
     carriers: Array<LinkCarrier>
   ) {
+    
+    if (propertyMeta.allowUserAddAndRemoveItem === false) return;
     carriers.push({
       carrierType: 'ACTION',
       title: 'insert',
       depth: ReformUtils.getDepthOfPath(name) + 1,
-
       action: () => {
-        const parentValue = this.bridge.getValueByPath(name) as [];
-        const arrayLength = parentValue.length;
-        const latestPath = this.buildPath(name, arrayLength);
-        if (
-          propertMeta.arrayItemInputType == 'sub-object' &&
-          propertMeta.subObjectKey
-        ) {
-          this.bridge.setValueByPath(latestPath, {});
-        } else {
-          this.bridge.setValueByPath(latestPath, '');
-        }
+        const parentValue = this.bridge.getValueByPath(name) as any[];
+        const latestPath = this.buildPath(name, parentValue.length);
+        const newValue = propertyMeta.arrayItemInputType === 'sub-object' && propertyMeta.subObjectKey
+          ? {}
+          : '';
+        this.bridge.setValueByPath(latestPath, newValue);
         this.bridge.emitBigUpdate(this.bridge.value());
       },
     });

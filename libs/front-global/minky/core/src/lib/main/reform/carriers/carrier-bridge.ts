@@ -17,4 +17,5 @@ export interface ICarrierBridge {
   emitUpdate(val: any): void;
   value(): any;
   getFeeder(path: string): ListFunction;
+  combinedEnvironment(): CombinedEnvironment;
 }

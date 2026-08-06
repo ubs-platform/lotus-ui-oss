@@ -1,0 +1,57 @@
+<div class="flex flex-column gap-3 overflow-hidden p-2 h-full w-full">
+  <div class="flex-grow-1 overflow-auto">
+    @if (!isEditMode) {
+    <div class="flex flex-column gap-1">
+      <label for="anyLogin">Email ya da Kullanıcı adı</label>
+      <input pInputText id="anyLogin" type="text" [(ngModel)]="anyLogin" />
+    </div>
+    }
+
+    <div>
+      <div class="my-2"><b>Grup yetkisi</b></div>
+
+      <div class="flex flex-column gap-2">
+        @for (option of groupCapabilityOptions; track option.value) {
+        <div class="flex align-items-center gap-2">
+          <input
+            type="checkbox"
+            [id]="'groupCapability_' + option.value"
+            [checked]="groupCapabilityValues.includes(option.value)"
+            (change)="
+              toggleGroupCapability(option.value, $any($event.target).checked)
+            "
+          />
+          <label [for]="'groupCapability_' + option.value">{{
+            option.text | translate
+          }}</label>
+        </div>
+        }
+      </div>
+    </div>
+
+    <entity-capability-group-selector
+      [groups]="groups"
+      [value]="entityCapabilityValues"
+      [allowAllCapabilities]="allowAllCapabilities"
+      [allowedCapabilities]="allowedEntityCapabilities"
+      (valueChange)="onEntityCapabilitiesChange($event)"
+    ></entity-capability-group-selector>
+  </div>
+  <div class="action-buttons">
+    <block-button
+      stringContent="Vazgeç"
+      iconClass="material-symbols-outlined"
+      iconContent="close"
+      buttonClass="border"
+      (click)="cancel()"
+    ></block-button>
+    <block-button
+      buttonClass="primary"
+      iconClass="material-symbols-outlined"
+      iconContent="check"
+      [stringContent]="isEditMode ? 'Kaydet' : 'Davet Et'"
+      [disabled]="!canSubmit"
+      (click)="submit()"
+    ></block-button>
+  </div>
+</div>

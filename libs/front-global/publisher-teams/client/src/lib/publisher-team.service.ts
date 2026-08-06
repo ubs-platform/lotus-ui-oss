@@ -29,11 +29,14 @@ export class PublisherTeamService extends CrudBaseServiceGenerator<EntityOwnersh
         return this._activeTeamId;
     }
 
+
+    // DİKKAT: Bu kısımlar Lotus Propriety APIYİ kullanır. Lotus-UI-OSS'te çalışmayacaktır
     // Sadece güvenilir takımlar listelensin
     getEogTrustedStatus(eogId: string) {
         return this.http.get<boolean>(`${environment.examsServiceUrl}eog-book-trust/${eogId}`);
     }
 
+    // DİKKAT: Bu kısımlar Lotus Propriety APIYİ kullanır. Lotus-UI-OSS'te çalışmayacaktır
     // Güvenilir takım olarak işaretle veya işareti kaldır. Sadece adminler yapabilir.
     setEogTrusted(eogId: string, isTrusted: boolean) {
         if (isTrusted) {
@@ -41,5 +44,11 @@ export class PublisherTeamService extends CrudBaseServiceGenerator<EntityOwnersh
         } else {
             return this.http.delete(`${environment.examsServiceUrl}eog-book-trust/${eogId}`);
         }
+    }
+
+    // DİKKAT: Bu kısımlar Lotus Propriety APIYİ kullanır. Lotus-UI-OSS'te çalışmayacaktır
+    // Kullanıcının güvenilir takımlardan birine üye olup olmadığını kontrol eder
+    isUserInTrustedTeam() {
+        return this.http.get<boolean>(`${environment.examsServiceUrl}eog-book-trust/is-user-trusted`);
     }
 }

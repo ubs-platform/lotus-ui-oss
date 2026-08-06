@@ -1,0 +1,22 @@
+@if (rows.length) {
+<div class="flex flex-column gap-3">
+  @for (row of rows; track row.entityGroup + row.entityName) {
+  @if (row.options.length !== 0) {
+  <div>
+    <div class="my-1"><b>{{ (row.label) | translate }}</b></div>
+
+    <div class="flex flex-column gap-2">
+      @for (option of row.options; track option.value) {
+      <div class="flex align-items-center gap-2">
+        <input type="checkbox" [id]="row.entityGroup + '_' + row.entityName + '_' + option.value"
+          [checked]="row.capabilities.includes(option.value)"
+          (change)="toggle(row, option.value, $any($event.target).checked)" />
+        <label [for]="row.entityGroup + '_' + row.entityName + '_' + option.value">{{ option.text | translate}}</label>
+      </div>
+      }
+    </div>
+  </div>
+  }
+  }
+</div>
+}

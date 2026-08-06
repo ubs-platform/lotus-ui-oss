@@ -11,4 +11,5 @@ export type PropertyInputType =
   | 'array'
   | 'sub-object'
   | 'datetime'
-  | 'radios';
+  | 'radios'
+  | 'checkbox-array-group';

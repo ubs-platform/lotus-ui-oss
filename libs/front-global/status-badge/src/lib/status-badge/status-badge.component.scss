@@ -30,6 +30,31 @@
     color: var(--text-color-secondary);
   }
 
+  &.status-badge-orange {
+    background-color: var(--orange-100);
+    color: var(--orange-700);
+  }
+
+  &.status-badge-teal {
+    background-color: var(--teal-100);
+    color: var(--teal-700);
+  }
+
+  &.status-badge-indigo {
+    background-color: var(--indigo-100);
+    color: var(--indigo-700);
+  }
+
+  &.status-badge-violet {
+    background-color: var(--purple-100);
+    color: var(--purple-700);
+  }
+
+  &.status-badge-pink {
+    background-color: var(--pink-100);
+    color: var(--pink-700);
+  }
+
   &.status-badge-primary {
     background-color: var(--primary-color-card-bg);
     color: var(--primary-color-card-bg-text);

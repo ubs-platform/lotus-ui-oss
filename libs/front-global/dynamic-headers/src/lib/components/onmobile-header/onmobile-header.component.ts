@@ -1,13 +1,14 @@
 import { Component, ElementRef, model, OnInit, signal, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderCommunicationService } from '../../services/header-communication.service';
+import { HeaderAction, HeaderCommunicationService } from '../../services/header-communication.service';
 import { TranslatorText } from '@ubs-platform/translator-core';
 import { TranslatorRepositoryService, UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
 import { screenTypeStatus } from "@lotus/front-global/mona-mobile-experience-ng"
+import { FrontGlobalButtonModule } from "@lotus/front-global/button";
 
 @Component({
   selector: 'lib-onmobile-header',
-  imports: [CommonModule, UbsTranslatorNgxModule],
+  imports: [CommonModule, UbsTranslatorNgxModule, FrontGlobalButtonModule, FrontGlobalButtonModule],
   templateUrl: './onmobile-header.component.html',
   styleUrl: './onmobile-header.component.scss',
 })
@@ -19,6 +20,7 @@ export class OnmobileHeaderComponent implements OnInit {
   headerTextParent = viewChild<ElementRef<HTMLDivElement>>("headerTextParent");
   enableMarquee = signal<boolean>(false);
   approxLength = signal<number>(0);
+  backAction = model<HeaderAction | null | undefined>(undefined);
 
   constructor(private headerCommunicationService: HeaderCommunicationService, private translatorService: TranslatorRepositoryService) { }
 
@@ -38,6 +40,10 @@ export class OnmobileHeaderComponent implements OnInit {
     screenTypeStatus.subscribe(screenType => {
       this.isMobile.set(screenType === "mobile");
       this.marquee();
+    });
+
+    this.headerCommunicationService.getHeaderBackAction().subscribe(action => {
+      this.backAction.set(action);
     });
 
     // window.addEventListener('resize', () => {

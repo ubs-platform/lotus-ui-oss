@@ -1,22 +1,11 @@
-import { Component, HostBinding, OnDestroy, OnInit, signal, viewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, viewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '@lotus-web/environment';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { SearchableDataTableComponent } from '@lotus/front-global/table';
 import {
-  AccountControllerService,
-  AccountUserControllerService,
-  AddressControllerService,
-  ItemAdminControllerService,
-  ItemCrudService,
   ItemTaxControllerService,
 } from '@lotus/postral-core-frontend/client';
-import {
-  AccountDTO,
-  AccountAddressDto,
-  ItemTaxDTO,
-} from '@tk-postral/payment-common';
-import { bindNodeCallback } from 'rxjs';
 
 @Component({
   selector: 'libItemTaxList',

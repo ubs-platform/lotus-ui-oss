@@ -12,11 +12,11 @@ import { GlobalPipesModule } from '@lotus/front-global/global-pipes';
   standalone: true,
 })
 export class IconComponent {
-  readonly iconClass = input('');
-  readonly iconContent = input('');
-  readonly iconImageSource = input('');
-  readonly iconSize = input('');
-  readonly styleClass = input('');
+  readonly iconClass = input<string | null | undefined>(undefined);
+  readonly iconContent = input<string | null | undefined>(undefined);
+  readonly iconImageSource = input<string | null | undefined>(undefined);
+  readonly iconSize = input<string | null | undefined>(undefined);
+  readonly styleClass = input<string | null | undefined>(undefined);
   readonly resolvedClasses = computed(() =>
     [this.iconClass(), this.styleClass()].filter(
       (value): value is string => typeof value === 'string' && value.trim().length > 0

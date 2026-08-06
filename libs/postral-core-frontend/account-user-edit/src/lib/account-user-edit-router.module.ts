@@ -30,6 +30,7 @@ import { WebhookConfigListComponent } from './components/webhook-config-list/web
         path: '',
         component: PaymentSettingsWrapComponent,
         children: [
+          { path: '', redirectTo: 'address', pathMatch: 'full' },
           { path: 'address', component: AddressListComponent },
           { path: 'address/:id', component: AddressInfoComponent },
           { path: 'account', component: AccountsComponent },

@@ -1,5 +1,5 @@
 <div class="h-full w-full flex flex-column pt-2">
-  <div style="padding-top: 50px;">
+  <div>
     <lib-tab-view
       #tabView
       [onlyButtons]="true"
@@ -10,7 +10,7 @@
       <ng-template block-page="members" title="Takım üyeleri"> </ng-template>
     </lib-tab-view>
   </div>
-  <div class="flex-grow-1 overflow-auto">
+  <div class="flex-grow-1 overflow-auto main-scrolling-content">
     <router-outlet></router-outlet>
   </div>
 </div>

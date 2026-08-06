@@ -1,5 +1,5 @@
 @if (createdEventKey()) {
-<p-messages severity="warn">
+<!-- <p-messages severity="warn">
   <ng-template pTemplate>
     <span>
       Event Key yalnızca bir kez gösterilir. Lütfen bu bilgiyi güvenli bir yerde
@@ -14,7 +14,21 @@
       ></block-button>
     </span>
   </ng-template>
-</p-messages>
+</p-messages> -->
+<div class="mona-card" severity="warn">
+  <span>
+    Event Key yalnızca bir kez gösterilir. Lütfen bu bilgiyi güvenli bir yerde
+    saklayın. Oluşturulan Event Key:
+    <strong>{{ createdEventKey() }}</strong>
+    <block-button
+      buttonClass="border"
+      style="margin-left: 10px"
+      (click)="copyEventKey()"
+      stringContent="Kopyala"
+      iconClass="pi pi-copy"
+    ></block-button>
+  </span>
+</div>
 } @if (instruction()) {
 <lib-reform-data-edit [formInstruction]="instruction()!"></lib-reform-data-edit>
 @if (existingId()) {
