@@ -17,3 +17,4 @@ export * from "./lib/services/payment/report-controller.service"
 export * from './lib/services/payment/admin-settings-controller.service';
 export * from './lib/services/payment/webhook-config-controller.service';
 export * from './lib/services/payment/payment-channel-config-controller.service';
+export * from './lib/services/payment/external-platform-controller.service';

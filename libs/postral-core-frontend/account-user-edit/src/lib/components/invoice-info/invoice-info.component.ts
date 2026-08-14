@@ -8,9 +8,9 @@ import {
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import {
   InvoiceDTO,
-  InvoiceAccountDTO,
-  InvoiceAddressDto,
-  PaymentItemDto,
+  SnapshotAccountDTO,
+  SnapshotAddressDTO,
+  PaymentItemDTO,
 } from '@tk-postral/payment-common';
 import { Optional } from '@ubs-platform/crud-base-common/utils';
 import { FileService } from '@lotus/front-global/images';
@@ -29,7 +29,7 @@ export class InvoiceInfoComponent implements OnInit {
   error = signal<Optional<string>>(null);
   fileInput: HTMLInputElement | null = null;
   hasInvoiceFile = signal<boolean>(false);
-  items = signal<PaymentItemDto[]>([]);
+  items = signal<PaymentItemDTO[]>([]);
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -196,28 +196,28 @@ export class InvoiceInfoComponent implements OnInit {
   /**
    * İşletmeci fatura adresini döner
    */
-  getSellerAddress(): Optional<InvoiceAddressDto> {
+  getSellerAddress(): Optional<SnapshotAddressDTO> {
     return this.invoiceInfo()?.sellerInvoiceAddress || null;
   }
 
   /**
    * İşletmeci hesap bilgisini döner
    */
-  getSellerAccount(): Optional<InvoiceAccountDTO> {
+  getSellerAccount(): Optional<SnapshotAccountDTO> {
     return this.invoiceInfo()?.sellerInvoiceAccount || null;
   }
 
   /**
    * Müşteri fatura adresini döner
    */
-  getCustomerAddress(): Optional<InvoiceAddressDto> {
+  getCustomerAddress(): Optional<SnapshotAddressDTO> {
     return this.invoiceInfo()?.customerInvoiceAddress || null;
   }
 
   /**
    * Müşteri hesap bilgisini döner
    */
-  getCustomerAccount(): Optional<InvoiceAccountDTO> {
+  getCustomerAccount(): Optional<SnapshotAccountDTO> {
     return this.invoiceInfo()?.customerAccount || null;
   }
 

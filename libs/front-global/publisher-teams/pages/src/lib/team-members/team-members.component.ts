@@ -1,5 +1,4 @@
 import { Component, computed, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { EntityOwnershipGroupControllerService } from '@lotus/front-global/entity-ownership';
 import {
   Capability,
@@ -9,9 +8,9 @@ import {
 } from '@ubs-platform/users-common';
 import { ActivatedRoute } from '@angular/router';
 import { PublisherTeamService } from '@lotus/front-global/publisher-teams/client';
-import { forkJoin, mergeMap } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
-import { AuthManagementService, AuthService } from '@lotus/front-global/auth';
+import { AuthManagementService, RoleService } from '@lotus/front-global/auth';
 import {
   TeamMemberCapabilityDialogComponent,
   TeamMemberCapabilityDialogData,
@@ -49,10 +48,15 @@ export class TeamMembersComponent {
   userCapabilities = signal<EOGUserCapabilityDTO[]>([]);
   userCapabilityInvitations = signal<EOGUserCapabilityInvitationDTO[]>([]);
   currentUserId = signal<string | undefined>(undefined);
+  isAdmin = signal(false);
   publisherTeamId = '';
   currentUser?: UserDTO;
   capabilityGroups: EntityCapabilityGroupConfig[] = DEFAULT_ENTITY_CAPABILITY_GROUPS;
   canAdjustMembers = computed(() => {
+    if (this.isAdmin()) {
+      return true;
+    }
+
     const userId = this.currentUserId();
     if (!userId) {
       return false;
@@ -84,7 +88,7 @@ export class TeamMembersComponent {
   } {
     const me = this.getCurrentUserCapabilityEntry();
     const groupCaps = me?.groupCapabilities ?? [];
-    const allowAllCapabilities = groupCaps.includes(Capability.OWNER);
+    const allowAllCapabilities = this.isAdmin() || groupCaps.includes(Capability.OWNER);
 
     if (allowAllCapabilities) {
       return { allowAllCapabilities };
@@ -106,7 +110,8 @@ export class TeamMembersComponent {
     private route: ActivatedRoute,
     private service: PublisherTeamService,
     private overlay: BasicOverlayService,
-    private auth: AuthManagementService
+    private auth: AuthManagementService,
+    private roleService: RoleService
   ) { }
 
   removeUserShow(item: EOGUserCapabilityDTO) {
@@ -152,6 +157,15 @@ export class TeamMembersComponent {
     this.auth.userChange().subscribe((info) => {
       this.currentUser = info!;
       this.currentUserId.set(info?.id);
+
+      if (!info) {
+        this.isAdmin.set(false);
+        return;
+      }
+
+      this.roleService.hasRole(['ADMIN']).subscribe((isAdmin) => {
+        this.isAdmin.set(isAdmin);
+      });
     });
 
     this.capabilityGroups =

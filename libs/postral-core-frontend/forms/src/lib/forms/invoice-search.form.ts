@@ -1,7 +1,7 @@
 import { minky, minkyRoot } from '@lotus/front-global/minky/core';
 import {
-  InvoiceAccountDTO,
-  InvoiceAddressDto,
+  SnapshotAccountDTO,
+  SnapshotAddressDTO,
   InvoiceDTO,
   InvoiceSearchDTO,
 } from '@tk-postral/payment-common';

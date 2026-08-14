@@ -1,7 +1,7 @@
 import { Component, computed, input, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FrontGlobalTableModule } from '@lotus/front-global/table';
-import { PaymentItemDto, UNIT_TYPES_MAPPED } from '@tk-postral/payment-common';
+import { PaymentItemDTO, UNIT_TYPES_MAPPED } from '@tk-postral/payment-common';
 import { PostralReportsModule } from '@lotus/postral-core-frontend/reports';
 
 @Component({
@@ -11,7 +11,7 @@ import { PostralReportsModule } from '@lotus/postral-core-frontend/reports';
   styleUrl: './payment-item-list.component.css',
 })
 export class PaymentItemListComponent {
-  items = input<PaymentItemDto[]>([]);
+  items = input<PaymentItemDTO[]>([]);
   currency = input<string>('TRY');
   showSellerPaymentId = input<boolean>(false);
   showComissions = input<boolean>(false);

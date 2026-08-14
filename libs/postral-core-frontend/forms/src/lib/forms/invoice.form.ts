@@ -1,7 +1,7 @@
 import { minky, minkyRoot } from '@lotus/front-global/minky/core';
 import {
-  InvoiceAccountDTO,
-  InvoiceAddressDto,
+  SnapshotAccountDTO,
+  SnapshotAddressDTO,
   InvoiceDTO,
 } from '@tk-postral/payment-common';
 import { InvoiceAddressForm } from './invoice-address.form';
@@ -59,21 +59,21 @@ export class InvoiceForm implements InvoiceDTO {
     inputType: 'sub-object',
     subObjectKey: InvoiceAddressForm,
   })
-  sellerInvoiceAddress?: InvoiceAddressDto | undefined;
+  sellerInvoiceAddress?: SnapshotAddressDTO | undefined;
   @minky({
     inputType: 'sub-object',
     subObjectKey: InvoiceAccountForm,
   })
-  sellerInvoiceAccount?: InvoiceAccountDTO | undefined;
+  sellerInvoiceAccount?: SnapshotAccountDTO | undefined;
   @minky({
     inputType: 'sub-object',
     subObjectKey: InvoiceAddressForm,
   })
-  customerInvoiceAddress?: InvoiceAddressDto | undefined;
+  customerInvoiceAddress?: SnapshotAddressDTO | undefined;
 
   @minky({
     inputType: 'sub-object',
     subObjectKey: InvoiceAccountForm,
   })
-  customerAccount?: InvoiceAccountDTO | undefined;
+  customerAccount?: SnapshotAccountDTO | undefined;
 }

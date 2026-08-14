@@ -19,3 +19,4 @@ export * from './forms/app-comission.form';
 export * from './forms/admin-settings.form';
 export * from './forms/webhook-config.form';
 export * from './forms/payment-channel-config.form';
+export * from './forms/external-platform.form';

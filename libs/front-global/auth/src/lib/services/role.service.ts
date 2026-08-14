@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@lotus-web/environment';
-import { catchError, map, of, onErrorResumeNextWith } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class RoleService {
   constructor(private http: HttpClient) {}
 
@@ -11,7 +13,7 @@ export class RoleService {
     if (!roleList || roleList.length == 0) return of(true);
 
     return this.http.post(`${environment.authUrl}auth/has-role`, roleList).pipe(
-      map((a) => a as any as boolean),
+      map((response) => response as boolean),
       catchError(() => of(false))
     );
   }

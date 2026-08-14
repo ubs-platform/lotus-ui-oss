@@ -7,7 +7,7 @@
 import {
   PaymentTransactionDTO,
   PaymentItemSearchDTO,
-  PaymentItemDto,
+  PaymentItemDTO,
 } from '@tk-postral/payment-common';
 
 import { Injectable } from '@angular/core';
@@ -28,10 +28,10 @@ export class PaymentItemSearchService {
     );
   }
 
-  fetchPaymentItems(filter: PaymentItemSearchDTO): Observable<PaymentItemDto[]> {
+  fetchPaymentItems(filter: PaymentItemSearchDTO): Observable<PaymentItemDTO[]> {
     let urlAltered = this.interceptUrl("");
 
-    return this.http.get<PaymentItemDto[]>(urlAltered, { params: filter as any });
+    return this.http.get<PaymentItemDTO[]>(urlAltered, { params: filter as any });
   }
 
 }

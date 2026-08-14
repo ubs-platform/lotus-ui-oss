@@ -11,7 +11,7 @@ import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import {
   InvoiceDTO,
   PaymentDTO,
-  PaymentItemDto,
+  PaymentItemDTO,
   PaymentTransactionDTO,
   TaxDTO,
 } from '@tk-postral/payment-common';
@@ -28,7 +28,7 @@ import { InvoiceListMinimalComponent } from '@lotus/postral-core-frontend/invoic
 export class TransactionInfoComponent implements OnInit {
   sellerPaymentOrderId: any;
   hasInvoice = signal(false);
-  paymentItems = signal<PaymentItemDto[]>([]);
+  paymentItems = signal<PaymentItemDTO[]>([]);
   invoiceList = signal<InvoiceDTO[]>([]);
   transactionInfo = signal<Optional<PaymentTransactionDTO>>(null);
   paymentInfo = signal<Optional<PaymentDTO>>(null);

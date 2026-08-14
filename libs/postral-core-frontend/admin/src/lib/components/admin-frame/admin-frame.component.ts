@@ -29,6 +29,7 @@ export class AdminFrameComponent {
     new SidebarItem('admin-settings', 'Admin ayarları', fromMaterialSymbol('settings'), this.isNotReallyAdmin),
     new SidebarItem('', 'Entegrasyonlar', undefined, this.isNotReallyAdmin, "category"),
     new SidebarItem('payment-channel-config', 'Ödeme Kanalları', fromMaterialSymbol('credit_card'), this.isNotReallyAdmin),
+    new SidebarItem('external-platforms', 'Harici Platformlar', fromMaterialSymbol('cloud'), this.isNotReallyAdmin),
     new SidebarItem('', 'Raporlar', undefined, this.isNotReallyAdmin, "category"),
     new SidebarItem('report-query', 'Rapor sorguları', fromMaterialSymbol('search'), this.isNotReallyAdmin),
     new SidebarItem('reports', 'Raporlar', fromMaterialSymbol('description'), this.isNotReallyAdmin),

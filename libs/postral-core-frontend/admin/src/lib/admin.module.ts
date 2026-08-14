@@ -19,6 +19,8 @@ import { AdminSettingsEditComponent } from './components/admin-settings-edit/adm
 import { AdminOperationsComponent } from './components/admin-operations/admin-operations.component';
 import { PaymentChannelConfigListComponent } from './components/payment-channel-config-list/payment-channel-config-list.component';
 import { PaymentChannelConfigEditComponent } from './components/payment-channel-config-edit/payment-channel-config-edit.component';
+import { ExternalPlatformListComponent } from './components/external-platform-list/external-platform-list.component';
+import { ExternalPlatformEditComponent } from './components/external-platform-edit/external-platform-edit.component';
 // import { AccountsComponent } from "@lotus/postral-core-frontend/account-user-edit"
 
 @NgModule({
@@ -33,9 +35,12 @@ import { PaymentChannelConfigEditComponent } from './components/payment-channel-
     AccordionComponent,
     AccountUserEditModule,
     ReformDataEditComponent,
-    DataListLayoutModule
+    DataListLayoutModule,
   ],
-  declarations: [HomepageComponent, AdminFrameComponent, ComissionListComponent, ComissionEditComponent, AdminSettingsEditComponent, AdminOperationsComponent, PaymentChannelConfigListComponent, PaymentChannelConfigEditComponent],
+  declarations: [HomepageComponent, AdminFrameComponent, ComissionListComponent, ComissionEditComponent, AdminSettingsEditComponent, AdminOperationsComponent, PaymentChannelConfigListComponent, PaymentChannelConfigEditComponent,
+    ExternalPlatformListComponent, ExternalPlatformEditComponent
+
+  ],
   exports: [HomepageComponent, AdminFrameComponent],
 })
 export class PostralCoreAdminModule { }

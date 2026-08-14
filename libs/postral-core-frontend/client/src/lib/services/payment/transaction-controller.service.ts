@@ -8,7 +8,7 @@ import {
   PaymentInitDTO,
   PaymentDTO,
   PaymentCaptureInfoDTO,
-  PaymentItemDto,
+  PaymentItemDTO,
   TaxDTO,
   PaymentChannelStatusDTO,
   PaymentTransactionSearchPaginationDTO,
@@ -83,10 +83,10 @@ export class TransactionControllerService {
   //   return this.http.get<PaymentDTO>(urlAltered);
   // }
 
-  // fetchItems(id: string): Observable<PaymentItemDto[]> {
+  // fetchItems(id: string): Observable<PaymentItemDTO[]> {
   //   let urlAltered = this.interceptUrl('/:id/item').replace(':id', id + '');
 
-  //   return this.http.get<PaymentItemDto[]>(urlAltered);
+  //   return this.http.get<PaymentItemDTO[]>(urlAltered);
   // }
 
   // fetchTaxes(id: string): Observable<TaxDTO[]> {

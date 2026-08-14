@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentChannelConfigControllerService, PaymentControllerService } from '@lotus/postral-core-frontend/client';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
-import { PaymentChannelConfigDTO, PaymentDTO, PaymentItemDto, TaxDTO } from '@tk-postral/payment-common';
+import { PaymentChannelConfigDTO, PaymentDTO, PaymentItemDTO, TaxDTO } from '@tk-postral/payment-common';
 import { Optional } from '@ubs-platform/crud-base-common/utils';
 import { Observable, Subscription } from 'rxjs';
 @Component({
@@ -18,7 +18,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   paymentId: any;
   //TODO: Sonra Taxlar ve Itemler PaymentDTO içinde zaten geliyorsa, onları kullan.
   paymentInfo = signal<Optional<PaymentDTO>>(null);
-  paymentItems = signal<PaymentItemDto[]>([]);
+  paymentItems = signal<PaymentItemDTO[]>([]);
   taxes = signal<TaxDTO[]>([]);
   paymentStreamSubscription?: Observable<PaymentDTO>;
   statusStream: Subscription | null = null;

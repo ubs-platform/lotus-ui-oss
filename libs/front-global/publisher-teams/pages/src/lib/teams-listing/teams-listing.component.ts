@@ -64,13 +64,13 @@ export class TeamsListingComponent {
               {
                 entityGroup: 'LOTUS_QB',
                 entityName: 'QUESTION_BOOK',
-                capability: 'OWNER',
+                // capability: 'OWNER',
                 capabilities: [Capability.OWNER]
               },
               {
                 entityGroup: 'POSTRAL',
                 entityName: 'ACCOUNT',
-                capability: 'OWNER',
+                // capability: 'OWNER',
                 capabilities: [Capability.OWNER]
               },
             ],

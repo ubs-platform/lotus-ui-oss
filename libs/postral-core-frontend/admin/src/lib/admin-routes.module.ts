@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 // import { AccountsComponent } from "./components/accounts/accounts.component";
 import { AdminFrameComponent } from './components/admin-frame/admin-frame.component';
 import { HomepageComponent } from './components/home-page/homepage.component';
+import { ExternalPlatformListComponent } from './components/external-platform-list/external-platform-list.component';
 import {
   NotFoundPageComponent,
   SuspendedPageComponent,
@@ -22,6 +23,7 @@ import { AdminOperationsComponent } from './components/admin-operations/admin-op
 import { QueryInfoComponent, QueryListComponent, ReportInfoComponent, ReportListComponent } from '@lotus/postral-core-frontend/reports';
 import { PaymentChannelConfigListComponent } from './components/payment-channel-config-list/payment-channel-config-list.component';
 import { PaymentChannelConfigEditComponent } from './components/payment-channel-config-edit/payment-channel-config-edit.component';
+import { ExternalPlatformEditComponent } from './components/external-platform-edit/external-platform-edit.component';
 
 @NgModule({
   imports: [
@@ -43,6 +45,9 @@ import { PaymentChannelConfigEditComponent } from './components/payment-channel-
           { path: "report-query/:id", component: QueryInfoComponent },
           { path: "report-query/:queryId/reports", component: ReportListComponent, data: { admin: true } },
           { path: "reports", component: ReportListComponent, data: { admin: true } },
+          { path: "external-platforms", component: ExternalPlatformListComponent, data: { admin: true } },
+          { path: "external-platforms/create", component: ExternalPlatformEditComponent, data: { admin: true } },
+          { path: "external-platforms/:id", component: ExternalPlatformEditComponent, data: { admin: true } },
           { path: "reports/:id", component: ReportInfoComponent },
           {
             path: 'users',
@@ -63,6 +68,7 @@ import { PaymentChannelConfigEditComponent } from './components/payment-channel-
               import('@lotus/front-global/publisher-teams/pages').then(
                 (m) => m.PagesModule
               ),
+            data: { admin: true },
           },
           {
             path: 'notify',

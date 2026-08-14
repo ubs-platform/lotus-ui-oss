@@ -34,7 +34,39 @@ export class AddressForm extends AccountAddressDto {
   override postalZone = '';
 
   @minky({
-    validators: [new RequiredValidator()],
   })
   override streetName = '';
+
+  @minky({
+  })
+  override buildingNumber = '';
+
+  @minky({
+  })
+  override blockName = '';
+
+  @minky({
+  })
+  override floor = '';
+
+  @minky({
+  })
+  override room = '';
+
+
+  @minky({
+  })
+  override countrySubentityCode = '';
+
+  @minky({
+  })
+  override postbox = '';
+
+  @minky({
+  })
+  override buildingName = '';
+
+  @minky({
+  })
+  override additionalStreetName?: string | undefined;
 }

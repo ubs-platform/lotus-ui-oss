@@ -1,7 +1,7 @@
 import { minky, minkyRoot } from '@lotus/front-global/minky/core';
-import { InvoiceAddressDto } from '@tk-postral/payment-common';
+import { SnapshotAddressDTO } from '@tk-postral/payment-common';
 @minkyRoot()
-export class InvoiceAddressForm extends InvoiceAddressDto {
+export class InvoiceAddressForm extends SnapshotAddressDTO {
   @minky({
     disable: true,
   })

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, signal, computed, model } from '@angular/core';
-import { PaymentItemDto, CreateRefundRequestDTO } from '@tk-postral/payment-common';
+import { PaymentItemDTO, CreateRefundRequestDTO } from '@tk-postral/payment-common';
 import { RefundControllerService } from '@lotus/postral-core-frontend/client';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { Option } from '@lotus/legendary-front/custom-select';
@@ -14,7 +14,7 @@ export class RefundRequestDialogComponent {
 
   visible = model<boolean>(false);
   paymentId = model<string>('');
-  paymentItems = model<PaymentItemDto[]>([]);
+  paymentItems = model<PaymentItemDTO[]>([]);
   visibleChange = new EventEmitter<boolean>();
   onSuccess = new EventEmitter<void>();
 
