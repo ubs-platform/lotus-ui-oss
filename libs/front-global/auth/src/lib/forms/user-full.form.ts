@@ -10,6 +10,7 @@ import {
   minky,
   minkyRoot,
 } from '@lotus/front-global/minky/core';
+import { fetchCountries, fetchLocalities, fetchSubdivisions, listenSubdivisions, listenLocalities } from "@lotus/front-global/cscd-forms";
 
 @minkyRoot({
   fallbackConstruction: () => new UserFullForm(),
@@ -59,7 +60,7 @@ export class UserFullForm implements UserFullDto {
     inputType: 'select',
     widthRatio: '50%',
     selectItems: () => {
-      
+
       return [
         { text: 'male', value: 'M' },
         { text: 'female', value: 'F' },
@@ -92,19 +93,29 @@ export class UserFullForm implements UserFullDto {
 
   @minky({
     widthRatio: '50%',
-    inputType: 'select',
+    inputType: "select",
+    selectItems: (env) => {
+      return fetchCountries(env);
+    }
   })
   country!: string;
 
   @minky({
-    inputType: 'select',
+    inputType: "select",
     widthRatio: '50%',
+    selectItems: (env) => {
+      return listenSubdivisions(env, () => env.state.formValue.country);
+    }
   })
   state!: string;
 
   @minky({
-    inputType: 'select',
+    inputType: "select",
     widthRatio: '50%',
+    selectItems: (env) => {
+      return listenLocalities(env, () => env.state.formValue.country, () => env.state.formValue.state);
+
+    }
   })
   city!: string;
 
@@ -112,6 +123,7 @@ export class UserFullForm implements UserFullDto {
     widthRatio: '50%',
   })
   district!: string;
+
   @minky({
     inputType: 'checkbox',
   })

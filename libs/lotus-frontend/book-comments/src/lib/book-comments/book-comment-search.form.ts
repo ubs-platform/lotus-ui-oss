@@ -43,7 +43,7 @@ export class BookCommentSearchForm
     inputType: 'select',
     selectItems: () => [
       { text: 'Puan', value: 'votes' },
-      { text: 'Oluşturma tarihi', value: 'creationDate' },
+      { text: 'general.creation-date', value: 'creationDate' },
     ],
   })
   sortBy?: 'votes' | 'creationDate' = 'creationDate';

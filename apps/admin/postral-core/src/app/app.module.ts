@@ -20,6 +20,7 @@ import {
 import {
   LANGUAGE_JSON_URL,
   TranslatorRepositoryService,
+  UbsTranslatorNgxModule,
 } from '@ubs-platform/translator-ngx';
 import { EnvironmentController } from '@ubs-platform/translator-core';
 import { FrontGlobaErrorStatusPagesModule } from '@lotus/front-global/error-status-pages';
@@ -79,7 +80,8 @@ registerLocaleData(turkish);
     PostralCoreAdminModule,
     WarningWatermarkComponent,
     CustomSelectComponent,
-    ToggleComponent
+    ToggleComponent,
+    UbsTranslatorNgxModule
 ],
   providers: [
     // { provide: LOCALE_ID, useValue: 'TR-tr' },

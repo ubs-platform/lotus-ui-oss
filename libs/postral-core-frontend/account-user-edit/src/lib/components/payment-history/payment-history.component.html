@@ -13,25 +13,25 @@
       #dataTable
     >
       <!-- <column name="id">
-        <ng-template header> Id </ng-template>
+        <ng-template header content="general.id"></ng-template>
         <ng-template data let-item="item">
           {{ item.id }}
         </ng-template>
       </column> -->
       <column name="paymentDate">
-        <ng-template header> Ödeme Tarihi </ng-template>
+        <ng-template header content="postral.payment.date"></ng-template>
         <ng-template data let-item="item">
           {{ item.createdAt | date : 'short' }}
         </ng-template>
       </column>
       <column name="type">
-        <ng-template header> Ödeme Türü </ng-template>
+        <ng-template header content="postral.payment.type"></ng-template>
         <ng-template data let-item="item">
-          {{ item.type === 'PURCHASE' ? 'Satın Alma' : 'İade' }}
+          {{ (item.type === 'PURCHASE' ? 'postral.payment.type-purchase' : 'postral.payment.type-refund') | translate }}
         </ng-template>
       </column>
       <column name="amount">
-        <ng-template header> Tutar </ng-template>
+        <ng-template header content="postral.amount"></ng-template>
         <ng-template data let-item="item">
           <lib-money-display
             [amount]="item.totalAmount"
@@ -40,7 +40,7 @@
         </ng-template>
       </column>
       <column name="status">
-        <ng-template header> Durum </ng-template>
+        <ng-template header content="general.status"></ng-template>
         <ng-template data let-item="item">
           <!-- {{ item.paymentStatus }} <br />
           {{ item.errorStatus }} -->
@@ -53,28 +53,28 @@
                 : 'gray'
             "
             [label]="
-              item.paymentStatus == 'COMPLETED'
-                ? 'Başarılı'
+              (item.paymentStatus == 'COMPLETED'
+                ? 'postral.payment.status-completed'
                 : (item.paymentStatus == 'WAITING' || item.paymentStatus == 'INITIATED')
-                ? 'Beklemede'
-                : 'Başarısız'
+                ? 'postral.payment.status-waiting'
+                : 'postral.payment.status-failed') | translate
             "
           ></lotus-web-status-badge>
         </ng-template>
       </column>
       <column name="customerId">
-        <ng-template header> Müşteri </ng-template>
+        <ng-template header content="postral.customer"></ng-template>
         <ng-template data let-item="item">
           {{ item.customerAccountName || item.customerId }}
         </ng-template>
       </column>
       <column name="actions">
-        <ng-template header> İşlemler </ng-template>
+        <ng-template header content="general.actions"></ng-template>
         <ng-template data let-item="item">
           <block-button
             buttonClass="secondary"
             (click)="goPaymentInfo(item.id)"
-            stringContent="Detay"
+            stringContent="general.detail"
             iconClass="material-symbols-outlined" iconContent="visibility"
           >
           </block-button>

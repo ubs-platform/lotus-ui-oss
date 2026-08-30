@@ -4,22 +4,22 @@
   <div class="flex flex-column gap-4 flex-grow-1">
     @if (transactionInfo()) {
     <div class="payment-info-section mona-card">
-      <h2 class="mb-2">Ödeme Bilgileri</h2>
+      <h2 class="mb-2">{{ 'postral.payment.info' | translate }}</h2>
       <div class="info-grid gap-3">
         <div class="info-item">
-          <span class="label">Satıcı Sipariş ID:</span>
+          <span class="label">{{ 'postral.seller-order-id' | translate }}:</span>
           <span class="value">{{ transactionInfo()!.id }}</span>
         </div>
         <div class="info-item">
-          <span class="label">Payment ID:</span>
+          <span class="label">{{ 'postral.invoice.payment-id' | translate }}:</span>
           <span class="value">{{ transactionInfo()!.paymentId }}</span>
         </div>
         <div class="info-item">
-          <span class="label">Para Birimi:</span>
+          <span class="label">{{ 'postral.currency' | translate }}:</span>
           <span class="value">{{ transactionInfo()!.currency }}</span>
         </div>
         <div class="info-item">
-          <span class="label">Tutar:</span>
+          <span class="label">{{ 'postral.amount' | translate }}:</span>
           <span class="value">
             <lib-money-display
               [amount]="transactionInfo()!.amount"
@@ -28,12 +28,12 @@
           </span>
         </div>
         <div class="info-item">
-          <span class="label">İşlem Tipi:</span>
+          <span class="label">{{ 'postral.transaction.type' | translate }}:</span>
           <span class="value">{{ transactionInfo()!.transactionType }}</span>
         </div>
 
         <div class="info-item">
-          <span class="label">Alıcı hesap</span>
+          <span class="label">{{ 'postral.transaction.target-account' | translate }}:</span>
           <span class="value">
             <!-- 
 export type SellerPaymentOrderType = "CREDIT_TO_SELLER" | "DEBIT_FROM_SELLER";
@@ -48,7 +48,7 @@ export type SellerPaymentOrderType = "CREDIT_TO_SELLER" | "DEBIT_FROM_SELLER";
           </span>
         </div>
         <div class="info-item">
-          <span class="label">Gönderici hesap</span>
+          <span class="label">{{ 'postral.transaction.source-account' | translate }}:</span>
           <span class="value">
             {{
               transactionInfo()!.transactionType == 'CREDIT_TO_SELLER'
@@ -61,7 +61,7 @@ export type SellerPaymentOrderType = "CREDIT_TO_SELLER" | "DEBIT_FROM_SELLER";
     </div>
     } @if (paymentItems().length > 0) {
     <div class="payment-items-section flex-grow-1 mona-card">
-      <h2 class="mb-2">Ödeme Kalemleri</h2>
+      <h2 class="mb-2">{{ 'postral.payment.items' | translate }}</h2>
       <lib-payment-item-list
         [items]="paymentItems()"
         [showSellerPaymentId]="true"
@@ -72,7 +72,7 @@ export type SellerPaymentOrderType = "CREDIT_TO_SELLER" | "DEBIT_FROM_SELLER";
   </div>
   <div class="flex flex-column gap-4 side-minimal">
     <div class="payment-info-section mona-card">
-      <h2 class="mb-2">Faturalar</h2>
+      <h2 class="mb-2">{{ 'postral.menu.invoices' | translate }}</h2>
       <div class="info-grid flex flex-column gap-3">
         <lib-invoice-list-minimal
           [sellerPaymentOrderId]="sellerPaymentOrderId"
@@ -80,14 +80,13 @@ export type SellerPaymentOrderType = "CREDIT_TO_SELLER" | "DEBIT_FROM_SELLER";
         ></lib-invoice-list-minimal>
         @if (invoiceHasBeenFinalized()) {
         <div class="text-sm text-muted">
-          Bir fatura zaten kesinleştirilmiş. Yeni bir fatura oluşturmak için
-          önce iade işlemi yapılmalıdır
+          {{ 'postral.invoice.already-finalized-warning' | translate }}
         </div>
         } @else {
         <block-button
           (click)="createInvoice()"
           [cover]="true"
-          stringContent="Yeni fatura oluştur"
+          stringContent="postral.invoice.create-new"
           iconClass="material-symbols-outlined" iconContent="add"
         ></block-button>
         }
@@ -95,19 +94,19 @@ export type SellerPaymentOrderType = "CREDIT_TO_SELLER" | "DEBIT_FROM_SELLER";
     </div>
 
     <div class="payment-info-section mona-card">
-      <h2 class="mb-2">İşlemler</h2>
+      <h2 class="mb-2">{{ 'general.actions' | translate }}</h2>
       <div class="info-grid flex flex-column gap-3">
         @if (paymentInfo()?.openPayment && paymentInfo()?.paymentStatus === 'WAITING') {
         <block-button
           (click)="confirmOpenPayment()"
           [cover]="true"
-          stringContent="Açık Faturayı Onayla"
+          stringContent="postral.invoice.confirm-open"
           iconClass="material-symbols-outlined" iconContent="check"
         ></block-button>
         }
         <block-button
           [cover]="true"
-          stringContent="İtiraz Et"
+          stringContent="postral.transaction.dispute"
           iconClass="material-symbols-outlined" iconContent="warning"
         ></block-button>
       </div>

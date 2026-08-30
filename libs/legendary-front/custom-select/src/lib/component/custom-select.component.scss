@@ -10,25 +10,25 @@
     border-radius: var(--border-radius);
     border: 1px solid #ced4da;
     &.error {
-      border-color: #FF0000 !important;
+      border-color: #ff0000 !important;
     }
-    .text{
+    .text {
       display: inline-block;
-      padding: .4rem 0px .25rem .5rem;
+      padding: 0.4rem 0px 0.25rem 0.5rem;
       font-size: 16px;
       line-height: 22px;
       overflow: hidden;
       // width: calc(100% - 100px);
     }
-    .expand-button{
+    .expand-button {
       position: relative;
       margin: 9px 10px 9px 10px;
       padding: 3px;
       display: inline-block;
       width: 20px;
       height: 20px;
-      background-color: #EECA17;
-      img{
+      background-color: #eeca17;
+      img {
         position: absolute;
         left: 50%;
         top: 50%;
@@ -37,26 +37,26 @@
       }
     }
   }
-  .items{
+  .items {
     display: none;
   }
   &.disabled {
-    opacity: .8;
+    opacity: 0.8;
     filter: grayscale(1);
   }
 }
 
-.costum-selection.expanded{
+.costum-selection.expanded {
   // box-shadow:  0px 1px 4px 0px #0000004D;
   z-index: 2;
-
+  width: 100%;
   .head {
     border-color: var(--border-color);
     &.error {
-      border-color: #FF0000 !important;
+      border-color: #ff0000 !important;
     }
   }
-  .items{
+  .items {
     display: block;
     border: 1px solid var(--border-color);
     background-color: var(--bg-surface);
@@ -65,7 +65,7 @@
     // box-shadow:  0px 1px 4px 0px #0000004D;
     max-height: 300px;
     overflow-y: auto;
-    .item{
+    .item {
       padding: 8px 15px;
 
       // border: 1px solid var(--border-color);
@@ -73,20 +73,50 @@
       background-color: var(--bg-surface);
       font-size: 16px;
       &.error {
-        border-color: #FF0000 !important;
+        border-color: #ff0000 !important;
       }
     }
-    .item.hidden{
+    .item.hidden {
       display: none;
     }
 
-    .item:hover{
+    .item:hover,
+    .item.active {
       background-color: var(--primary-color);
       color: white;
     }
-    *:not(.hidden).item:last-of-type{
-      border-radius: 0px 0px var(--border-radius) var(--border-radius) ;
+    .item:focus {
+      outline: none;
+    }
+    *:not(.hidden).item:last-of-type {
+      border-radius: 0px 0px var(--border-radius) var(--border-radius);
       border-bottom: 1px solid var(--primary-color);
+    }
+  }
+}
+
+.search-input {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 10px;
+  border: 1px solid var(--border-color);
+  border-bottom: none;
+  background-color: var(--bg-surface);
+  font-size: 16px;
+  input {
+    padding: 8px 15px;
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: var(--bg-surface);
+    color: var(--fg) !important;
+    // amk primengsi
+    margin-bottom: 0px !important;
+    &:focus {
+      outline: none;
     }
   }
 }

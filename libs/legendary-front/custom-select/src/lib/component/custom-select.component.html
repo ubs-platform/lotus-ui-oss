@@ -4,14 +4,32 @@
 
 <ng-template #dropdownTemplate>
   <div class="costum-selection expanded">
+    <div class="search-input" *ngIf="searchable()">
+      <lib-icon
+        iconClass="material-symbols-outlined"
+        iconContent="search"
+      ></lib-icon>
+      <input
+        #searchInput
+        type="text"
+        placeholder="{{ searchPlaceholder() | translate }}"
+        [value]="searchText()"
+        (input)="onSearchInput($event)"
+        (keydown)="onListKeyDown($event)"
+      />
+    </div>
     <div class="items">
-      @for (option of options(); track trackByValue($index, option)) { @if
-      (!isSelected(option.value) || !hideSelectedItem()) {
+      @for (option of visibleOptions(); track trackByValue($index, option); let
+      i = $index) {
       <div
         class="item"
+        tabindex="-1"
         [class.error]="error()"
+        [class.active]="i === activeIndex()"
         [attr.value]="option.value"
         (click)="selectVal(option)"
+        (mouseenter)="setActiveIndex(i)"
+        (keydown)="onListKeyDown($event)"
       >
         <ng-container
           *ngTemplateOutlet="
@@ -21,7 +39,7 @@
         >
         </ng-container>
       </div>
-      } }
+      }
     </div>
   </div>
 </ng-template>
@@ -35,7 +53,7 @@
       (click)="toggleOptionsShow(); handleElementClick()"
     >
       <div class="text">
-        {{ displayText() }}
+        {{ displayText() | translate }}
         <ng-container
           *ngTemplateOutlet="
             optionValuesTemplate() || defaultOptionText;
@@ -45,7 +63,9 @@
         </ng-container>
       </div>
       <div class="flex align-items-center justify-content-center pr-1">
-        <i class="material-symbols-outlined" style="height: 0; line-height: 0">expand_more</i>
+        <i class="material-symbols-outlined" style="height: 0; line-height: 0"
+          >expand_more</i
+        >
       </div>
     </div>
   </div>

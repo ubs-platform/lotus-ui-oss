@@ -4,7 +4,7 @@
       buttonClass="primary"
       style="margin-bottom: 10px"
       (click)="createItem()"
-      stringContent="Yeni Ürün Oluştur"
+      stringContent="postral.menu.items.new"
       iconClass="material-symbols-outlined" iconContent="add"
     >
     </block-button>
@@ -17,20 +17,20 @@
       #table
     >
       <column name="id">
-        <ng-template header> Id </ng-template>
+        <ng-template header content="general.id"></ng-template>
         <ng-template data let-item="item">
           {{ item.id }}
         </ng-template>
       </column>
       <column name="name">
-        <ng-template header> Ürün İsmi </ng-template>
+        <ng-template header content="postral.item.name"></ng-template>
         <ng-template data let-item="item">
           {{ item.name }}
         </ng-template>
       </column>
 
       <column name="actions">
-        <ng-template header> Aksiyonlar </ng-template>
+        <ng-template header content="general.actions"></ng-template>
         <ng-template data let-item="item">
           <div class="action-buttons">
             <block-button
@@ -39,7 +39,8 @@
               buttonClass="border"
               iconClass="material-symbols-outlined"
               iconContent="info"
-              >Ürün bilgileri</block-button
+              stringContent="postral.menu.items.info"
+              ></block-button
             >
             <block-button
               [hasContent]="false"
@@ -48,7 +49,8 @@
               buttonClass="bg-danger"
               iconClass="material-symbols-outlined"
               iconContent="close"
-              >Ürünü Sil</block-button
+              stringContent="general.delete"
+              ></block-button
             >
           </div>
         </ng-template>

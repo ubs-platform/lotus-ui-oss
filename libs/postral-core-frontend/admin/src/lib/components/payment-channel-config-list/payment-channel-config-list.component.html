@@ -3,6 +3,14 @@
     <button class="btn btn-primary" (click)="create()">
       Yeni Kanal Ekle
     </button>
+    <block-button
+      buttonClass="primary"
+      (click)="create()"
+      stringContent="postral.payment-channel.add"
+      iconClass="material-symbols-outlined"
+      iconContent="add"
+    >
+    </block-button>
   </ng-template>
   <ng-container content>
     <searchable-data-table
@@ -12,34 +20,41 @@
     >
       <column name="channelId">
         <ng-template header>Kanal ID</ng-template>
+        <ng-template header content="postral.payment-channel.channel-id"></ng-template>
         <ng-template data let-item="item">{{ item.channelId }}</ng-template>
       </column>
       <column name="name">
         <ng-template header>Görünen Ad</ng-template>
+        <ng-template header content="postral.payment-channel.display-name"></ng-template>
         <ng-template data let-item="item">{{ item.name }}</ng-template>
       </column>
       <column name="enabled">
         <ng-template header>Aktif</ng-template>
+        <ng-template header content="general.active"></ng-template>
         <ng-template data let-item="item">
           <span [class]="item.enabled ? 'badge badge-success' : 'badge badge-danger'">
             {{ item.enabled ? 'Evet' : 'Hayır' }}
+            {{ (item.enabled ? 'yes' : 'no') | translate }}
           </span>
         </ng-template>
       </column>
       <column name="devOnly">
         <ng-template header>Sadece Dev</ng-template>
+        <ng-template header content="postral.payment-channel.dev-only"></ng-template>
         <ng-template data let-item="item">
           <span [class]="item.devOnly ? 'badge badge-warning' : ''">
             {{ item.devOnly ? 'Evet' : '-' }}
+            {{ item.devOnly ? ('yes' | translate) : '-' }}
           </span>
         </ng-template>
       </column>
       <column name="createdAt">
         <ng-template header>Oluşturulma</ng-template>
+        <ng-template header content="general.creation-date"></ng-template>
         <ng-template data let-item="item">{{ item.createdAt | date: 'short' }}</ng-template>
       </column>
       <column name="actions">
-        <ng-template header>Aksiyonlar</ng-template>
+        <ng-template header content="general.actions"></ng-template>
         <ng-template data let-item="item">
           <div class="action-buttons">
             <block-button
@@ -47,14 +62,16 @@
               buttonClass="bg-danger"
               iconClass="material-symbols-outlined"
               iconContent="delete"
-              >Sil</block-button
+              stringContent="general.delete"
+              ></block-button
             >
             <block-button
               (click)="edit(item)"
               buttonClass="primary"
               iconClass="material-symbols-outlined"
               iconContent="edit"
-              >Düzenle</block-button
+              stringContent="general.edit.verb"
+              ></block-button
             >
           </div>
         </ng-template>

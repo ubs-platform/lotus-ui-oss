@@ -68,7 +68,7 @@ import { ExternalPlatformEditComponent } from './components/external-platform-ed
               import('@lotus/front-global/publisher-teams/pages').then(
                 (m) => m.PagesModule
               ),
-            data: { admin: true },
+            data: { admin: true, showLotusTrustTeam: false },
           },
           {
             path: 'notify',

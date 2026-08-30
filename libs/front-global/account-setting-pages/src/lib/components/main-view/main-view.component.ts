@@ -20,8 +20,8 @@ export class MainViewComponent implements OnInit {
   ngOnInit(): void {
     this.menuItems = [
       new SidebarItem('thumb-photo', 'Profil fotoğrafı', fromMaterialSymbol('image')),
-      new SidebarItem('information', 'Hesap bilgileri', fromMaterialSymbol('person')),
-      new SidebarItem('security', 'Güvenlik', fromMaterialSymbol('lock')),
+      new SidebarItem('information', 'general.account.info', fromMaterialSymbol('person')),
+      new SidebarItem('security', 'general.security', fromMaterialSymbol('lock')),
     ];
   }
 

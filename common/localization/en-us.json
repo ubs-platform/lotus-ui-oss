@@ -140,7 +140,12 @@
       "privacy": "Privacy",
       "terms-of-use": "Terms of use",
       "need-to-login-to-show-page": "You need to log in to view this page.",
-      "account-activated": "Welcome back. Your account has been activated and you can log in."
+      "account-activated": "Welcome back. Your account has been activated and you can log in.",
+      "santral": "UBS Platform Santral",
+      "user.active": "Active",
+      "user.passive": "Inactive",
+      "user.suspended": "Suspended",
+      "social.options": "Social options"
     }
   },
   {
@@ -217,21 +222,19 @@
       "status": "Status",
       "edit": "Edit",
       "suspendReason": "Suspend Reason",
-      "no-form-instructions": "Form talimatı yok",
-      "loading": "Yükleniyor..."
+      "no-form-instructions": "No form instructions",
+      "loading": "Loading...",
+      "type-to-search": "Type to search...",
+      "search": "Search",
+      "searching": "Searching...",
+      "no-results": "No results found",
+      "no-results-long": "No results found for your search criteria. Please change your search criteria or perform a more general search."
     }
   },
   {
     "prefix": "users.errors",
     "stringMap": {
       "fail-authentication": "User is not found or password does not match"
-    }
-  },
-  {
-    "prefix": "admin.general",
-    "stringMap": {
-      "need-admin": "To use the central, you must log in as an admin. You can log in using the button on the top right.",
-      "first": "'Kyle Broflovski' is the admin user added for initial startup. You can find the login information from the console logs at first startup. If you can't see, clean the users document in the ubsusers database on MongoDB (after a backup) and then, run UBS Users. Then upload your backup"
     }
   },
   {
@@ -307,13 +310,73 @@
     }
   },
   {
+    "prefix": "postral.menu",
+    "stringMap": {
+      "payment-history": "Payment History",
+      "payment-and-sales": "Payments and Sales",
+      "addresses": "Addresses",
+      "addresses.new": "New Address",
+      "accounts": "Payment Accounts",
+      "accounts.new": "New Payment Account",
+      "taxes": "Taxes",
+      "taxes.new": "Create New Tax",
+      "items": "Items",
+      "items.new": "Create New Item",
+      "payment-records": "Payment Records",
+      "account-management": "Account Management",
+      "sale-simulation": "Sale Simulation",
+      "seller-orders": "Seller Orders",
+      "refund-requests": "Refund Requests",
+      "refund-detail": "Refund Detail",
+      "invoices": "Invoices",
+      "reports": "Reports",
+      "report-queries": "Report Queries",
+      "all-reports": "All Reports",
+      "integrations": "Integrations",
+      "webhook": "Webhook",
+      "application-commissions": "Application Commissions",
+      "external-platforms": "External Platforms",
+      "admin-actions": "Admin Actions",
+      "admin-settings": "Admin Settings",
+      "payment-channels": "Payment Channels"
+    }
+  },
+  {
     "prefix": "postral",
     "stringMap": {
+      "sale-settings.saved": "Sale settings have been saved.",
+      "sale-settings.not-saved": "Sale settings could not be saved.",
+      "address.saved": "Address information has been saved.",
+      "address.not-saved": "Address information could not be saved.",
+      "menu.account-management": "Account Management",
+      "menu.sale-simulation": "Sale Simulation",
+      "menu.seller-orders": "Seller Orders",
+      "menu.refund-requests": "Refund Requests",
+      "menu.refund-detail": "Refund Detail",
+      "menu.invoices": "Invoices",
+      "menu.reports": "Reports",
+      "menu.report-queries": "Report Queries",
+      "menu.all-reports": "All Reports",
+      "menu.integrations": "Integrations",
+      "menu.webhook": "Webhook",
       "demo-server-warning": "DO NOT USE your Tetakent account",
       "demo-server-warning-long": "This Postral Core instance is prepared for demo purposes and is not suitable for production use. Your data will be regularly deleted.",
-      "billing-dates": "Faturalama günleri (2-28 arası)",
+      "billing-dates": "Billing dates (between 2-28 of the month)",
       "account-information-updated-su": "Account information updated successfully.",
-      "latest-prices": "Latest prices:"
+      "latest-prices": "Latest prices:",
+      "address": "Address",
+      "postal-code": "Postal Code",
+      "account-name": "Account Name",
+      "national-id": "National ID",
+      "tax-number": "Tax Number",
+      "extra-notes": "Extra notes",
+      "currency": "Currency",
+      "total-amount": "Total Amount",
+      "total-tax": "Total Tax",
+      "customer-account": "Customer Account",
+      "amount": "Amount",
+      "seller-order-id": "Seller Order ID",
+      "customer": "Customer"
     }
   },
   {
@@ -341,6 +404,221 @@
     }
   },
   {
+    "prefix": "postral.reports",
+    "stringMap": {
+      "report-type": "Report Type",
+      "query-name": "Query Name",
+      "date-grouping": "Date Grouping",
+      "period": "Period",
+      "payment-count": "Payment Count",
+      "total-sale-amount": "Total Sale",
+      "total-refund-amount": "Total Refund",
+      "net-sale-amount": "Net Sale",
+      "net-tax-amount": "Net Tax",
+      "net-revenue": "Net Revenue",
+      "created-or-updated": "Creation / Last update",
+      "digestion-status": "Processing Status",
+      "report-info": "Report Information",
+      "report-id": "Report ID",
+      "account": "Account",
+      "currency": "Currency",
+      "archived": "Archived",
+      "active": "Active",
+      "created-at": "Created At",
+      "last-digested-at": "Last Digested At",
+      "summary": "Summary",
+      "total-sale-tax-amount": "Total Sale Tax",
+      "total-refund-tax-amount": "Total Refund Tax",
+      "net-revenue-without-expense": "Net revenue without expenses",
+      "expense": "Expense",
+      "expenses": "Expenses",
+      "tax-groups": "Tax Groups",
+      "amount": "Amount",
+      "actions": "Actions",
+      "reconstruct-report": "Reconstruct report",
+      "report-not-found": "Report not found",
+      "show-archived": "Show Archived",
+      "hide-archived": "Hide Archived",
+      "reports-of-query": "Reports of {name}",
+      "account-name": "Account name",
+      "report-details": "Report Details"
+    }
+  },
+  {
+    "prefix": "postral.invoice",
+    "stringMap": {
+      "id": "Invoice ID",
+      "info": "Invoice Information",
+      "payment-id": "Payment ID",
+      "finalized": "Finalized",
+      "not-created": "Not Created",
+      "draft": "Draft",
+      "seller-payment-order-id": "Seller Payment Order ID",
+      "uploaded-by-user-id": "Uploaded By User ID",
+      "notes": "Notes",
+      "date": "Invoice Date",
+      "number": "Invoice Number",
+      "customer-info": "Customer Info",
+      "seller-info": "Seller Info",
+      "download-file": "Download invoice file",
+      "download-ubl": "Download UBL XML",
+      "upload-file": "Upload Invoice File",
+      "update-file": "Update Invoice File",
+      "finalize": "Finalize invoice",
+      "delete": "Delete invoice",
+      "finalized-warning": "Files cannot be uploaded or deleted on a finalized invoice. If the invoice needs to be changed, it must be refunded and re-processed.",
+      "not-found": "Invoice not found",
+      "already-finalized-warning": "An invoice is already finalized. To create a new invoice, a refund must be performed first",
+      "create-new": "Create new invoice",
+      "confirm-open": "Confirm Open Invoice",
+      "upload-success": "Invoice uploaded successfully.",
+      "finalize-confirm-title": "Finalize Invoice",
+      "finalize-confirm-message": "Are you sure you want to finalize this invoice? This action cannot be undone.",
+      "finalized-success": "Invoice finalized",
+      "delete-confirm-title": "Delete Invoice",
+      "delete-confirm-message": "Are you sure you want to delete this invoice?",
+      "deleted-success": "Invoice deleted",
+      "create-confirm-title": "Create Invoice",
+      "create-confirm-message": "This will create an invoice for the current transaction. Are you sure you want to proceed?",
+      "created-success": "Invoice created successfully.",
+      "confirm-open-title": "Confirm Open Invoice",
+      "confirm-open-message": "Are you sure you want to confirm this payment as completed? This action cannot be undone.",
+      "confirm-open-success": "Open invoice confirmed successfully and payment completed."
+    }
+  },
+  {
+    "prefix": "postral.payment",
+    "stringMap": {
+      "info": "Payment Information",
+      "items": "Payment Items",
+      "date": "Payment Date",
+      "type": "Payment Type",
+      "type-purchase": "Purchase",
+      "type-refund": "Refund",
+      "status-completed": "Completed",
+      "status-waiting": "Pending",
+      "status-failed": "Failed"
+    }
+  },
+  {
+    "prefix": "postral.item",
+    "stringMap": {
+      "name": "Item Name"
+    }
+  },
+  {
+    "prefix": "postral.payment-item",
+    "stringMap": {
+      "quantity": "Quantity",
+      "item": "Item",
+      "unit-price": "Unit Price",
+      "total": "Total",
+      "tax-untax": "Tax / Untaxed",
+      "commission-rate": "Commission Rate",
+      "commission-amount": "Commission Amount"
+    }
+  },
+  {
+    "prefix": "postral.tax",
+    "stringMap": {
+      "name": "Tax Name",
+      "rates": "Tax Rates",
+      "info": "Tax Information",
+      "amount": "Tax Amount",
+      "untax-amount": "Untaxed Amount"
+    }
+  },
+  {
+    "prefix": "postral.transaction",
+    "stringMap": {
+      "type": "Transaction Type",
+      "target-account": "Target Account",
+      "source-account": "Source Account",
+      "dispute": "Dispute",
+      "not-found": "Transaction information not found."
+    }
+  },
+  {
+    "prefix": "postral.refund",
+    "stringMap": {
+      "start": "Start refund"
+    }
+  },
+  {
+    "prefix": "postral.seller-orders",
+    "stringMap": {
+      "amount": "Amount",
+      "taxAmount": "Tax Amount",
+      "invoiceCount": "Invoice Count",
+      "status": "Status",
+      "sourceAccountId": "Source Account",
+      "transactionType": "Transaction Type",
+      "targetAccountId": "Target Account"
+    }
+  },
+  {
+    "prefix": "postral.payment-channel",
+    "stringMap": {
+      "add": "Add New Channel",
+      "channel-id": "Channel ID",
+      "display-name": "Display Name",
+      "dev-only": "Dev Only"
+    }
+  },
+  {
+    "prefix": "postral.external-platform",
+    "stringMap": {
+      "add": "Add External Platform",
+      "platform-name": "Platform Name",
+      "code": "Code"
+    }
+  },
+  {
+    "prefix": "postral.commission",
+    "stringMap": {
+      "add": "Add New Commission",
+      "external-platform": "External Platform",
+      "seller-account": "Seller Account",
+      "item-class": "Item Class",
+      "default-sample": "Postral Sample"
+    }
+  },
+  {
+    "prefix": "postral.address",
+    "stringMap": {
+      "create-new": "Create New Address",
+      "name": "Address Name",
+      "info": "Address Information",
+      "delete": "Delete Address"
+    }
+  },
+  {
+    "prefix": "postral.account",
+    "stringMap": {
+      "create-new": "Create New Account",
+      "name": "Account Name",
+      "tckn-vkn": "National ID / Tax ID",
+      "type": "Account Type",
+      "type-individual": "Individual",
+      "type-corporate": "Corporate",
+      "deactivate": "Deactivate Account"
+    }
+  },
+  {
+    "prefix": "postral.currencies",
+    "stringMap": {
+      "USD": "US Dollars ($)",
+      "EUR": "Euro (€)",
+      "TRY": "Turkish Lira (₺)"
+    }
+  },
+  {
+    "prefix": "postral.view",
+    "stringMap": {
+      "precision.4": "Four-digit precision"
+    }
+  },
+  {
     "prefix": "capability.item",
     "stringMap": {
       "EOG_ADJUST_CAPABILITIES": "Can adjust the team's capabilities",
@@ -361,6 +639,80 @@
       "POSTRAL/ADDRESS": "Address",
       "POSTRAL/TAX": "Tax",
       "POSTRAL/ITEM": "Item"
+    }
+  },
+  {
+    "prefix": "general",
+    "stringMap": {
+      "_": "General",
+      "id": "ID",
+      "database-id": "Database ID",
+      "name": "Name",
+      "status": "Status",
+      "active": "Active",
+      "default": "Default",
+      "home": "Home",
+      "social-media": "Social Media",
+      "all-rights-reserved": "All rights reserved",
+      "owner-of-added-data": "Owner of added data",
+      "personal-account": "Personal account",
+      "about": "About",
+      "team.new": "New Team",
+      "team.info": "Team Information",
+      "team.members": "Team Members",
+      "teams": "Teams",
+      "teams.invitations": "Team invitations",
+      "invitations.for-me": "Invitations for me",
+      "members": "Members",
+      "member.edit-authority": "Edit member authorities",
+      "member.authority.group": "Team authorities",
+      "member.authority.entity": "Entity authorities",
+      "trust-team.revoke": "Revoke team trust",
+      "trust-team.grant": "Grant team trust",
+      "account.info": "Account information",
+      "security": "Security",
+      "select.verb": "Select",
+      "email-primary.change.instruction": "Enter the code sent to your new email address within the remaining time.",
+      "email-primary.change": "Change primary email",
+      "password.change": "Change password",
+      "phone.number": "Phone Number",
+      "2fa": "Two-Factor Authentication",
+      "WIP": "We are working on this feature. We will notify you.",
+      "change": "Change",
+      "users": "Users",
+      "actions": "Actions",
+      "edit.verb": "Edit",
+      "delete": "Delete",
+      "remove": "Remove",
+      "save": "Save",
+      "update-date.verb": "Update date",
+      "update-date": "Update date",
+      "creation-date": "Creation date",
+      "createdAt": "Created At",
+      "update": "Update",
+      "next": "Next",
+      "previous": "Previous",
+      "success": "Success",
+      "error": "Error",
+      "error-occurred": "An error occurred",
+      "apply": "Apply",
+      "filter.options": "Filter Options",
+      "filter.title": "Filter",
+      "filter.clear": "Clear Filter",
+      "ok": "OK",
+      "cancel": "Cancel",
+      "all": "All",
+      "detail": "Detail",
+      "details": "Details",
+      "reject": "Reject",
+      "approve": "Approve",
+      "review": "Review"
+    }
+  },
+  {
+    "prefix": "payment",
+    "stringMap": {
+      "error.receive": "Payment could not be received"
     }
   }
 ]

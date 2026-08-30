@@ -4,14 +4,14 @@
   <div class="flex flex-column gap-4 flex-grow-1">
     @if (paymentInfo()) {
     <div class="payment-info-section mona-card">
-      <h2 class="mb-2">Ödeme Bilgileri</h2>
+      <h2 class="mb-2">{{ 'postral.payment.info' | translate }}</h2>
       <div class="info-grid gap-3">
         <div class="info-item">
-          <span class="label">Ödeme ID:</span>
+          <span class="label">{{ 'postral.invoice.payment-id' | translate }}:</span>
           <span class="value">{{ paymentInfo()!.id }}</span>
         </div>
         <div class="info-item">
-          <span class="label">Para Birimi:</span>
+          <span class="label">{{ 'postral.currency' | translate }}:</span>
           <span class="value">{{ paymentInfo()!.currency }}</span>
         </div>
         <!-- <div class="info-item">
@@ -19,12 +19,12 @@
         <span class="value">{{ paymentInfo()!.saleMode }}</span>
       </div> -->
         <div class="info-item">
-          <span class="label">Tip:</span>
+          <span class="label">{{ 'general.type' | translate }}:</span>
           <span class="value">{{ paymentInfo()!.type }}</span>
         </div>
         @if (paymentInfo()!.customerAccountId) {
         <div class="info-item">
-          <span class="label">Müşteri Hesap:</span>
+          <span class="label">{{ 'postral.customer-account' | translate }}:</span>
           <span class="value">{{ paymentInfo()!.customerAccountName || paymentInfo()!.customerAccountId }}</span>
         </div>
         }
@@ -32,7 +32,7 @@
     </div>
     } @if (paymentItems().length > 0) {
     <div class="payment-items-section flex-grow-1 mona-card">
-      <h2 class="mb-2">Ödeme Kalemleri</h2>
+      <h2 class="mb-2">{{ 'postral.payment.items' | translate }}</h2>
       <lib-payment-item-list
         [showSellerPaymentId]="true"
         [items]="paymentItems()"
@@ -41,10 +41,10 @@
     </div>
     } @if (taxes().length > 0) {
     <div class="taxes-section mona-card">
-      <h3 class="mb-2">Vergiler</h3>
+      <h3 class="mb-2">{{ 'postral.menu.taxes' | translate }}</h3>
       <ubs-table-ngx [cover]="true" [items]="taxes()">
         <column name="taxInfo">
-          <ng-template header> Vergi Bilgisi </ng-template>
+          <ng-template header content="postral.tax.info"></ng-template>
           <ng-template data let-tax="item">
             {{ tax.taxName || 'Vergi' }} <br />
             <span class="text-sm text-muted"> Oran: {{ tax.percent }} </span>
@@ -52,7 +52,7 @@
         </column>
 
         <column name="taxAmount">
-          <ng-template header> Vergi tutarı </ng-template>
+          <ng-template header content="postral.tax.amount"></ng-template>
           <ng-template data let-tax="item">
             <lib-money-display
               [amount]="tax.taxAmount"
@@ -62,7 +62,7 @@
         </column>
 
         <column name="untaxAmount">
-          <ng-template header> Vergisiz tutar </ng-template>
+          <ng-template header content="postral.tax.untax-amount"></ng-template>
           <ng-template data let-tax="item">
             <lib-money-display
               [amount]="tax.untaxAmount"
@@ -78,7 +78,7 @@
         class="flex flex-row justify-content-between align-items-center gap-4"
       >
         <div class="summary-item">
-          <span class="label">Toplam Tutar:</span>
+          <span class="label">{{ 'postral.total-amount' | translate }}:</span>
           <span class="value total">
             <lib-money-display
               [amount]="paymentInfo()!.totalAmount"
@@ -87,7 +87,7 @@
           </span>
         </div>
         <div class="summary-item">
-          <span class="label">Toplam Vergi:</span>
+          <span class="label">{{ 'postral.total-tax' | translate }}:</span>
           <span class="value">
             <lib-money-display
               [amount]="paymentInfo()!.taxAmount"
@@ -103,18 +103,18 @@
 
   <div class="flex flex-column gap-4 side-minimal">
     <div class="mona-card">
-      <h2 class="mb-2">Faturalar</h2>
+      <h2 class="mb-2">{{ 'postral.menu.invoices' | translate }}</h2>
       <lib-invoice-list-minimal
         [paymentId]="paymentInfo()?.id"
         [billingStatusFilter]="'true'"
       ></lib-invoice-list-minimal>
     </div>
     <div class="payment-info-section mona-card">
-      <h2 class="mb-2">İşlemler</h2>
+      <h2 class="mb-2">{{ 'general.actions' | translate }}</h2>
       <div class="info-grid gap-3">
         @if (paymentInfo()?.paymentStatus === 'COMPLETED') {
         <block-button
-          stringContent="İade başlat"
+          stringContent="postral.refund.start"
           iconClass="material-symbols-outlined" iconContent="undo"
           (click)="showRefundDialog()"
         ></block-button>

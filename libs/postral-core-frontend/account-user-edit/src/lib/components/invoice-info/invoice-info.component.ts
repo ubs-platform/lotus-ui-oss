@@ -56,7 +56,7 @@ export class InvoiceInfoComponent implements OnInit {
           this.hasInvoiceFile.set(exists);
         },
         error: (err) => {
-          this.basicOverlay.alert('Hata oluştu', err, 'error');
+          this.basicOverlay.alert('general.error-occurred', err, 'error');
         },
       });
 
@@ -77,7 +77,7 @@ export class InvoiceInfoComponent implements OnInit {
                 this.items.set(items);
               },
               error: (err) => {
-                this.basicOverlay.alert('Hata oluştu', err, 'error');
+                this.basicOverlay.alert('general.error-occurred', err, 'error');
               },
             });
 
@@ -85,8 +85,8 @@ export class InvoiceInfoComponent implements OnInit {
         },
         error: (err) => {
           this.loading.set(false);
-          this.error.set(err?.message || 'Fatura bilgisi alınamadı');
-          this.basicOverlay.alert('Hata oluştu', err, 'error');
+          this.error.set(err?.message || 'postral.invoice.not-found');
+          this.basicOverlay.alert('general.error-occurred', err, 'error');
         },
       });
     });
@@ -94,7 +94,7 @@ export class InvoiceInfoComponent implements OnInit {
 
   downloadInvoiceFile() {
     if (!this.invoiceId) {
-      this.basicOverlay.alert('Hata', 'Fatura bilgisi bulunamadı.', 'error');
+      this.basicOverlay.alert('general.error', 'postral.invoice.not-found', 'error');
       return;
     }
 
@@ -104,7 +104,7 @@ export class InvoiceInfoComponent implements OnInit {
 
   importInvoiceFile() {
     if (!this.invoiceId) {
-      this.basicOverlay.alert('Hata', 'Fatura bilgisi bulunamadı.', 'error');
+      this.basicOverlay.alert('general.error', 'postral.invoice.not-found', 'error');
       return;
     }
 
@@ -121,14 +121,14 @@ export class InvoiceInfoComponent implements OnInit {
             .subscribe({
               next: (response) => {
                 this.basicOverlay.alert(
-                  'Başarılı',
-                  'Fatura başarıyla yüklendi.',
+                  'general.success',
+                  'postral.invoice.upload-success',
                   'success'
                 );
                 this.hasInvoiceFile.set(true);
               },
               error: (err) => {
-                this.basicOverlay.alert('Hata oluştu', err, 'error');
+                this.basicOverlay.alert('general.error-occurred', err, 'error');
               },
             });
         }
@@ -147,8 +147,8 @@ export class InvoiceInfoComponent implements OnInit {
 
     const confirmed = await lastValueFrom(
       this.basicOverlay.confirm(
-        'Faturayı Sonlandır',
-        'Bu faturayı sonlandırmak istediğinizden emin misiniz? Sonlandırma işlemi geri alınamaz.'
+        'postral.invoice.finalize-confirm-title',
+        'postral.invoice.finalize-confirm-message'
       )
     );
 
@@ -157,10 +157,10 @@ export class InvoiceInfoComponent implements OnInit {
     this.invoiceService.finalize(this.invoiceId).subscribe({
       next: (updatedInvoice) => {
         this.invoiceInfo.set(updatedInvoice);
-        this.basicOverlay.alert('Başarılı', 'Fatura sonlandırıldı', 'success');
+        this.basicOverlay.alert('general.success', 'postral.invoice.finalized-success', 'success');
       },
       error: (err) => {
-        this.basicOverlay.alert('Hata oluştu', err, 'error');
+        this.basicOverlay.alert('general.error-occurred', err, 'error');
       },
     });
   }
@@ -173,20 +173,20 @@ export class InvoiceInfoComponent implements OnInit {
 
     this.basicOverlay
       .confirm(
-        'Faturayı Sil',
-        'Bu faturayı silmek istediğinizden emin misiniz?'
+        'postral.invoice.delete-confirm-title',
+        'postral.invoice.delete-confirm-message'
       )
       .subscribe((confirmed) => {
         if (confirmed) {
           this.invoiceService.delete(this.invoiceId).subscribe({
             next: () => {
-              this.basicOverlay.alert('Başarılı', 'Fatura silindi', 'success');
+              this.basicOverlay.alert('general.success', 'postral.invoice.deleted-success', 'success');
               this.router.navigate(['..', 'history'], {
                 relativeTo: this.activeRoute,
               });
             },
             error: (err) => {
-              this.basicOverlay.alert('Hata oluştu', err, 'error');
+              this.basicOverlay.alert('general.error-occurred', err, 'error');
             },
           });
         }

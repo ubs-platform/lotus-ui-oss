@@ -141,7 +141,12 @@
       "privacy": "Gizlilik",
       "terms-of-use": "Kullanım şartları",
       "need-to-login-to-show-page": "Bu sayfayı görüntüleyebilmeniz için giriş yapmanız gerekmektedir",
-      "account-activated": "Tekrardan hoş geldiniz. Hesabınız etkin hale gelmiştir ve giriş yapabilirsiniz."
+      "account-activated": "Tekrardan hoş geldiniz. Hesabınız etkin hale gelmiştir ve giriş yapabilirsiniz.",
+      "santral": "UBS Platform Santrali",
+      "user.active": "Etkin",
+      "user.passive": "Etkin değil",
+      "user.suspended": "Askıya Alındı",
+      "social.options": "Sosyal seçenekler"
     }
   },
   {
@@ -219,7 +224,12 @@
       "edit": "Düzenle",
       "suspendReason": "Yasaklanma sebebi",
       "no-form-instructions": "Form talimatı yok",
-      "loading": "Yükleniyor..."
+      "loading": "Yükleniyor...",
+      "type-to-search": "Aramak için yazın...",
+      "search": "Ara",
+      "searching": "Aranıyor...",
+      "no-results": "Sonuç bulunamadı",
+      "no-results-long": "Aradığınız kriterlere uygun sonuç bulunamadı. Lütfen arama kriterlerinizi değiştirin ya da daha genel bir arama yapın."
     }
   },
   {
@@ -308,13 +318,62 @@
     }
   },
   {
+    "prefix": "postral.menu",
+    "stringMap": {
+      "payment-history": "Ödeme Geçmişi",
+      "payment-and-sales": "Ödeme ve Satışlar",
+      "addresses": "Adresler",
+      "addresses.new": "Yeni Adres",
+      "accounts": "Ödeme Hesapları",
+      "accounts.new": "Yeni Ödeme Hesabı",
+      "taxes": "Vergiler",
+      "taxes.new": "Yeni Vergi",
+      "items": "Ürünler",
+      "items.new": "Yeni Ürün",
+      "payment-records": "Ödeme Kayıtları",
+      "account-management": "Hesap yönetimi",
+      "sale-simulation": "Satış Simülasyonu",
+      "seller-orders": "Satıcı Siparişleri",
+      "refund-requests": "İade Talepleri",
+      "refund-detail": "İade Detayı",
+      "invoices": "Faturalar",
+      "reports": "Raporlar",
+      "report-queries": "Rapor Sorguları",
+      "all-reports": "Tüm Raporlar",
+      "integrations": "Entegrasyonlar",
+      "webhook": "Webhook",
+      "application-commissions": "Uygulama Komisyonları",
+      "external-platforms": "Harici Platformlar",
+      "admin-actions": "Yönetici İşlemleri",
+      "admin-settings": "Yönetici Ayarları",
+      "payment-channels": "Ödeme Kanalları"
+    }
+  },
+  {
     "prefix": "postral",
     "stringMap": {
+      "address.saved": "Adres bilgileri kaydedildi.",
+      "address.not-saved": "Adres bilgileri kaydedilemedi.",
+      "sale-settings.saved": "Satış ayarları kaydedildi.",
+      "sale-settings.not-saved": "Satış ayarları kaydedilemedi.",
       "demo-server-warning": "Tetakent hesabınızı KULLANMAYINIZ",
       "demo-server-warning-long": "Bu postral core örneği, demo için hazırlanmıştır ve nihai kullanım için uygun değildir. Verileriniz düzenli olarak silinecektir. ",
       "billing-dates": "Faturalama günleri (2-28 arası)",
-      "account-information-updated-su": "Account information updated successfully.",
-      "latest-prices": "Latest prices:"
+      "account-information-updated-su": "Hesap bilgileri başarıyla güncellendi.",
+      "latest-prices": "Güncel fiyatlar:",
+      "address": "Adres",
+      "postal-code": "Posta Kodu",
+      "account-name": "Hesap Adı",
+      "national-id": "TC Kimlik No",
+      "tax-number": "Vergi No",
+      "extra-notes": "Ekstra notlar",
+      "currency": "Para Birimi",
+      "total-amount": "Toplam Tutar",
+      "total-tax": "Toplam Vergi",
+      "customer-account": "Müşteri Hesap",
+      "amount": "Tutar",
+      "seller-order-id": "Satıcı Sipariş ID",
+      "customer": "Müşteri"
     }
   },
   {
@@ -342,6 +401,221 @@
     }
   },
   {
+    "prefix": "postral.reports",
+    "stringMap": {
+      "report-type": "Rapor Türü",
+      "query-name": "Sorgu Adı",
+      "date-grouping": "Tarih Gruplaması",
+      "period": "Dönem",
+      "payment-count": "Ödeme Sayısı",
+      "total-sale-amount": "Toplam Satış",
+      "total-refund-amount": "Toplam İade",
+      "net-sale-amount": "Net Satış",
+      "net-tax-amount": "Net Vergi",
+      "net-revenue": "Satış Net",
+      "created-or-updated": "Oluşturulma/Son güncelleme",
+      "digestion-status": "İşleme Durumu",
+      "report-info": "Rapor Bilgileri",
+      "report-id": "Rapor ID",
+      "account": "Hesap",
+      "currency": "Para Birimi",
+      "archived": "Arşivlendi",
+      "active": "Aktif",
+      "created-at": "Oluşturma Tarihi",
+      "last-digested-at": "Son İşlenen Tarih",
+      "summary": "Özet",
+      "total-sale-tax-amount": "Toplam Satış Vergisi",
+      "total-refund-tax-amount": "Toplam İade Vergisi",
+      "net-revenue-without-expense": "Masraflar olmadan net gelir",
+      "expense": "Masraflar",
+      "expenses": "Giderler",
+      "tax-groups": "Vergi Grupları",
+      "amount": "Miktar",
+      "actions": "İşlemler",
+      "reconstruct-report": "Raporu tekrar oluştur",
+      "report-not-found": "Rapor bulunamadı",
+      "show-archived": "Arşivlenenleri Göster",
+      "hide-archived": "Arşivlenenleri Gizle",
+      "reports-of-query": "{name} raporları",
+      "account-name": "Hesap ismi",
+      "report-details": "Rapor Detayları"
+    }
+  },
+  {
+    "prefix": "postral.invoice",
+    "stringMap": {
+      "id": "Fatura ID",
+      "info": "Fatura Bilgileri",
+      "payment-id": "Ödeme ID",
+      "finalized": "Kesinleşmiş",
+      "not-created": "Oluşturulmamış",
+      "draft": "Taslak",
+      "seller-payment-order-id": "Satıcı Sipariş ID",
+      "uploaded-by-user-id": "Yükleyen Kullanıcı",
+      "notes": "Notlar",
+      "date": "Fatura Tarihi",
+      "number": "Fatura No",
+      "customer-info": "Müşteri Bilgisi",
+      "seller-info": "Satıcı Bilgisi",
+      "download-file": "Fatura dosyasını indir",
+      "download-ubl": "UBL XML İndir",
+      "upload-file": "Fatura Dosyası Yükle",
+      "update-file": "Fatura Dosyasını Güncelle",
+      "finalize": "Faturayı kesinleştir",
+      "delete": "Faturayı sil",
+      "finalized-warning": "Kesinleştirilmiş bir faturaya dosya yüklenemez veya silinemez. Eğer fatura değiştirilmesi gerekiyorsa iade edilip işlem tekrar yapılmalıdır.",
+      "not-found": "Fatura bulunamadı",
+      "already-finalized-warning": "Bir fatura zaten kesinleştirilmiş. Yeni bir fatura oluşturmak için önce iade işlemi yapılmalıdır",
+      "create-new": "Yeni fatura oluştur",
+      "confirm-open": "Açık Faturayı Onayla",
+      "upload-success": "Fatura başarıyla yüklendi.",
+      "finalize-confirm-title": "Faturayı Sonlandır",
+      "finalize-confirm-message": "Bu faturayı sonlandırmak istediğinizden emin misiniz? Sonlandırma işlemi geri alınamaz.",
+      "finalized-success": "Fatura sonlandırıldı",
+      "delete-confirm-title": "Faturayı Sil",
+      "delete-confirm-message": "Bu faturayı silmek istediğinizden emin misiniz?",
+      "deleted-success": "Fatura silindi",
+      "create-confirm-title": "Fatura Oluştur",
+      "create-confirm-message": "Bu işlem, mevcut işlem için bir fatura oluşturacaktır. Devam etmek istediğinize emin misiniz?",
+      "created-success": "Fatura başarıyla oluşturuldu.",
+      "confirm-open-title": "Açık Faturayı Onayla",
+      "confirm-open-message": "Bu ödemeyi tamamlandı olarak onaylamak istediğinize emin misiniz? Onayladıktan sonra geri alınamaz.",
+      "confirm-open-success": "Açık fatura başarıyla onaylandı ve ödeme tamamlandı."
+    }
+  },
+  {
+    "prefix": "postral.payment",
+    "stringMap": {
+      "info": "Ödeme Bilgileri",
+      "items": "Ödeme Kalemleri",
+      "date": "Ödeme Tarihi",
+      "type": "Ödeme Türü",
+      "type-purchase": "Satın Alma",
+      "type-refund": "İade",
+      "status-completed": "Başarılı",
+      "status-waiting": "Beklemede",
+      "status-failed": "Başarısız"
+    }
+  },
+  {
+    "prefix": "postral.item",
+    "stringMap": {
+      "name": "Ürün İsmi"
+    }
+  },
+  {
+    "prefix": "postral.payment-item",
+    "stringMap": {
+      "quantity": "Adet",
+      "item": "Ürün",
+      "unit-price": "Birim Fiyat",
+      "total": "Toplam",
+      "tax-untax": "Vergi/V.siz",
+      "commission-rate": "Komisyon Oranı",
+      "commission-amount": "Komisyon Tutarı"
+    }
+  },
+  {
+    "prefix": "postral.tax",
+    "stringMap": {
+      "name": "Vergi İsmi",
+      "rates": "Vergi Oranları",
+      "info": "Vergi Bilgisi",
+      "amount": "Vergi tutarı",
+      "untax-amount": "Vergisiz tutar"
+    }
+  },
+  {
+    "prefix": "postral.transaction",
+    "stringMap": {
+      "type": "İşlem Tipi",
+      "target-account": "Alıcı hesap",
+      "source-account": "Gönderici hesap",
+      "dispute": "İtiraz Et",
+      "not-found": "İşlem bilgisi bulunamadı."
+    }
+  },
+  {
+    "prefix": "postral.refund",
+    "stringMap": {
+      "start": "İade başlat"
+    }
+  },
+  {
+    "prefix": "postral.seller-orders",
+    "stringMap": {
+      "amount": "Tutar",
+      "taxAmount": "Vergi Tutarı",
+      "invoiceCount": "Fatura Sayısı",
+      "status": "Durum",
+      "sourceAccountId": "Kaynak Hesap",
+      "transactionType": "İşlem Türü",
+      "targetAccountId": "Hedef Hesap"
+    }
+  },
+  {
+    "prefix": "postral.payment-channel",
+    "stringMap": {
+      "add": "Yeni Kanal Ekle",
+      "channel-id": "Kanal ID",
+      "display-name": "Görünen Ad",
+      "dev-only": "Sadece Dev"
+    }
+  },
+  {
+    "prefix": "postral.external-platform",
+    "stringMap": {
+      "add": "Dış Platform Ekle",
+      "platform-name": "Platform Adı",
+      "code": "Kod"
+    }
+  },
+  {
+    "prefix": "postral.commission",
+    "stringMap": {
+      "add": "Yeni Komisyon Ekle",
+      "external-platform": "Dış Platform",
+      "seller-account": "Satıcı Hesap",
+      "item-class": "Ürün Sınıfı",
+      "default-sample": "Postral Örneği"
+    }
+  },
+  {
+    "prefix": "postral.address",
+    "stringMap": {
+      "create-new": "Yeni Adres Oluştur",
+      "name": "Adres İsmi",
+      "info": "Adres Bilgileri",
+      "delete": "Adresi Sil"
+    }
+  },
+  {
+    "prefix": "postral.account",
+    "stringMap": {
+      "create-new": "Yeni Hesap Oluştur",
+      "name": "Hesap İsmi",
+      "tckn-vkn": "TCKN / VKN",
+      "type": "Hesap Tipi",
+      "type-individual": "Bireysel",
+      "type-corporate": "Kurumsal",
+      "deactivate": "Hesabı devre dışı bırak"
+    }
+  },
+  {
+    "prefix": "postral.currencies",
+    "stringMap": {
+      "USD": "ABD Doları ($)",
+      "EUR": "Euro (€)",
+      "TRY": "Türk Lirası (₺)"
+    }
+  },
+  {
+    "prefix": "postral.view",
+    "stringMap": {
+      "precision.4": "Dört basamaklı hassasiyet"
+    }
+  },
+  {
     "prefix": "capability.item",
     "stringMap": {
       "EOG_ADJUST_CAPABILITIES": "Takımın yeteneklerini düzenleyebilir",
@@ -362,6 +636,81 @@
       "POSTRAL/ADDRESS": "Adres",
       "POSTRAL/TAX": "Vergi",
       "POSTRAL/ITEM": "Ürün"
+    }
+  },
+  {
+    "prefix": "general",
+    "stringMap": {
+      "_": "Genel",
+      "id": "ID",
+      "database-id": "Veritabanı kimliği",
+      "name": "İsim",
+      "status": "Durum",
+      "active": "Aktif",
+      "default": "Varsayılan",
+      "home": "Ana sayfa",
+      "social-media": "Sosyal Medya",
+      "all-rights-reserved": "Tüm hakları saklıdır",
+      "owner-of-added-data": "Eklenecek verinin sahibi",
+      "personal-account": "Kişisel hesap",
+      "about": "Hakkında",
+      "team.new": "Yeni Takım",
+      "team.info": "Takım Bilgileri",
+      "team.members": "Takım Üyeleri",
+      "team.edit": "Takımı Düzenle",
+      "teams": "Takımlar",
+      "teams.invitations": "Takım davetleri",
+      "account.info": "Hesap bilgileri",
+      "security": "Güvenlik",
+      "select.verb": "Seçiniz",
+      "email-primary.change": "Ana e-posta adresini değiştir",
+      "email-primary.change.instruction": "Kalan süre içerisinde yeni e-posta adresinize gelen kodu aşağıya giriniz",
+      "password.change": "Parolayı değiştir",
+      "phone.number": "Telefon Numarası",
+      "2fa": "İki Faktörlü Kimlik Doğrulama",
+      "WIP": "Bu özellik üzerinde çalışıyoruz. Size haber edeceğiz",
+      "change": "Değiştir",
+      "users": "Kullanıcılar",
+      "actions": "Eylemler",
+      "edit.verb": "Düzenle",
+      "delete": "Sil",
+      "remove": "Kaldır",
+      "save": "Kaydet",
+      "update-date.verb": "Tarihi güncelle",
+      "update-date": "Güncelleme tarihi",
+      "creation-date": "Oluşturulma tarihi",
+      "createdAt": "Oluşturulma Tarihi",
+      "update": "Güncelle",
+      "next": "İleri",
+      "previous": "Geri",
+      "invitations.for-me": "Davetlerim",
+      "members": "Üyeler",
+      "member.edit-authority": "Üye yetkilerini düzenle",
+      "member.authority.group": "Takım yetkileri",
+      "member.authority.entity": "Varlık yetkileri",
+      "trust-team.revoke": "Takıma güvenmeyi bırak",
+      "trust-team.grant": "Takıma güven",
+      "success": "Başarılı",
+      "error": "Hata",
+      "error-occurred": "Hata oluştu",
+      "apply": "Uygula",
+      "filter.options": "Filtre Seçenekleri",
+      "filter.title": "Filtrele",
+      "filter.clear": "Filtreyi Temizle",
+      "ok": "Tamam",
+      "cancel": "İptal",
+      "all": "Tümü",
+      "detail": "Detay",
+      "details": "Detaylar",
+      "reject": "Reddet",
+      "approve": "Onayla",
+      "review": "İncele"
+    }
+  },
+  {
+    "prefix": "payment",
+    "stringMap": {
+      "error.receive": "Ödeme alınamadı"
     }
   }
 ]

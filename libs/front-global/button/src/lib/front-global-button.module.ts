@@ -18,8 +18,7 @@ import { GlobalPipesModule } from '@lotus/front-global/global-pipes';
     UbsTouchNgxModule,
     UbsTranslatorNgxModule,
     GlobalPipesModule,
-    IconComponent,
-  ],
+    IconComponent],
   declarations: [
     BlockPartBaseComponent,
     BlockPartBaseButtonComponent,
@@ -35,4 +34,4 @@ import { GlobalPipesModule } from '@lotus/front-global/global-pipes';
     CustomItemDirective,
   ],
 })
-export class FrontGlobalButtonModule {}
+export class FrontGlobalButtonModule { }

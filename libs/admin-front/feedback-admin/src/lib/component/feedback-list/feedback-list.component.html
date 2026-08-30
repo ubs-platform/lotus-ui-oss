@@ -46,19 +46,21 @@
     </column>
 
     <column name="actions">
-      <ng-template header>Aksiyonlar</ng-template>
+      <ng-template header content="general.actions"></ng-template>
       <ng-template data let-item="item">
         <block-button
           buttonClass="primary"
           iconClass="material-symbols-outlined" iconContent="visibility"
           routerLink="./{{ item._id }}"
-          >Detaylar</block-button
+          stringContent="general.details"
+          ></block-button
         >
         <block-button
           buttonClass="error"
           iconClass="material-symbols-outlined" iconContent="close"
           (click)="remove(item._id)"
-          >Sil</block-button
+          stringContent="general.delete"
+          ></block-button
         >
       </ng-template>
     </column>

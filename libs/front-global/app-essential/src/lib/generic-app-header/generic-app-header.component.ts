@@ -360,7 +360,7 @@ export class GenericAppHeaderComponent
     ];
     const postMenus: Array<PaginationItem | null> = [
       {
-        text: 'Uygulama hakkında',
+        text: 'general.about',
         ...fromMaterialSymbol('help'),
         childPageContents: [
           ...(this.appFooter?.template

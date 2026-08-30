@@ -14,7 +14,7 @@ import { SearchResult } from '@ubs-platform/crud-base-common';
   styleUrl: './teams-listing.component.scss',
 })
 export class TeamsListingComponent {
-
+  showTrustedTeams = signal<boolean>(false);
   adminMode = signal<boolean>(false);
   adminModeString = computed(() => (this.adminMode() ? 'true' : 'false'));
   teams = signal<EntityOwnershipGroupCommonDTO[]>([]);
@@ -38,6 +38,7 @@ export class TeamsListingComponent {
   ngOnInit() {
     this.activatedRoute.data.subscribe((data) => {
       this.adminMode.set(data['admin']);
+      this.showTrustedTeams.set(data['showLotusTrustTeam'] ?? false);
       // this.publisherTeamService.getAll({}).subscribe((data) => {
       //   this.teams.set(data);
       // });

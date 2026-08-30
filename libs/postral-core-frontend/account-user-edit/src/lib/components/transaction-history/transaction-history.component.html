@@ -13,13 +13,13 @@
       #dataTable
     >
       <column name="createdAt">
-        <ng-template header> Ödeme Tarihi </ng-template>
+        <ng-template header content="general.createdAt"></ng-template>
         <ng-template data let-item="item">
           {{ item.createdAt | date : 'short' }}
         </ng-template>
       </column>
       <column name="amount">
-        <ng-template header> Tutar </ng-template>
+        <ng-template header content="postral.seller-orders.amount"></ng-template>
         <ng-template data let-item="item">
           <lib-money-display
             [amount]="item.amount"
@@ -28,7 +28,7 @@
         </ng-template>
       </column>
       <column name="taxAmount">
-        <ng-template header> Vergilendirme tutarı </ng-template>
+        <ng-template header content="postral.seller-orders.taxAmount"></ng-template>
         <ng-template data let-item="item">
           <lib-money-display
             [amount]="item.taxAmount"
@@ -37,7 +37,7 @@
         </ng-template>
       </column>
       <column name="invoiceCount">
-        <ng-template header> Fatura Sayısı </ng-template>
+        <ng-template header content="postral.seller-orders.invoiceCount"></ng-template>
         <ng-template data let-item="item">
           <lotus-web-status-badge
             [color]="
@@ -48,11 +48,11 @@
                 : 'gray'
             "
             [label]="
-              item.hasFinalizedInvoice
-                ? 'Kesinleştirildi'
+              (item.hasFinalizedInvoice
+                ? 'postral.invoice.finalized'
                 : item.invoiceCount > 0
-                ? item.invoiceCount + ' Taslak'
-                : 'Fatura yok'
+                ? item.invoiceCount + ' ' + ('postral.invoice.draft' | translate)
+                : 'postral.invoice.none') | translate
             "
           ></lotus-web-status-badge>
           <!-- <div
@@ -73,7 +73,7 @@
       </column>
 
       <column name="status">
-        <ng-template header> Durum </ng-template>
+        <ng-template header content="postral.seller-orders.status"></ng-template>
         <ng-template data let-item="item">
           <lotus-web-status-badge
             [color]="
@@ -98,30 +98,30 @@
       </column>
 
       <column name="sourceAccountId">
-        <ng-template header> Müşteri </ng-template>
+        <ng-template header content="postral.seller-orders.sourceAccountId"></ng-template>
         <ng-template data let-item="item">
           {{ item.sourceAccountName }}
         </ng-template>
       </column>
       <column name="transactionType">
-        <ng-template header> Yön </ng-template>
+        <ng-template header content="postral.seller-orders.transactionType"></ng-template>
         <ng-template data let-item="item">
           {{ item.transactionType == 'DEBIT_FROM_SELLER' ? '<-' : '->' }}
         </ng-template>
       </column>
       <column name="targetAccountId">
-        <ng-template header> Satıcı </ng-template>
+        <ng-template header content="postral.seller-orders.targetAccountId"></ng-template>
         <ng-template data let-item="item">
           {{ item.targetAccountName }}
         </ng-template>
       </column>
       <column name="actions">
-        <ng-template header> İşlemler </ng-template>
+        <ng-template header content="general.actions"></ng-template>
         <ng-template data let-item="item">
           <block-button
             buttonClass="secondary"
             [routerLink]="['..', item.id]"
-            stringContent="Detay"
+            stringContent="general.detail"
             iconClass="material-symbols-outlined" iconContent="visibility"
           >
           </block-button> </ng-template

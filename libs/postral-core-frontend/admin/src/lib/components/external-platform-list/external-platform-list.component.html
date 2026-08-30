@@ -1,8 +1,11 @@
 <lotus-web-data-list-layout>
-  <ng-template action action>
+  <ng-template action>
     <block-button
       buttonClass="btn btn-primary"
       (click)="goToCreate()"
+      stringContent="postral.external-platform.add"
+      iconClass="material-symbols-outlined"
+      iconContent="add"
     >
       Dış Platform Ekle
     </block-button>
@@ -15,12 +18,14 @@
     >
       <column name="name">
         <ng-template header> Platform adı </ng-template>
+        <ng-template header content="postral.external-platform.platform-name"></ng-template>
         <ng-template data let-item="item">
           {{ item.name }}
         </ng-template>
       </column>
       <column name="code">
         <ng-template header> Kod </ng-template>
+        <ng-template header content="postral.external-platform.code"></ng-template>
         <ng-template data let-item="item">
           {{ item.code }}
         </ng-template>
@@ -28,19 +33,21 @@
 
       <column name="createdAt">
         <ng-template header> Oluşturulma Tarihi </ng-template>
+        <ng-template header content="general.creation-date"></ng-template>
         <ng-template data let-item="item">
           {{ item.createdAt | date : 'short' }}
         </ng-template>
       </column>
       <column name="updatedAt">
         <ng-template header> Güncellenme Tarihi </ng-template>
+        <ng-template header content="general.update-date"></ng-template>
         <ng-template data let-item="item">
           {{ item.updatedAt | date : 'short' }}
         </ng-template>
       </column>
 
       <column name="actions">
-        <ng-template header> Aksiyonlar </ng-template>
+        <ng-template header content="general.actions"></ng-template>
         <ng-template data let-item="item">
           <div class="action-buttons">
             <block-button
@@ -48,14 +55,16 @@
               buttonClass="bg-danger"
               iconClass="material-symbols-outlined"
               iconContent="delete"
-              >Sil</block-button
+              stringContent="general.delete"
+              ></block-button
             >
             <block-button
               (click)="editExternalPlatform(item)"
               buttonClass="primary"
               iconClass="material-symbols-outlined"
               iconContent="edit"
-              >Düzenle</block-button
+              stringContent="general.edit.verb"
+              ></block-button
             >
           </div>
         </ng-template>

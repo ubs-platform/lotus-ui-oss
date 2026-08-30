@@ -5,6 +5,7 @@
       style="margin-bottom: 10px"
       (click)="createAccount()"
       stringContent="Yeni Hesap Oluştur"
+      stringContent="postral.account.create-new"
       iconClass="material-symbols-outlined" iconContent="add"
     >
     </block-button>
@@ -17,38 +18,40 @@
       #table
     >
       <column name="id">
-        <ng-template header> Veritabanı kimliği </ng-template>
+        <ng-template header content="general.database-id"></ng-template>
         <ng-template data let-item="item">
           {{ item.id }}
         </ng-template>
       </column>
       <column name="name">
-        <ng-template header> Hesap İsmi </ng-template>
+        <ng-template header content="postral.account.name"></ng-template>
         <ng-template data let-item="item">
           {{ item.name }}
         </ng-template>
       </column>
       <column name="legalIdentity">
-        <ng-template header> TCKN / VKN </ng-template>
+        <ng-template header content="postral.account.tckn-vkn"></ng-template>
         <ng-template data let-item="item">
           {{ item.legalIdentity }}
         </ng-template>
       </column>
 
       <column name="type">
-        <ng-template header> Hesap Tipi </ng-template>
+        <ng-template header content="postral.account.type"></ng-template>
         <ng-template data let-item="item">
           {{ item.type == 'INDIVIDUAL' ? 'Bireysel' : 'Kurumsal' }}
+          {{ (item.type == 'INDIVIDUAL' ? 'postral.account.type-individual' : 'postral.account.type-corporate') | translate }}
         </ng-template>
       </column>
 
       <column name="actions">
-        <ng-template header> Aksiyonlar </ng-template>
+        <ng-template header content="general.actions"></ng-template>
         <ng-template data let-item="item">
           <div class="action-buttons" >
             <block-button
               [hasContent]="false"
               stringContent="Hesap bilgileri"
+              stringContent="general.account.info"
               buttonClass="border"
               iconClass="material-symbols-outlined"
               iconContent="info"
@@ -60,6 +63,7 @@
               iconClass="material-symbols-outlined"
               iconContent="close"
               stringContent="Hesabı devre dışı bırak"
+              stringContent="postral.account.deactivate"
               [hasContent]="false"
             ></block-button>
             <!-- @if (admin()) {

@@ -35,20 +35,23 @@ export class ReformDataEditComponent {
       return;
     }
 
-    if (i.form.hasErrors()) {
-      i.form.revealAllErrors();
-      return;
-    }
+    this.toObservableThing(i.beforeValidation?.(i.form) ?? of(undefined)).subscribe(() => {
 
-    this.toObservableThing(i.beforeSave(i.form)).subscribe((canSave) => {
-      if (!canSave) {
+      if (i.form.hasErrors()) {
+        i.form.revealAllErrors();
         return;
       }
 
-      this.toObservableThing(i.saveMethod(i.form.value)).subscribe({
-        next: (saved) => i.afterSaveSuccess(saved, i.form.value),
-        error: (err) => i.afterSaveError(err, i.form.value),
-        complete: () => {}
+      this.toObservableThing(i.beforeSave?.(i.form) ?? of(true)).subscribe((canSave) => {
+        if (!canSave) {
+          return;
+        }
+
+        this.toObservableThing(i.saveMethod(i.form.value)).subscribe({
+          next: (saved) => i.afterSaveSuccess(saved, i.form.value),
+          error: (err) => i.afterSaveError(err, i.form.value),
+          complete: () => { }
+        });
       });
     });
   }

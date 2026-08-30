@@ -1,5 +1,4 @@
 <lotus-web-data-list-layout>
-
   <ng-container content>
     <searchable-data-table
       url="/service/payment/api/refund/request/_search"
@@ -8,37 +7,37 @@
       #table
     >
       <column name="id">
-        <ng-template header> Id </ng-template>
+        <ng-template header content="general.id"> Id </ng-template>
         <ng-template data let-item="item">
           {{ item.id }}
         </ng-template>
       </column>
       <column name="paymentId">
-        <ng-template header> Ödeme id </ng-template>
+        <ng-template header content="postral.invoice.payment-id"> Ödeme id </ng-template>
         <ng-template data let-item="item">
           {{ item.paymentId }}
         </ng-template>
       </column>
       <column name="status">
-        <ng-template header> Durum </ng-template>
+        <ng-template header content="general.status"> Durum </ng-template>
         <ng-template data let-item="item">
           {{ item.status }}
         </ng-template>
       </column>
       <column name="createdAt">
-        <ng-template header> Oluşturulma Tarihi </ng-template>
+        <ng-template header content="general.creation-date"> </ng-template>
         <ng-template data let-item="item">
           {{ item.createdAt | date : 'short' }}
         </ng-template>
       </column>
       <column name="updatedAt">
-        <ng-template header> Güncellenme Tarihi </ng-template>
+        <ng-template header content="general.update-date"> </ng-template>
         <ng-template data let-item="item">
           {{ item.updatedAt | date : 'short' }}
         </ng-template>
       </column>
       <column name="actions">
-        <ng-template header> Aksiyonlar </ng-template>
+        <ng-template header content="general.actions"></ng-template>
         <ng-template data let-item="item">
           <div class="action-buttons">
             <!-- <block-button
@@ -53,17 +52,16 @@
               buttonClass="primary"
               iconClass="material-symbols-outlined"
               iconContent="info"
-              >Detaylar</block-button
-            >
+              stringContent="general.details"
+            ></block-button>
             <block-button
               (click)="deleteRefund(item.id, 'rejected')"
               buttonClass="bg-danger"
               iconClass="material-symbols-outlined"
               iconContent="close"
-              stringContent="Reddet"
+              stringContent="general.reject"
               [hasContent]="false"
-              ></block-button
-            >
+            ></block-button>
           </div>
         </ng-template>
       </column>

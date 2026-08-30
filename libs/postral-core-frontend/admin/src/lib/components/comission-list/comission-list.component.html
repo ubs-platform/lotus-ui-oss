@@ -1,7 +1,13 @@
 <lotus-web-data-list-layout>
-  <ng-template action action>
-    <block-button buttonClass="btn btn-primary" (click)="createComission()">
-      Yeni Komisyon Ekle
+  <ng-template action>
+
+    <block-button
+      buttonClass="btn btn-primary"
+      (click)="createComission()"
+      stringContent="postral.commission.add"
+      iconClass="material-symbols-outlined"
+      iconContent="add"
+    >
     </block-button>
   </ng-template>
   <ng-container content>
@@ -12,47 +18,51 @@
     >
       <!-- <column name="id">
         <ng-template header> Id </ng-template>
+        <ng-template header content="general.id"></ng-template>
         <ng-template data let-item="item">
           {{ item.id }}
         </ng-template>
       </column> -->
       <column name="externalPlatformId">
-        <ng-template header> Dış Platform </ng-template>
+        <ng-template header content="postral.commission.external-platform"></ng-template>
         <ng-template data let-item="item">
           {{ item.externalPlatformName ?? 'Postral Örneği' }}
+          {{ item.externalPlatformName ?? ('postral.commission.default-sample' | translate) }}
         </ng-template>
       </column>
       <column name="sellerAccountName">
-        <ng-template header> Satıcı hesap </ng-template>
+        <ng-template header content="postral.commission.seller-account"></ng-template>
         <ng-template data let-item="item">
           {{ item.sellerAccountName || 'Varsayılan' }}
+          {{ item.sellerAccountName || ('general.default' | translate) }}
         </ng-template>
       </column>
       <column name="itemClass">
-        <ng-template header> Ürün Sınıfı </ng-template>
+        <ng-template header content="postral.commission.item-class"></ng-template>
         <ng-template data let-item="item">
           {{ item.itemClass || 'Varsayılan' }}
+          {{ item.itemClass || ('general.default' | translate) }}
         </ng-template>
       </column>
       <column name="percent">
-        <ng-template header> Komisyon Oranı </ng-template>
+        <ng-template header content="postral.payment-item.commission-rate"></ng-template>
         <ng-template data let-item="item"> {{ item.percent }}% </ng-template>
       </column>
       <column name="createdAt">
-        <ng-template header> Oluşturulma Tarihi </ng-template>
+        <ng-template header content="general.creation-date"></ng-template>
         <ng-template data let-item="item">
           {{ item.createdAt | date : 'short' }}
         </ng-template>
       </column>
       <column name="updatedAt">
-        <ng-template header> Güncellenme Tarihi </ng-template>
+        <ng-template header content="general.update-date"></ng-template>
         <ng-template data let-item="item">
           {{ item.updatedAt | date : 'short' }}
         </ng-template>
       </column>
 
       <column name="actions">
-        <ng-template header> Aksiyonlar </ng-template>
+        <ng-template header content="general.actions"></ng-template>
         <ng-template data let-item="item">
           <div class="action-buttons">
             <block-button
@@ -60,14 +70,16 @@
               buttonClass="bg-danger"
               iconClass="material-symbols-outlined"
               iconContent="delete"
-              >Sil</block-button
+              stringContent="general.delete"
+              ></block-button
             >
             <block-button
               (click)="editComission(item)"
               buttonClass="primary"
               iconClass="material-symbols-outlined"
               iconContent="edit"
-              >Düzenle</block-button
+              stringContent="general.edit.verb"
+              ></block-button
             >
           </div>
         </ng-template>

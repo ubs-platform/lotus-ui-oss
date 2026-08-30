@@ -65,10 +65,30 @@ export class TeamMembersComponent {
     const me = this.userCapabilities().find((u) => u.userId === userId);
     const groupCaps = me?.groupCapabilities ?? [];
     return (
+      groupCaps.includes(Capability.OWNER) ||
       groupCaps.includes(Capability.EOG_ADJUST_MEMBERS) ||
-      groupCaps.includes(Capability.OWNER)
+      groupCaps.includes(Capability.EOG_ADJUST_CAPABILITIES)
     );
   });
+
+  canChangeCaps = computed(() => {
+    if (this.isAdmin()) {
+      return true;
+    }
+
+    const userId = this.currentUserId();
+    if (!userId) {
+      return false;
+    }
+
+    const me = this.userCapabilities().find((u) => u.userId === userId);
+    const groupCaps = me?.groupCapabilities ?? [];
+    return (
+      groupCaps.includes(Capability.OWNER) ||
+      groupCaps.includes(Capability.EOG_ADJUST_CAPABILITIES)
+    );
+  });
+
   private readonly capabilityLabelByValue = new Map<number, string>(
     groupCapabilities.map((cap) => [cap.value, cap.text])
   );
@@ -239,7 +259,7 @@ export class TeamMembersComponent {
       .showComponentAsDialog<TeamMemberCapabilityDialogData, TeamMemberCapabilityDialogResult | null>(
         TeamMemberCapabilityDialogComponent,
         {
-          title: 'Üye Yetkilerini Düzenle',
+          title: 'general.member.edit-authority',
           defaultOutValue: null,
           height: "100dvh",
           maxHeight: "600px",

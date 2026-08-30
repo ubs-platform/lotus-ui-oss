@@ -9,7 +9,7 @@
   }
   <ubs-table-ngx [items]="userCapabilities()" [cover]="true">
     <column name="name">
-      <ng-template header> İsim</ng-template>
+      <ng-template header content="name"> İsim</ng-template>
       <ng-template data let-item="item">
         <div class="flex align-items-center">
           <img
@@ -24,7 +24,7 @@
       </ng-template>
     </column>
     <column name="capability">
-      <ng-template header>İçerik Yetkisi</ng-template>
+      <ng-template header content="general.member.authority.entity">İçerik Yetkisi</ng-template>
       <ng-template data let-item="item">
         <div
           class="flex flex-column align-items-start sm:align-items-end lg:align-items-start"
@@ -55,7 +55,7 @@
       </ng-template>
     </column>
     <column name="group-capability">
-      <ng-template header>Grup Yetkisi</ng-template>
+      <ng-template header content="general.member.authority.group">Grup Yetkisi</ng-template>
       <ng-template data let-item="item">
         <div class="flex flex-wrap gap-1" style="max-width: 400px !important">
           @for (badge of getGroupCapabilityBadges(item); track badge.label + '-'
@@ -71,26 +71,26 @@
       </ng-template>
     </column>
     <column name="actions">
-      <ng-template header>Aksiyonlar </ng-template>
+      <ng-template header content="general.actions"></ng-template>
       <ng-template data let-item="item">
         <div class="action-buttons">
           @if (canAdjustMembers()) {
           <block-button
-            stringContent="Kaldır"
+            stringContent="general.remove"
             iconClass="material-symbols-outlined"
             iconContent="logout"
             buttonClass="bg-danger"
             (click)="removeUserShow(item)"
           ></block-button>
-          }
-
+          } @if (canChangeCaps()) {
           <block-button
-            stringContent="Yetkileri düzenle"
+            stringContent="general.member.edit-authority"
             iconClass="material-symbols-outlined"
             iconContent="edit"
             buttonClass="border"
             (click)="editUserShow(item)"
           ></block-button>
+          }
         </div>
       </ng-template>
     </column>
@@ -98,7 +98,7 @@
             <ng-template header>Aksiyonlar </ng-template>
             <ng-template data let-item="item">
                 <div style="width: 500px;">
-                    <block-button stringContent="Düzenle" iconClass="material-symbols-outlined" iconContent="edit"
+                    <block-button stringContent="general.edit.verb" iconClass="material-symbols-outlined" iconContent="edit"
                         [routerLink]="[item._id, 'edit']"></block-button>
                     <block-button stringContent="Üyeler" iconClass="material-symbols-outlined" iconContent="group"
                         [routerLink]="[item._id, 'members']"></block-button>
@@ -117,7 +117,7 @@
   </div>
   <ubs-table-ngx [items]="userCapabilityInvitations()" [cover]="true">
     <column name="name" width="50%">
-      <ng-template header> İsim</ng-template>
+      <ng-template header content="name"></ng-template>
       <ng-template data let-item="item">
         <div class="flex align-items-center">
           <img
@@ -132,7 +132,7 @@
       </ng-template>
     </column>
     <column name="capability">
-      <ng-template header>İçerik Yetkisi</ng-template>
+      <ng-template header content="general.member.authority.entity"></ng-template>
       <ng-template data let-item="item">
         <div
           class="flex flex-column align-items-start sm:align-items-end lg:align-items-start"
@@ -163,7 +163,7 @@
       </ng-template>
     </column>
     <column name="group-capability">
-      <ng-template header>Grup Yetkisi</ng-template>
+      <ng-template header content="general.member.authority.group"></ng-template>
       <ng-template data let-item="item">
         <div class="flex flex-wrap gap-1" style="max-width: 400px !important">
           @for (badge of getGroupCapabilityBadges(item); track badge.label + '-'
@@ -179,11 +179,11 @@
       </ng-template>
     </column>
     <column name="actions">
-      <ng-template header>Aksiyonlar </ng-template>
+      <ng-template header content="general.actions"></ng-template>
       <ng-template data let-item="item">
         @if (canAdjustMembers()) {
         <block-button
-          stringContent="Kaldır"
+          stringContent="general.remove"
           iconClass="material-symbols-outlined"
           iconContent="logout"
           buttonClass="bg-danger"

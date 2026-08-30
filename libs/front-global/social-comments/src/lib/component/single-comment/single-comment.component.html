@@ -119,7 +119,7 @@
 
       <div [class.downvoted]="commentIsDownVoted" style="font-size: 0.75rem">
         <div class="flex flex-column">
-          <div>Oluşturma: {{ creationDate }}</div>
+          <div>{{ 'general.creation-date' | translate }}: {{ creationDate }}</div>
 
           <div>
             <div *ngIf="item()!.editCount">

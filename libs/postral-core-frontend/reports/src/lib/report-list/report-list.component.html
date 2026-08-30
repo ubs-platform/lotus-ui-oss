@@ -4,7 +4,7 @@
       <div class="flex justify-content-end mb-2">
         <block-button [hasContent]="false" iconClass="material-symbols-outlined" [iconContent]="hideArchived() ? 'visibility' : 'visibility_off'"
           (click)="toggleHideArchived()" [stringContent]="
-            hideArchived() ? 'Arşivlenenleri Göster' : 'Arşivlenenleri Gizle'
+            hideArchived() ? ('postral.reports.show-archived' | translate) : ('postral.reports.hide-archived' | translate)
           "></block-button>
       </div>
     </div>
@@ -13,18 +13,18 @@
     <div class="flex flex-column h-full w-full">
       @if (queryId() && query()) {
       <div class="mona-card mb-3">
-        <h2 class="mb-2">{{ query()!.name }} raporları</h2>
+        <h2 class="mb-2">{{ 'postral.reports.reports-of-query' | translate: { name: query()!.name } }}</h2>
         <div class="info-grid gap-3">
           <div class="info-item">
-            <span class="label">Periyod</span>
+            <span class="label">{{ 'postral.reports.period' | translate }}</span>
             <span class="value"> {{ query()!.dateGrouping }}</span>
           </div>
           <div class="info-item">
-            <span class="label">Hesap ismi</span>
+            <span class="label">{{ 'postral.reports.account-name' | translate }}</span>
             <span class="value"> {{ query()!.ownerAccountId }}</span>
           </div>
           <div class="info-item">
-            <span class="label">Para birimi</span>
+            <span class="label">{{ 'postral.reports.currency' | translate }}</span>
             <span class="value"> {{ query()!.currency }}</span>
           </div>
         </div>
@@ -34,25 +34,25 @@
         <searchable-data-table #reportTable [url]="reportSearchUrl" [otherFilter]="reportOtherFilter()" [cover]="true"
           (fetched)="onReportsFetched($event)">
           <column name="reportType">
-            <ng-template header> Rapor Türü </ng-template>
+            <ng-template header content="postral.reports.report-type"></ng-template>
             <ng-template data let-item="item">
               {{ 'postral.report-type.' + item.reportType | translate }}
             </ng-template>
           </column>
           <column name="periodLabel">
-            <ng-template header> Dönem </ng-template>
+            <ng-template header content="postral.reports.period"></ng-template>
             <ng-template data let-item="item">
               {{ item.periodLabel }}
             </ng-template>
           </column>
           <column name="paymentCount">
-            <ng-template header> Ödeme<br>Sayısı </ng-template>
+            <ng-template header content="postral.reports.payment-count"></ng-template>
             <ng-template data let-item="item">
               {{ item.paymentCount }}
             </ng-template>
           </column>
           <column name="totalSaleAmount">
-            <ng-template header> Toplam Satış </ng-template>
+            <ng-template header content="postral.reports.total-sale-amount"></ng-template>
             <ng-template data let-item="item">
               <lib-money-display
                 [amount]="item.totalSaleAmount"
@@ -61,7 +61,7 @@
             </ng-template>
           </column>
           <column name="totalRefundAmount">
-            <ng-template header> Toplam İade </ng-template>
+            <ng-template header content="postral.reports.total-refund-amount"></ng-template>
             <ng-template data let-item="item">
               <lib-money-display
                 [amount]="item.totalRefundAmount"
@@ -70,7 +70,7 @@
             </ng-template>
           </column>
           <column name="netSaleAmount">
-            <ng-template header> Net Satış </ng-template>
+            <ng-template header content="postral.reports.net-sale-amount"></ng-template>
             <ng-template data let-item="item">
               <lib-money-display
                 [amount]="item.netSaleAmount"
@@ -80,7 +80,7 @@
           </column>
 
           <column name="netTaxAmount">
-            <ng-template header> Net Vergi </ng-template>
+            <ng-template header content="postral.reports.net-tax-amount"></ng-template>
             <ng-template data let-item="item">
               <lib-money-display
                 [amount]="item.netTaxAmount"
@@ -89,7 +89,7 @@
             </ng-template>
           </column>
           <column name="netRevenue">
-            <ng-template header> Satış Net </ng-template>
+            <ng-template header content="postral.reports.net-revenue"></ng-template>
             <ng-template data let-item="item">
               <lib-money-display
                 [amount]="item.netRevenue"
@@ -99,7 +99,7 @@
           </column>
 
           <column name="createdAt">
-            <ng-template header> Oluşturulma/Son güncelleme </ng-template>
+            <ng-template header content="postral.reports.created-or-updated"></ng-template>
             <ng-template data let-item="item">
               {{ item.createdAt | date : 'dd MMMM yyyy, HH:mm:ss' }}<br />
               {{ item.lastDigestedAt | date : 'dd MMMM yyyy, HH:mm:ss' }}
@@ -108,22 +108,22 @@
           </column>
 
           <column name="digestionStatus">
-            <ng-template header> İşleme Durumu </ng-template>
+            <ng-template header content="postral.reports.digestion-status"></ng-template>
             <ng-template data let-item="item">
               <lotus-web-status-badge [label]="reportProgress()[item.id] || 'UNKNOWN'"
                 [color]="reportProgressColor()[item.id] || 'gray'"></lotus-web-status-badge>
             </ng-template>
           </column>
           <column name="actions">
-            <ng-template header> Aksiyonlar </ng-template>
+            <ng-template header content="general.actions"></ng-template>
             <ng-template data let-item="item">
               <div class="action-buttons">
                 @if (!item.archived) {
                 <block-button [hasContent]="false" iconClass="material-symbols-outlined" iconContent="refresh" (click)="reconstructReport(item.id)"
-                  stringContent="Raporu tekrar oluştur"></block-button>
+                  [stringContent]="'postral.reports.reconstruct-report' | translate"></block-button>
                 }
                 <block-button [hasContent]="false" buttonClass="border" iconClass="material-symbols-outlined"
-                  iconContent="info" (click)="viewReport(item.id)">Rapor Detayları</block-button>
+                  iconContent="info" (click)="viewReport(item.id)">{{ 'postral.reports.report-details' | translate }}</block-button>
               </div>
             </ng-template>
           </column>

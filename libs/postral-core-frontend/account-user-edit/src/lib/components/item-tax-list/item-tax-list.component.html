@@ -1,14 +1,14 @@
 <lotus-web-data-list-layout [class.tayyip]="tayyip()">
   <ng-template action>
     <block-button buttonClass="primary" style="margin-bottom: 10px" (click)="createItemTax()"
-      stringContent="Yeni Vergi Oluştur" iconClass="material-symbols-outlined" iconContent="add">
+      stringContent="postral.menu.taxes.new" iconClass="material-symbols-outlined" iconContent="add">
     </block-button>
   </ng-template>
   <ng-container content>
     <searchable-data-table url="/service/payment/api/item-tax/_search" [cover]="true"
       [otherFilter]="{ admin: admin() }" #table>
       <column name="name">
-        <ng-template header> Vergi İsmi </ng-template>
+        <ng-template header content="postral.tax.name"></ng-template>
         <ng-template data let-item="item">
           {{ item.taxName }}
           @if (item.isPublic) {
@@ -17,7 +17,7 @@
         </ng-template>
       </column>
       <column name="rates">
-        <ng-template header> Vergi Oranları </ng-template>
+        <ng-template header content="postral.tax.rates"></ng-template>
         <ng-template data let-item="item">
           @for (item of item.variations; track $index) {
           <div>
@@ -27,7 +27,7 @@
         </ng-template>
       </column>
       <column name="actions">
-        <ng-template header> Aksiyonlar </ng-template>
+        <ng-template header content="general.actions"></ng-template>
         <ng-template data let-item="item">
           <div class="action-buttons">
             <block-button [hasContent]="false" [routerLink]="['../tax', item.id]" borderClass="border"

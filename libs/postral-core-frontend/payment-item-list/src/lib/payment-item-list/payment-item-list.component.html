@@ -1,6 +1,6 @@
 <ubs-table-ngx [cover]="true" [items]="items()">
   <column name="countUnit">
-    <ng-template header> Adet </ng-template>
+    <ng-template header content="postral.payment-item.quantity"></ng-template>
     <ng-template data let-item="item">
       {{ item.quantity }}
       {{ item.unit || 'adet' }}
@@ -12,7 +12,7 @@
   </column>
 
   <column name="item">
-    <ng-template header> Ürün </ng-template>
+    <ng-template header content="postral.payment-item.item"></ng-template>
     <ng-template data let-item="item">
       <div>{{ item.name }}</div>
       @if (item.variation) {
@@ -24,7 +24,7 @@
   </column>
 
   <column name="unitAmount">
-    <ng-template header> Birim Fiyat </ng-template>
+    <ng-template header content="postral.payment-item.unit-price"></ng-template>
     <ng-template data let-item="item">
       <lib-money-display
         [amount]="item.unitAmount"
@@ -34,7 +34,7 @@
   </column>
 
   <column name="amount">
-    <ng-template header> Toplam </ng-template>
+    <ng-template header content="postral.payment-item.total"></ng-template>
     <ng-template data let-item="item">
       <lib-money-display
         [amount]="item.totalAmount"
@@ -44,7 +44,7 @@
   </column>
 
   <column name="taxAmount">
-    <ng-template header> Vergi/V.siz </ng-template>
+    <ng-template header content="postral.payment-item.tax-untax"></ng-template>
     <ng-template data let-item="item">
       <lib-money-display
         [amount]="item.taxAmount"
@@ -62,13 +62,13 @@
 
   @if (showComissions()) {
   <column name="comissionRate">
-    <ng-template header> Komisyon Oranı </ng-template>
+    <ng-template header content="postral.payment-item.commission-rate"></ng-template>
     <ng-template data let-item="item">
       {{ item.appComissionPercent }}
     </ng-template>
   </column>
   <column name="comissionAmount">
-    <ng-template header> Komisyon Tutarı </ng-template>
+    <ng-template header content="postral.payment-item.commission-amount"></ng-template>
     <ng-template data let-item="item">
       <lib-money-display
         [amount]="item.appComissionAmount"

@@ -70,7 +70,7 @@ export class SearchableDataTableComponent implements AfterViewInit {
   showFilter() {
     const reform = this.reformFilter();
     if (reform) {
-      this.basicOverlay.reformDialog(reform, 'Filtrele').subscribe((a) => {
+      this.basicOverlay.reformDialog(reform, 'general.filter.title').subscribe((a) => {
         if (a) {
           this.loadData();
         }

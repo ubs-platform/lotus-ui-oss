@@ -13,7 +13,7 @@
       </column>
 
       <column name="actions">
-        <ng-template header> Aksiyonlar </ng-template>
+        <ng-template header content="general.actions"></ng-template>
         <ng-template data let-item="item">
           <block-button
             [routerLink]="['../webhook', item.id]"

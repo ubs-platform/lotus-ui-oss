@@ -39,7 +39,7 @@
   </div>
   <div class="action-buttons">
     <block-button
-      stringContent="Vazgeç"
+      stringContent="general.cancel"
       iconClass="material-symbols-outlined"
       iconContent="close"
       buttonClass="border"
@@ -49,7 +49,7 @@
       buttonClass="primary"
       iconClass="material-symbols-outlined"
       iconContent="check"
-      [stringContent]="isEditMode ? 'Kaydet' : 'Davet Et'"
+      [stringContent]="isEditMode ? 'save' : 'general.members.invite'"
       [disabled]="!canSubmit"
       (click)="submit()"
     ></block-button>

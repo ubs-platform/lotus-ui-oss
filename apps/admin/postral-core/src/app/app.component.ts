@@ -84,7 +84,7 @@ export class AppComponent implements AfterViewInit, OnInit {
       } as Option));
 
       // Ürün, vergi ya da adres eklerken gönderilecek takım bilgisini seçmek için kullanılıyor. Kişisel hesap seçeneği de ekleniyor çünkü bazı kullanıcılar takımlara katılmadan kişisel hesaplarıyla işlem yapmayı tercih edebilir.
-      this.teamList.set(user ? [...teamList, { text: 'Kişisel hesap', value: undefined }] : []);
+      this.teamList.set(user ? [...teamList, { text: 'general.personal-account', value: undefined }] : []);
     });
   }
 
@@ -103,26 +103,26 @@ export class AppComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
     this.menus.set([
       {
-        text: 'Kullanıcı ödeme hesapları',
+        text: 'postral.menu.account-management',
         action: () => {
           this.router.navigate(["user", "payment-accounts", "account"]);
           return true;
         }
       }, {
-        text: "Takımlar",
+        text: "general.teams",
         action: () => {
           this.router.navigate(["publisher-teams"]);
           return true;
         }
       }, {
-        text: "Takım davetleri",
+        text: "general.teams.invitations",
         action: () => {
           this.router.navigate(["publisher-teams/invitations-for-me"]);
           return true;
         }
       }, 
       {
-        text: "Satış simülasyonu",
+        text: "postral.menu.sale-simulation",
         action: () => {
           this.router.navigate(["sale-simulation"]);
           return true;

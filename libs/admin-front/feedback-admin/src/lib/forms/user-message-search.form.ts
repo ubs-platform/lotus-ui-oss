@@ -12,7 +12,7 @@ export class UserMessageSearchForm implements IUserMessageSearch {
   @minky({
     inputType: 'select',
     selectItems: () => [
-      { text: 'Tümü', value: undefined },
+      { text: 'general.all', value: undefined },
       { text: 'İçerik bildir', value: 'CONTENT_REPORT' },
       { text: 'Hata - Bug', value: 'BUG' },
       { text: 'Öneri', value: 'SUGGESTION' },

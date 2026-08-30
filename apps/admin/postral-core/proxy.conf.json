@@ -22,6 +22,11 @@
     "pathRewrite": { "^/api/social": "/api" },
     "secure": false
   },
+  "/service/cscd/api": {
+    "target": "http://localhost:3000",
+    "pathRewrite": { "^/service/cscd": "" },
+    "secure": false
+  },
   "/service/payment": {
     "target": "http://localhost:3767",
     "pathRewrite": {

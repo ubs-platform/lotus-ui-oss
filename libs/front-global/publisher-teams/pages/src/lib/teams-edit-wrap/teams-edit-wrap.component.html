@@ -1,4 +1,9 @@
 <div class="h-full w-full flex flex-column pt-2">
+  <onpage-header
+    [topMinimal]="teamName"
+    content="general.team.info"
+  ></onpage-header>
+  <!-- <h2>TODO: Takım ismi</h2> -->
   <div>
     <lib-tab-view
       #tabView
@@ -6,8 +11,8 @@
       [initialTab]="currentMenu()"
       (tabSelected)="onTabSelected($event)"
     >
-      <ng-template block-page="edit" title="Takım bilgileri"> </ng-template>
-      <ng-template block-page="members" title="Takım üyeleri"> </ng-template>
+      <ng-template block-page="edit" title="general.team.info"> </ng-template>
+      <ng-template block-page="members" title="general.team.members"> </ng-template>
     </lib-tab-view>
   </div>
   <div class="flex-grow-1 overflow-auto main-scrolling-content">

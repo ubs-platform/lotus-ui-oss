@@ -30,12 +30,13 @@
     </ng-template>
   </column>
   <column name="actions">
-    <ng-template header> Aksiyonlar </ng-template>
+    <ng-template header content="general.actions"></ng-template>
     <ng-template data let-item="item">
       <block-button
         buttonClass="primary"
         iconClass="material-symbols-outlined" iconContent="edit"
         routerLink="{{ item._id }}"
+        stringContent="general.edit.verb"
         >Düzenle</block-button
       >
       <block-button

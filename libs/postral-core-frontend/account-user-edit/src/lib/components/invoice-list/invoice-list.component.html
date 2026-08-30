@@ -13,19 +13,19 @@
         <searchable-data-table url="/service/payment/api/invoice/_search"
           [otherFilter]="{ searchSide: historySearchSide() }" [cover]="true" [reformFilter]="reform()" #dataTable>
           <column name="id">
-            <ng-template header> ID </ng-template>
+            <ng-template header content="general.id"></ng-template>
             <ng-template data let-item="item"> {{ item.id }} </ng-template>
           </column>
           <column name="paymentId">
-            <ng-template header> Ödeme ID </ng-template>
+            <ng-template header content="postral.invoice.payment-id"></ng-template>
             <ng-template data let-item="item"> {{ item.paymentId }} </ng-template>
           </column>
           <column name="finalized">
-            <ng-template header> Durum </ng-template>
+            <ng-template header content="general.status"></ng-template>
             <ng-template data let-item="item"> {{ item.finalized ? 'Kesinleştirilmiş' : 'Beklemede' }} </ng-template>
           </column>
           <column name="actions">
-            <ng-template header> İşlemler </ng-template>
+            <ng-template header content="general.actions"></ng-template>
             <ng-template data let-item="item">
               <block-button buttonClass="secondary" [routerLink]="['..', item.id]" stringContent="Detay"
                 iconClass="material-symbols-outlined" iconContent="visibility">

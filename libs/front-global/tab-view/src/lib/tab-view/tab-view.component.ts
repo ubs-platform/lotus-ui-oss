@@ -6,9 +6,10 @@ import {
 } from '@lotus/front-global/ubs-touch-ngx';
 import { BlockPartBaseButtonComponent } from 'libs/front-global/button/src/lib/block-part-base-button/block-part-base-button.component';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
+import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
 @Component({
   selector: 'lib-tab-view',
-  imports: [CommonModule, UbsTouchNgxModule, FrontGlobalButtonModule],
+  imports: [CommonModule, UbsTouchNgxModule, FrontGlobalButtonModule, UbsTranslatorNgxModule],
   templateUrl: './tab-view.component.html',
   styleUrl: './tab-view.component.css',
 })

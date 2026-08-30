@@ -1,7 +1,7 @@
 <div class="h-full w-full flex flex-column">
   <div class="flex flex-row-reverse w-full gap-2 mb-2">
     <block-button
-      stringContent="Yeni takım oluştur"
+      stringContent="general.team.new"
       iconClass="material-symbols-outlined"
       iconContent="add"
       (click)="createNewTeam()"
@@ -30,13 +30,13 @@
           </p>
           <div class="action-buttons">
             <block-button
-              stringContent="Yeni takım oluştur"
+              stringContent="general.team.new"
               iconClass="material-symbols-outlined"
               iconContent="add"
               (click)="createNewTeam()"
             ></block-button>
             <block-button
-              stringContent="Davetlerim"
+              stringContent="general.invitations.for-me"
               iconClass="material-symbols-outlined"
               iconContent="inbox"
               routerLink="invitations-for-me"
@@ -57,33 +57,33 @@
       </column>
 
       <column name="actions" width="30%">
-        <ng-template header>Aksiyonlar </ng-template>
+        <ng-template header content="general.actions"></ng-template>
         <ng-template data let-item="item">
           <div>
             <div class="action-buttons">
               <block-button
-                stringContent="Düzenle"
+                stringContent="general.edit.verb"
                 iconClass="material-symbols-outlined"
                 iconContent="edit"
                 [routerLink]="[item.id, 'edit']"
               ></block-button>
               <block-button
-                stringContent="Üyeler"
+                stringContent="general.members"
                 iconClass="material-symbols-outlined"
                 iconContent="group"
                 [routerLink]="[item.id, 'members']"
               ></block-button>
               <!-- <block-button stringContent="Gruptan ayrıl" iconClass="material-symbols-outlined" iconContent="logout"></block-button> -->
               <block-button
-                stringContent="Sil"
+                stringContent="general.delete"
                 iconClass="material-symbols-outlined"
                 iconContent="delete"
                 (click)="deleteTeam(item)"
               ></block-button>
-              @if (adminMode()) { @if(eogTrusted()[item.id] != null) { @if
-              (eogTrusted()[item.id]) {
+              @if (adminMode()&& showTrustedTeams()) { @if(eogTrusted()[item.id]
+              != null) { @if (eogTrusted()[item.id]) {
               <block-button
-                stringContent="Takıma güvenmeyi bırak"
+                stringContent="general.trust-team.revoke"
                 iconContent="heart_broken"
                 iconClass="material-symbols-outlined"
                 (click)="setEogTrusted(item.id, false)"
@@ -92,7 +92,7 @@
               <block-button
                 iconClass="material-symbols-outlined"
                 iconContent="verified"
-                stringContent="Takıma güven"
+                stringContent="general.trust-team.grant"
                 (click)="setEogTrusted(item.id, true)"
               ></block-button>
               } } }

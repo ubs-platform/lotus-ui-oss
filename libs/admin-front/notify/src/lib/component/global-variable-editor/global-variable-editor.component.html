@@ -33,7 +33,7 @@
       <ng-template data let-item="item"> {{ item.value }} </ng-template>
     </column>
     <column name="Actions">
-      <ng-template header> Aksiyonlar </ng-template>
+      <ng-template header content="general.actions"></ng-template>
       <ng-template data let-item="item">
         <block-button buttonClass="primary m-1" iconClass="material-symbols-outlined" iconContent="edit"
           (click)="edit(globalVariable, item.key, item.value)"></block-button>

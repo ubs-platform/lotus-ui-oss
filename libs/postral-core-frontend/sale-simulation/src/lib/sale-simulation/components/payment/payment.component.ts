@@ -182,8 +182,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
           );
         } else if (pi.paymentStatus === 'FAILED') {
           this.basicOverlay.alert(
-            'Ödeme başarısız',
-            'Ödeme alınamadı',
+            'payment.error.receive',
+            'payment.error.receive',
             'error'
           );
         }

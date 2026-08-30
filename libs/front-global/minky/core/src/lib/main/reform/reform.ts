@@ -53,7 +53,6 @@ export class Reform<T = any> {
     }
 
     this._initialValue = JSON.parse(JSON.stringify(this._value));
-
     this.carrierManager = new CarrierManager({
       getValueByPath: (p) => this.getValueByPath(p),
       setValueByPath: (p, value) => this.setValueByPath(p, value),
@@ -71,7 +70,7 @@ export class Reform<T = any> {
             meta.selectItems?.({
               app: this.appEnv,
               parameters: this._parameters,
-              state: { formValue: this._value },
+              state: { formValue: this._value, onChanges: this.valueUpdate.asObservable() },
             }) || [];
         }
         console.warn('MINKY: Unable to find related meta for select items');
@@ -80,7 +79,7 @@ export class Reform<T = any> {
       combinedEnvironment: () => ({
         app: this.appEnv,
         parameters: this._parameters,
-        state: { formValue: this._value },
+        state: { formValue: this._value, onChanges: this.valueUpdate.asObservable() },
       }),
     });
   }

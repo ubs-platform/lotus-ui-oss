@@ -1,7 +1,7 @@
 <div class="h-full w-full gap-4 flex flex-column overflow-auto">
   @if (loading()) {
   <div class="mona-card">
-    <p class="text-center">Yükleniyor...</p>
+    <p class="text-center">{{ 'general.loading' | translate }}</p>
   </div>
   } @else if (error()) {
   <div class="mona-card">
@@ -10,47 +10,47 @@
   } @else if (reportInfo()) {
 
   <div class="report-info-section mona-card">
-    <h2 class="mb-2">Rapor Bilgileri</h2>
+    <h2 class="mb-2">{{ 'postral.reports.report-info' | translate }}</h2>
     <div class="info-grid gap-3">
       <div class="info-item">
-        <span class="label">Rapor ID:</span>
+        <span class="label">{{ 'postral.reports.report-id' | translate }}:</span>
         <span class="value">{{ reportInfo()!.id }}</span>
       </div>
       <div class="info-item">
-        <span class="label">Hesap:</span>
+        <span class="label">{{ 'postral.reports.account' | translate }}:</span>
         <span class="value">{{
           reportInfo()!.accountName || reportInfo()!.accountId
         }}</span>
       </div>
       <div class="info-item">
-        <span class="label">Rapor tipi:</span>
+        <span class="label">{{ 'postral.reports.report-type' | translate }}:</span>
         <span class="value">{{ reportInfo()!.reportType }}</span>
       </div>
       <div class="info-item">
-        <span class="label">Dönem:</span>
+        <span class="label">{{ 'postral.reports.period' | translate }}:</span>
         <span class="value">{{ reportInfo()!.periodLabel }}</span>
       </div>
       <div class="info-item">
-        <span class="label">Para Birimi:</span>
+        <span class="label">{{ 'postral.reports.currency' | translate }}:</span>
         <span class="value">{{ reportInfo()!.currency }}</span>
       </div>
       <div class="info-item">
-        <span class="label">Arşivlendi:</span>
+        <span class="label">{{ 'postral.reports.archived' | translate }}:</span>
         <lotus-web-status-badge
           [color]="reportInfo()!.archived ? 'gray' : 'green'"
-          [label]="reportInfo()!.archived ? 'Arşivlendi' : 'Aktif'"
+          [label]="reportInfo()!.archived ? ('postral.reports.archived' | translate) : ('postral.reports.active' | translate)"
         ></lotus-web-status-badge>
       </div>
       @if (reportInfo()!.createdAt) {
       <div class="info-item">
-        <span class="label">Oluşturma Tarihi:</span>
+        <span class="label">{{ 'postral.reports.created-at' | translate }}:</span>
         <span class="value">{{
           reportInfo()!.createdAt | date : 'dd MMMM yyyy, HH:mm:ss'
         }}</span>
       </div>
       } @if (reportInfo()!.lastDigestedAt) {
       <div class="info-item">
-        <span class="label">Son İşlenen Tarih:</span>
+        <span class="label">{{ 'postral.reports.last-digested-at' | translate }}:</span>
         <span class="value">{{
           reportInfo()!.lastDigestedAt | date : 'dd MMMM yyyy, HH:mm:ss'
         }}</span>
@@ -60,14 +60,14 @@
   </div>
 
   <div class="report-summary-section mona-card">
-    <h2 class="mb-2">Özet</h2>
+    <h2 class="mb-2">{{ 'postral.reports.summary' | translate }}</h2>
     <div class="info-grid gap-3">
       <div class="info-item">
-        <span class="label">Ödeme Sayısı:</span>
+        <span class="label">{{ 'postral.reports.payment-count' | translate }}:</span>
         <span class="value">{{ reportInfo()!.paymentCount }}</span>
       </div>
       <div class="info-item">
-        <span class="label">Toplam Satış:</span>
+        <span class="label">{{ 'postral.reports.total-sale-amount' | translate }}:</span>
         <span class="value">
           <lib-money-display
             [amount]="reportInfo()!.totalSaleAmount"
@@ -76,7 +76,7 @@
         </span>
       </div>
       <div class="info-item">
-        <span class="label">Toplam İade:</span>
+        <span class="label">{{ 'postral.reports.total-refund-amount' | translate }}:</span>
         <span class="value">
           <lib-money-display
             [amount]="reportInfo()!.totalRefundAmount"
@@ -85,7 +85,7 @@
         </span>
       </div>
       <div class="info-item">
-        <span class="label">Net Satış:</span>
+        <span class="label">{{ 'postral.reports.net-sale-amount' | translate }}:</span>
         <span class="value">
           <lib-money-display
             [amount]="reportInfo()!.netSaleAmount"
@@ -94,7 +94,7 @@
         </span>
       </div>
       <div class="info-item">
-        <span class="label">Toplam Satış Vergisi:</span>
+        <span class="label">{{ 'postral.reports.total-sale-tax-amount' | translate }}:</span>
         <span class="value">
           <lib-money-display
             [amount]="reportInfo()!.totalSaleTaxAmount"
@@ -103,7 +103,7 @@
         </span>
       </div>
       <div class="info-item">
-        <span class="label">Toplam İade Vergisi:</span>
+        <span class="label">{{ 'postral.reports.total-refund-tax-amount' | translate }}:</span>
         <span class="value">
           <lib-money-display
             [amount]="reportInfo()!.totalRefundTaxAmount"
@@ -112,7 +112,7 @@
         </span>
       </div>
       <div class="info-item">
-        <span class="label">Net Vergi:</span>
+        <span class="label">{{ 'postral.reports.net-tax-amount' | translate }}:</span>
         <span class="value">
           <lib-money-display
             [amount]="reportInfo()!.netTaxAmount"
@@ -121,7 +121,7 @@
         </span>
       </div>
       <div class="info-item">
-        <span class="label">Vergisiz Gelir:</span>
+        <span class="label">{{ 'postral.reports.net-revenue' | translate }}:</span>
         <span class="value">
           <lib-money-display
             [amount]="reportInfo()!.netRevenue"
@@ -131,7 +131,7 @@
       </div>
 
       <div class="info-item">
-        <span class="label">Masraflar olmadan net gelir:</span>
+        <span class="label">{{ 'postral.reports.net-revenue-without-expense' | translate }}:</span>
         <span class="value">
           <lib-money-display
             [amount]="reportInfo()!.netRevenueWithoutExpense"
@@ -140,7 +140,7 @@
         </span>
       </div>
       <div class="info-item">
-        <span class="label">Masraflar:</span>
+        <span class="label">{{ 'postral.reports.expense' | translate }}:</span>
         <span class="value">
           <lib-money-display
             [amount]="reportInfo()!.totalExpense"
@@ -153,18 +153,18 @@
 
   @if (reportInfo()!.taxGroups && reportInfo()!.taxGroups.length > 0) {
   <div class="tax-groups-section mona-card">
-    <h2 class="mb-2">Vergi Grupları</h2>
+    <h2 class="mb-2">{{ 'postral.reports.tax-groups' | translate }}</h2>
     <div class="flex flex-column gap-3">
       @for (group of reportInfo()!.taxGroups; track group.taxGroupName) {
       <div class="tax-group-item">
         <h3 class="mb-2">{{ group.taxGroupName }} (%{{ group.taxPercent }})</h3>
         <div class="info-grid gap-2">
           <div class="info-item">
-            <span class="label">Ödeme Sayısı:</span>
+            <span class="label">{{ 'postral.reports.payment-count' | translate }}:</span>
             <span class="value">{{ group.paymentCount }}</span>
           </div>
           <div class="info-item">
-            <span class="label">Toplam Satış:</span>
+            <span class="label">{{ 'postral.reports.total-sale-amount' | translate }}:</span>
             <span class="value"
               ><lib-money-display
                 [amount]="group.totalSaleAmount"
@@ -173,7 +173,7 @@
             ></span>
           </div>
           <div class="info-item">
-            <span class="label">Toplam İade:</span>
+            <span class="label">{{ 'postral.reports.total-refund-amount' | translate }}:</span>
             <span class="value"
               ><lib-money-display
                 [amount]="group.totalRefundAmount"
@@ -182,7 +182,7 @@
             ></span>
           </div>
           <div class="info-item">
-            <span class="label">Net Satış:</span>
+            <span class="label">{{ 'postral.reports.net-sale-amount' | translate }}:</span>
             <span class="value"
               ><lib-money-display
                 [amount]="group.netSaleAmount"
@@ -191,7 +191,7 @@
             ></span>
           </div>
           <div class="info-item">
-            <span class="label">Toplam Satış Vergisi:</span>
+            <span class="label">{{ 'postral.reports.total-sale-tax-amount' | translate }}:</span>
             <span class="value"
               ><lib-money-display
                 [amount]="group.totalSaleTaxAmount"
@@ -200,7 +200,7 @@
             ></span>
           </div>
           <div class="info-item">
-            <span class="label">Toplam İade Vergisi:</span>
+            <span class="label">{{ 'postral.reports.total-refund-tax-amount' | translate }}:</span>
             <span class="value"
               ><lib-money-display
                 [amount]="group.totalRefundTaxAmount"
@@ -209,7 +209,7 @@
             ></span>
           </div>
           <div class="info-item">
-            <span class="label">Net Vergi:</span>
+            <span class="label">{{ 'postral.reports.net-tax-amount' | translate }}:</span>
             <span class="value"
               ><lib-money-display
                 [amount]="group.netTaxAmount"
@@ -218,7 +218,7 @@
             ></span>
           </div>
           <div class="info-item">
-            <span class="label">Vergisiz Gelir:</span>
+            <span class="label">{{ 'postral.reports.net-revenue' | translate }}:</span>
             <span class="value"
               ><lib-money-display
                 [amount]="group.netRevenue"
@@ -233,7 +233,7 @@
   </div>
   } @if (reportInfo()!.expenses && reportInfo()!.expenses.length > 0) {
   <div class="expenses-section mona-card">
-    <h2 class="mb-2">Giderler</h2>
+    <h2 class="mb-2">{{ 'postral.reports.expenses' | translate }}</h2>
     <div class="flex flex-column gap-3">
       @for (expense of reportInfo()!.expenses; track expense.expenseKey) {
       <div class="expense-item">
@@ -245,7 +245,7 @@
         </h3>
         <div class="info-grid gap-2">
           <div class="info-item">
-            <span class="label">Miktar:</span>
+            <span class="label">{{ 'postral.reports.amount' | translate }}:</span>
             <span class="value"
               ><lib-money-display
                 [amount]="expense.expenseAmount"
@@ -261,12 +261,12 @@
   }
 
   <div class="actions-section mona-card">
-    <h3 class="mb-3">İşlemler</h3>
+    <h3 class="mb-3">{{ 'postral.reports.actions' | translate }}</h3>
     <div class="flex flex-column gap-2">
       @if (!reportInfo()!.archived) {
       <block-button
         buttonClass="border"
-        stringContent="Raporu tekrar oluştur"
+        [stringContent]="'postral.reports.reconstruct-report' | translate"
         iconClass="material-symbols-outlined" iconContent="refresh"
         (click)="reconstructReport()"
       ></block-button>
@@ -276,7 +276,7 @@
 
   } @else {
   <div class="mona-card">
-    <p class="text-center">Rapor bulunamadı</p>
+    <p class="text-center">{{ 'postral.reports.report-not-found' | translate }}</p>
   </div>
   }
 </div>

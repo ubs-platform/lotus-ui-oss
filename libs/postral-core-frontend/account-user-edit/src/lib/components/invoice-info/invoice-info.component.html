@@ -13,61 +13,61 @@
     } @else if (invoiceInfo()) {
 
     <div class="invoice-info-section mona-card">
-      <h2 class="mb-2">Fatura Bilgileri</h2>
+      <h2 class="mb-2">{{ 'postral.invoice.info' | translate }}</h2>
       <div class="info-grid gap-3">
         <div class="info-item">
-          <span class="label">Fatura ID:</span>
+          <span class="label">{{ 'postral.invoice.id' | translate }}:</span>
           <span class="value">{{ invoiceInfo()!.id }}</span>
         </div>
         @if (invoiceInfo()!.invoiceNumber) {
         <div class="info-item">
-          <span class="label">Fatura No:</span>
+          <span class="label">{{ 'postral.invoice.number' | translate }}:</span>
           <span class="value">{{ invoiceInfo()!.invoiceNumber }}</span>
         </div>
         } @if (invoiceInfo()!.invoiceDate) {
         <div class="info-item">
-          <span class="label">Fatura Tarihi:</span>
+          <span class="label">{{ 'postral.invoice.date' | translate }}:</span>
           <span class="value">{{
             invoiceInfo()!.invoiceDate | date : 'short'
           }}</span>
         </div>
         }
         <div class="info-item">
-          <span class="label">Kesinleştirildi:</span>
+          <span class="label">{{ 'postral.invoice.finalized' | translate }}:</span>
           <lotus-web-status-badge
             [color]="invoiceInfo()!.finalized ? 'green' : 'gray'"
-            [label]="invoiceInfo()!.finalized ? 'Kesinleştirildi' : 'Taslak'"
+            [label]="invoiceInfo()!.finalized ? ('postral.invoice.finalized' | translate) : ('postral.invoice.draft' | translate)"
           ></lotus-web-status-badge>
         </div>
         @if (invoiceInfo()!.paymentId) {
         <div class="info-item">
-          <span class="label">Ödeme ID:</span>
+          <span class="label">{{ 'postral.invoice.payment-id' | translate }}:</span>
           <span class="value">{{ invoiceInfo()!.paymentId }}</span>
         </div>
         } @if (invoiceInfo()!.sellerPaymentOrderId) {
         <div class="info-item">
-          <span class="label">Satıcı Sipariş ID:</span>
+          <span class="label">{{ 'postral.invoice.seller-payment-order-id' | translate }}:</span>
           <span class="value">{{ invoiceInfo()!.sellerPaymentOrderId }}</span>
         </div>
         } @if (invoiceInfo()!.uploadedByUserId) {
         <div class="info-item">
-          <span class="label">Yükleyen Kullanıcı:</span>
+          <span class="label">{{ 'postral.invoice.uploaded-by-user-id' | translate }}:</span>
           <span class="value">{{ invoiceInfo()!.uploadedByUserId }}</span>
         </div>
         } @if (invoiceInfo()!.notes) {
         <div class="info-item">
-          <span class="label">Notlar:</span>
+          <span class="label">{{ 'postral.invoice.notes' | translate }}:</span>
           <span class="value">{{ invoiceInfo()!.notes }}</span>
         </div>
         }
         <div class="info-item">
-          <span class="label">Oluşturma Tarihi:</span>
+          <span class="label">{{ 'general.creation-date' | translate }}:</span>
           <span class="value">{{
             invoiceInfo()!.createdAt | date : 'short'
           }}</span>
         </div>
         <div class="info-item">
-          <span class="label">Güncellenme Tarihi:</span>
+          <span class="label">{{ 'general.update-date' | translate }}:</span>
           <span class="value">{{
             invoiceInfo()!.updatedAt | date : 'short'
           }}</span>
@@ -78,35 +78,35 @@
     <div class="flex w-full flex-column lg:flex-row gap-2 items-start">
       <!-- İşletmeci Bilgileri -->
       <div class="lg:flex-grow-1 seller-section mona-card">
-        <h3 class="mb-2">İşletmeci Bilgileri</h3>
+        <h3 class="mb-2">{{ 'postral.invoice.seller-info' | translate }}</h3>
         @if (getSellerAddress()) {
         <div class="address-info mb-3">
-          <p class="font-semibold">Adres:</p>
+          <p class="font-semibold">{{ 'postral.address' | translate }}:</p>
           <p class="text-sm">
             {{ getSellerAddress()!.streetName }}
             {{ getSellerAddress()!.buildingNumber }}
           </p>
           <p class="text-sm">
             {{ getSellerAddress()!.district }}
-            {{ getSellerAddress()!.cityName }}/{{ getSellerAddress()!.country }}
+            {{ getSellerAddress()!.cityName }}{{ getSellerAddress()!.countrySubentity ? '/' + getSellerAddress()!.countrySubentity : '' }}/{{ getSellerAddress()!.countryReadName || getSellerAddress()!.country }}
           </p>
           @if (getSellerAddress()!.postalZone) {
           <p class="text-sm">
-            Posta Kodu: {{ getSellerAddress()!.postalZone }}
+            {{ 'postral.postal-code' | translate }}: {{ getSellerAddress()!.postalZone }}
           </p>
           }
         </div>
         } @if (getSellerAccount()) {
         <div class="account-info">
-          <p class="font-semibold">Hesap Bilgileri:</p>
+          <p class="font-semibold">{{ 'general.account.info' | translate }}:</p>
           @if (getSellerAccount()!.name) {
-          <p class="text-sm">Hesap Adı: {{ getSellerAccount()!.name }}</p>
+          <p class="text-sm">{{ 'postral.account-name' | translate }}: {{ getSellerAccount()!.name }}</p>
           } @if (getSellerAccount()!.legalIdentity) {
           <p class="text-sm">
             {{
               getSellerAccount()?.type == 'INDIVIDUAL'
-                ? 'TC Kimlik No'
-                : 'Vergi No'
+                ? ('postral.national-id' | translate)
+                : ('postral.tax-number' | translate)
             }}: {{ getSellerAccount()!.legalIdentity }}
           </p>
           }
@@ -123,37 +123,35 @@
 
       <!-- Müşteri Bilgileri -->
       <div class="lg:flex-grow-1 customer-section mona-card">
-        <h3 class="mb-2">Müşteri Bilgileri</h3>
+        <h3 class="mb-2">{{ 'postral.invoice.customer-info' | translate }}</h3>
         @if (getCustomerAddress()) {
         <div class="address-info mb-3">
-          <p class="font-semibold">Adres:</p>
+          <p class="font-semibold">{{ 'postral.address' | translate }}:</p>
           <p class="text-sm">
             {{ getCustomerAddress()!.streetName }}
             {{ getCustomerAddress()!.buildingNumber }}
           </p>
           <p class="text-sm">
             {{ getCustomerAddress()!.district }}
-            {{ getCustomerAddress()!.cityName }}/{{
-              getCustomerAddress()!.country
-            }}
+            {{ getCustomerAddress()!.cityName }}{{ getCustomerAddress()!.countrySubentity ? '/' + getCustomerAddress()!.countrySubentity : '' }}/{{ getCustomerAddress()!.countryReadName || getCustomerAddress()!.country }}
           </p>
           @if (getCustomerAddress()!.postalZone) {
           <p class="text-sm">
-            Posta Kodu: {{ getCustomerAddress()!.postalZone }}
+            {{ 'postral.postal-code' | translate }}: {{ getCustomerAddress()!.postalZone }}
           </p>
           }
         </div>
         } @if (getCustomerAccount()) {
         <div class="account-info">
-          <p class="font-semibold">Hesap Bilgileri:</p>
+          <p class="font-semibold">{{ 'general.account.info' | translate }}:</p>
           @if (getCustomerAccount()!.name) {
-          <p class="text-sm">Hesap Adı: {{ getCustomerAccount()!.name }}</p>
+          <p class="text-sm">{{ 'postral.account-name' | translate }}: {{ getCustomerAccount()!.name }}</p>
           } @if (getCustomerAccount()!.legalIdentity) {
           <p class="text-sm">
             {{
               getCustomerAccount()?.type == 'INDIVIDUAL'
-                ? 'TC Kimlik No'
-                : 'Vergi No'
+                ? ('postral.national-id' | translate)
+                : ('postral.tax-number' | translate)
             }}: {{ getCustomerAccount()!.legalIdentity }}
           </p>
           }
@@ -170,21 +168,21 @@
 
     @if (items().length > 0) {
     <div class="payment-items-section flex-grow-1 mona-card">
-      <h2 class="mb-2">Ödeme Kalemleri</h2>
+      <h2 class="mb-2">{{ 'postral.payment.items' | translate }}</h2>
       <lib-payment-item-list [items]="items()"></lib-payment-item-list>
     </div>
     }
     <div class="payment-items-section flex-grow-1 mona-card">
-      <h2 class="mb-2">Ekstra notlar</h2>
+      <h2 class="mb-2">{{ 'postral.extra-notes' | translate }}</h2>
       <!-- Fatura Numarası ve ekstra başka notlar-->
     </div>
     <!-- İşlemler -->
     <div class="actions-section mona-card">
-      <h3 class="mb-3">İşlemler</h3>
+      <h3 class="mb-3">{{ 'general.actions' | translate }}</h3>
       <div class="flex flex-column gap-2">
         @if (invoiceInfo()!.finalized && hasInvoiceFile()) {
         <block-button
-          stringContent="Fatura dosyasını indir"
+          stringContent="postral.invoice.download-file"
           buttonClass="border"
           iconClass="material-symbols-outlined" iconContent="download"
           (click)="downloadInvoiceFile()"
@@ -192,14 +190,14 @@
         } @if (!invoiceInfo()!.finalized) {
         <div class="flex gap-2">
           <block-button
-            stringContent="UBL XML İndir"
+            stringContent="postral.invoice.download-ubl"
             buttonClass="border"
             iconClass="material-symbols-outlined" iconContent="code"
             (click)="downloadUblFile()"
           ></block-button>
           @if (hasInvoiceFile()) {
           <block-button
-            stringContent="Fatura dosyasını indir"
+            stringContent="postral.invoice.download-file"
             buttonClass="border"
             iconClass="material-symbols-outlined" iconContent="download"
             (click)="downloadInvoiceFile()"
@@ -209,8 +207,8 @@
             buttonClass="border"
             [stringContent]="
               hasInvoiceFile()
-                ? 'Fatura Dosyasını Güncelle'
-                : 'Fatura Dosyası Yükle'
+                ? 'postral.invoice.update-file'
+                : 'postral.invoice.upload-file'
             "
             iconClass="material-symbols-outlined" iconContent="upload"
             (click)="importInvoiceFile()"
@@ -219,7 +217,7 @@
         <div class="flex gap-2">
           <block-button
             buttonClass="primary"
-            stringContent="Faturayı kesinleştir"
+            stringContent="postral.invoice.finalize"
             iconClass="material-symbols-outlined" iconContent="check"
             (click)="finalizeInvoice()"
           >
@@ -227,7 +225,7 @@
           <block-button
             buttonClass="error"
             iconClass="material-symbols-outlined" iconContent="delete"
-            stringContent="Faturayı sil"
+            stringContent="postral.invoice.delete"
             (click)="deleteInvoice()"
           >
           </block-button>
@@ -235,16 +233,14 @@
 
         } @else {
         <div>
-          Kesinleştirilmiş bir faturaya dosya yüklenemez veya silinemez. Eğer
-          fatura değiştirilmesi gerekiyorsa iade edilip işlem tekrar
-          yapılmalıdır.
+          {{ 'postral.invoice.finalized-warning' | translate }}
         </div>
         }
       </div>
     </div>
     } @else {
     <div class="mona-card">
-      <p class="text-center">Fatura bulunamadı</p>
+      <p class="text-center">{{ 'postral.invoice.not-found' | translate }}</p>
     </div>
     }
   </div>

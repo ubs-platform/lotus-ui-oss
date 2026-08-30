@@ -11,7 +11,7 @@
           @for (columnItem of columnsContent(); track $index) {
           <column [name]="columnItem.name()">
             @if (columnItem.head?.templateRef) {
-            <ng-template header>
+            <ng-template header [content]="columnItem.head!.content()">
               <div *ngTemplateOutlet="columnItem.head!.templateRef"></div>
             </ng-template>
             } @if (columnItem.data?.templateRef) {
@@ -33,10 +33,10 @@
       </div>
     </div>
     <div class="w-full flex gap-1 align-items-center justify-content-center">
-      <block-button (click)="back()" stringContent="Geri" iconClass="material-symbols-outlined" iconContent="chevron_left"
+      <block-button (click)="back()" stringContent="general.previous" iconClass="material-symbols-outlined" iconContent="chevron_left"
         [disabled]="firstPage()"></block-button>
       {{ pageHumanReadable() }} / {{ maxPage() }}
-      <block-button (click)="next()" [disabled]="lastPage()" iconPosition="RIGHT" stringContent="İleri"
+      <block-button (click)="next()" [disabled]="lastPage()" iconPosition="RIGHT" stringContent="general.next"
         iconClass="material-symbols-outlined" iconContent="chevron_right"></block-button>
     </div>
   </div>

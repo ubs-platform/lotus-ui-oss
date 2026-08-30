@@ -10,6 +10,7 @@ import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import { FrontGlobalPromptOverlaysModule } from '../../../prompt-overlays/src/lib/front-global-prompt-overlays.module';
 import { EmptyDataDirective } from './directives/empty-data.directive';
 import { SearchableDataTableFilterConfigHolderComponent } from './components/searchable-data-table-filter-config-holder/searchable-data-table-filter-config-holder.component';
+import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { SearchableDataTableFilterConfigHolderComponent } from './components/sea
     TableModule,
     FrontGlobalButtonModule,
     FrontGlobalPromptOverlaysModule,
+    UbsTranslatorNgxModule,
   ],
   declarations: [
     TableComponent,

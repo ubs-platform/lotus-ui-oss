@@ -21,6 +21,7 @@ import { PaymentChannelConfigListComponent } from './components/payment-channel-
 import { PaymentChannelConfigEditComponent } from './components/payment-channel-config-edit/payment-channel-config-edit.component';
 import { ExternalPlatformListComponent } from './components/external-platform-list/external-platform-list.component';
 import { ExternalPlatformEditComponent } from './components/external-platform-edit/external-platform-edit.component';
+import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
 // import { AccountsComponent } from "@lotus/postral-core-frontend/account-user-edit"
 
 @NgModule({
@@ -36,6 +37,7 @@ import { ExternalPlatformEditComponent } from './components/external-platform-ed
     AccountUserEditModule,
     ReformDataEditComponent,
     DataListLayoutModule,
+    UbsTranslatorNgxModule
   ],
   declarations: [HomepageComponent, AdminFrameComponent, ComissionListComponent, ComissionEditComponent, AdminSettingsEditComponent, AdminOperationsComponent, PaymentChannelConfigListComponent, PaymentChannelConfigEditComponent,
     ExternalPlatformListComponent, ExternalPlatformEditComponent

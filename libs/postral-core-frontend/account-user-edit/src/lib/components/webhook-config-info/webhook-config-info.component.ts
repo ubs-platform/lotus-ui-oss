@@ -62,7 +62,7 @@ export class WebhookConfigInfoComponent {
                 return this.webhookConfigService.create({ ...data, accountId });
             },
             afterSaveSuccess: (out: WebhookConfigDTO) => {
-                this.basicOverlay.alert('Başarılı', 'Webhook konfigürasyonu kaydedildi.', 'success');
+                this.basicOverlay.alert('general.success', 'Webhook konfigürasyonu kaydedildi.', 'success');
                 this.existingId.set(out.id);
                 if (out.eventKey && out.eventKey !== '***') {
                     this.createdEventKey.set(out.eventKey);
@@ -98,7 +98,7 @@ export class WebhookConfigInfoComponent {
         const eventKey = this.createdEventKey();
         if (eventKey) {
             navigator.clipboard.writeText(eventKey).then(() => {
-                this.basicOverlay.alert('Başarılı', 'Event Key kopyalandı.', 'success');
+                this.basicOverlay.alert('general.success', 'Event Key kopyalandı.', 'success');
             });
         }
     }

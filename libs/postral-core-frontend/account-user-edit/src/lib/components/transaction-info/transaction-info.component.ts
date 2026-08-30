@@ -81,14 +81,14 @@ export class TransactionInfoComponent implements OnInit {
                 this.paymentItems.set(paymentItems);
               },
               error: (err) => {
-                this.basicOverlay.alert('Hata oluştu', err, 'error');
+                this.basicOverlay.alert('general.error-occurred', err, 'error');
               },
             });
           this.fetchInvoiceExistence();
           // this.paymentItems.set(transactionInfo.items || []);
         },
         error: (err) => {
-          this.basicOverlay.alert('Hata oluştu', err, 'error');
+          this.basicOverlay.alert('general.error-occurred', err, 'error');
         },
       });
 
@@ -102,7 +102,7 @@ export class TransactionInfoComponent implements OnInit {
   uploadInvoice() {
     const transaction = this.transactionInfo();
     if (!transaction) {
-      this.basicOverlay.alert('Hata', 'İşlem bilgisi bulunamadı.', 'error');
+      this.basicOverlay.alert('general.error', 'postral.transaction.not-found', 'error');
       return;
     }
 
@@ -123,14 +123,14 @@ export class TransactionInfoComponent implements OnInit {
             .subscribe({
               next: (response) => {
                 this.basicOverlay.alert(
-                  'Başarılı',
-                  'Fatura başarıyla yüklendi.',
+                  'general.success',
+                  'postral.invoice.upload-success',
                   'success'
                 );
                 this.hasInvoice.set(true);
               },
               error: (err) => {
-                this.basicOverlay.alert('Hata oluştu', err, 'error');
+                this.basicOverlay.alert('general.error-occurred', err, 'error');
               },
             });
         }
@@ -153,7 +153,7 @@ export class TransactionInfoComponent implements OnInit {
           );
         },
         error: (err) => {
-          this.basicOverlay.alert('Hata oluştu', err, 'error');
+          this.basicOverlay.alert('general.error-occurred', err, 'error');
         },
       });
   }
@@ -165,14 +165,14 @@ export class TransactionInfoComponent implements OnInit {
   createInvoice() {
     const transaction = this.transactionInfo();
     if (!transaction) {
-      this.basicOverlay.alert('Hata', 'İşlem bilgisi bulunamadı.', 'error');
+      this.basicOverlay.alert('general.error', 'postral.transaction.not-found', 'error');
       return;
     }
 
     this.basicOverlay
       .confirm(
-        'Fatura Oluştur',
-        'Bu işlem, mevcut işlem için bir fatura oluşturacaktır. Devam etmek istediğinize emin misiniz?'
+        'postral.invoice.create-confirm-title',
+        'postral.invoice.create-confirm-message'
       )
       .subscribe((confirmed) => {
         if (!confirmed) {
@@ -181,8 +181,8 @@ export class TransactionInfoComponent implements OnInit {
         this.invoiceService.createFromTransaction(transaction.id!).subscribe({
           next: (invoice) => {
             this.basicOverlay.alert(
-              'Başarılı',
-              'Fatura başarıyla oluşturuldu.',
+              'general.success',
+              'postral.invoice.created-success',
               'success'
             );
             this.invoiceList.set([...this.invoiceList(), invoice]);
@@ -190,7 +190,7 @@ export class TransactionInfoComponent implements OnInit {
             this.invoiceListMinimal()?.loadInvoices();
           },
           error: (err) => {
-            this.basicOverlay.alert('Hata oluştu', err, 'error');
+            this.basicOverlay.alert('general.error-occurred', err, 'error');
           },
         });
       });
@@ -205,8 +205,8 @@ export class TransactionInfoComponent implements OnInit {
 
     this.basicOverlay
       .confirm(
-        'Açık Faturayı Onayla',
-        'Bu ödemeyi tamamlandı olarak onaylamak istediğinize emin misiniz? Onayladıktan sonra geri alınamaz.'
+        'postral.invoice.confirm-open-title',
+        'postral.invoice.confirm-open-message'
       )
       .subscribe((confirmed) => {
         if (!confirmed) return;
@@ -217,13 +217,13 @@ export class TransactionInfoComponent implements OnInit {
             next: (payment) => {
               this.paymentInfo.set(payment);
               this.basicOverlay.alert(
-                'Başarılı',
-                'Açık fatura başarıyla onaylandı ve ödeme tamamlandı.',
+                'general.success',
+                'postral.invoice.confirm-open-success',
                 'success'
               );
             },
             error: (err) => {
-              this.basicOverlay.alert('Hata oluştu', err, 'error');
+              this.basicOverlay.alert('general.error-occurred', err, 'error');
             },
           });
       });

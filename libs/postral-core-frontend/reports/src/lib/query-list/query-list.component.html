@@ -13,49 +13,49 @@
       #table
     >
       <column name="id">
-        <ng-template header> Id </ng-template>
+        <ng-template header content="general.id"></ng-template>
         <ng-template data let-item="item">
           {{ item.id }}
         </ng-template>
       </column>
       <column name="reportType">
-        <ng-template header> Rapor Tipi </ng-template>
+        <ng-template header content="postral.reports.report-type"></ng-template>
         <ng-template data let-item="item">
           {{ ("postral.report-type." + item.reportType) | translate}}
         </ng-template>
       </column>
       <column name="name">
-        <ng-template header> Ad </ng-template>
+        <ng-template header content="general.name"></ng-template>
         <ng-template data let-item="item">
           {{ item.name }}
         </ng-template>
       </column>
       <column name="dateGrouping">
-        <ng-template header> Tarih Gruplaması </ng-template>
+        <ng-template header content="postral.reports.date-grouping"></ng-template>
         <ng-template data let-item="item">
           {{ item.dateGrouping }}
         </ng-template>
       </column>
       <!-- <column name="status">
-        <ng-template header> Durum </ng-template>
+        <ng-template header content="general.status"></ng-template>
         <ng-template data let-item="item">
           {{ item.status }}
         </ng-template>
       </column> -->
       <column name="createdAt">
-        <ng-template header> Oluşturulma Tarihi </ng-template>
+        <ng-template header content="general.creation-date"></ng-template>
         <ng-template data let-item="item">
           {{ item.createdAt | date : 'short' }}
         </ng-template>
       </column>
       <column name="updatedAt">
-        <ng-template header> Güncellenme Tarihi </ng-template>
+        <ng-template header content="general.update-date"></ng-template>
         <ng-template data let-item="item">
           {{ item.updatedAt | date : 'short' }}
         </ng-template>
       </column>
       <column name="actions">
-        <ng-template header> İşlemler </ng-template>
+        <ng-template header content="general.actions"></ng-template>
         <ng-template data let-item="item">
           <div class="action-buttons">
             <block-button
@@ -80,7 +80,7 @@
             ></block-button>
           </div>
           <!-- <block-button
-            stringContent="Düzenle"
+            stringContent="general.edit.verb"
             (click)="editItem(item)"
           ></block-button>
           <block-button

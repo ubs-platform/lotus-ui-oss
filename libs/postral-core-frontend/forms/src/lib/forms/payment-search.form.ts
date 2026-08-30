@@ -12,10 +12,10 @@ export class PaymentSearchForm
     inputType: 'select',
     selectItems: () => {
       return [
-        { text: 'Tümü', value: '' },
-        { text: 'ABD Doları', value: 'USD' },
-        { text: 'Euro', value: 'EUR' },
-        { text: 'Türk Lirası', value: 'TRY' },
+        { text: 'general.all', value: '' },
+        { text: 'postral.currencies.USD', value: 'USD' },
+        { text: 'postral.currencies.EUR', value: 'EUR' },
+        { text: 'postral.currencies.TRY', value: 'TRY' },
       ];
     },
   })
@@ -67,7 +67,7 @@ export class PaymentSearchForm
     inputType: 'select',
     selectItems: () => {
       return [
-        { value: '', text: 'Tümü' },
+        { value: '', text: 'general.all' },
         { value: 'INITIATED,WAITING', text: 'Bekleyenler' },
         { value: 'COMPLETED', text: 'Tamamlandı' },
         { value: 'FAILED', text: 'Başarısız' },

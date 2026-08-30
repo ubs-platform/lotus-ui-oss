@@ -1,13 +1,13 @@
 <ng-template #steeringConfig>
   <div>
     <toggle
-      label="Onbinlik"
+      label="postral.view.precision.4"
       [value]="moneyPrecision() === 4"
       (valueChange)="setMoneyPrecision($event ? 4 : 2)"
     ></toggle>
   </div>
   <div>
-    <sub>Eklenecek verinin sahibi</sub>
+    <sub>{{ 'general.owner-of-added-data' | translate }}</sub>
     <lib-custom-select
       minWidth="200px"
       placeholder="Takım ya da kişisel hesap"
@@ -28,12 +28,12 @@
     <div header-left class="hidden lg:flex gap-2 items-center">
       <block-button
         buttonClass="surface"
-        stringContent="Hesap yönetimi"
+        stringContent="postral.menu.account-management"
         routerLink="/user/payment-accounts/account"
       ></block-button>
       <block-button
         buttonClass="surface"
-        stringContent="Satış simülasyonu"
+        stringContent="postral.menu.sale-simulation"
         routerLink="/sale-simulation"
       ></block-button>
     </div>
@@ -58,7 +58,8 @@
     </ng-template>
     <ng-template appFooter>
       <h3>Postral Core</h3>
-      <p>© 2026 Tetakent (H.C.G). Tüm hakları saklıdır.</p>
+      <p>© 2026 Tetakent (H.C.G).</p>
+      <p>{{"general.all-rights-reserved" | translate}}</p>
       <div
         class="app-logo-with-tetakent"
         role="img"

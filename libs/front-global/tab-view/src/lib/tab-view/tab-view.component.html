@@ -5,7 +5,7 @@
       [buttonClass]="selectedTabName() === item.name() ? 'primary' : ''"
       (click)="onTabHeaderClick(item.name())"
     >
-      {{ item.title() }}</block-button
+      {{ item.title() | translate}}</block-button
     >
     }
   </div>

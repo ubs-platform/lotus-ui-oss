@@ -24,7 +24,7 @@ import {
 import { InputFieldLinkDirective } from '../input-field-link/input-field-link.directive';
 import { ButtonFieldLinkDirective } from '../button-field-link/button-field-link.directive';
 import { GroupLabelFieldLinkDirective } from '../group-label-field-link/group-label-field-link.directive';
-import { lastValueFrom, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'minky-reform-prime',
@@ -35,7 +35,9 @@ import { lastValueFrom, Observable } from 'rxjs';
 })
 export class ReformNgxPrimeComponent implements OnInit, AfterViewInit, OnChanges {
   readonly reform = input<Reform<any>>();
-  readonly gap = input(10);
+  readonly gap = input<number>(10);
+  readonly gapUnit = input<string>('px');
+  readonly gapPx = computed(() => `${this.gap()}${this.gapUnit()}`);
 
   @Output() afterCarrierInitialized = new EventEmitter<LinkCarrier[]>();
 
@@ -124,7 +126,9 @@ export class ReformNgxPrimeComponent implements OnInit, AfterViewInit, OnChanges
       if (result instanceof Promise) {
         this.feeds[carrier.path] = result;
       } else if (result instanceof Observable) {
-        this.feeds[carrier.path] = lastValueFrom(result);
+        result.subscribe((data) => {
+          this.feeds[carrier.path] = Promise.resolve(data);
+        });
       } else {
         this.feeds[carrier.path] = Promise.resolve(result);
       }
