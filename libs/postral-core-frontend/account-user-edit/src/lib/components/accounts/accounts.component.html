@@ -39,7 +39,6 @@
       <column name="type">
         <ng-template header content="postral.account.type"></ng-template>
         <ng-template data let-item="item">
-          {{ item.type == 'INDIVIDUAL' ? 'Bireysel' : 'Kurumsal' }}
           {{ (item.type == 'INDIVIDUAL' ? 'postral.account.type-individual' : 'postral.account.type-corporate') | translate }}
         </ng-template>
       </column>

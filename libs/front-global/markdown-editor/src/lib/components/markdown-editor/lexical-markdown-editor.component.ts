@@ -1,6 +1,7 @@
 //@ts-nocheck
 // Allah belanı versin mark zuckerberg, saçma sapan typescript seçimlerin yüzünden hata da debuglayamıyorum. senin reactın da instagramın da batsın amk
 // Mark Zuckerberg senin ben tüm sülaleni rm -rf / --no-preserve-root yapayım...
+import { SpoilerNode, $createSpoilerNode, $isSpoilerNode, SPOILER_TRANSFORMER } from './nodes/spoier.node';
 import {
     Component,
     input,
@@ -60,6 +61,7 @@ const MARKDOWN_TRANSFORMERS = [
     MATH_BLOCK_TRANSFORMER,   // block before inline — order matters
     MATH_INLINE_TRANSFORMER,
     IMAGE_TRANSFORMER,
+    SPOILER_TRANSFORMER,
     ...TRANSFORMERS.filter((t) => !('regExp' in t && /---/.test((t as any).regExp?.source ?? ''))),
 ];
 
@@ -157,6 +159,7 @@ export class LexicalMarkdownEditorComponent
         this.editor = createEditor({
             namespace: 'LotusMarkdownEditor',
             nodes: [
+                SpoilerNode,
                 ImageNode,
                 MathInlineNode,
                 MathBlockNode,
@@ -183,6 +186,7 @@ export class LexicalMarkdownEditorComponent
         this.registerBlockMathEnter();
         this.registerImagePasteMethod();
         this.registerUndoRedoEvents();
+        
 
         // Set initial markdown content
         this.valueInternal = this.value() ?? '';

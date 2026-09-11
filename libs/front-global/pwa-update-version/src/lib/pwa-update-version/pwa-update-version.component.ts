@@ -4,10 +4,11 @@ import { SwUpdate } from '@angular/service-worker';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { LoadingIndicationService } from '@lotus/front-global/user-service-wraps';
+import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
 
 @Component({
   selector: 'lib-pwa-update-version',
-  imports: [CommonModule, FrontGlobalButtonModule],
+  imports: [CommonModule, FrontGlobalButtonModule, UbsTranslatorNgxModule],
   templateUrl: './pwa-update-version.component.html',
   styleUrl: './pwa-update-version.component.scss',
   standalone: true,
@@ -48,8 +49,8 @@ export class PwaUpdateVersionComponent {
   update() {
     this.overlayService
       .confirm(
-        'Yeni sürüm kurulumu',
-        "Evet'e bastığınız anda sayfa yenilenecektir. Eğer kaydetmediğiniz önemli bir değişikliğiniz varsa kurulumu sonra da yapabilirsiniz. Şimdi yüklensin mi?"
+        "general.app-update.title",
+        "general.app-update.alert"
       )
       .subscribe((a) => {
         if (a) {
@@ -90,8 +91,8 @@ export class PwaUpdateVersionComponent {
 
   private updateError(error?: any) {
     this.overlayService.alert(
-      'Kurulum esnasında bir hata oluştu',
-      'Lütfen tekrar deneyin',
+      "general.app-update.error-title",
+      "general.app-update.error-desc",
       'warn'
     );
     this.onUpdate = false;

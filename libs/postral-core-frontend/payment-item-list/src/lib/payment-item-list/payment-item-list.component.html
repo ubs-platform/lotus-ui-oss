@@ -6,7 +6,7 @@
       {{ item.unit || 'adet' }}
       <br />
       <sub>
-        {{ unitDescriptionsByItemId()[item.itemId] || 'adet' }}
+        {{ getUnitLabel(item.unit) | translate }}
       </sub>
     </ng-template>
   </column>

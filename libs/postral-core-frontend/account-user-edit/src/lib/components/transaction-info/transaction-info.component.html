@@ -4,7 +4,7 @@
   <div class="flex flex-column gap-4 flex-grow-1">
     @if (transactionInfo()) {
     <div class="payment-info-section mona-card">
-      <h2 class="mb-2">{{ 'postral.payment.info' | translate }}</h2>
+      <h2>{{ 'postral.payment.info' | translate }}</h2>
       <div class="info-grid gap-3">
         <div class="info-item">
           <span class="label">{{ 'postral.seller-order-id' | translate }}:</span>
@@ -61,10 +61,10 @@ export type SellerPaymentOrderType = "CREDIT_TO_SELLER" | "DEBIT_FROM_SELLER";
     </div>
     } @if (paymentItems().length > 0) {
     <div class="payment-items-section flex-grow-1 mona-card">
-      <h2 class="mb-2">{{ 'postral.payment.items' | translate }}</h2>
+      <h2>{{ 'postral.payment.items' | translate }}</h2>
       <lib-payment-item-list
         [items]="paymentItems()"
-        [showSellerPaymentId]="true"
+        [showSellerPaymentId]="false"
         [currency]="transactionInfo()?.currency || 'TRY'"
       ></lib-payment-item-list>
     </div>
@@ -72,7 +72,7 @@ export type SellerPaymentOrderType = "CREDIT_TO_SELLER" | "DEBIT_FROM_SELLER";
   </div>
   <div class="flex flex-column gap-4 side-minimal">
     <div class="payment-info-section mona-card">
-      <h2 class="mb-2">{{ 'postral.menu.invoices' | translate }}</h2>
+      <h2>{{ 'postral.menu.invoices' | translate }}</h2>
       <div class="info-grid flex flex-column gap-3">
         <lib-invoice-list-minimal
           [sellerPaymentOrderId]="sellerPaymentOrderId"
@@ -94,7 +94,7 @@ export type SellerPaymentOrderType = "CREDIT_TO_SELLER" | "DEBIT_FROM_SELLER";
     </div>
 
     <div class="payment-info-section mona-card">
-      <h2 class="mb-2">{{ 'general.actions' | translate }}</h2>
+      <h2>{{ 'general.actions' | translate }}</h2>
       <div class="info-grid flex flex-column gap-3">
         @if (paymentInfo()?.openPayment && paymentInfo()?.paymentStatus === 'WAITING') {
         <block-button

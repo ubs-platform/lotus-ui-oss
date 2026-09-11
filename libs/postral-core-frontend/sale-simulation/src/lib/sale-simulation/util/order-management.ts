@@ -1,7 +1,6 @@
 import {
   ItemDTO,
   PaymentItemInputDto,
-  UNIT_TYPES_MAPPED,
 } from '@tk-postral/payment-common';
 import { Subject } from 'rxjs';
 
@@ -90,16 +89,10 @@ export class OrderManagement {
   //     return this.orders
   // }
 
-  getItemQuantity(itemId: string, variation: string) {
+  getItemQuantity(itemId: string, variation: string, unitName?: string) {
     const exists = this.orders.find(
       (o) => o.itemId === itemId && o.variation === variation
     );
-    return (
-      (exists ? exists.quantity : 0) +
-      ' ' +
-      UNIT_TYPES_MAPPED[
-        (exists?.unit as keyof typeof UNIT_TYPES_MAPPED) || 'C62'
-      ]
-    );
+    return `${exists ? exists.quantity : 0}${unitName ? ' ' + unitName : ''}`;
   }
 }

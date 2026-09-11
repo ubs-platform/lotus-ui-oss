@@ -1,6 +1,6 @@
 <div class="h-full w-full" style="display: block">
   <lib-tab-view>
-    <ng-template block-page="information" title="Ürün bilgileri">
+    <ng-template block-page="information" title="postral.item.info">
       @if (instruction()) {
       <div class="flex flex-column">
         <div class="flex-grow-1 overflow-auto">
@@ -9,13 +9,15 @@
             saveButtonPosition="bottom"
           ></lib-reform-data-edit>
         </div>
-        <div>Bilgi: {{ unitDescription() }}</div>
+        @if (unitDescription()) {
+        <div>{{ 'postral.item.info-label' | translate }}: {{ unitDescription() | translate }}</div>
+        }
       </div>
       } @else {
-      <p>Form talimatı yok</p>
+      <p>{{ 'postral.item.no-form-instruction' | translate }}</p>
       }
     </ng-template>
-    <ng-template block-page="pricing" title="Fiyat listesi">
+    <ng-template block-page="pricing" title="postral.item.price-list">
       @if (itemId()) {
       <lib-item-price-list [itemId]="itemId()"></lib-item-price-list>
       }

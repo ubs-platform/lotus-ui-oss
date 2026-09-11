@@ -7,12 +7,10 @@
       [forceDesktopMode]="true"
     >
       <column name="name">
-        <ng-template header> Ürün İsmi </ng-template>
+        <ng-template header content="postral.payment-item.item"></ng-template>
         <ng-template data let-item="item" let-index="index">
           <div>
-            {{
-              orderManagement()!.getItemQuantity(item.itemId, item.variation)
-            }}
+            {{ item.quantity }} {{ ('postral.units.' + (item.unit || 'C62')) | translate }}
             x
             {{ item._itemName }}
           </div>

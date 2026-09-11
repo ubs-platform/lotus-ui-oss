@@ -66,7 +66,7 @@ export class ItemPriceListComponent {
 
   deletePrice(priceId: string): void {
     this.overlayService
-      .confirm('Emin misiniz?', 'Bu fiyatı silmek istediğinize emin misiniz?')
+      .confirm('general.confirm-title', 'postral.item-price.delete-confirm-message')
       .subscribe((confirmed) => {
         if (confirmed) {
           this.performDelete(priceId);
@@ -77,8 +77,8 @@ export class ItemPriceListComponent {
   private performDelete(priceId: string): void {
     this.itemService.removePrice(this.itemId(), priceId).subscribe(() => {
       this.overlayService.alert(
-        'Başarılı',
-        'Fiyat başarıyla silindi.',
+        'general.success',
+        'postral.item-price.deleted-success',
         'success'
       );
       this.loadPrices();
@@ -92,8 +92,8 @@ export class ItemPriceListComponent {
       form: form,
       onValidationError: (form: Reform) => {
         this.overlayService.alert(
-          'Doğrulama Hatası',
-          'Lütfen formu kontrol edip tekrar deneyin.',
+          'general.validation-error',
+          'general.validation-error-desc',
           'error'
         );
       },
@@ -103,15 +103,15 @@ export class ItemPriceListComponent {
       },
       afterSaveSuccess: (out, data) => {
         this.overlayService.alert(
-          'Başarılı',
-          'Fiyat bilgileri başarıyla güncellendi.',
+          'general.success',
+          'postral.item-price.saved-success',
           'success'
         );
         this.selectedPage.set('list');
         this.loadPrices();
       },
       afterSaveError: (error, data) => {
-        this.overlayService.alert('Hata', 'Fiyat kaydedilemedi.', 'error');
+        this.overlayService.alert('general.error', 'postral.item-price.save-error', 'error');
       },
     } as FormEditInstruction<ItemPriceForm, ItemPriceForm>);
   }

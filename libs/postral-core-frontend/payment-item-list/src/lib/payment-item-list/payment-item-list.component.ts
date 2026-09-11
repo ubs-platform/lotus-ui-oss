@@ -1,12 +1,19 @@
-import { Component, computed, input, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FrontGlobalTableModule } from '@lotus/front-global/table';
-import { PaymentItemDTO, UNIT_TYPES_MAPPED } from '@tk-postral/payment-common';
+import { PaymentItemDTO } from '@tk-postral/payment-common';
 import { PostralReportsModule } from '@lotus/postral-core-frontend/reports';
+import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { UNIT_TYPE_CODES } from '@lotus/postral-core-frontend/forms';
 
 @Component({
   selector: 'lib-payment-item-list',
-  imports: [CommonModule, FrontGlobalTableModule, PostralReportsModule],
+  imports: [
+    CommonModule,
+    FrontGlobalTableModule,
+    PostralReportsModule,
+    UbsTranslatorNgxModule,
+  ],
   templateUrl: './payment-item-list.component.html',
   styleUrl: './payment-item-list.component.css',
 })
@@ -16,15 +23,11 @@ export class PaymentItemListComponent {
   showSellerPaymentId = input<boolean>(false);
   showComissions = input<boolean>(false);
 
-  readonly unitDescriptions = UNIT_TYPES_MAPPED;
-
-  readonly unitDescriptionsByItemId = computed(() => {
-    return this.items().reduce((acc, item) => {
-      acc[item.itemId] =
-        this.unitDescriptions[item.unit as keyof typeof this.unitDescriptions];
-      return acc;
-    }, {} as { [key: string]: string });
-  });
-
-
+  getUnitLabel(unit?: string): string {
+    if (!unit) return 'postral.units.C62';
+    if ((UNIT_TYPE_CODES as readonly string[]).includes(unit)) {
+      return `postral.units.${unit}`;
+    }
+    return unit;
+  }
 }

@@ -7,12 +7,12 @@ import { FormEditInstruction } from '@lotus/front-global/reform-data-edit';
 import { Reform } from '@lotus/front-global/minky/core';
 import {
   ItemForm,
+  UNIT_TYPE_CODES,
 } from '@lotus/postral-core-frontend/forms';
-import {
-  UNIT_TYPES_MAPPED,
-  ItemDTO,
-} from '@tk-postral/payment-common';
+import { ItemDTO } from '@tk-postral/payment-common';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
+import { TranslatorText } from '@ubs-platform/translator-core';
+import { TranslatorRepositoryService } from '@ubs-platform/translator-ngx';
 import { map } from 'rxjs';
 @Component({
   selector: 'lib-account-user-info',
@@ -24,7 +24,8 @@ export class ItemInfoComponent {
   instruction = signal<FormEditInstruction | null>(null);
   selectedPage = signal<string>('information');
   itemId = signal<string>('');
-  unitDescription = signal<string>('');
+  unitDescription = signal<TranslatorText>('');
+  private currentData?: ItemDTO | null;
   /**
    *
    */
@@ -32,10 +33,14 @@ export class ItemInfoComponent {
     private itemService: ItemCrudService,
     private activatedRoute: ActivatedRoute,
     private basicOverlay: BasicOverlayService,
-    private router: Router
+    private router: Router,
+    private translator: TranslatorRepositoryService
   ) {}
 
   ngOnInit(): void {
+    this.translator.changeDetection().subscribe(() => {
+      this.setUnitDescription(this.currentData);
+    });
     this.activatedRoute.params.subscribe((params) => {
       const itemId = params['id'];
       if (itemId === 'new') {
@@ -61,8 +66,8 @@ export class ItemInfoComponent {
       form: form,
       onValidationError: (form: Reform) => {
         this.basicOverlay.alert(
-          'Validation Error',
-          'Please check the form for errors and try again.',
+          'general.validation-error',
+          'general.validation-error-desc',
           'error'
         );
       },
@@ -76,8 +81,8 @@ export class ItemInfoComponent {
       
       afterSaveSuccess: (out, data) => {
         this.basicOverlay.alert(
-          'Success',
-          'Item information updated successfully.',
+          'general.success',
+          'postral.item.updated-success',
           'success'
         );
         if (this.itemId() === "new") {
@@ -95,8 +100,8 @@ export class ItemInfoComponent {
       },
       afterSaveError: (error, data) => { 
         this.basicOverlay.alert(
-          'Hata',
-          'Öğe bilgileri kaydedilirken bir hata oluştu. Lütfen tekrar deneyin. ' + (error?.message || ''),
+          'general.error',
+          'postral.item.error-while-save',
           'error'
         );
       },
@@ -104,6 +109,7 @@ export class ItemInfoComponent {
   }
 
   private setUnitDescription(data: ItemDTO | null | undefined) {
+    this.currentData = data;
     if (!data) {
       return;
     }
@@ -111,15 +117,21 @@ export class ItemInfoComponent {
       this.unitDescription.set('');
       return;
     }
-    const desc = UNIT_TYPES_MAPPED[data.unit as keyof typeof UNIT_TYPES_MAPPED]
-    if (!desc) {
-      this.unitDescription.set(data.unit + " birimi bulunamadı. Fatura oluşturulurken sorun yaşamamak için birim bilgisini kontrol ediniz.");
+    const isValidUnit = (UNIT_TYPE_CODES as readonly string[]).includes(data.unit);
+    if (!isValidUnit) {
+      this.unitDescription.set({
+        key: 'postral.item.unit-not-found',
+        parameters: { unit: data.unit },
+      });
       return;
     }
-    this.unitDescription.set(
-      data.unit +
-        ' birimi ' +
-        desc + ' olarak tanımlanmıştır. Fatura oluşturulurken bu birim kullanılacaktır.'
-    );
+    const desc = this.translator.getString(`postral.units.${data.unit}`);
+    this.unitDescription.set({
+      key: 'postral.item.unit-defined',
+      parameters: {
+        unit: data.unit,
+        desc: desc,
+      },
+    });
   }
 }

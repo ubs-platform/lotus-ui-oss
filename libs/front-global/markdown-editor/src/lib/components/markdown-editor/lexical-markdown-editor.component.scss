@@ -55,6 +55,31 @@
       color: var(--primary-color, #1976d2);
       text-decoration: underline;
     }
+
+    .spoiler {
+      .spoiler-toggle {
+        display: inline-block !important;
+        // border: 1px solid var(--border-color, #ccc);
+        // background: var(--primary-color, #f5f5f5);
+        // color: var(--text-color, #000);
+        // border-radius: 3px;
+        // padding: 0 0.4em;
+        // margin-right: 0.25em;
+        // cursor: pointer;
+        // font-size: 0.85em;
+      }
+
+      .spoiler-content {
+        background: var(--bg-1, #f5f5f5);
+        border-radius: 3px;
+        border: 1px solid var(--border-color, #ccc);
+        padding: 0.1em 0.3em;
+
+        &.hidden {
+          display: none;
+        }
+      }
+    }
   }
 
   &:not(.readonly) .lexical-content-editable {

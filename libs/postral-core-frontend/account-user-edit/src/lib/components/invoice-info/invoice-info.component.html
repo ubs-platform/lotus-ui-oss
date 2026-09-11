@@ -13,7 +13,7 @@
     } @else if (invoiceInfo()) {
 
     <div class="invoice-info-section mona-card">
-      <h2 class="mb-2">{{ 'postral.invoice.info' | translate }}</h2>
+      <h2>{{ 'postral.invoice.info' | translate }}</h2>
       <div class="info-grid gap-3">
         <div class="info-item">
           <span class="label">{{ 'postral.invoice.id' | translate }}:</span>
@@ -168,12 +168,12 @@
 
     @if (items().length > 0) {
     <div class="payment-items-section flex-grow-1 mona-card">
-      <h2 class="mb-2">{{ 'postral.payment.items' | translate }}</h2>
+      <h2>{{ 'postral.payment.items' | translate }}</h2>
       <lib-payment-item-list [items]="items()"></lib-payment-item-list>
     </div>
     }
     <div class="payment-items-section flex-grow-1 mona-card">
-      <h2 class="mb-2">{{ 'postral.extra-notes' | translate }}</h2>
+      <h2>{{ 'postral.extra-notes' | translate }}</h2>
       <!-- Fatura Numarası ve ekstra başka notlar-->
     </div>
     <!-- İşlemler -->

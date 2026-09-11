@@ -1,6 +1,104 @@
 
 @import "placeholders";
-// Invoice Info Component Styles
+
 :host {
   @extend %page-host;
 }
+
+.mona-input {
+  min-height: 38px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius, 2px);
+  color: var(--text-color);
+  background: var(--surface-0, var(--bg-surface));
+  font: inherit;
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: var(--focus-ring);
+  }
+}
+
+.payment-cleanup-warnings {
+  margin: 1rem 0;
+  padding: 1rem 1.25rem 1rem 2rem;
+  border-left: 3px solid var(--primary-color);
+  background: var(--surface-50, var(--bg-surface));
+  border-radius: 0 var(--border-radius, 2px) var(--border-radius, 2px) 0;
+  list-style: disc;
+
+  li {
+    margin: 0.25rem 0;
+    color: var(--text-color-secondary, var(--fg));
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+}
+
+// .payment-cleanup-panel h2,
+// .payment-cleanup-panel h3 {
+//   margin-top: 0;
+// }
+
+// .payment-cleanup-panel label {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 6px;
+//   max-width: 260px;
+//   margin: 16px 0;
+// }
+
+// .payment-cleanup-panel input {
+//   min-height: 36px;
+//   padding: 6px 8px;
+//   border: 1px solid var(--border-color, #b8c0cc);
+//   border-radius: 4px;
+// }
+
+// .payment-cleanup-status {
+//   margin-bottom: 0;
+// }
+
+// .payment-cleanup-result {
+//   margin-top: 20px;
+// }
+
+// .payment-cleanup-result dl {
+//   display: grid;
+//   grid-template-columns: minmax(0, 1fr) auto;
+//   gap: 6px 16px;
+// }
+
+// .payment-cleanup-result dl div {
+//   display: contents;
+// }
+
+// .payment-cleanup-result dt,
+// .payment-cleanup-result dd {
+//   margin: 0;
+// }
+
+// .payment-cleanup-result dd {
+//   font-variant-numeric: tabular-nums;
+// }
+
+// .payment-archive-list {
+//   margin-top: 20px;
+// }
+
+// .payment-archive-row {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   gap: 16px;
+//   padding: 10px 0;
+//   border-top: 1px solid var(--border-color, #d9dee7);
+// }
+
+// .payment-archive-row > div {
+//   display: flex;
+//   flex-wrap: wrap;
+//   gap: 8px 16px;
+// }

@@ -1,4 +1,5 @@
 export * from './constants/account-types';
+export * from './constants/unit-types';
 export * from './types/search-from-stringified.type';
 export * from './utils/get-account-ids-related.util';
 

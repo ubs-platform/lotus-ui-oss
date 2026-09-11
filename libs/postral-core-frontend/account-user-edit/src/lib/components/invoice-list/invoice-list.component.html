@@ -7,7 +7,7 @@
   <ng-container content>
     <div class="div flex flex-column h-full w-full gap-2">
       <div class="mona-card">
-        Yeni bir fatura oluşturmak için işlem detaylarından "Fatura oluştur" butonuna tıklayabilirsiniz.
+        {{ 'postral.invoice.creation-instruction' | translate }}
       </div>
       <div class="flex-grow-1">
         <searchable-data-table url="/service/payment/api/invoice/_search"

@@ -1,5 +1,6 @@
 import { Injector } from '@angular/core';
-import { ItemDTO, UNIT_TYPES } from '@tk-postral/payment-common';
+import { ItemDTO } from '@tk-postral/payment-common';
+import { UNIT_TYPES } from '../constants/unit-types';
 import { minky, minkyRoot } from '@lotus/front-global/minky/core';
 import { ItemTaxControllerService } from '@lotus/postral-core-frontend/client';
 import { map, min } from 'rxjs';

@@ -1,15 +1,218 @@
 
-<div>
-  <p>TCKN, Iban ve adres bilgileri gibi hassas verileri şifrelemek için bu işlemi çalıştırabilirsiniz. Ancak uzun sürebilir:</p>
-  <block-button stringContent="Tüm verileri şifrele" (click)="encryptSensitiveData()"></block-button>
+<div class="h-full w-full gap-4 flex flex-column overflow-auto p-3">
+  <!-- Üst İşlemler Kartları (Hassas Veri & Faturalama) -->
+  <div class="flex flex-column md:flex-row gap-3 w-full">
+    <div class="mona-card flex-grow-1 flex flex-column justify-content-between gap-3">
+      <div>
+        <h2 class="mb-2">{{ 'postral.admin.sensitive-data.title' | translate }}</h2>
+        <p class="text-secondary text-sm">{{ 'postral.admin.sensitive-data.description' | translate }}</p>
+      </div>
+      <div class="flex gap-2 flex-wrap">
+        <block-button
+          buttonClass="primary"
+          iconClass="material-symbols-outlined"
+          iconContent="lock"
+          stringContent="postral.admin.sensitive-data.encrypt"
+          (click)="encryptSensitiveData()"
+        ></block-button>
+        <block-button
+          buttonClass="border"
+          iconClass="material-symbols-outlined"
+          iconContent="lock_open"
+          stringContent="postral.admin.sensitive-data.decrypt"
+          (click)="decryptSensitiveData()"
+        ></block-button>
+      </div>
+    </div>
 
-</div>
-<div>
-  <p>TCKN, Iban ve adres bilgileri gibi hassas verileri şifresini çözmek için aşağıdaki işlemleri kullanabilirsiniz:</p>
-  <block-button stringContent="Tüm verilerin şifresini çöz" (click)="decryptSensitiveData()"></block-button>
+    <div class="mona-card flex-grow-1 flex flex-column justify-content-between gap-3">
+      <div>
+        <h2 class="mb-2">{{ 'postral.admin.billing.title' | translate }}</h2>
+        <p class="text-secondary text-sm">{{ 'postral.admin.billing.description' | translate }}</p>
+      </div>
+      <div class="flex gap-2 flex-wrap">
+        <block-button
+          buttonClass="primary"
+          iconClass="material-symbols-outlined"
+          iconContent="receipt_long"
+          stringContent="postral.admin.billing.start"
+          (click)="startBillingProcess()"
+        ></block-button>
+      </div>
+    </div>
+  </div>
 
-</div>
-<div>
-  <p>Faturalama işlemini başlatmak için aşağıdaki butona tıklayabilirsiniz:</p>
-  <block-button stringContent="Faturalamayı Başlat" (click)="startBillingProcess()"></block-button>
+  <!-- Payment Arşivi ve Temizliği Bölümü -->
+  <div class="mona-card flex flex-column gap-4">
+    <div>
+      <h2 class="mb-2">{{ 'postral.admin.cleanup.title' | translate }}</h2>
+      <p class="text-secondary text-sm">{{ 'postral.admin.cleanup.description' | translate }}</p>
+    </div>
+
+    <!-- Filtre Toolbar ve Aksiyonlar -->
+    <div class="flex flex-column sm:flex-row gap-3 align-items-sm-end justify-content-between p-3 border rounded surface-50">
+      <div class="flex flex-column gap-1">
+        <label class="font-semibold text-sm">{{ 'postral.admin.cleanup.before-label' | translate }}</label>
+        <input #beforeDate type="date" class="mona-input" [attr.aria-label]="'postral.admin.cleanup.before-label' | translate" />
+      </div>
+      <div class="flex gap-2 flex-wrap">
+        <block-button
+          buttonClass="border"
+          iconClass="material-symbols-outlined"
+          iconContent="preview"
+          stringContent="postral.admin.cleanup.preview"
+          (click)="previewPaymentCleanup(beforeDate.value)">
+        </block-button>
+        <block-button
+          buttonClass="border"
+          iconClass="material-symbols-outlined"
+          iconContent="archive"
+          stringContent="postral.admin.cleanup.archive"
+          (click)="archivePaymentCleanup(beforeDate.value)">
+        </block-button>
+        <block-button
+          buttonClass="border"
+          iconClass="material-symbols-outlined"
+          iconContent="refresh"
+          stringContent="postral.admin.cleanup.refresh-archives"
+          (click)="loadPaymentArchives()">
+        </block-button>
+      </div>
+    </div>
+    <p class="text-secondary text-xs -mt-2">{{ 'postral.admin.cleanup.date-hint' | translate }}</p>
+
+    <!-- Yükleniyor Durumu -->
+    <div *ngIf="paymentCleanupLoading" class="p-3 text-center">
+      <p class="text-secondary">{{ 'postral.admin.cleanup.loading' | translate }}</p>
+    </div>
+
+    <!-- Önizleme Sonucu -->
+    <div *ngIf="paymentCleanupPreview as preview" class="flex flex-column gap-3 pt-3 border-top">
+      <div class="flex justify-content-between align-items-center flex-wrap gap-2">
+        <h3 class="m-0">{{ 'postral.admin.cleanup.preview-result' | translate }}</h3>
+        <span class="text-sm font-semibold">{{ 'postral.admin.cleanup.payment-found' | translate:{ count: preview.paymentIds.length.toString() } }}</span>
+      </div>
+
+      <div class="info-grid gap-3">
+        <div class="info-item">
+          <span class="label">{{ 'postral.admin.cleanup.report-queries-preserved' | translate }}</span>
+          <span class="value font-bold">{{ preview.preservedReportQueryCount }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">{{ 'postral.admin.cleanup.reports-affected' | translate }}</span>
+          <span class="value font-bold">{{ preview.affectedReportIds.length }}</span>
+        </div>
+      </div>
+
+      <!-- Sayım Tablosu (Counts Table) -->
+      <div class="mt-2">
+        <ubs-table-ngx [cover]="true" [items]="preview.counts | keyvalue">
+          <column name="item">
+            <ng-template header content="general.name"></ng-template>
+            <ng-template data let-item="item">
+              {{ ('postral.admin.count.' + item.key) | translate }}
+            </ng-template>
+          </column>
+          <column name="count">
+            <ng-template header content="postral.payment-item.quantity"></ng-template>
+            <ng-template data let-item="item">
+              <span class="font-bold">{{ item.value }}</span>
+            </ng-template>
+          </column>
+        </ubs-table-ngx>
+      </div>
+
+      <!-- Uyarılar -->
+      <ul *ngIf="preview.warnings.length > 0" class="payment-cleanup-warnings">
+        <li *ngFor="let warning of preview.warnings">{{ warning | translate }}</li>
+      </ul>
+
+      <div>
+        <block-button
+          buttonClass="bg-danger"
+          iconClass="material-symbols-outlined"
+          iconContent="delete"
+          stringContent="postral.admin.cleanup.clean"
+          (click)="cleanPaymentData()">
+        </block-button>
+      </div>
+    </div>
+
+    <!-- Aktif Arşiv Kartı -->
+    <div *ngIf="paymentArchive" class="flex justify-content-between align-items-center flex-wrap gap-3 p-3 border rounded surface-50">
+      <div>
+        <span class="font-semibold text-sm">{{ 'postral.admin.cleanup.archive-ready' | translate }}</span>
+        <p class="text-sm m-0 mt-1">{{ 'postral.admin.cleanup.checksum' | translate }}: <code>{{ paymentArchive.checksum }}</code></p>
+      </div>
+      <div class="flex gap-2 flex-wrap">
+        <block-button
+          buttonClass="primary"
+          iconClass="material-symbols-outlined"
+          iconContent="download"
+          stringContent="postral.admin.cleanup.download"
+          (click)="downloadPaymentArchive()">
+        </block-button>
+        <block-button
+          buttonClass="bg-danger"
+          iconClass="material-symbols-outlined"
+          iconContent="delete"
+          stringContent="postral.admin.cleanup.delete-archived"
+          (click)="deletePaymentData()">
+        </block-button>
+      </div>
+    </div>
+
+    <!-- Oluşturulan Arşivler Listesi (Table) -->
+    <div *ngIf="paymentArchives.length > 0" class="flex flex-column gap-3 pt-3 border-top">
+      <div class="flex justify-content-between align-items-center flex-wrap gap-2">
+        <h3 class="m-0">{{ 'postral.admin.cleanup.created-archives' | translate }}</h3>
+        <span class="text-sm font-semibold">{{ 'postral.admin.cleanup.archive-count' | translate:{ count: paymentArchives.length.toString() } }}</span>
+      </div>
+
+      <ubs-table-ngx [cover]="true" [items]="paymentArchives">
+        <column name="createdAt">
+          <ng-template header content="general.creation-date"></ng-template>
+          <ng-template data let-item="item">
+            {{ item.createdAt | date:'medium' }}
+          </ng-template>
+        </column>
+
+        <column name="paymentCount">
+          <ng-template header content="postral.payment-item.quantity"></ng-template>
+          <ng-template data let-item="item">
+            <span class="font-semibold">{{ item.paymentCount }}</span>
+          </ng-template>
+        </column>
+
+        <column name="before">
+          <ng-template header content="postral.admin.cleanup.before-date"></ng-template>
+          <ng-template data let-item="item">
+            {{ item.before ? (item.before | date:'medium') : ('general.default' | translate) }}
+          </ng-template>
+        </column>
+
+        <column name="checksum">
+          <ng-template header content="postral.admin.cleanup.checksum"></ng-template>
+          <ng-template data let-item="item">
+            <code>{{ item.checksum }}</code>
+          </ng-template>
+        </column>
+
+        <column name="actions">
+          <ng-template header content="general.actions"></ng-template>
+          <ng-template data let-item="item">
+            <div class="action-buttons">
+              <block-button
+                buttonClass="border"
+                iconClass="material-symbols-outlined"
+                iconContent="download"
+                stringContent="postral.admin.cleanup.download-short"
+                (click)="downloadArchiveById(item.id)">
+              </block-button>
+            </div>
+          </ng-template>
+        </column>
+      </ubs-table-ngx>
+    </div>
+  </div>
 </div>

@@ -10,7 +10,7 @@
   } @else if (reportInfo()) {
 
   <div class="report-info-section mona-card">
-    <h2 class="mb-2">{{ 'postral.reports.report-info' | translate }}</h2>
+    <h2>{{ 'postral.reports.report-info' | translate }}</h2>
     <div class="info-grid gap-3">
       <div class="info-item">
         <span class="label">{{ 'postral.reports.report-id' | translate }}:</span>
@@ -60,7 +60,7 @@
   </div>
 
   <div class="report-summary-section mona-card">
-    <h2 class="mb-2">{{ 'postral.reports.summary' | translate }}</h2>
+    <h2>{{ 'postral.reports.summary' | translate }}</h2>
     <div class="info-grid gap-3">
       <div class="info-item">
         <span class="label">{{ 'postral.reports.payment-count' | translate }}:</span>
@@ -153,7 +153,7 @@
 
   @if (reportInfo()!.taxGroups && reportInfo()!.taxGroups.length > 0) {
   <div class="tax-groups-section mona-card">
-    <h2 class="mb-2">{{ 'postral.reports.tax-groups' | translate }}</h2>
+    <h2>{{ 'postral.reports.tax-groups' | translate }}</h2>
     <div class="flex flex-column gap-3">
       @for (group of reportInfo()!.taxGroups; track group.taxGroupName) {
       <div class="tax-group-item">
@@ -233,7 +233,7 @@
   </div>
   } @if (reportInfo()!.expenses && reportInfo()!.expenses.length > 0) {
   <div class="expenses-section mona-card">
-    <h2 class="mb-2">{{ 'postral.reports.expenses' | translate }}</h2>
+    <h2>{{ 'postral.reports.expenses' | translate }}</h2>
     <div class="flex flex-column gap-3">
       @for (expense of reportInfo()!.expenses; track expense.expenseKey) {
       <div class="expense-item">

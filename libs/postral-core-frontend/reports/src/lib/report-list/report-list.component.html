@@ -13,7 +13,7 @@
     <div class="flex flex-column h-full w-full">
       @if (queryId() && query()) {
       <div class="mona-card mb-3">
-        <h2 class="mb-2">{{ 'postral.reports.reports-of-query' | translate: { name: query()!.name } }}</h2>
+        <h2>{{ 'postral.reports.reports-of-query' | translate: { name: query()!.name } }}</h2>
         <div class="info-grid gap-3">
           <div class="info-item">
             <span class="label">{{ 'postral.reports.period' | translate }}</span>
