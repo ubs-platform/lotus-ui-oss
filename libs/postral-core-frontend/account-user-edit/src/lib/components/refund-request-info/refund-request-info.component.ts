@@ -60,7 +60,10 @@ export class RefundRequestInfoComponent implements OnInit {
     }
 
     this.basicOverlay
-      .confirm('İade talebini onayla', 'Bu iade talebini onaylamak istiyor musunuz?')
+      .confirm(
+        'postral.refund.approve-confirm-title',
+        'postral.refund.approve-confirm-message'
+      )
       .subscribe((confirmed) => {
         if (!confirmed) {
           return;
@@ -70,13 +73,13 @@ export class RefundRequestInfoComponent implements OnInit {
           next: (updatedRefundRequest) => {
             this.refundRequest.set(updatedRefundRequest);
             this.basicOverlay.alert(
-              'Başarılı',
-              'İade talebi onaylandı.',
+              'general.success',
+              'postral.refund.approve-success',
               'success'
             );
           },
           error: (err) => {
-            this.basicOverlay.alert('Hata oluştu', err, 'error');
+            this.basicOverlay.alert('general.error-occurred', err, 'error');
           },
         });
       });
@@ -88,7 +91,10 @@ export class RefundRequestInfoComponent implements OnInit {
     }
 
     this.basicOverlay
-      .confirm('İade talebini reddet', 'Bu iade talebini reddetmek istiyor musunuz?')
+      .confirm(
+        'postral.refund.reject-confirm-title',
+        'postral.refund.reject-confirm-message'
+      )
       .subscribe((confirmed) => {
         if (!confirmed) {
           return;
@@ -98,13 +104,13 @@ export class RefundRequestInfoComponent implements OnInit {
           next: (updatedRefundRequest) => {
             this.refundRequest.set(updatedRefundRequest);
             this.basicOverlay.alert(
-              'Başarılı',
-              'İade talebi reddedildi.',
+              'general.success',
+              'postral.refund.reject-success',
               'success'
             );
           },
           error: (err) => {
-            this.basicOverlay.alert('Hata oluştu', err, 'error');
+            this.basicOverlay.alert('general.error-occurred', err, 'error');
           },
         });
       });
@@ -116,14 +122,14 @@ export class RefundRequestInfoComponent implements OnInit {
 
   getStatusLabel(status: RefundRequestDTO['status']): string {
     if (status === 'APPROVED') {
-      return 'Onaylandı';
+      return 'postral.refund.status-approved';
     }
 
     if (status === 'REJECTED') {
-      return 'Reddedildi';
+      return 'postral.refund.status-rejected';
     }
 
-    return 'Bekliyor';
+    return 'postral.refund.status-pending';
   }
 
   getStatusClass(status: RefundRequestDTO['status']): string {
@@ -163,8 +169,8 @@ export class RefundRequestInfoComponent implements OnInit {
       },
       error: (err) => {
         this.loading.set(false);
-        this.error.set(err?.message || 'İade talebi alınamadı.');
-        this.basicOverlay.alert('Hata oluştu', err, 'error');
+        this.error.set(err?.message || 'postral.refund.load-error');
+        this.basicOverlay.alert('general.error-occurred', err, 'error');
       },
     });
   }

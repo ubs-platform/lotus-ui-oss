@@ -4271,7 +4271,7 @@ textarea {
 }
 
 .mona-card h1, .mona-card h2, .mona-card h3 {
-  margin-top: 0;
+  margin-top: .3rem;
   margin-bottom: .5rem;
 }
 

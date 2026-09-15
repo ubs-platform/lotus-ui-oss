@@ -1,66 +1,63 @@
-<div class="h-full w-full p-4">
+<div class="h-full w-full">
   @if (loading()) {
   <div class="mona-card">
-    <p class="text-center">Yukleniyor...</p>
+    <p class="text-center">{{ 'loading' | translate }}</p>
   </div>
   } @else if (error()) {
   <div class="mona-card">
-    <p class="text-center text-danger">{{ error() }}</p>
+    <p class="text-center text-danger">{{ error() | translate }}</p>
   </div>
   } @else if (refundRequest()) {
   <div class="flex flex-column gap-4">
     <div class="mona-card">
       <div class="flex justify-content-between align-items-center gap-3">
-        <h2 class="m-0">Iade Talebi Detayi</h2>
+        <h2 class="m-0">{{ 'postral.refund.detail' | translate }}</h2>
         <block-button
           buttonClass="border"
           iconClass="material-symbols-outlined" iconContent="arrow_back"
-          stringContent="Listeye Don"
+          [stringContent]="'postral.refund.back-to-list' | translate"
           (click)="goToRequests()"
         ></block-button>
       </div>
     </div>
 
     <div class="mona-card">
-      <h3 class="mb-3">Genel Bilgiler</h3>
+      <h3 class="mb-3">{{ 'postral.refund.general-info' | translate }}</h3>
       <div class="info-grid gap-3">
         <div class="info-item">
-          <span class="label">Iade Talep ID:</span>
+          <span class="label">{{ 'postral.refund.id' | translate }}:</span>
           <span class="value">{{ refundRequest()!.id }}</span>
         </div>
         <div class="info-item">
-          <span class="label">Odeme ID:</span>
+          <span class="label">{{ 'postral.refund.payment-id' | translate }}:</span>
           <span class="value">{{ refundRequest()!.paymentId }}</span>
         </div>
         <div class="info-item">
-          <span class="label">Durum:</span>
-          <!-- <span
-            class="status-pill"
-            [ngClass]="getStatusClass(refundRequest()!.status)"
+          <span class="label">{{ 'general.status' | translate }}:</span>
+          <lotus-web-status-badge
+            [color]="getStatusColor(refundRequest()!.status)"
+            [label]="getStatusLabel(refundRequest()!.status) | translate"
           >
-            {{ getStatusLabel(refundRequest()!.status) }}
-          </span> -->
-          <lotus-web-status-badge [color]="getStatusColor(refundRequest()!.status)" [label]="getStatusLabel(refundRequest()!.status)">
           </lotus-web-status-badge>
         </div>
         <div class="info-item">
-          <span class="label">Talep Eden Kullanıcı Hesabı (UBS):</span>
+          <span class="label">{{ 'postral.refund.requested-by-account' | translate }}:</span>
           <span class="value">{{ refundRequest()!.requestedByAccountId }}</span>
         </div>
         @if (refundRequest()!.resolvedByAccountId) {
         <div class="info-item">
-          <span class="label">Sonuclandiran Ödeme Hesabı:</span>
+          <span class="label">{{ 'postral.refund.resolved-by-account' | translate }}:</span>
           <span class="value">{{ refundRequest()!.resolvedByAccountId }}</span>
         </div>
         }
         <div class="info-item">
-          <span class="label">Olusturulma:</span>
+          <span class="label">{{ 'general.creation-date' | translate }}:</span>
           <span class="value">{{
             formatDate(refundRequest()!.createdAt!)
           }}</span>
         </div>
         <div class="info-item">
-          <span class="label">Guncellenme:</span>
+          <span class="label">{{ 'general.update-date' | translate }}:</span>
           <span class="value">{{
             formatDate(refundRequest()!.updatedAt!)
           }}</span>
@@ -69,38 +66,26 @@
     </div>
 
     <div class="mona-card">
-      <h3 class="mb-3">Iade Kalemleri</h3>
+      <h3 class="mb-3">{{ 'postral.refund.items' | translate }}</h3>
       @if (refundRequest()!.items.length > 0) {
-      <!-- 
-        
-        {
-        id: string;
-        paymentItemId: string;
-        refundCount: number;
-        itemName?: string;
-        unitAmount?: number;
-        unitAmountWithoutTax?: number;
-        refundAmount?: number;
-        refundAmountWithoutTax?: number;
-        refundTaxAmount?: number;
-    }
-    // Kolonlar bu fieldlerdan oluşacak, idler atlanabilir.
-
-    -->
       <ubs-table-ngx [cover]="true" [items]="refundRequest()!.items">
         <column name="item">
-          <ng-template header> Ürün </ng-template>
+          <ng-template header content="postral.payment-item.item">
+            {{ 'postral.payment-item.item' | translate }}
+          </ng-template>
           <ng-template data let-item="item">
             <div>{{ item.itemName }}</div>
             @if (item.variation) {
             <div class="text-sm text-muted">
-              Varyasyon: {{ item.variation }}
+              {{ 'postral.item-price.variation' | translate }}: {{ item.variation }}
             </div>
             }
           </ng-template>
         </column>
         <column name="unitAmount">
-          <ng-template header> Birim Fiyat </ng-template>
+          <ng-template header content="postral.payment-item.unit-price">
+            {{ 'postral.payment-item.unit-price' | translate }}
+          </ng-template>
           <ng-template data let-item="item">
             <lib-money-display
               [amount]="item.unitAmount"
@@ -109,13 +94,17 @@
           </ng-template>
         </column>
         <column name="refundCount">
-          <ng-template header> Iade Edilen Adet </ng-template>
+          <ng-template header content="postral.refund.refund-count">
+            {{ 'postral.refund.refund-count' | translate }}
+          </ng-template>
           <ng-template data let-item="item">
             {{ item.refundCount }}
           </ng-template>
         </column>
         <column name="refundAmount">
-          <ng-template header> Iade Edilen Tutar </ng-template>
+          <ng-template header content="postral.refund.refund-amount">
+            {{ 'postral.refund.refund-amount' | translate }}
+          </ng-template>
           <ng-template data let-item="item">
             <lib-money-display
               [amount]="item.refundAmount"
@@ -124,24 +113,13 @@
           </ng-template>
         </column>
       </ubs-table-ngx>
-
-      <!-- id: string;
-        paymentItemId: string;
-        refundCount: number;
-        itemName?: string;
-        unitAmount?: number;
-        unitAmountWithoutTax?: number;
-        refundAmount?: number;
-        refundAmountWithoutTax?: number;
-        refundTaxAmount?: number; -->
-
       } @else {
-      <p class="text-muted">Bu iade talebinde kalem bulunamadı.</p>
+      <p class="text-muted">{{ 'postral.refund.no-items' | translate }}</p>
       }
     </div>
 
     <div class="mona-card">
-      <h3 class="mb-3">İşlemler</h3>
+      <h3 class="mb-3">{{ 'general.actions' | translate }}</h3>
       @if (refundRequest()!.status === 'PENDING') {
       <div class="flex gap-2">
         <block-button
@@ -159,14 +137,14 @@
       </div>
       } @else {
       <p class="text-muted">
-        Bu iade talebi sonuclandirildigi icin tekrar islem yapilamaz.
+        {{ 'postral.refund.already-resolved' | translate }}
       </p>
       }
     </div>
   </div>
   } @else {
   <div class="mona-card">
-    <p class="text-center">Iade talebi bulunamadi.</p>
+    <p class="text-center">{{ 'postral.refund.not-found' | translate }}</p>
   </div>
   }
 </div>
