@@ -34,6 +34,7 @@ export class TransactionInfoComponent implements OnInit {
   paymentInfo = signal<Optional<PaymentDTO>>(null);
   fileInput?: HTMLInputElement;
   invoiceHasBeenFinalized = signal(false);
+  refundDialogVisible = false;
   invoiceListMinimal = viewChild<InvoiceListMinimalComponent>('invoiceListMinimal');
 
   constructor(
@@ -227,5 +228,9 @@ export class TransactionInfoComponent implements OnInit {
             },
           });
       });
+  }
+
+  showRefundDialog() {
+    this.refundDialogVisible = true;
   }
 }

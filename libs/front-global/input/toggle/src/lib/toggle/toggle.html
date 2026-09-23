@@ -5,8 +5,8 @@
       [(ngModel)]="value"
       [class.checkbox-style]="checkboxStyle()"
       [class.toggle-style]="!checkboxStyle()"
-      [style.pointerEvents]="checkOnClickInput() ? null : 'none'"
+      [style.pointerEvents]="!disabled() && checkOnClickInput() ? null : 'none'"
     />
   </div>
-  <div class="label" (click)="checkOnClickText() && toggleValue(); $event.preventDefault()">{{label() | translate}}</div>
+  <div class="label" (click)="!disabled() && checkOnClickText() && toggleValue(); $event.preventDefault()">{{label() | translate}}</div>
 </div>

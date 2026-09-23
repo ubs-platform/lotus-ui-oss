@@ -1,8 +1,21 @@
-import { Component, input } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  effect,
+  inject,
+  input,
+  isSignal,
+  signal,
+  untracked,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FormEditInstruction } from '../util/form-edit-instruction';
-import { from, Observable, of } from 'rxjs';
+import {
+  ReformDataEditAction,
+  ReformDataEditCondition,
+} from '../util/reform-data-edit-action';
+import { from, isObservable, Observable, of, Subscription } from 'rxjs';
 import { MinkyReformNgxPrimeModule } from '@lotus/front-global/minky/reform-ngx-prime';
 import { FrontGlobalButtonModule } from "@lotus/front-global/button";
 
@@ -16,6 +29,110 @@ export class ReformDataEditComponent {
 
   saveButtonPosition = input<'top-right' | 'bottom'>('top-right');
   formInstruction = input<FormEditInstruction>();
+
+  private observableConditions = signal(
+    new Map<Observable<boolean>, boolean>()
+  );
+  private conditionSubscriptions = new Map<Observable<boolean>, Subscription>();
+
+  constructor() {
+    effect(() => {
+      const actions = this.formInstruction()?.extraActions ?? [];
+      untracked(() => this.syncObservableConditions(actions));
+    });
+
+    inject(DestroyRef).onDestroy(() => {
+      this.conditionSubscriptions.forEach((s) => s.unsubscribe());
+      this.conditionSubscriptions.clear();
+    });
+  }
+
+  visibleActions() {
+    const instruction = this.formInstruction();
+    if (!instruction) {
+      return [];
+    }
+    return (instruction.extraActions ?? []).filter((a) =>
+      this.resolveCondition(a.renderIf, true)
+    );
+  }
+
+  isActionDisabled(action: ReformDataEditAction) {
+    return this.resolveCondition(action.disabled, false);
+  }
+
+  runAction(action: ReformDataEditAction) {
+    const instruction = this.formInstruction();
+    if (!instruction || this.isActionDisabled(action)) {
+      return;
+    }
+    action.action(instruction.form);
+  }
+
+  private syncObservableConditions(actions: ReformDataEditAction[]) {
+    const current = new Set<Observable<boolean>>();
+    for (const action of actions) {
+      for (const condition of [action.renderIf, action.disabled]) {
+        if (isObservable(condition)) {
+          current.add(condition);
+        }
+      }
+    }
+
+    this.conditionSubscriptions.forEach((sub, source) => {
+      if (!current.has(source)) {
+        sub.unsubscribe();
+        this.conditionSubscriptions.delete(source);
+        this.updateObservableCondition(source, undefined);
+      }
+    });
+
+    current.forEach((source) => {
+      if (this.conditionSubscriptions.has(source)) {
+        return;
+      }
+      this.conditionSubscriptions.set(
+        source,
+        source.subscribe((value) =>
+          this.updateObservableCondition(source, value)
+        )
+      );
+    });
+  }
+
+  private updateObservableCondition(
+    source: Observable<boolean>,
+    value: boolean | undefined
+  ) {
+    this.observableConditions.update((map) => {
+      const next = new Map(map);
+      if (value === undefined) {
+        next.delete(source);
+      } else {
+        next.set(source, value);
+      }
+      return next;
+    });
+  }
+
+  private resolveCondition(
+    condition: ReformDataEditCondition | undefined,
+    fallback: boolean
+  ): boolean {
+    if (condition == null) {
+      return fallback;
+    }
+    if (typeof condition === 'boolean') {
+      return condition;
+    }
+    if (isObservable(condition)) {
+      return this.observableConditions().get(condition) ?? fallback;
+    }
+    if (isSignal(condition)) {
+      return condition();
+    }
+    return condition(this.formInstruction()!.form);
+  }
 
   toObservableThing<T>(data: T | Promise<T> | Observable<T>): Observable<T> {
     if (data instanceof Promise) {

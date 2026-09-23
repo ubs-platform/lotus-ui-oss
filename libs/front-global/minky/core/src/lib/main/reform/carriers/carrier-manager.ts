@@ -51,7 +51,9 @@ export class CarrierManager<T extends any> {
     const path = this.buildPath(prefix, propertyMeta.name);
     const carrierLink = {
       carrierType: 'INPUT',
-      disable: propertyMeta.disable || false,
+      disable: this.bridge.getDisableByPath(path) ?? (propertyMeta.disable || false),
+      hidden: this.bridge.getHiddenByPath(path) ?? false,
+      data: this.bridge.getDataByPath(path),
       value: this.bridge.getValueByPath(path),
       inputType: propertyMeta.inputType,
       widthRatio: propertyMeta.widthRatio || '100%',
@@ -89,6 +91,9 @@ export class CarrierManager<T extends any> {
           path,
           meta: propertyMeta,
         });
+        if (propertyMeta.onValueChange) {
+          this.bridge.emitBigUpdate(this.bridge.value());
+        }
       }
     };
     return carrierLink;

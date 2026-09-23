@@ -2,7 +2,7 @@ import { PropertyInputType } from './reform/form-input-type';
 import { Label } from './label';
 import { FeederItem, Validator } from './reform';
 import { MetaKey } from './meta-key';
-import { CombinedEnvironment, StateEnvironment } from './state-environment';
+import { CombinedEnvironment } from './state-environment';
 import { InteropObservable, Observable, ObservableLike } from 'rxjs';
 
 
@@ -76,7 +76,5 @@ export interface PropertyMeta<T = any> extends Label {
     newValue: T,
     oldValue: T,
     combinedEnvironment: CombinedEnvironment,
-    // appEnv: CombinedEnvironment,
-    // stateEnv: StateEnvironment
   ) => T | undefined ;
 }

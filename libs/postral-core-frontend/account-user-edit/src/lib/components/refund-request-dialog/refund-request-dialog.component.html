@@ -12,6 +12,15 @@
       İade edilebilecek kalem bulunamadı.
     </div>
     } @else {
+    <div class="flex flex-column gap-2">
+      <span class="font-semibold">{{ 'postral.refund.reasons' | translate }}</span>
+      @for (reason of reasonOptions; track reason.key) {
+      <label class="flex align-items-center gap-2">
+        <input type="checkbox" [(ngModel)]="selectedReasons[reason.key]" />
+        <span>{{ reason.label | translate }}</span>
+      </label>
+      }
+    </div>
     <div class="flex flex-column gap-3">
       @for (item of items(); track item.id; let i = $index) {
       <div
@@ -41,6 +50,10 @@
       </div>
       }
     </div>
+    <div class="flex flex-column gap-2">
+      <span class="font-semibold">{{ 'postral.refund.request-note' | translate }}</span>
+      <lotus-web-markdown-editor [(value)]="requestNote"></lotus-web-markdown-editor>
+    </div>
     <div class="action-buttons">
       <!-- <p-button
         label="İptal"
@@ -62,6 +75,7 @@
         stringContent="İade İsteğini Gönder"
         iconClass="material-symbols-outlined" iconContent="check"
         buttonClass="primary"
+        [disabled]="!hasSelectedAny() || !hasSelectedReason() || submitting()"
         (click)="submitRefundRequest()"
       >
       </block-button>

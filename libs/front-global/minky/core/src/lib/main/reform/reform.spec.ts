@@ -71,6 +71,29 @@ export class FictionalCharacter {
   age?: number;
 }
 
+@minkyRoot({
+  fallbackConstruction: () => new DynamicCharacter('', ''),
+})
+class DynamicCharacter {
+  constructor(source: string, target: string) {
+    this.source = source;
+    this.target = target;
+  }
+
+  @minky({
+    validators: [new RequiredValidator()],
+    onValueChange: (_newValue, _oldValue, environment) => {
+      environment.state.setDisabled?.('target', true);
+      environment.state.setHidden?.('source', true);
+      environment.state.setData?.('target', { hasSubdivisions: true });
+    },
+  })
+  source: string;
+
+  @minky({ validators: [new RequiredValidator()] })
+  target: string;
+}
+
 let reform: Reform<FictionalCharacter>;
 const KYLE_SURNAME = 'Broflovski';
 const KYLE_NAME = 'Kyle';
@@ -136,6 +159,59 @@ describe('Reform Instance', () => {
     });
     it('string', () => {
       expect(reform.getValueByPath('religion')).toEqual('');
+    });
+  });
+
+  describe('Dynamic carrier state', () => {
+    it('updates disabled and hidden state through the carrier bridge', () => {
+      const dynamicReform = new Reform(DynamicCharacter, {
+        source: '',
+        target: '',
+      });
+      const sourceCarrier = dynamicReform.generateInputCarriers()[0] as any;
+
+      sourceCarrier.setValue('updated');
+
+      const carriers = dynamicReform.generateInputCarriers() as any[];
+      expect(carriers.find((carrier) => carrier.path === 'source').hidden).toBe(true);
+      expect(carriers.find((carrier) => carrier.path === 'target').disable).toBe(true);
+    });
+
+    it('skips hidden and disabled fields during validation', () => {
+      const dynamicReform = new Reform(DynamicCharacter, {
+        source: '',
+        target: '',
+      });
+      const sourceCarrier = dynamicReform.generateInputCarriers()[0] as any;
+
+      sourceCarrier.setValue('updated');
+
+      expect(dynamicReform.validationErrorByPath({
+        path: 'source',
+        meta: dynamicReform.getPropertyMeta('source'),
+      })).toEqual([]);
+      expect(dynamicReform.validationErrorByPath({
+        path: 'target',
+        meta: dynamicReform.getPropertyMeta('target'),
+      })).toEqual([]);
+      expect(dynamicReform.allValidationErrors()).toEqual([]);
+    });
+
+    it('stores and clears arbitrary per-path data set through the state environment', () => {
+      const dynamicReform = new Reform(DynamicCharacter, {
+        source: '',
+        target: '',
+      });
+      const sourceCarrier = dynamicReform.generateInputCarriers()[0] as any;
+
+      sourceCarrier.setValue('updated');
+
+      const carriers = dynamicReform.generateInputCarriers() as any[];
+      expect(carriers.find((carrier) => carrier.path === 'target').data).toEqual({ hasSubdivisions: true });
+
+      dynamicReform.reset();
+      const resetCarriers = dynamicReform.generateInputCarriers() as any[];
+      expect(resetCarriers.find((carrier) => carrier.path === 'target').data).toBeUndefined();
     });
   });
 });

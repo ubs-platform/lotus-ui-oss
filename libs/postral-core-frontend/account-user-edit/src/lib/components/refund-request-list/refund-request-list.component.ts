@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { SearchableDataTableComponent } from '@lotus/front-global/table';
 import { RefundControllerService } from '@lotus/postral-core-frontend/client';
+import { RefundRequestResolutionDialogComponent } from '../refund-request-resolution-dialog/refund-request-resolution-dialog.component';
 
 @Component({
   selector: 'libRefundRequestList',
@@ -30,29 +31,27 @@ export class RefundRequestListComponent {
   }
 
   deleteRefund(refundId: string, status: "rejected" | "approved") {
-    // TODO :Çeviri için tr-tr ve en-us jsonu güncellenecek 
-    this.overlayService.confirm('Emin misiniz?', "Yeni iade durumu: " + (status == 'approved' ? 'Onaylandı' : 'Reddedildi') + '. Bu iade talebini sonlandırmak istediğinize emin misiniz?').subscribe((confirmed) => {
-      if (confirmed) {
-        this.perform(refundId, status);
-      }
-    });
+    this.perform(refundId, status);
   }
 
   private perform(refundId: string, status: "rejected" | "approved") {
-    if (status === "approved") {
-      this.refundService.approveRefundRequest(refundId).subscribe(() => {
-        // Refresh the list after approval
-        // this.addressService.list().subscribe();
-        this.table()?.loadData();
+    const action = status === 'approved' ? 'APPROVED' : 'REJECTED';
+    this.overlayService
+      .showComponentAsDialog(RefundRequestResolutionDialogComponent, {
+        title: action === 'APPROVED'
+          ? 'postral.refund.approve-confirm-title'
+          : 'postral.refund.reject-confirm-title',
+        data: { action },
+        defaultOutValue: null,
+      })
+      .onClose()
+      .subscribe((result) => {
+        if (!result) return;
+        const request = action === 'APPROVED'
+          ? this.refundService.approveRefundRequest(refundId, result)
+          : this.refundService.rejectRefundRequest(refundId, result);
+        request.subscribe(() => this.table()?.loadData());
       });
-    } else if (status === "rejected") {
-      this.refundService.rejectRefundRequest(refundId).subscribe(() => {
-        // Refresh the list after rejection
-        // this.addressService.list().subscribe();
-        this.table()?.loadData();
-      });
-    }
-   
   }
 
 

@@ -23,6 +23,10 @@ export class WebhookConfigControllerService {
     return this.http.put<WebhookConfigDTO>(`${this.basePath}/${id}`, requestBody);
   }
 
+  regenerateEventKey(id: string): Observable<WebhookConfigDTO> {
+    return this.http.post<WebhookConfigDTO>(`${this.basePath}/${id}/regenerate-key`, {});
+  }
+
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.basePath}/${id}`);
   }

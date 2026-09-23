@@ -1,15 +1,21 @@
-import { minky, minkyRoot, RequiredValidator } from '@lotus/front-global/minky/core';
+import { minky, minkyRoot, RegexValidator, RequiredValidator } from '@lotus/front-global/minky/core';
 import { WebhookConfigCreateDTO } from '@tk-postral/payment-common';
 
 @minkyRoot()
 export class WebhookConfigForm implements WebhookConfigCreateDTO {
+
+    @minky({
+        inputType: "slider-toggle",
+        label: 'Is Enabled',
+    })
+    isEnabled: boolean = false;
     @minky({ disable: true })
     accountId: string = '';
 
     @minky({
         inputType: 'text',
         label: 'Webhook URL',
-        validators: [new RequiredValidator()],
+        validators: [new RequiredValidator(), new RegexValidator(/^https?:\/\/.+$/, "invalid-url")],
     })
     url: string = '';
 
@@ -23,10 +29,4 @@ export class WebhookConfigForm implements WebhookConfigCreateDTO {
         ],
     })
     method: 'POST' | 'PUT' = 'POST';
-
-    @minky({
-        inputType: 'text',
-        label: 'Event Key (boş bırakılırsa otomatik üretilir)',
-    })
-    eventKey?: string;
 }

@@ -7,6 +7,10 @@ export interface ApplicationEnvironment {
 export interface StateEnvironment {
   formValue?: any;
   onChanges?: Observable<any>;
+  setHidden?: (path: string, value: boolean | undefined) => void;
+  setDisabled?: (path: string, value: boolean | undefined) => void;
+  setData?: (path: string, value: any) => void;
+  getData?: (path: string) => any;
 }
 
 export interface CombinedEnvironment {

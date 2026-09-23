@@ -29,6 +29,8 @@ export interface InputLinkCarrier extends BaseLinkCarrier {
   widthRatio?: string;
   feeder?: ListFunction;
   disable: boolean;
+  hidden: boolean;
+  data: any;
 }
 
 export interface ActionLinkCarrier extends BaseLinkCarrier {

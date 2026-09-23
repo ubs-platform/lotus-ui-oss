@@ -43,6 +43,8 @@ import { SidebarPageActionHolderComponent } from './components/sidebar-page-acti
 import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
 import { WebhookConfigInfoComponent } from './components/webhook-config-info/webhook-config-info.component';
 import { WebhookConfigListComponent } from './components/webhook-config-list/webhook-config-list.component';
+import { FrontGlobalMarkdownEditorModule } from '@lotus/front-global/markdown-editor';
+import { RefundRequestResolutionDialogComponent } from './components/refund-request-resolution-dialog/refund-request-resolution-dialog.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -65,7 +67,8 @@ import { WebhookConfigListComponent } from './components/webhook-config-list/web
     CustomSelectComponent,
     UbsTranslatorNgxModule,
     PostralReportsModule,
-  ],
+    FrontGlobalMarkdownEditorModule
+],
   declarations: [
     AccountUserInfoComponent,
     AccountsComponent,
@@ -86,6 +89,7 @@ import { WebhookConfigListComponent } from './components/webhook-config-list/web
     RefundRequestDialogComponent,
     RefundRequestListComponent,
     RefundRequestInfoComponent,
+    RefundRequestResolutionDialogComponent,
     SidebarPageActionHolderComponent,
     WebhookConfigInfoComponent,
     WebhookConfigListComponent,

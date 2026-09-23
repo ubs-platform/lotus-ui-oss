@@ -1,0 +1,30 @@
+<div class="flex flex-column gap-3">
+  <p class="text-color-secondary">
+    {{
+      (action === 'APPROVED'
+        ? 'postral.refund.approve-note-description'
+        : 'postral.refund.reject-note-description') | translate
+    }}
+  </p>
+  <lotus-web-markdown-editor [(value)]="resolutionNote"></lotus-web-markdown-editor>
+  <div class="flex gap-2">
+    <block-button
+      buttonClass="border"
+      iconClass="material-symbols-outlined"
+      iconContent="close"
+      stringContent="general.cancel"
+      (click)="close()"
+    ></block-button>
+    <block-button
+      [buttonClass]="action === 'APPROVED' ? 'primary' : 'error'"
+      iconClass="material-symbols-outlined"
+      [iconContent]="action === 'APPROVED' ? 'check' : 'close'"
+      [stringContent]="
+        action === 'APPROVED'
+          ? 'postral.refund.approve'
+          : 'postral.refund.reject'
+      "
+      (click)="submit()"
+    ></block-button>
+  </div>
+</div>

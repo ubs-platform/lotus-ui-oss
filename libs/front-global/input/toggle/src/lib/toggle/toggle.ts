@@ -12,6 +12,7 @@ export class ToggleComponent {
   iconClass = input('');
   label = input('');
   name = input('');
+  disabled = input<boolean>(false);
   checkOnClickText = input<boolean>(true);
   checkOnClickInput = input<boolean>(true);
   // onClickCheckPolicy = input<"ICON" | "FULL" | "NONE">("FULL")

@@ -24,6 +24,14 @@
           {{ item.status }}
         </ng-template>
       </column>
+      <column name="reasonKeys">
+        <ng-template header content="postral.refund.reasons"></ng-template>
+        <ng-template data let-item="item">
+          @for (reason of item.reasonKeys || []; track reason; let isLast = $last) {
+          {{ ('postral.refund.reason.' + reason | lowercase) | translate }}{{ isLast ? '' : ', ' }}
+          }
+        </ng-template>
+      </column>
       <column name="createdAt">
         <ng-template header content="general.creation-date"> </ng-template>
         <ng-template data let-item="item">

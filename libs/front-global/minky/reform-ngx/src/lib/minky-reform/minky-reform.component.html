@@ -29,6 +29,7 @@
     [value]="carrier.value"
     (valueChange)="carrier.setValue($event)"
     (blur)="carrier.setTouched(true)"
+    [disabled]="carrier.disable"
     [attr.name]="carrier.name"
   />
   
@@ -37,6 +38,7 @@
     type="file"
     (input)="carrier.setValue($event, carrier)"
     (blur)="carrier.setTouched(true)"
+    [disabled]="carrier.disable"
     [attr.name]="carrier.name"
   />
   <!-- </ng-template> -->
@@ -121,7 +123,7 @@
           ></div>
         </div>
         <div
-          *ngIf="carrier.carrierType == 'INPUT'"
+          *ngIf="carrier.carrierType == 'INPUT' && !carrier.hidden"
           [attr.reform-path]="carrier.path"
         >
           <div

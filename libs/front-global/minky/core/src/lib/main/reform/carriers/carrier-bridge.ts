@@ -11,6 +11,12 @@ export interface ICarrierBridge {
   touchMap(): TouchMap;
   setValueByPath(path: string, value: any): void;
   setFileByPath(path: string, value: any): void;
+  setDisableByPath(path: string, value: boolean | undefined): void;
+  setHiddenByPath(path: string, value: boolean | undefined): void;
+  getDisableByPath(path: string): boolean | undefined;
+  getHiddenByPath(path: string): boolean | undefined;
+  setDataByPath(path: string, value: any): void;
+  getDataByPath(path: string): any;
   getValueByPath(path: string): any;
   validationErrorByPath(path: MetaPath): IValidatorResult[];
   emitBigUpdate(val: any): void;

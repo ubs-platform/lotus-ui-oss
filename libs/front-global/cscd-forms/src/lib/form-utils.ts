@@ -3,6 +3,21 @@ import { Injector } from '@angular/core';
 import { CscdClientService } from '@lotus/front-global/cscd-client';
 import { catchError, distinctUntilChanged, map, of, startWith, switchMap } from 'rxjs';
 
+export const fetchIsCountrySubdivision = (env: CombinedEnvironment, countryCode: string | null | undefined) => {
+  if (!countryCode) {
+    return of(false);
+  }
+  const cscdService = (env.app?.['injector'] as Injector).get(
+    CscdClientService
+  );
+  return cscdService.hasSubdivisions(countryCode).pipe(
+    catchError((err) => {
+      console.error(err);
+      return of(false);
+    })
+  );
+}
+
 export const fetchCountries = (env: CombinedEnvironment) => {
   const cscdService = (env.app?.['injector'] as Injector).get(
     CscdClientService

@@ -1,6 +1,6 @@
 import { AccountAddressDto } from '@tk-postral/payment-common';
 import { minky, minkyRoot, RequiredValidator } from '@lotus/front-global/minky/core';
-import { fetchCountries, listenSubdivisions, listenLocalities } from '@lotus/front-global/cscd-forms';
+import { fetchCountries, listenSubdivisions, listenLocalities, fetchIsCountrySubdivision } from '@lotus/front-global/cscd-forms';
 
 
 export interface AddressDtoWithUserInput extends AccountAddressDto {
@@ -29,7 +29,13 @@ export class AddressForm extends AccountAddressDto {
     inputType: "select",
     selectItems: (env) => {
       return fetchCountries(env);
-    }
+    },
+    onValueChange: (value, oldVal, combined) => {
+       fetchIsCountrySubdivision(combined, value).subscribe((hasSubdivisions) => {
+         combined.state.setData?.('countryCodeUserInput', { hasSubdivisions });
+         combined.state.setDisabled?.('citySubdivisionName', !hasSubdivisions);
+       });
+    },
   })
   countryCodeUserInput!: string;
 
@@ -40,7 +46,7 @@ export class AddressForm extends AccountAddressDto {
     widthRatio: '50%',
     selectItems: (env) => {
       return listenSubdivisions(env, () => env.state.formValue.countryCodeUserInput);
-    }
+    },
   })
   subdivisionUserInput!: string;
 
@@ -55,7 +61,7 @@ export class AddressForm extends AccountAddressDto {
   localityUserInput!: string;
 
   @minky({
-    label: '(Ş) Rastgele doldurunuz / (E) İlçe',
+    label: 'İlçe',
     validators: [new RequiredValidator()],
     disable: false,
     widthRatio: '50%',
@@ -70,7 +76,7 @@ export class AddressForm extends AccountAddressDto {
 
   })
   override country = '';
-  
+
   @minky({
     // validators: [new RequiredValidator()],
     disable: true,

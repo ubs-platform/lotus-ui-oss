@@ -5,6 +5,10 @@ import { StatusBadgeColor } from '@lotus/front-global/status-badge';
 import { RefundControllerService } from '@lotus/postral-core-frontend/client';
 import { RefundRequestDTO } from '@tk-postral/payment-common';
 import { Optional } from '@ubs-platform/crud-base-common/utils';
+import {
+  RefundRequestResolutionDialogComponent,
+  RefundResolutionAction,
+} from '../refund-request-resolution-dialog/refund-request-resolution-dialog.component';
 
 @Component({
   selector: 'libRefundRequestInfo',
@@ -59,30 +63,7 @@ export class RefundRequestInfoComponent implements OnInit {
       return;
     }
 
-    this.basicOverlay
-      .confirm(
-        'postral.refund.approve-confirm-title',
-        'postral.refund.approve-confirm-message'
-      )
-      .subscribe((confirmed) => {
-        if (!confirmed) {
-          return;
-        }
-
-        this.refundService.approveRefundRequest(this.refundRequestId).subscribe({
-          next: (updatedRefundRequest) => {
-            this.refundRequest.set(updatedRefundRequest);
-            this.basicOverlay.alert(
-              'general.success',
-              'postral.refund.approve-success',
-              'success'
-            );
-          },
-          error: (err) => {
-            this.basicOverlay.alert('general.error-occurred', err, 'error');
-          },
-        });
-      });
+    this.resolve('APPROVED');
   }
 
   reject(): void {
@@ -90,22 +71,35 @@ export class RefundRequestInfoComponent implements OnInit {
       return;
     }
 
+    this.resolve('REJECTED');
+  }
+
+  private resolve(action: RefundResolutionAction): void {
     this.basicOverlay
-      .confirm(
-        'postral.refund.reject-confirm-title',
-        'postral.refund.reject-confirm-message'
-      )
-      .subscribe((confirmed) => {
-        if (!confirmed) {
+      .showComponentAsDialog(RefundRequestResolutionDialogComponent, {
+        title: action === 'APPROVED'
+          ? 'postral.refund.approve-confirm-title'
+          : 'postral.refund.reject-confirm-title',
+        data: { action },
+        defaultOutValue: null,
+      })
+      .onClose()
+      .subscribe((result) => {
+        if (!result) {
           return;
         }
 
-        this.refundService.rejectRefundRequest(this.refundRequestId).subscribe({
+        const request = action === 'APPROVED'
+          ? this.refundService.approveRefundRequest(this.refundRequestId, result)
+          : this.refundService.rejectRefundRequest(this.refundRequestId, result);
+        request.subscribe({
           next: (updatedRefundRequest) => {
             this.refundRequest.set(updatedRefundRequest);
             this.basicOverlay.alert(
               'general.success',
-              'postral.refund.reject-success',
+              action === 'APPROVED'
+                ? 'postral.refund.approve-success'
+                : 'postral.refund.reject-success',
               'success'
             );
           },

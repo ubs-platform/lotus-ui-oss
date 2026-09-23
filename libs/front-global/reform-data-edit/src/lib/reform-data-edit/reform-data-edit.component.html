@@ -1,23 +1,18 @@
 @if (formInstruction()) {
-<div class="flex flex-column h-full w-full">
-  @if (saveButtonPosition() === 'top-right') {
-  <div
-    class="flex flex-row justify-content-end align-items-center gap-2 mb-3"
-    style="min-height: 60px"
-  >
-    <block-button
-      buttonClass="primary"
-      iconClass="material-symbols-outlined"
-      iconContent="save"
-      stringContent="general.save"
-      (click)="saveForm()"
-    ></block-button>
-  </div>
+<ng-template #actionBar>
+  @for (action of visibleActions(); track $index) {
+  <block-button
+    [buttonClass]="action.buttonClass ?? 'surface'"
+    [iconClass]="action.iconClass"
+    [iconContent]="action.iconContent"
+    [iconImageSource]="action.iconImageSource"
+    [iconPosition]="action.iconPosition ?? 'LEFT'"
+    [hideContentAtLowScr]="action.hideContentAtLowScr ?? false"
+    [disabled]="isActionDisabled(action)"
+    [stringContent]="action.stringContent"
+    (click)="runAction(action)"
+  ></block-button>
   }
-  <div class="flex-grow-1" style="overflow: auto">
-    <minky-reform-prime [reform]="formInstruction()!.form"></minky-reform-prime>
-  </div>
-  @if (saveButtonPosition() === 'bottom') {
   <block-button
     buttonClass="primary"
     iconClass="material-symbols-outlined"
@@ -25,6 +20,23 @@
     stringContent="general.save"
     (click)="saveForm()"
   ></block-button>
+</ng-template>
+<div class="flex flex-column h-full w-full">
+  @if (saveButtonPosition() === 'top-right') {
+  <div
+    class="flex flex-row justify-content-end align-items-center gap-2 mb-3"
+    style="min-height: 60px"
+  >
+    <ng-container *ngTemplateOutlet="actionBar"></ng-container>
+  </div>
+  }
+  <div class="flex-grow-1" style="overflow: auto">
+    <minky-reform-prime [reform]="formInstruction()!.form"></minky-reform-prime>
+  </div>
+  @if (saveButtonPosition() === 'bottom') {
+  <div class="flex flex-row align-items-center gap-2">
+    <ng-container *ngTemplateOutlet="actionBar"></ng-container>
+  </div>
   }
 </div>
 } @else {

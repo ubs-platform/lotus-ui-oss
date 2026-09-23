@@ -104,12 +104,30 @@ export type SellerPaymentOrderType = "CREDIT_TO_SELLER" | "DEBIT_FROM_SELLER";
           iconClass="material-symbols-outlined" iconContent="check"
         ></block-button>
         }
-        <block-button
+        <!-- TODO:Satıcı tarafı iade başlatabilir... Ya -->
+        <!-- <block-button
           [cover]="true"
           stringContent="postral.transaction.dispute"
           iconClass="material-symbols-outlined" iconContent="warning"
+        ></block-button> -->
+        @if (paymentInfo()?.paymentStatus === 'COMPLETED') {
+        <block-button
+          (click)="showRefundDialog()"
+          [cover]="true"
+          stringContent="postral.refund.start"
+          iconClass="material-symbols-outlined" iconContent="undo"
         ></block-button>
+        }
       </div>
     </div>
   </div>
 </div>
+
+@if (paymentInfo()) {
+<lib-refund-request-dialog
+  [visible]="refundDialogVisible"
+  [paymentId]="paymentInfo()!.id"
+  [paymentItems]="paymentItems()"
+  (visibleChange)="refundDialogVisible = false"
+></lib-refund-request-dialog>
+}

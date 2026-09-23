@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormEditInstruction } from '@lotus/front-global/reform-data-edit';
 import { Reform } from '@lotus/front-global/minky/core';
@@ -18,6 +18,9 @@ export class WebhookConfigInfoComponent {
     instruction = signal<FormEditInstruction | null>(null);
     existingId = signal<string | null>(null);
     createdEventKey = signal<string | null>(null);
+    hasExistingConfig = computed(() => !!this.existingId());
+    programmaticCopyEnabled = computed(() => (window.location.protocol === 'https:' || window.location.hostname === 'localhost'))
+    isCopyDisabled = computed(() => !this.createdEventKey() && !this.programmaticCopyEnabled());
 
     constructor(
         private webhookConfigService: WebhookConfigControllerService,
@@ -50,6 +53,24 @@ export class WebhookConfigInfoComponent {
     private buildInstruction(form: Reform, accountId: string, existingId: string | null) {
         this.instruction.set({
             form,
+            extraActions: [
+                {
+                    stringContent: 'Yeni Event Key oluştur',
+                    iconClass: 'material-symbols-outlined',
+                    iconContent: 'key',
+                    buttonClass: 'border',
+                    renderIf: this.hasExistingConfig,
+                    action: () => this.regenerateEventKey(),
+                },
+                {
+                    stringContent: 'Webhook konfigürasyonunu sil',
+                    iconClass: 'material-symbols-outlined',
+                    iconContent: 'delete',
+                    buttonClass: 'border text-danger',
+                    renderIf: this.hasExistingConfig,
+                    action: () => this.deleteConfig(),
+                },
+            ],
             onValidationError: (_form: Reform) => {
                 this.basicOverlay.alert('Hata', 'Lütfen formu kontrol edin.', 'error');
             },
@@ -75,6 +96,32 @@ export class WebhookConfigInfoComponent {
         } as FormEditInstruction<WebhookConfigDTO, WebhookConfigDTO>);
     }
 
+    regenerateEventKey() {
+        const id = this.existingId();
+        if (!id) return;
+        this.basicOverlay
+            .confirm(
+                'Emin misiniz?',
+                'Yeni bir Event Key oluşturulacak ve mevcut key geçersiz olacak. Devam edilsin mi?',
+            )
+            .subscribe((confirmed) => {
+                if (!confirmed) return;
+                this.webhookConfigService.regenerateEventKey(id).subscribe({
+                    next: (out) => {
+                        this.createdEventKey.set(out.eventKey);
+                        this.basicOverlay.alert(
+                            'general.success',
+                            'Yeni Event Key oluşturuldu.',
+                            'success',
+                        );
+                    },
+                    error: () => {
+                        this.basicOverlay.alert('Hata', 'Event Key oluşturulamadı.', 'error');
+                    },
+                });
+            });
+    }
+
     deleteConfig() {
         const id = this.existingId();
         if (!id) return;
@@ -96,6 +143,10 @@ export class WebhookConfigInfoComponent {
 
     copyEventKey() {
         const eventKey = this.createdEventKey();
+        if (!this.programmaticCopyEnabled()) {
+            this.basicOverlay.alert('Hata', 'Kopyalama yalnızca HTTPS protokolü veya localhost üzerinde desteklenir.', 'error');
+            return
+        }
         if (eventKey) {
             navigator.clipboard.writeText(eventKey).then(() => {
                 this.basicOverlay.alert('general.success', 'Event Key kopyalandı.', 'success');

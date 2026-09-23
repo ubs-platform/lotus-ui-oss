@@ -14,7 +14,8 @@
         <h2 class="m-0">{{ 'postral.refund.detail' | translate }}</h2>
         <block-button
           buttonClass="border"
-          iconClass="material-symbols-outlined" iconContent="arrow_back"
+          iconClass="material-symbols-outlined"
+          iconContent="arrow_back"
           [stringContent]="'postral.refund.back-to-list' | translate"
           (click)="goToRequests()"
         ></block-button>
@@ -22,14 +23,50 @@
     </div>
 
     <div class="mona-card">
-      <h3 class="mb-3">{{ 'postral.refund.general-info' | translate }}</h3>
+      <h2 class="mb-3">{{ 'postral.refund.reasons-and-notes' | translate }}</h2>
+      <ul class="mt-0">
+        @for (reason of refundRequest()!.reasonKeys || []; track reason) {
+        <li>{{ 'postral.refund.reason.' + reason | lowercase | translate }}</li>
+        }
+      </ul>
+      @if (refundRequest()!.requestNote) {
+      <p class="font-semibold">
+        {{ 'postral.refund.request-note' | translate }}
+      </p>
+      <lotus-web-markdown-editor
+        [editor]="false"
+        [value]="refundRequest()!.requestNote!"
+      ></lotus-web-markdown-editor>
+      } @if (refundRequest()!.resolutionNote) {
+      <p class="font-semibold">
+        {{ 'postral.refund.resolution-note' | translate }}
+      </p>
+      <lotus-web-markdown-editor
+        [editor]="false"
+        [value]="refundRequest()!.resolutionNote!"
+      ></lotus-web-markdown-editor>
+      }
+      <div class="info-item">
+        <span class="label">{{ 'general.status' | translate }}:</span>
+        <lotus-web-status-badge
+          [color]="getStatusColor(refundRequest()!.status)"
+          [label]="getStatusLabel(refundRequest()!.status) | translate"
+        >
+        </lotus-web-status-badge>
+      </div>
+    </div>
+
+    <div class="mona-card">
+      <h2 class="mb-3">{{ 'postral.refund.general-info' | translate }}</h2>
       <div class="info-grid gap-3">
         <div class="info-item">
           <span class="label">{{ 'postral.refund.id' | translate }}:</span>
           <span class="value">{{ refundRequest()!.id }}</span>
         </div>
         <div class="info-item">
-          <span class="label">{{ 'postral.refund.payment-id' | translate }}:</span>
+          <span class="label"
+            >{{ 'postral.refund.payment-id' | translate }}:</span
+          >
           <span class="value">{{ refundRequest()!.paymentId }}</span>
         </div>
         <div class="info-item">
@@ -41,12 +78,16 @@
           </lotus-web-status-badge>
         </div>
         <div class="info-item">
-          <span class="label">{{ 'postral.refund.requested-by-account' | translate }}:</span>
+          <span class="label"
+            >{{ 'postral.refund.requested-by-account' | translate }}:</span
+          >
           <span class="value">{{ refundRequest()!.requestedByAccountId }}</span>
         </div>
         @if (refundRequest()!.resolvedByAccountId) {
         <div class="info-item">
-          <span class="label">{{ 'postral.refund.resolved-by-account' | translate }}:</span>
+          <span class="label"
+            >{{ 'postral.refund.resolved-by-account' | translate }}:</span
+          >
           <span class="value">{{ refundRequest()!.resolvedByAccountId }}</span>
         </div>
         }
@@ -66,7 +107,7 @@
     </div>
 
     <div class="mona-card">
-      <h3 class="mb-3">{{ 'postral.refund.items' | translate }}</h3>
+      <h2 class="mb-3">{{ 'postral.refund.items' | translate }}</h2>
       @if (refundRequest()!.items.length > 0) {
       <ubs-table-ngx [cover]="true" [items]="refundRequest()!.items">
         <column name="item">
@@ -77,7 +118,8 @@
             <div>{{ item.itemName }}</div>
             @if (item.variation) {
             <div class="text-sm text-muted">
-              {{ 'postral.item-price.variation' | translate }}: {{ item.variation }}
+              {{ 'postral.item-price.variation' | translate }}:
+              {{ item.variation }}
             </div>
             }
           </ng-template>
@@ -119,18 +161,20 @@
     </div>
 
     <div class="mona-card">
-      <h3 class="mb-3">{{ 'general.actions' | translate }}</h3>
+      <h2 class="mb-3">{{ 'general.actions' | translate }}</h2>
       @if (refundRequest()!.status === 'PENDING') {
       <div class="flex gap-2">
         <block-button
           buttonClass="primary"
-          iconClass="material-symbols-outlined" iconContent="check"
+          iconClass="material-symbols-outlined"
+          iconContent="check"
           stringContent="general.approve"
           (click)="approve()"
         ></block-button>
         <block-button
           buttonClass="error"
-          iconClass="material-symbols-outlined" iconContent="close"
+          iconClass="material-symbols-outlined"
+          iconContent="close"
           stringContent="general.reject"
           (click)="reject()"
         ></block-button>

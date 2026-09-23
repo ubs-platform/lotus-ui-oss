@@ -19,6 +19,7 @@ import { ListFunction } from './select-feeder';
 import {
   ApplicationEnvironment,
   CombinedEnvironment,
+  StateEnvironment,
 } from '../state-environment';
 
 export class Reform<T = any> {
@@ -34,6 +35,9 @@ export class Reform<T = any> {
   fileMap: Map<string, File[]> = new Map();
   appEnv?: ApplicationEnvironment;
   private _parameters = new Map<string, any>();
+  private _disableOverrides = new Map<string, boolean>();
+  private _hiddenOverrides = new Map<string, boolean>();
+  private _dataOverrides = new Map<string, any>();
 
   constructor(
     private metaKey: MetaKey,
@@ -63,6 +67,12 @@ export class Reform<T = any> {
       value: () => this.value,
       emitUpdate: (val) => this.valueUpdate.next(val),
       setFileByPath: (p, file) => this.setFileByPath(p, file),
+      setDisableByPath: (p, value) => this.setDisableByPath(p, value),
+      setHiddenByPath: (p, value) => this.setHiddenByPath(p, value),
+      getDisableByPath: (p) => this._disableOverrides.get(p),
+      getHiddenByPath: (p) => this._hiddenOverrides.get(p),
+      setDataByPath: (p, value) => this.setDataByPath(p, value),
+      getDataByPath: (p) => this._dataOverrides.get(p),
       getFeeder: (path) => {
         const meta = this.getPropertyMeta(path);
         if (meta && typeof meta.selectItems === 'function') {
@@ -70,7 +80,7 @@ export class Reform<T = any> {
             meta.selectItems?.({
               app: this.appEnv,
               parameters: this._parameters,
-              state: { formValue: this._value, onChanges: this.valueUpdate.asObservable() },
+              state: this.getStateEnvironment(),
             }) || [];
         }
         console.warn('MINKY: Unable to find related meta for select items');
@@ -79,7 +89,7 @@ export class Reform<T = any> {
       combinedEnvironment: () => ({
         app: this.appEnv,
         parameters: this._parameters,
-        state: { formValue: this._value, onChanges: this.valueUpdate.asObservable() },
+        state: this.getStateEnvironment(),
       }),
     });
   }
@@ -93,6 +103,26 @@ export class Reform<T = any> {
 
   getParameterMap() {
     return this._parameters;
+  }
+
+  setDisableByPath(path: string, value: boolean | undefined): void {
+    this.setOverride(this._disableOverrides, path, value);
+  }
+
+  setHiddenByPath(path: string, value: boolean | undefined): void {
+    this.setOverride(this._hiddenOverrides, path, value);
+  }
+
+  setDataByPath(path: string, value: any): void {
+    if (value === undefined) {
+      this._dataOverrides.delete(path);
+    } else {
+      this._dataOverrides.set(path, value);
+    }
+  }
+
+  getDataByPath(path: string): any {
+    return this._dataOverrides.get(path);
   }
 
 
@@ -250,6 +280,7 @@ export class Reform<T = any> {
   }
 
   validationErrorByPath(path: MetaPath) {
+    if (this.isDisabledOrHidden(path.path, path.meta)) return [];
     const value = path.meta.inputType === 'file'
       ? this.getFiles().find((a) => a.key === path.path)?.files[0]
       : this.getValueByPath(path.path);
@@ -279,6 +310,9 @@ export class Reform<T = any> {
     this._value = JSON.parse(JSON.stringify(this._initialValue));
     this.fileMap.clear();
     this.touchMap = new TouchMap();
+    this._disableOverrides.clear();
+    this._hiddenOverrides.clear();
+    this._dataOverrides.clear();
     this.allErrorsRevealed = false;
     this.valueBigUpdate.next(this.value);
   }
@@ -290,5 +324,36 @@ export class Reform<T = any> {
 
   generateInputCarriers(propertyMetas = this.propertyMetas, prefix = '') {
     return this.carrierManager.generateInputCarriers(propertyMetas, prefix);
+  }
+
+  private getStateEnvironment(): StateEnvironment {
+    return {
+      formValue: this._value,
+      onChanges: this.valueUpdate.asObservable(),
+      setHidden: (path, value) => this.setHiddenByPath(path, value),
+      setDisabled: (path, value) => this.setDisableByPath(path, value),
+      setData: (path, value) => this.setDataByPath(path, value),
+      getData: (path) => this.getDataByPath(path),
+    };
+  }
+
+  private setOverride(
+    overrides: Map<string, boolean>,
+    path: string,
+    value: boolean | undefined
+  ): void {
+    if (value === undefined) {
+      overrides.delete(path);
+    } else {
+      overrides.set(path, value);
+    }
+  }
+
+  private isDisabledOrHidden(path: string, meta: PropertyMeta): boolean {
+    return (
+      (this._disableOverrides.get(path) ?? meta.disable ?? false) ||
+      (this._hiddenOverrides.get(path) ?? false) ||
+      meta.hide === true
+    );
   }
 }

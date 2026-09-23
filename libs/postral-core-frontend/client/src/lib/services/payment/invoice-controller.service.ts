@@ -16,6 +16,7 @@ import { SearchResult } from '@ubs-platform/crud-base-common';
   providedIn: 'root'
 })
 export class InvoiceControllerService {
+
   readonly basePath = '/service/payment/api/invoice';
   constructor(private http: HttpClient) {}
   
@@ -28,6 +29,11 @@ export class InvoiceControllerService {
   search(s: InvoiceSearchDTO): Observable<SearchResult<InvoiceDTO>> {
     let urlAltered = this.interceptUrl("/_search");
     return this.http.get<SearchResult<InvoiceDTO>>(urlAltered, { params: s as any });
+  }
+  
+  updateExtraNotes(invoiceId: string, arg1: string): Observable<InvoiceDTO> {
+    let urlAltered = this.interceptUrl(":id/extra-notes").replace(':id', invoiceId + '');
+    return this.http.put<InvoiceDTO>(urlAltered, { notes: arg1 });
   }
 
   interceptUrl(url: string): string {

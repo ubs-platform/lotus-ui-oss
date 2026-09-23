@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -23,13 +23,16 @@ import { lastValueFrom } from 'rxjs';
   styleUrls: ['./invoice-info.component.scss'],
 })
 export class InvoiceInfoComponent implements OnInit {
+
   invoiceId: string = '';
   invoiceInfo = signal<Optional<InvoiceDTO>>(null);
+  isFinalized = computed(() => this.invoiceInfo()?.finalized || false);
   loading = signal<boolean>(true);
   error = signal<Optional<string>>(null);
   fileInput: HTMLInputElement | null = null;
   hasInvoiceFile = signal<boolean>(false);
   items = signal<PaymentItemDTO[]>([]);
+  valueChangeFlag = signal<boolean>(false);
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -38,7 +41,7 @@ export class InvoiceInfoComponent implements OnInit {
     private basicOverlay: BasicOverlayService,
     private fileService: FileService,
     private paymentItemSearchService: PaymentItemSearchService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.activeRoute.params.subscribe((params) => {
@@ -228,5 +231,23 @@ export class InvoiceInfoComponent implements OnInit {
   downloadUblFile(): void {
     if (!this.invoiceId) return;
     this.invoiceService.downloadUblUrl(this.invoiceId);
+  }
+
+  saveExtraNotes() {
+    if (!this.valueChangeFlag()) return;
+    if (this.invoiceInfo()?.finalized) {
+      this.basicOverlay.alert('general.error-occurred', 'postral.invoice.finalized-cannot-update-notes', 'error');
+      return;
+    }
+    this.invoiceService.updateExtraNotes(this.invoiceId, this.invoiceInfo()!.notes!).subscribe({
+      next: (updatedInvoice) => {
+        this.invoiceInfo.set(updatedInvoice);
+        this.basicOverlay.alert('general.success', 'postral.extra-notes.saved', 'success');
+        this.valueChangeFlag.set(false);
+      },
+      error: (err) => {
+        this.basicOverlay.alert('general.error-occurred', err, 'error');
+      },
+    });
   }
 }

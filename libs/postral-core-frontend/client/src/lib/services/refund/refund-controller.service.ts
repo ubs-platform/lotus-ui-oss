@@ -5,6 +5,7 @@ import {
   CreateRefundRequestDTO,
   RefundRequestDTO,
   RefundRequestSearchDTO,
+  ResolveRefundRequestDTO,
 } from '@tk-postral/payment-common';
 
 @Injectable({
@@ -26,14 +27,14 @@ export class RefundControllerService {
     return this.http.post<RefundRequestDTO>(urlAltered, requestBody);
   }
 
-  approveRefundRequest(id: string): Observable<RefundRequestDTO> {
+  approveRefundRequest(id: string, body: ResolveRefundRequestDTO = {}): Observable<RefundRequestDTO> {
     const urlAltered = this.interceptUrl(`request/${id}/approve`);
-    return this.http.post<RefundRequestDTO>(urlAltered, {});
+    return this.http.post<RefundRequestDTO>(urlAltered, body);
   }
 
-  rejectRefundRequest(id: string): Observable<RefundRequestDTO> {
+  rejectRefundRequest(id: string, body: ResolveRefundRequestDTO = {}): Observable<RefundRequestDTO> {
     const urlAltered = this.interceptUrl(`request/${id}/reject`);
-    return this.http.post<RefundRequestDTO>(urlAltered, {});
+    return this.http.post<RefundRequestDTO>(urlAltered, body);
   }
 
   searchRefundRequests(searchBody: RefundRequestSearchDTO): Observable<{ data: RefundRequestDTO[], total: number }> {

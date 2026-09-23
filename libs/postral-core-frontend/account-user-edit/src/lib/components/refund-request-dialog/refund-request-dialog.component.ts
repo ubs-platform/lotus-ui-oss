@@ -1,5 +1,5 @@
 import { Component, EventEmitter, signal, computed, model } from '@angular/core';
-import { PaymentItemDTO, CreateRefundRequestDTO } from '@tk-postral/payment-common';
+import { PaymentItemDTO, CreateRefundRequestDTO, RefundReasonKey } from '@tk-postral/payment-common';
 import { RefundControllerService } from '@lotus/postral-core-frontend/client';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { Option } from '@lotus/legendary-front/custom-select';
@@ -10,6 +10,16 @@ import { Option } from '@lotus/legendary-front/custom-select';
   templateUrl: './refund-request-dialog.component.html',
 })
 export class RefundRequestDialogComponent {
+
+  readonly reasonOptions: { key: RefundReasonKey; label: string }[] = [
+    { key: 'DAMAGED', label: 'postral.refund.reason.damaged' },
+    { key: 'DEFECTIVE', label: 'postral.refund.reason.defective' },
+    { key: 'WRONG_ITEM', label: 'postral.refund.reason.wrong_item' },
+    { key: 'MISSING_PARTS', label: 'postral.refund.reason.missing_parts' },
+    { key: 'NOT_AS_DESCRIBED', label: 'postral.refund.reason.not_as_described' },
+    { key: 'CHANGED_MIND', label: 'postral.refund.reason.changed_mind' },
+    { key: 'OTHER', label: 'postral.refund.reason.other' },
+  ];
 
 
   visible = model<boolean>(false);
@@ -38,6 +48,8 @@ export class RefundRequestDialogComponent {
   });
 
   refundSelections: { [key: string]: number } = {};
+  selectedReasons: Record<RefundReasonKey, boolean> = {} as Record<RefundReasonKey, boolean>;
+  requestNote = '';
   submitting = signal(false);
 
   constructor(
@@ -53,6 +65,8 @@ export class RefundRequestDialogComponent {
 
   resetSelections() {
     this.refundSelections = {};
+    this.selectedReasons = {} as Record<RefundReasonKey, boolean>;
+    this.requestNote = '';
     this.items().forEach(item => {
       this.refundSelections[item.id!] = 0;
     });
@@ -60,6 +74,10 @@ export class RefundRequestDialogComponent {
 
   hasSelectedAny(): boolean {
     return Object.values(this.refundSelections).some(count => count > 0);
+  }
+
+  hasSelectedReason(): boolean {
+    return Object.values(this.selectedReasons).some(Boolean);
   }
 
   close() {
@@ -75,14 +93,18 @@ export class RefundRequestDialogComponent {
         refundCount
       }));
 
-    if (refundItemsToSubmit.length === 0) {
-      this.basicOverlay.alert("Uyarı", "Lütfen iade edilecek en az bir ürün adetini girin.", "warn");
+    if (refundItemsToSubmit.length === 0 || !this.hasSelectedReason()) {
+      this.basicOverlay.alert('general.warning', 'postral.refund.validation-required', 'warn');
       return;
     }
 
     const dto: CreateRefundRequestDTO = {
       paymentId: this.paymentId(),
-      items: refundItemsToSubmit
+      items: refundItemsToSubmit,
+      reasonKeys: this.reasonOptions
+        .filter((reason) => this.selectedReasons[reason.key])
+        .map((reason) => reason.key),
+      requestNote: this.requestNote.trim() || undefined,
     };
 
     this.submitting.set(true);

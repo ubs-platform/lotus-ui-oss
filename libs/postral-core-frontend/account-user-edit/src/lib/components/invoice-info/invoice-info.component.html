@@ -33,31 +33,38 @@
         </div>
         }
         <div class="info-item">
-          <span class="label">{{ 'postral.invoice.finalized' | translate }}:</span>
+          <span class="label"
+            >{{ 'postral.invoice.finalized' | translate }}:</span
+          >
           <lotus-web-status-badge
             [color]="invoiceInfo()!.finalized ? 'green' : 'gray'"
-            [label]="invoiceInfo()!.finalized ? ('postral.invoice.finalized' | translate) : ('postral.invoice.draft' | translate)"
+            [label]="
+              invoiceInfo()!.finalized
+                ? ('postral.invoice.finalized' | translate)
+                : ('postral.invoice.draft' | translate)
+            "
           ></lotus-web-status-badge>
         </div>
         @if (invoiceInfo()!.paymentId) {
         <div class="info-item">
-          <span class="label">{{ 'postral.invoice.payment-id' | translate }}:</span>
+          <span class="label"
+            >{{ 'postral.invoice.payment-id' | translate }}:</span
+          >
           <span class="value">{{ invoiceInfo()!.paymentId }}</span>
         </div>
         } @if (invoiceInfo()!.sellerPaymentOrderId) {
         <div class="info-item">
-          <span class="label">{{ 'postral.invoice.seller-payment-order-id' | translate }}:</span>
+          <span class="label"
+            >{{ 'postral.invoice.seller-payment-order-id' | translate }}:</span
+          >
           <span class="value">{{ invoiceInfo()!.sellerPaymentOrderId }}</span>
         </div>
         } @if (invoiceInfo()!.uploadedByUserId) {
         <div class="info-item">
-          <span class="label">{{ 'postral.invoice.uploaded-by-user-id' | translate }}:</span>
+          <span class="label"
+            >{{ 'postral.invoice.uploaded-by-user-id' | translate }}:</span
+          >
           <span class="value">{{ invoiceInfo()!.uploadedByUserId }}</span>
-        </div>
-        } @if (invoiceInfo()!.notes) {
-        <div class="info-item">
-          <span class="label">{{ 'postral.invoice.notes' | translate }}:</span>
-          <span class="value">{{ invoiceInfo()!.notes }}</span>
         </div>
         }
         <div class="info-item">
@@ -78,7 +85,7 @@
     <div class="flex w-full flex-column lg:flex-row gap-2 items-start">
       <!-- İşletmeci Bilgileri -->
       <div class="lg:flex-grow-1 seller-section mona-card">
-        <h3 class="mb-2">{{ 'postral.invoice.seller-info' | translate }}</h3>
+        <h2 class="mb-2">{{ 'postral.invoice.seller-info' | translate }}</h2>
         @if (getSellerAddress()) {
         <div class="address-info mb-3">
           <p class="font-semibold">{{ 'postral.address' | translate }}:</p>
@@ -88,11 +95,19 @@
           </p>
           <p class="text-sm">
             {{ getSellerAddress()!.district }}
-            {{ getSellerAddress()!.cityName }}{{ getSellerAddress()!.countrySubentity ? '/' + getSellerAddress()!.countrySubentity : '' }}/{{ getSellerAddress()!.countryReadName || getSellerAddress()!.country }}
+            {{ getSellerAddress()!.cityName
+            }}{{
+              getSellerAddress()!.countrySubentity
+                ? '/' + getSellerAddress()!.countrySubentity
+                : ''
+            }}/{{
+              getSellerAddress()!.countryReadName || getSellerAddress()!.country
+            }}
           </p>
           @if (getSellerAddress()!.postalZone) {
           <p class="text-sm">
-            {{ 'postral.postal-code' | translate }}: {{ getSellerAddress()!.postalZone }}
+            {{ 'postral.postal-code' | translate }}:
+            {{ getSellerAddress()!.postalZone }}
           </p>
           }
         </div>
@@ -100,7 +115,10 @@
         <div class="account-info">
           <p class="font-semibold">{{ 'general.account.info' | translate }}:</p>
           @if (getSellerAccount()!.name) {
-          <p class="text-sm">{{ 'postral.account-name' | translate }}: {{ getSellerAccount()!.name }}</p>
+          <p class="text-sm">
+            {{ 'postral.account-name' | translate }}:
+            {{ getSellerAccount()!.name }}
+          </p>
           } @if (getSellerAccount()!.legalIdentity) {
           <p class="text-sm">
             {{
@@ -123,7 +141,7 @@
 
       <!-- Müşteri Bilgileri -->
       <div class="lg:flex-grow-1 customer-section mona-card">
-        <h3 class="mb-2">{{ 'postral.invoice.customer-info' | translate }}</h3>
+        <h2 class="mb-2">{{ 'postral.invoice.customer-info' | translate }}</h2>
         @if (getCustomerAddress()) {
         <div class="address-info mb-3">
           <p class="font-semibold">{{ 'postral.address' | translate }}:</p>
@@ -133,11 +151,20 @@
           </p>
           <p class="text-sm">
             {{ getCustomerAddress()!.district }}
-            {{ getCustomerAddress()!.cityName }}{{ getCustomerAddress()!.countrySubentity ? '/' + getCustomerAddress()!.countrySubentity : '' }}/{{ getCustomerAddress()!.countryReadName || getCustomerAddress()!.country }}
+            {{ getCustomerAddress()!.cityName
+            }}{{
+              getCustomerAddress()!.countrySubentity
+                ? '/' + getCustomerAddress()!.countrySubentity
+                : ''
+            }}/{{
+              getCustomerAddress()!.countryReadName ||
+                getCustomerAddress()!.country
+            }}
           </p>
           @if (getCustomerAddress()!.postalZone) {
           <p class="text-sm">
-            {{ 'postral.postal-code' | translate }}: {{ getCustomerAddress()!.postalZone }}
+            {{ 'postral.postal-code' | translate }}:
+            {{ getCustomerAddress()!.postalZone }}
           </p>
           }
         </div>
@@ -145,7 +172,10 @@
         <div class="account-info">
           <p class="font-semibold">{{ 'general.account.info' | translate }}:</p>
           @if (getCustomerAccount()!.name) {
-          <p class="text-sm">{{ 'postral.account-name' | translate }}: {{ getCustomerAccount()!.name }}</p>
+          <p class="text-sm">
+            {{ 'postral.account-name' | translate }}:
+            {{ getCustomerAccount()!.name }}
+          </p>
           } @if (getCustomerAccount()!.legalIdentity) {
           <p class="text-sm">
             {{
@@ -175,16 +205,35 @@
     <div class="payment-items-section flex-grow-1 mona-card">
       <h2>{{ 'postral.extra-notes' | translate }}</h2>
       <!-- Fatura Numarası ve ekstra başka notlar-->
+      <!--  -->
+      <div class="mb-2">
+        <lotus-web-markdown-editor
+          [editor]="!isFinalized()"
+          [(value)]="invoiceInfo()!.notes!"
+          (valueChange)="valueChangeFlag.set(true)"
+        ></lotus-web-markdown-editor>
+      </div>
+      @if (!isFinalized()) {
+      <block-button
+        [disabled]="!valueChangeFlag()"
+        stringContent="postral.extra-notes.save"
+        buttonClass="primary"
+        iconClass="material-symbols-outlined"
+        iconContent="save"
+        (click)="saveExtraNotes()"
+      ></block-button>
+      }
     </div>
     <!-- İşlemler -->
     <div class="actions-section mona-card">
-      <h3 class="mb-3">{{ 'general.actions' | translate }}</h3>
+      <h2 class="mb-3">{{ 'general.actions' | translate }}</h2>
       <div class="flex flex-column gap-2">
         @if (invoiceInfo()!.finalized && hasInvoiceFile()) {
         <block-button
           stringContent="postral.invoice.download-file"
           buttonClass="border"
-          iconClass="material-symbols-outlined" iconContent="download"
+          iconClass="material-symbols-outlined"
+          iconContent="download"
           (click)="downloadInvoiceFile()"
         ></block-button>
         } @if (!invoiceInfo()!.finalized) {
@@ -192,14 +241,16 @@
           <block-button
             stringContent="postral.invoice.download-ubl"
             buttonClass="border"
-            iconClass="material-symbols-outlined" iconContent="code"
+            iconClass="material-symbols-outlined"
+            iconContent="code"
             (click)="downloadUblFile()"
           ></block-button>
           @if (hasInvoiceFile()) {
           <block-button
             stringContent="postral.invoice.download-file"
             buttonClass="border"
-            iconClass="material-symbols-outlined" iconContent="download"
+            iconClass="material-symbols-outlined"
+            iconContent="download"
             (click)="downloadInvoiceFile()"
           ></block-button>
           }
@@ -210,7 +261,8 @@
                 ? 'postral.invoice.update-file'
                 : 'postral.invoice.upload-file'
             "
-            iconClass="material-symbols-outlined" iconContent="upload"
+            iconClass="material-symbols-outlined"
+            iconContent="upload"
             (click)="importInvoiceFile()"
           ></block-button>
         </div>
@@ -218,13 +270,15 @@
           <block-button
             buttonClass="primary"
             stringContent="postral.invoice.finalize"
-            iconClass="material-symbols-outlined" iconContent="check"
+            iconClass="material-symbols-outlined"
+            iconContent="check"
             (click)="finalizeInvoice()"
           >
           </block-button>
           <block-button
             buttonClass="error"
-            iconClass="material-symbols-outlined" iconContent="delete"
+            iconClass="material-symbols-outlined"
+            iconContent="delete"
             stringContent="postral.invoice.delete"
             (click)="deleteInvoice()"
           >

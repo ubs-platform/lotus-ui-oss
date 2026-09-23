@@ -7,6 +7,7 @@
           " [binary]="true" [disabled]="carrier.disable" [ngModel]="carrier.value"
           (ngModelChange)="carrier.setValue($event)"></p-checkbox> -->
     <toggle [label]="carrier.title" [checkboxStyle]="carrier.inputType == 'checkbox'" [value]="carrier.value"
+      [disabled]="carrier.disable"
       (valueChange)="carrier.setValue($event)"></toggle>
   </div>
   } @else {
@@ -60,6 +61,7 @@
       index = $index) {
       <div>
         <p-radioButton inputId="{{ carrier.path }}_{{ index }}" name="category" [value]="item.value"
+          [disabled]="carrier.disable"
           [ngModel]="carrier.value" (ngModelChange)="carrier.setValue($event)" />
         <label for="{{ carrier.path }}_{{ index }}" class="ml-2">
           {{ item.text }}
@@ -70,13 +72,13 @@
   </div>
   } @case ('file') {
   <div>
-    <p-fileUpload mode="advanced" [attr.name]="carrier.name" [showUploadButton]="false"
+    <p-fileUpload mode="advanced" [attr.name]="carrier.name" [disabled]="carrier.disable" [showUploadButton]="false"
       (blur)="carrier.setTouched(true)" (onSelect)="carrier.setValue($event.files, carrier)" [multiple]="false"
       chooseLabel="Dosya seç"></p-fileUpload>
   </div>
   } @case ('datetime') {
   <div>
-    <p-calendar styleClass="w-full" (ngModelChange)="carrier.setValue($event)" [ngModel]="carrier.value"
+    <p-calendar styleClass="w-full" [disabled]="carrier.disable" (ngModelChange)="carrier.setValue($event)" [ngModel]="carrier.value"
       [showTime]="true" [showSeconds]="true"></p-calendar>
     <!-- <input pInputText type="datetime" [ngModel]="carrier.value" (ngModelChange)="carrier.setValue($event)"
             (blur)="carrier.setTouched(true)" [class.ng-invalid]="carrier.validationErrors?.length"
@@ -165,7 +167,7 @@
             </div>
 
           </div>
-          <div *ngIf="carrier.carrierType == 'INPUT'" [attr.reform-path]="carrier.path">
+          <div *ngIf="carrier.carrierType == 'INPUT' && !carrier.hidden" [attr.reform-path]="carrier.path">
             <div *ngTemplateOutlet="
                 getRelatedInputTemplate(carrier).template;
                 context: { carrier: carrier }
