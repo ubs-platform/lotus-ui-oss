@@ -74,7 +74,41 @@
       "earnings": "Kazanımlar",
       "correct-answer-is": "Doğru cevap: {answer}",
       "your-answer-is-correct": "Cevabın doğru 🎉",
-      "total-questions-length": "Toplam soru sayısı"
+      "total-questions-length": "Toplam soru sayısı",
+      "settings": "Ayarlar",
+      "lectures": "Konular",
+      "saving": "Kaydediliyor",
+      "offline-reading": "Çevrimdışı okuma",
+      "offline-saved-success": "Kitap çevrimdışı olarak kaydedildi",
+      "offline-saved-warn-images": "Ancak bazı resimler farklı sunucuda barındırıldığından ya da ulaşılamadığından kaydedilemedi",
+      "offline-save-error": "Maalesef kitap kaydedilirken bir hata oluştu.",
+      "offline-remove-title": "Çevrimdışı kitabı kaldır",
+      "offline-remove-confirm": "Çevrimdışı kitabı kaldırmaktan emin misiniz?",
+      "offline-removed-success": "Kitap çevrimdışı moddan kaldırıldı",
+      "offline-remove-error": "Maalesef kitap kaldırılırken bir hata oluştu.",
+      "save-offline-update": "Kitabı çevrimdışı olarak kaydet (varsa güncelle)",
+      "delete-offline": "Çevrimdışı olarak kaydedildiyse sil",
+      "editor-settings": "Düzenleyici ayarları",
+      "book-info": "Kitap bilgileri",
+      "meta-info": "Meta Bilgileri",
+      "visibility": "Görünürlük",
+      "general-analyses": "Genel analizler",
+      "order-arrangement": "Soru sıralama",
+      "book-ownership": "Kitap sahipliği",
+      "ownership": "Sahiplik",
+      "view": "Görünüm",
+      "monetization-wip": "Para kazanma (Üzerinde çalışıyoruz)",
+      "general-options": "Genel seçenekler",
+      "book-page": "Kitap Sayfası",
+      "sales-settings-disabled-title": "Satış ayarları kapalı",
+      "sales-settings-disabled-desc": "Satış arayüzü şu anda geçici olarak devre dışı.",
+      "welcome-editor-mode": "Düzenleyici Modu",
+      "welcome-editor-desc": "Bu kitapta düzenleme yetkiniz var. Sol menüden soru ve konulara geçebilir, aşağıdan ayarlara hızlıca ulaşabilirsiniz.",
+      "welcome": "Hoş Geldiniz",
+      "welcome-viewer-desc": "Soldaki listeden bir soru veya konu seçerek başlayabilirsiniz.",
+      "start-from-first-question": "İlk Sorudan Başla",
+      "start-trial-button": "Deneme Başlat",
+      "untitled-lecture": "Başlıksız Konu"
     }
   },
   {
@@ -241,8 +275,7 @@
   {
     "prefix": "admin.general",
     "stringMap": {
-      "need-admin": "Santrali kullanabilmek için yönetici olarak giriş yapmalısınız. Sağ üstteki butonu kullanarak giriş yapabilirsiniz",
-      "first": "'Kyle Broflovski' başlangıç için eklenen yönetici kullanıcıdır. İlk açılışta konsol loglarından giriş bilgilerini bulabilirsiniz. Eğer yoksa, MongoDB üzerinde ubsusers veritabanındaki users dokümanını yedek alarak temizleyin ve UBS Users'ı tekrar çalıştırın. Ardından diğer kullanıcılarınızı yükleyin"
+      "need-admin": "Santrali kullanabilmek için yönetici olarak giriş yapmalısınız. Sağ üstteki butonu kullanarak giriş yapabilirsiniz"
     }
   },
   {
@@ -260,8 +293,9 @@
   {
     "prefix": "language",
     "stringMap": {
-      "tr-tr": "Türkçe",
-      "en-us": "İnglizce (ABD)"
+      "tr-tr": "Türkçe - TR",
+      "en-us": "İngilizce - US (Deneysel)",
+      "de-de": "Almanca - DE (Deneysel)"
     }
   },
   {
@@ -314,7 +348,9 @@
   {
     "prefix": "lotus",
     "stringMap": {
-      "bu-kitap-bir-takm-tarafndan-yn": "Bu kitap bir takım tarafından yönetilmektedir."
+      "bu-kitap-bir-takm-tarafndan-yn": "Bu kitap bir takım tarafından yönetilmektedir.",
+      "go-viewer": "Görüntüleyiciye geç",
+      "go-editor-mode": "Düzenleme moduna geç"
     }
   },
   {
@@ -367,13 +403,27 @@
       "national-id": "TC Kimlik No",
       "tax-number": "Vergi No",
       "extra-notes": "Ekstra notlar",
+      "extra-notes.save": "Ekstra notları kaydet",
+      "extra-notes.saved": "Ekstra notlar kaydedildi.",
+      "extra-notes.not-saved": "Ekstra notlar kaydedilemedi.",
       "currency": "Para Birimi",
       "total-amount": "Toplam Tutar",
       "total-tax": "Toplam Vergi",
       "customer-account": "Müşteri Hesap",
       "amount": "Tutar",
       "seller-order-id": "Satıcı Sipariş ID",
-      "customer": "Müşteri"
+      "customer": "Müşteri",
+      "webhook.delete": "Webhook konfigürasyonunu sil",
+      "webhook.regenerate": "Yeni Event Key oluştur",
+      "webhook.config.saved": "Webhook konfigürasyonu kaydedildi.",
+      "webhook.delete.success": "Webhook konfigürasyonu silindi.",
+      "webhook.regenerate.confirmation": "Yeni bir Event Key oluşturulacak ve mevcut key geçersiz olacak. Devam edilsin mi?",
+      "webhook.regenerate.success": "Yeni Event Key oluşturuldu.",
+      "webhook.regenerate.error": "Event Key oluşturulamadı.",
+      "webhook.settings": "Webhook Ayarları",
+      "webhook.event-key": "Olay Anahtarı",
+      "webhook.event-key.copied": "Event Key kopyalandı.",
+      "webhook.event-key-warning": "Event Key yalnızca bir kez gösterilir. Lütfen bu bilgiyi güvenli bir yerde saklayın. Oluşturulan Event Key:"
     }
   },
   {
@@ -480,7 +530,9 @@
       "created-success": "Fatura başarıyla oluşturuldu.",
       "confirm-open-title": "Açık Faturayı Onayla",
       "confirm-open-message": "Bu ödemeyi tamamlandı olarak onaylamak istediğinize emin misiniz? Onayladıktan sonra geri alınamaz.",
-      "confirm-open-success": "Açık fatura başarıyla onaylandı ve ödeme tamamlandı."
+      "confirm-open-success": "Açık fatura başarıyla onaylandı ve ödeme tamamlandı.",
+      "none": "Yok",
+      "creation-instruction": "Yeni bir fatura oluşturmak için işlem detaylarından \"Fatura oluştur\" butonuna tıklayabilirsiniz."
     }
   },
   {
@@ -500,7 +552,31 @@
   {
     "prefix": "postral.item",
     "stringMap": {
-      "name": "Ürün İsmi"
+      "name": "Ürün İsmi",
+      "info": "Ürün Bilgileri",
+      "info-label": "Bilgi",
+      "price-list": "Fiyat Listesi",
+      "no-form-instruction": "Form talimatı yok",
+      "updated-success": "Öğe bilgileri başarıyla güncellendi.",
+      "error-while-save": "Öğe bilgileri kaydedilirken bir hata oluştu. Lütfen tekrar deneyin.",
+      "unit-not-found": "{unit} birimi bulunamadı. Fatura oluşturulurken sorun yaşamamak için birim bilgisini kontrol ediniz.",
+      "unit-defined": "{unit} birimi {desc} olarak tanımlanmıştır. Fatura oluşturulurken bu birim kullanılacaktır."
+    }
+  },
+  {
+    "prefix": "postral.item-price",
+    "stringMap": {
+      "variation": "Varyasyon",
+      "price": "Fiyat",
+      "region": "Bölge",
+      "priority": "Öncelik",
+      "add-new": "Yeni Fiyat Ekle",
+      "edit-title": "Fiyat Düzenle",
+      "delete-confirm-title": "Fiyatı Sil",
+      "delete-confirm-message": "Bu fiyatı silmek istediğinizden emin misiniz?",
+      "deleted-success": "Fiyat başarıyla silindi.",
+      "saved-success": "Fiyat bilgileri başarıyla güncellendi.",
+      "save-error": "Fiyat kaydedilemedi."
     }
   },
   {
@@ -538,7 +614,46 @@
   {
     "prefix": "postral.refund",
     "stringMap": {
-      "start": "İade başlat"
+      "start": "İade başlat",
+      "detail": "İade Talebi Detayı",
+      "back-to-list": "Listeye Dön",
+      "general-info": "Genel Bilgiler",
+      "id": "İade Talep ID",
+      "payment-id": "Ödeme ID",
+      "requested-by-account": "Talep Eden Kullanıcı Hesabı (UBS)",
+      "resolved-by-account": "Sonuçlandıran Ödeme Hesabı",
+      "items": "İade Kalemleri",
+      "refund-count": "İade Edilen Adet",
+      "refund-amount": "İade Edilen Tutar",
+      "no-items": "Bu iade talebinde kalem bulunamadı.",
+      "already-resolved": "Bu iade talebi sonuçlandırıldığı için tekrar işlem yapılamaz.",
+      "not-found": "İade talebi bulunamadı.",
+      "status-approved": "Onaylandı",
+      "status-rejected": "Reddedildi",
+      "status-pending": "Bekliyor",
+      "approve-confirm-title": "İade Talebini Onayla",
+      "approve-confirm-message": "Bu iade talebini onaylamak istiyor musunuz?",
+      "approve-success": "İade talebi onaylandı.",
+      "reject-confirm-title": "İade Talebini Reddet",
+      "reject-confirm-message": "Bu iade talebini reddetmek istiyor musunuz?",
+      "reject-success": "İade talebi reddedildi.",
+      "load-error": "İade talebi alınamadı.",
+      "reasons": "İade nedenleri",
+      "request-note": "Talep notu",
+      "resolution-note": "Karar notu",
+      "reasons-and-notes": "Neden ve notlar",
+      "validation-required": "Lütfen en az bir iade kalemi ve neden seçin.",
+      "approve": "Onayla",
+      "reject": "Reddet",
+      "approve-note-description": "Onay kararınız için isteğe bağlı bir not ekleyebilirsiniz.",
+      "reject-note-description": "Ret kararınız için isteğe bağlı bir not ekleyebilirsiniz.",
+      "reason.damaged": "Hasarlı ürün",
+      "reason.defective": "Ürün kusurlu",
+      "reason.wrong_item": "Yanlış ürün gönderildi",
+      "reason.missing_parts": "Eksik parça",
+      "reason.not_as_described": "Açıklamadaki üründen farklı",
+      "reason.changed_mind": "Fikir değişikliği",
+      "reason.other": "Diğer"
     }
   },
   {
@@ -607,6 +722,57 @@
       "USD": "ABD Doları ($)",
       "EUR": "Euro (€)",
       "TRY": "Türk Lirası (₺)"
+    }
+  },
+  {
+    "prefix": "postral.units",
+    "stringMap": {
+      "C62": "Adet",
+      "B32": "Kg/Metre Kare",
+      "CCT": "Ton Başına Taşıma Kapasitesi",
+      "PR": "Çift",
+      "D30": "Brüt Kalori Değeri",
+      "D40": "Bin Litre",
+      "GFI": "Fissile İzotop Gramı",
+      "GRM": "Gram",
+      "GT": "Gross Ton",
+      "CEN": "Yüz Adet",
+      "KPO": "Kilogram Potasyum Oksit",
+      "MND": "Kurutulmuş Net Ağırlıklı Kilogramı",
+      "3I": "Kilogram-Adet",
+      "KFO": "Difosfor Pentaoksit Kilogramı",
+      "KGM": "Kilogram",
+      "KHY": "Hidrojen Peroksit Kilogramı",
+      "KMA": "Metil Aminlerin Kilogramı",
+      "KNI": "Azotun Kilogramı",
+      "KPH": "Kilogram Potasyum Hidroksit",
+      "KSD": "%90 Kuru Ürün Kilogramı",
+      "KSH": "Sodyum Hidroksit Kilogramı",
+      "KUR": "Uranyum Kilogramı",
+      "D32": "Terawatt Saat",
+      "GWH": "Gigawatt Saat",
+      "MWH": "Megawatt Saat (1000 kW.h)",
+      "KWH": "Kilowatt Saat",
+      "KWT": "Kilowatt",
+      "LPA": "Saf Alkol Litresi",
+      "LTR": "Litre",
+      "MTK": "Metre Kare",
+      "DMK": "Desimetre Kare",
+      "MTQ": "Metre Küp",
+      "MTR": "Metre",
+      "NCL": "Hücre Adedi",
+      "CTM": "Karat",
+      "SM3": "Standart Metreküp",
+      "R9": "Bin Metre Küp",
+      "SET": "Set",
+      "T3": "Bin Adet",
+      "TON": "Ton",
+      "TNE": "Kuru Ton",
+      "MIN": "Dakika",
+      "HUR": "Saat",
+      "DAY": "Gün",
+      "WEE": "Hafta",
+      "MON": "Ay"
     }
   },
   {
@@ -704,13 +870,116 @@
       "details": "Detaylar",
       "reject": "Reddet",
       "approve": "Onayla",
-      "review": "İncele"
+      "review": "İncele",
+      "back": "Geri",
+      "confirm-title": "Emin misiniz?",
+      "validation-error": "Doğrulama Hatası",
+      "validation-error-desc": "Lütfen formu kontrol edip tekrar deneyin.",
+      "app-update.title": "Yeni sürüm kurulumu",
+      "app-update.description": "Yeni sürüm güncellemesi mevcut",
+      "app-update.alert": "Evet'e bastığınız anda sayfa yenilenecektir. Eğer kaydetmediğiniz önemli bir değişikliğiniz varsa kurulumu sonra da yapabilirsiniz. Şimdi yüklensin mi?",
+      "app-update.error-title": "Kurulum esnasında bir hata oluştu",
+      "app-update.error-desc": "Lütfen tekrar deneyin",
+      "app-update.verb": "Güncelle",
+      "please-wait": "Lütfen bekleyin",
+      "expand": "Genişlet",
+      "collapse": "Daralt",
+      "copy": "Kopyala",
+      "copy.warn.support": "Kopyalama yalnızca HTTPS protokolü veya localhost üzerinde desteklenir. Sizin seçerek kopyalamanız gerekir.",
+      "user-id": "Kullanıcı kimliği"
     }
   },
   {
     "prefix": "payment",
     "stringMap": {
       "error.receive": "Ödeme alınamadı"
+    }
+  },
+  {
+    "prefix": "postral.admin",
+    "stringMap": {
+      "eyebrow": "Postral yönetimi",
+      "title": "Yönetici işlemleri",
+      "description": "Hassas verileri, faturalamayı ve payment arşivlerini kontrollü biçimde yönetin.",
+      "badge": "Yalnızca yönetici",
+      "sensitive-data.title": "Hassas veri işlemleri",
+      "sensitive-data.description": "TCKN, IBAN ve adres bilgileri üzerinde toplu şifreleme işlemleri.",
+      "sensitive-data.encrypt": "Verileri şifrele",
+      "sensitive-data.decrypt": "Şifreyi çöz",
+      "billing.title": "Faturalama",
+      "billing.description": "Faturalanmamış günlük raporları işleyip faturalama sürecini başlatın.",
+      "billing.start": "Faturalamayı başlat",
+      "cleanup.eyebrow": "Payment veri yönetimi",
+      "cleanup.title": "Payment arşivi ve temizliği",
+      "cleanup.description": "Önce kapsamı inceleyin, ardından SQL arşivi oluşturun. Silme işlemi yalnızca doğrulanmış bir arşivden sonra yapılır.",
+      "cleanup.preview-safe": "Önizleme güvenli",
+      "cleanup.before-label": "Şu tarihten önce oluşturulanlar",
+      "cleanup.preview": "Kapsamı göster",
+      "cleanup.archive": "Arşiv oluştur",
+      "cleanup.refresh-archives": "Arşivleri yenile",
+      "cleanup.date-hint": "Tarih boş bırakılırsa tüm payment geçmişi değerlendirilir. Önizleme hiçbir kayıt silmez.",
+      "cleanup.loading": "İşlem hazırlanıyor...",
+      "cleanup.preview-result": "Önizleme sonucu",
+      "cleanup.payment-found": "{count} payment bulundu",
+      "cleanup.report-queries-preserved": "ReportQuery korunacak",
+      "cleanup.reports-affected": "Rapor çıktısı etkilenecek",
+      "cleanup.clean": "Arşivle ve temizle",
+      "cleanup.archive-ready": "Arşiv hazır",
+      "cleanup.checksum": "Checksum",
+      "cleanup.download": "SQL arşivini indir",
+      "cleanup.delete-archived": "Arşivlenmiş verileri sil",
+      "cleanup.created-archives": "Oluşturulan arşivler",
+      "cleanup.archive-count": "{count} arşiv",
+      "cleanup.payment-count": "{count} payment",
+      "cleanup.before-date": "Öncesi",
+      "cleanup.download-short": "İndir",
+      "count.payment": "Payment",
+      "count.postral_payment_item": "Payment kalemi",
+      "count.postral_payment_tax": "Payment vergisi",
+      "count.seller_payment_order": "Satıcı payment siparişi",
+      "count.invoice": "Fatura",
+      "count.refund_request": "İade talebi",
+      "count.refund_request_item": "İade kalemi",
+      "count.account_payment_transaction": "Hesap ödeme işlemi",
+      "count.payment_channel_operation": "Ödeme kanalı işlemi",
+      "count.postral_payment_event": "Payment olayı",
+      "count.report_payment_relation": "Rapor-payment ilişkisi",
+      "count.report": "Rapor",
+      "count.report_tax_group": "Rapor vergi grubu",
+      "count.report_expense": "Rapor gideri",
+      "warning.report-queries-preserved": "ReportQuery kayıtları korunur.",
+      "warning.reports-may-be-empty": "Etkilenen rapor çıktıları yeni payment'lar işlenene kadar boş görünebilir.",
+      "warning.live-accounts-preserved": "Canlı hesap, adres ve banka hesabı kayıtları temizleme kapsamına alınmaz.",
+      "warning.preview-only": "Bu önizleme arşiv oluşturmaz ve veri silmez.",
+      "overlay.encrypt-title": "Tüm verileri şifrele",
+      "overlay.encrypt-message": "Tüm hassas verilerin şifrelenmesi başlatılacak. Bu işlem uzun sürebilir. Devam etmek istiyor musunuz?",
+      "overlay.encrypt-success-title": "Şifreleme tamamlandı",
+      "overlay.encrypt-success-message": "Tüm hassas verilerin şifrelenmesi tamamlandı.",
+      "overlay.encrypt-error-title": "Şifreleme hatası",
+      "overlay.decrypt-title": "Tüm verilerin şifresini çöz",
+      "overlay.decrypt-message": "Tüm hassas verilerin şifresinin çözülmesi başlatılacak. Devam etmek istiyor musunuz?",
+      "overlay.decrypt-success-title": "Şifre çözme tamamlandı",
+      "overlay.decrypt-success-message": "Tüm hassas verilerin şifresi çözüldü.",
+      "overlay.decrypt-error-title": "Şifre çözme hatası",
+      "overlay.billing-title": "Faturalamayı başlat",
+      "overlay.billing-message": "Faturalama işlemi başlatılacak. Devam etmek istiyor musunuz?",
+      "overlay.billing-success-title": "Faturalama başlatıldı",
+      "overlay.billing-success-message": "Faturalama işlemi başarıyla başlatıldı.",
+      "overlay.billing-error-title": "Faturalama hatası",
+      "overlay.preview-error-title": "Önizleme hatası",
+      "overlay.archive-ready-title": "Arşiv hazır",
+      "overlay.archive-ready-message": "Payment verilerinin SQL arşivi oluşturuldu.",
+      "overlay.archive-error-title": "Arşivleme hatası",
+      "overlay.archive-list-error-title": "Arşiv listesi alınamadı",
+      "overlay.archive-download-error-title": "Arşiv indirme hatası",
+      "overlay.delete-title": "Payment verilerini sil",
+      "overlay.delete-message": "Arşivlenmiş payment verileri silinecek. ReportQuery ve canlı hesaplar korunacak. Bu işlem geri alınamaz. Devam etmek istiyor musunuz?",
+      "overlay.delete-success-title": "Payment verileri silindi",
+      "overlay.delete-success-message": "Arşiv doğrulandı ve seçilen payment verileri silindi.",
+      "overlay.delete-error-title": "Payment silme hatası",
+      "overlay.delete-after-archive-error": "Arşiv oluşturuldu ancak payment verileri silinemedi.",
+      "overlay.archive-before-delete-error": "Silme öncesi arşiv oluşturulamadı. Hiçbir kayıt silinmedi.",
+      "overlay.operation-error": "İşlem sırasında bir hata oluştu. Lütfen tekrar deneyin."
     }
   }
 ]

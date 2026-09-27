@@ -11,7 +11,9 @@
       "_": "Support",
       "faq": "Frequently Asked Questions",
       "subreddit": "r/tetakent",
-      "contact-support": "Contact Support Team"
+      "contact-support": "Contact Support Team",
+      "feedback": "Feedback",
+      "feedback-short": "Fbk."
     }
   },
   {
@@ -74,7 +76,41 @@
       "your-answer-is-correct": "Your answer is correct 🎉",
       "contactLinks": "Contact Links",
       "url": "URL",
-      "total-questions-length": "Total questions"
+      "total-questions-length": "Total questions",
+      "settings": "Settings",
+      "lectures": "Lectures",
+      "saving": "Saving",
+      "offline-reading": "Offline reading",
+      "offline-saved-success": "Book saved offline",
+      "offline-saved-warn-images": "However, some images could not be saved because they are hosted on a different server or unreachable",
+      "offline-save-error": "Unfortunately, an error occurred while saving the book.",
+      "offline-remove-title": "Remove offline book",
+      "offline-remove-confirm": "Are you sure you want to remove the offline book?",
+      "offline-removed-success": "Book removed from offline mode",
+      "offline-remove-error": "Unfortunately, an error occurred while removing the book.",
+      "save-offline-update": "Save book offline (update if exists)",
+      "delete-offline": "Delete if saved offline",
+      "editor-settings": "Editor settings",
+      "book-info": "Book information",
+      "meta-info": "Meta Information",
+      "visibility": "Visibility",
+      "general-analyses": "General analyses",
+      "order-arrangement": "Question order",
+      "book-ownership": "Book ownership",
+      "ownership": "Ownership",
+      "view": "View",
+      "monetization-wip": "Monetization (Work in progress)",
+      "general-options": "General options",
+      "book-page": "Book Page",
+      "sales-settings-disabled-title": "Sale settings disabled",
+      "sales-settings-disabled-desc": "The sales interface is currently temporarily disabled.",
+      "welcome-editor-mode": "Editor Mode",
+      "welcome-editor-desc": "You have editing permissions for this book. You can switch to questions and lectures from the left menu, or quickly access settings below.",
+      "welcome": "Welcome",
+      "welcome-viewer-desc": "You can start by selecting a question or lecture from the list on the left.",
+      "start-from-first-question": "Start from First Question",
+      "start-trial-button": "Start Trial",
+      "untitled-lecture": "Untitled Lecture"
     }
   },
   {
@@ -145,7 +181,8 @@
       "user.active": "Active",
       "user.passive": "Inactive",
       "user.suspended": "Suspended",
-      "social.options": "Social options"
+      "social.options": "Social options",
+      "save": "Save"
     }
   },
   {
@@ -252,8 +289,9 @@
   {
     "prefix": "language",
     "stringMap": {
-      "tr-tr": "Turkish",
-      "en-us": "English - US"
+      "tr-tr": "Turkish - TR",
+      "en-us": "English - US (Experimental)",
+      "de-de": "German - DE (Experimental)"
     }
   },
   {
@@ -306,7 +344,9 @@
   {
     "prefix": "lotus",
     "stringMap": {
-      "bu-kitap-bir-takm-tarafndan-yn": "This book is managed by a team."
+      "bu-kitap-bir-takm-tarafndan-yn": "This book is managed by a team.",
+      "go-viewer": "Switch to viewer mode",
+      "go-editor-mode": "Switch to editor mode"
     }
   },
   {
@@ -370,13 +410,27 @@
       "national-id": "National ID",
       "tax-number": "Tax Number",
       "extra-notes": "Extra notes",
+      "extra-notes.save": "Save extra notes",
+      "extra-notes.saved": "Extra notes have been saved.",
+      "extra-notes.not-saved": "Extra notes could not be saved.",
       "currency": "Currency",
       "total-amount": "Total Amount",
       "total-tax": "Total Tax",
       "customer-account": "Customer Account",
       "amount": "Amount",
       "seller-order-id": "Seller Order ID",
-      "customer": "Customer"
+      "customer": "Customer",
+      "webhook.delete": "Delete Webhook configuration",
+      "webhook.regenerate": "Create New Event Key",
+      "webhook.config.saved": "Webhook configuration saved.",
+      "webhook.delete.success": "Webhook configuration deleted.",
+      "webhook.regenerate.confirmation": "A new Event Key will be created and the current key will become invalid. Continue?",
+      "webhook.regenerate.success": "New Event Key created.",
+      "webhook.regenerate.error": "Could not create Event Key.",
+      "webhook.settings": "Webhook Settings",
+      "webhook.event-key": "Event Key",
+      "webhook.event-key.copied": "Event Key copied.",
+      "webhook.event-key-warning": "The Event Key is shown only once. Please store this information in a secure place. Generated Event Key:"
     }
   },
   {
@@ -483,7 +537,9 @@
       "created-success": "Invoice created successfully.",
       "confirm-open-title": "Confirm Open Invoice",
       "confirm-open-message": "Are you sure you want to confirm this payment as completed? This action cannot be undone.",
-      "confirm-open-success": "Open invoice confirmed successfully and payment completed."
+      "confirm-open-success": "Open invoice confirmed successfully and payment completed.",
+      "none": "None",
+      "creation-instruction": "To create a new invoice, click the \"Create Invoice\" button in the transaction details."
     }
   },
   {
@@ -503,7 +559,31 @@
   {
     "prefix": "postral.item",
     "stringMap": {
-      "name": "Item Name"
+      "name": "Item Name",
+      "info": "Item Information",
+      "info-label": "Info",
+      "price-list": "Price List",
+      "no-form-instruction": "No form instruction",
+      "updated-success": "Item information updated successfully.",
+      "error-while-save": "An error occurred while saving item information. Please try again.",
+      "unit-not-found": "{unit} unit not found. Please check unit info to avoid issues when creating invoices.",
+      "unit-defined": "{unit} unit is defined as {desc}. This unit will be used when creating invoices."
+    }
+  },
+  {
+    "prefix": "postral.item-price",
+    "stringMap": {
+      "variation": "Variation",
+      "price": "Price",
+      "region": "Region",
+      "priority": "Priority",
+      "add-new": "Add New Price",
+      "edit-title": "Edit Price",
+      "delete-confirm-title": "Delete Price",
+      "delete-confirm-message": "Are you sure you want to delete this price?",
+      "deleted-success": "Price deleted successfully.",
+      "saved-success": "Price information updated successfully.",
+      "save-error": "Price could not be saved."
     }
   },
   {
@@ -541,7 +621,46 @@
   {
     "prefix": "postral.refund",
     "stringMap": {
-      "start": "Start refund"
+      "start": "Start refund",
+      "detail": "Refund Request Details",
+      "back-to-list": "Back to List",
+      "general-info": "General Information",
+      "id": "Refund Request ID",
+      "payment-id": "Payment ID",
+      "requested-by-account": "Requesting User Account (UBS)",
+      "resolved-by-account": "Resolved By Payment Account",
+      "items": "Refund Items",
+      "refund-count": "Refunded Quantity",
+      "refund-amount": "Refunded Amount",
+      "no-items": "No items found for this refund request.",
+      "already-resolved": "This refund request has been resolved, no further action can be taken.",
+      "not-found": "Refund request not found.",
+      "status-approved": "Approved",
+      "status-rejected": "Rejected",
+      "status-pending": "Pending",
+      "approve-confirm-title": "Approve Refund Request",
+      "approve-confirm-message": "Are you sure you want to approve this refund request?",
+      "approve-success": "Refund request approved.",
+      "reject-confirm-title": "Reject Refund Request",
+      "reject-confirm-message": "Are you sure you want to reject this refund request?",
+      "reject-success": "Refund request rejected.",
+      "load-error": "Could not load refund request.",
+      "reasons": "Refund reasons",
+      "request-note": "Request note",
+      "resolution-note": "Resolution note",
+      "reasons-and-notes": "Reasons and notes",
+      "validation-required": "Please select at least one refund item and reason.",
+      "approve": "Approve",
+      "reject": "Reject",
+      "approve-note-description": "You can add an optional note for your approval decision.",
+      "reject-note-description": "You can add an optional note for your rejection decision.",
+      "reason.damaged": "Damaged product",
+      "reason.defective": "Defective product",
+      "reason.wrong_item": "Wrong item received",
+      "reason.missing_parts": "Missing parts",
+      "reason.not_as_described": "Not as described",
+      "reason.changed_mind": "Changed my mind",
+      "reason.other": "Other"
     }
   },
   {
@@ -610,6 +729,57 @@
       "USD": "US Dollars ($)",
       "EUR": "Euro (€)",
       "TRY": "Turkish Lira (₺)"
+    }
+  },
+  {
+    "prefix": "postral.units",
+    "stringMap": {
+      "C62": "Piece",
+      "B32": "Kg/Square Metre",
+      "CCT": "Carrying Capacity in Metric Ton",
+      "PR": "Pair",
+      "D30": "Gross Calorific Value",
+      "D40": "Thousand Litre",
+      "GFI": "Gram of Fissile Isotope",
+      "GRM": "Gram",
+      "GT": "Gross Ton",
+      "CEN": "Hundred Pieces",
+      "KPO": "Kilogram of Potassium Oxide",
+      "MND": "Kilogram, Dry Net Weight",
+      "3I": "Kilogram-Piece",
+      "KFO": "Kilogram of Diphosphorus Pentaoxide",
+      "KGM": "Kilogram",
+      "KHY": "Kilogram of Hydrogen Peroxide",
+      "KMA": "Kilogram of Methylamine",
+      "KNI": "Kilogram of Nitrogen",
+      "KPH": "Kilogram of Potassium Hydroxide",
+      "KSD": "Kilogram of 90% Dry Substance",
+      "KSH": "Kilogram of Sodium Hydroxide",
+      "KUR": "Kilogram of Uranium",
+      "D32": "Terawatt Hour",
+      "GWH": "Gigawatt Hour",
+      "MWH": "Megawatt Hour (1000 kW.h)",
+      "KWH": "Kilowatt Hour",
+      "KWT": "Kilowatt",
+      "LPA": "Litre of Pure Alcohol",
+      "LTR": "Litre",
+      "MTK": "Square Metre",
+      "DMK": "Square Decimetre",
+      "MTQ": "Cubic Metre",
+      "MTR": "Metre",
+      "NCL": "Number of Cells",
+      "CTM": "Carat",
+      "SM3": "Standard Cubic Metre",
+      "R9": "Thousand Cubic Metre",
+      "SET": "Set",
+      "T3": "Thousand Pieces",
+      "TON": "Ton",
+      "TNE": "Dry Ton",
+      "MIN": "Minute",
+      "HUR": "Hour",
+      "DAY": "Day",
+      "WEE": "Week",
+      "MON": "Month"
     }
   },
   {
@@ -706,13 +876,124 @@
       "details": "Details",
       "reject": "Reject",
       "approve": "Approve",
-      "review": "Review"
+      "review": "Review",
+      "back": "Back",
+      "confirm-title": "Are you sure?",
+      "validation-error": "Validation Error",
+      "validation-error-desc": "Please check the form for errors and try again.",
+      "app-update.title": "New version available",
+      "app-update.description": "A new version is available.",
+      "app-update.alert": "Once you click Yes, the page will refresh. If you have any unsaved important changes, you can perform the update later. Do you want to install it now?",
+      "app-update.error-title": "An error occurred during the installation",
+      "app-update.error-desc": "Please try again",
+      "app-update.verb": "Update",
+      "please-wait": "Please wait",
+      "expand": "Expand",
+      "collapse": "Collapse",
+      "team.edit": "Edit team",
+      "copy": "Copy",
+      "copy.warn.support": "Copying is only supported over HTTPS or localhost. You need to copy it by selecting it.",
+      "user-id": "User ID"
+
     }
   },
   {
     "prefix": "payment",
     "stringMap": {
       "error.receive": "Payment could not be received"
+    }
+  },
+  {
+    "prefix": "postral.admin",
+    "stringMap": {
+      "eyebrow": "Postral administration",
+      "title": "Administrative operations",
+      "description": "Manage sensitive data, billing, and payment archives in a controlled way.",
+      "badge": "Admin only",
+      "sensitive-data.title": "Sensitive data operations",
+      "sensitive-data.description": "Batch encryption operations for national ID, IBAN, and address data.",
+      "sensitive-data.encrypt": "Encrypt data",
+      "sensitive-data.decrypt": "Decrypt data",
+      "billing.title": "Billing",
+      "billing.description": "Process unbilled daily reports and start the billing workflow.",
+      "billing.start": "Start billing",
+      "cleanup.eyebrow": "Payment data management",
+      "cleanup.title": "Payment archive and cleanup",
+      "cleanup.description": "Review the scope first, then create an SQL archive. Deletion is allowed only after an archive is verified.",
+      "cleanup.preview-safe": "Preview safe",
+      "cleanup.before-label": "Created before",
+      "cleanup.preview": "Show scope",
+      "cleanup.archive": "Create archive",
+      "cleanup.refresh-archives": "Refresh archives",
+      "cleanup.date-hint": "Leave the date empty to include the entire payment history. Preview does not delete data.",
+      "cleanup.loading": "Preparing operation...",
+      "cleanup.preview-result": "Preview result",
+      "cleanup.payment-found": "{count} payments found",
+      "cleanup.report-queries-preserved": "ReportQueries preserved",
+      "cleanup.reports-affected": "Report outputs affected",
+      "cleanup.clean": "Archive and clean",
+      "cleanup.archive-ready": "Archive ready",
+      "cleanup.checksum": "Checksum",
+      "cleanup.download": "Download SQL archive",
+      "cleanup.delete-archived": "Delete archived data",
+      "cleanup.created-archives": "Created archives",
+      "cleanup.archive-count": "{count} archives",
+      "cleanup.payment-count": "{count} payments",
+      "cleanup.before-date": "Before",
+      "cleanup.download-short": "Download",
+      "count.payment": "Payments",
+      "count.postral_payment_item": "Payment items",
+      "count.postral_payment_tax": "Payment taxes",
+      "count.seller_payment_order": "Seller payment orders",
+      "count.invoice": "Invoices",
+      "count.refund_request": "Refund requests",
+      "count.refund_request_item": "Refund items",
+      "count.account_payment_transaction": "Account payment transactions",
+      "count.payment_channel_operation": "Payment channel operations",
+      "count.postral_payment_event": "Payment events",
+      "count.report_payment_relation": "Report-payment relations",
+      "count.report": "Reports",
+      "count.report_tax_group": "Report tax groups",
+      "count.report_expense": "Report expenses",
+      "warning.report-queries-preserved": "ReportQuery records are preserved.",
+      "warning.reports-may-be-empty": "Affected report outputs may appear empty until new payments are digested.",
+      "warning.live-accounts-preserved": "Live account, address, and bank account records are not included in cleanup.",
+      "warning.preview-only": "This preview does not create an archive or delete data.",
+      "overlay.encrypt-title": "Encrypt all data",
+      "overlay.encrypt-message": "Encryption of all sensitive data will start and may take some time. Continue?",
+      "overlay.encrypt-success-title": "Encryption completed",
+      "overlay.encrypt-success-message": "All sensitive data was encrypted.",
+      "overlay.encrypt-error-title": "Encryption error",
+      "overlay.decrypt-title": "Decrypt all data",
+      "overlay.decrypt-message": "Decryption of all sensitive data will start. Continue?",
+      "overlay.decrypt-success-title": "Decryption completed",
+      "overlay.decrypt-success-message": "All sensitive data was decrypted.",
+      "overlay.decrypt-error-title": "Decryption error",
+      "overlay.billing-title": "Start billing",
+      "overlay.billing-message": "The billing workflow will start. Continue?",
+      "overlay.billing-success-title": "Billing started",
+      "overlay.billing-success-message": "The billing workflow was started successfully.",
+      "overlay.billing-error-title": "Billing error",
+      "overlay.preview-error-title": "Preview error",
+      "overlay.archive-ready-title": "Archive ready",
+      "overlay.archive-ready-message": "The payment SQL archive was created.",
+      "overlay.archive-error-title": "Archive error",
+      "overlay.archive-list-error-title": "Unable to load archives",
+      "overlay.archive-download-error-title": "Archive download error",
+      "overlay.delete-title": "Delete payment data",
+      "overlay.delete-message": "Archived payment data will be deleted. ReportQuery and live accounts will be preserved. This cannot be undone. Continue?",
+      "overlay.delete-success-title": "Payment data deleted",
+      "overlay.delete-success-message": "The archive was verified and the selected payment data was deleted.",
+      "overlay.delete-error-title": "Payment deletion error",
+      "overlay.delete-after-archive-error": "The archive was created, but payment data could not be deleted.",
+      "overlay.archive-before-delete-error": "The archive could not be created before deletion. No records were deleted.",
+      "overlay.operation-error": "An error occurred during the operation. Please try again."
+    }
+  },
+  {
+    "prefix": "admin.general",
+    "stringMap": {
+      "need-admin": "You need to log in as an administrator to use the central. You can log in using the button in the upper right."
     }
   }
 ]
