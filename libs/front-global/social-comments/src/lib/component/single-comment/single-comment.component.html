@@ -1,156 +1,163 @@
 <ng-template #extraOptionButtons>
   <div class="flex gap-1">
-    <block-button
-      *ngIf="existCommentAbility?.canRemove"
-      buttonClass="compact border"
-      iconClass="material-symbols-outlined" iconContent="delete"
-      (click)="deleteComment()"
-      pTooltip="Yorumu sil"
-    ></block-button>
-    <block-button
-      *ngIf="existCommentAbility?.canEdit"
-      buttonClass="compact border"
-      iconClass="material-symbols-outlined" iconContent="edit"
-      (click)="editComment()"
-    ></block-button>
-    <block-button
-      *ngIf="existCommentAbility?.userCommentAdmin && !item()!?.userBanned"
-      buttonClass="compact border"
-      iconClass="material-symbols-outlined" iconContent="block"
-      pTooltip="Kullanıcının bu alanda yorum işlevini kapat"
-      (click)="this.blockUser()"
-    ></block-button>
-    <block-button
-      *ngIf="existCommentAbility?.userCommentAdmin && item()!?.userBanned"
-      buttonClass="compact border"
-      iconClass="material-symbols-outlined" iconContent="check"
-      pTooltip="Kullanıcının bu alanda yorum işlevini kapatır"
-      (click)="this.unblockUser()"
-    ></block-button>
+    @if (existCommentAbility?.canRemove) {
+      <block-button
+        buttonClass="compact border"
+        iconClass="material-symbols-outlined" iconContent="delete"
+        (click)="deleteComment()"
+        pTooltip="Yorumu sil"
+      ></block-button>
+    }
+    @if (existCommentAbility?.canEdit) {
+      <block-button
+        buttonClass="compact border"
+        iconClass="material-symbols-outlined" iconContent="edit"
+        (click)="editComment()"
+      ></block-button>
+    }
+    @if (existCommentAbility?.userCommentAdmin && !item()!?.userBanned) {
+      <block-button
+        buttonClass="compact border"
+        iconClass="material-symbols-outlined" iconContent="block"
+        pTooltip="Kullanıcının bu alanda yorum işlevini kapat"
+        (click)="this.blockUser()"
+      ></block-button>
+    }
+    @if (existCommentAbility?.userCommentAdmin && item()!?.userBanned) {
+      <block-button
+        buttonClass="compact border"
+        iconClass="material-symbols-outlined" iconContent="check"
+        pTooltip="Kullanıcının bu alanda yorum işlevini kapatır"
+        (click)="this.unblockUser()"
+      ></block-button>
+    }
   </div>
 </ng-template>
 <p-overlayPanel #extraOptions>
   <div *ngTemplateOutlet="extraOptionButtons"></div>
 </p-overlayPanel>
 
-<div
-  class="flex gap-2 align-items-center p-1 comment-hold"
-  [class.child-right-border]="item()!.isChild"
-  *ngIf="item()!"
->
-  <div class="user-img">
-    <img src="/api/file/PROFILE_PHOTO/{{ item()!.byUserId }}" alt="" />
-  </div>
-  <div class="flex align-items-center pr-3 w-full">
-    <div class="flex flex-column w-full">
-      <div
-        class="flex justify-content-between w-full"
-        [class.downvoted]="commentIsDownVoted"
-      >
-        <div [class.lower-font]="item()!.isChild">
-          <b> {{ item()!.byFullName }} </b>
+@if (item()!) {
+  <div
+    class="flex gap-2 align-items-center p-1 comment-hold"
+    [class.child-right-border]="item()!.isChild"
+    >
+    <div class="user-img">
+      <img src="/api/file/PROFILE_PHOTO/{{ item()!.byUserId }}" alt="" />
+    </div>
+    <div class="flex align-items-center pr-3 w-full">
+      <div class="flex flex-column w-full">
+        <div
+          class="flex justify-content-between w-full"
+          [class.downvoted]="commentIsDownVoted"
+          >
+          <div [class.lower-font]="item()!.isChild">
+            <b> {{ item()!.byFullName }} </b>
+          </div>
         </div>
-      </div>
-
-      <div
-        [class.downvoted]="commentIsDownVoted"
-        [class.lower-font]="item()!.isChild"
-      >
-        {{ item()!.textContent }}
-      </div>
-
-      <div class="flex justify-content-between">
-        <div class="flex flex-wrap gap-2 py-1">
-          <block-button
+        <div
+          [class.downvoted]="commentIsDownVoted"
+          [class.lower-font]="item()!.isChild"
+          >
+          {{ item()!.textContent }}
+        </div>
+        <div class="flex justify-content-between">
+          <div class="flex flex-wrap gap-2 py-1">
+            <block-button
             [buttonClass]="
               'compact ' + (item()!.userUpVoted ? 'primary' : 'border')
             "
-            iconClass="material-symbols-outlined" iconContent="expand_less"
-            (click)="upvote()"
-            pTooltip="Olumlu olarak oyla"
-          ></block-button>
-
-          <block-button
+              iconClass="material-symbols-outlined" iconContent="expand_less"
+              (click)="upvote()"
+              pTooltip="Olumlu olarak oyla"
+            ></block-button>
+            <block-button
             [buttonClass]="
               'compact ' + (item()!.userDownVoted ? 'primary' : 'border')
             "
-            iconClass="material-symbols-outlined" iconContent="expand_more"
-            (click)="downvote()"
-            pTooltip="Olumsuz olarak oyla"
-          ></block-button>
-          <block-button
-            *ngIf="!item()!.isChild && item()!.childCommentsCount"
+              iconClass="material-symbols-outlined" iconContent="expand_more"
+              (click)="downvote()"
+              pTooltip="Olumsuz olarak oyla"
+            ></block-button>
+            @if (!item()!.isChild && item()!.childCommentsCount) {
+              <block-button
             [buttonClass]="
               'compact ' + (item()!.childCommentsCount ? 'primary' : 'border')
             "
-            iconClass="material-symbols-outlined" iconContent="comment"
-            (click)="toggleChildren()"
-          >
-            <div *ngIf="!showAnswers">
-              {{ item()!.childCommentsCount }}
-            </div>
-            <div *ngIf="showAnswers">Gizle</div>
-          </block-button>
-
-          <block-button
-            *ngIf="!item()!.isChild && !item()!.childCommentsCount"
-            [hasContent]="false"
-            buttonClass="compact border"
-            iconClass="material-symbols-outlined" iconContent="comment"
-            (click)="showAddAnswerDialogForThatComment()"
-          >
-          </block-button>
+                iconClass="material-symbols-outlined" iconContent="comment"
+                (click)="toggleChildren()"
+                >
+                @if (!showAnswers) {
+                  <div>
+                    {{ item()!.childCommentsCount }}
+                  </div>
+                }
+                @if (showAnswers) {
+                  <div>Gizle</div>
+                }
+              </block-button>
+            }
+            @if (!item()!.isChild && !item()!.childCommentsCount) {
+              <block-button
+                [hasContent]="false"
+                buttonClass="compact border"
+                iconClass="material-symbols-outlined" iconContent="comment"
+                (click)="showAddAnswerDialogForThatComment()"
+                >
+              </block-button>
+            }
+          </div>
+          <div class="flex flex-wrap gap-2 py-1">
+            <block-button
+              buttonClass="compact border"
+              iconClass="material-symbols-outlined" iconContent="flag"
+              pTooltip="Yorumu bildir"
+              (click)="flag()"
+            ></block-button>
+            <block-button
+              buttonClass="compact border"
+              (click)="toggleExistCommentAbilities($event)"
+              iconClass="material-symbols-outlined" iconContent="more_horiz"
+            ></block-button>
+          </div>
         </div>
-
-        <div class="flex flex-wrap gap-2 py-1">
-          <block-button
-            buttonClass="compact border"
-            iconClass="material-symbols-outlined" iconContent="flag"
-            pTooltip="Yorumu bildir"
-            (click)="flag()"
-          ></block-button>
-          <block-button
-            buttonClass="compact border"
-            (click)="toggleExistCommentAbilities($event)"
-            iconClass="material-symbols-outlined" iconContent="more_horiz"
-          ></block-button>
-        </div>
-      </div>
-
-      <div [class.downvoted]="commentIsDownVoted" style="font-size: 0.75rem">
-        <div class="flex flex-column">
-          <div>{{ 'general.creation-date' | translate }}: {{ creationDate }}</div>
-
-          <div>
-            <div *ngIf="item()!.editCount">
-              <div>{{ item()!.editCount }} kere düzenlendi.</div>
-              <div>
-                Son düzenlenme:
-                {{ editDate }}
-              </div>
+        <div [class.downvoted]="commentIsDownVoted" style="font-size: 0.75rem">
+          <div class="flex flex-column">
+            <div>{{ 'general.creation-date' | translate }}: {{ creationDate }}</div>
+            <div>
+              @if (item()!.editCount) {
+                <div>
+                  <div>{{ item()!.editCount }} kere düzenlendi.</div>
+                  <div>
+                    Son düzenlenme:
+                    {{ editDate }}
+                  </div>
+                </div>
+              }
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div
-      style="min-width: 40px; font-size: 1.5rem; text-align: right"
-      class="pr-1 pl-3 sm:pl-4"
-    >
-      {{ item()!!.votesLength || 0 }}
+      <div
+        style="min-width: 40px; font-size: 1.5rem; text-align: right"
+        class="pr-1 pl-3 sm:pl-4"
+        >
+        {{ item()!!.votesLength || 0 }}
+      </div>
     </div>
   </div>
-</div>
+}
 <div class="ml-6 child-comments" #childCommentsParentDiv>
-  <social-comments-component
-    *ngIf="showAnswers && item()!"
-    initialSortField="creationDate"
-    initialSortRotation="asc"
-    [childEntityId]="item()!.childEntityId"
-    [childEntityName]="item()!.childEntityName"
-    [mainEntityId]="item()!.mainEntityId"
-    [mainEntityName]="item()!.mainEntityName"
-    [entityGroup]="item()!.entityGroup"
-    [parentCommentId]="item()!._id"
-  ></social-comments-component>
+  @if (showAnswers && item()!) {
+    <social-comments-component
+      initialSortField="creationDate"
+      initialSortRotation="asc"
+      [childEntityId]="item()!.childEntityId"
+      [childEntityName]="item()!.childEntityName"
+      [mainEntityId]="item()!.mainEntityId"
+      [mainEntityName]="item()!.mainEntityName"
+      [entityGroup]="item()!.entityGroup"
+      [parentCommentId]="item()!._id"
+    ></social-comments-component>
+  }
 </div>

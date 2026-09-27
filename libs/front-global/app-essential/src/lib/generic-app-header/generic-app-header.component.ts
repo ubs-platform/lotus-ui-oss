@@ -21,7 +21,7 @@ import {
   BPaginationProgrammaticComponent,
   PaginationItem,
 } from '@lotus/front-global/button';
-import { EnvironmentController } from '@ubs-platform/translator-core';
+import { EnvironmentController } from '@lotus/extra/translator-core';
 import { environment } from '@lotus-web/environment';
 import { Observable, Subject, Subscription, of } from 'rxjs';
 import { DebugKeyValueViewComponentService } from '@lotus/front-global/debug-tools';
@@ -37,6 +37,7 @@ import { ApplicationFooterDirective } from '../application-footer.directive';
 import { WebdialogHandler } from 'libs/front-global/webdialog/src/lib/webdialog/webdialog-handler.service';
 import { screenTypeStatus } from '@lotus/front-global/mona-mobile-experience-ng';
 import { fromMaterialSymbol } from '@lotus/front-global/icon-type';
+import { LanguageManagement } from '@lotus/front-global/language-management';
 
 
 // tarihi eser diyalog testi
@@ -295,26 +296,36 @@ export class GenericAppHeaderComponent
       {
         text: 'mona.language',
         childPageContents: [
-          {
-            text: 'Türkçe',
+          ...LanguageManagement.Languages.map(lang => ({
+            text: lang.name,
             action: () => {
               EnvironmentController.getEnvironmentController().setLanguage(
-                'tr-tr'
+                lang.localeCode
               );
               return true;
             },
-            iconContent: '🇹🇷',
-          },
-          {
-            text: 'English (US)',
-            action: () => {
-              EnvironmentController.getEnvironmentController().setLanguage(
-                'en-us'
-              );
-              return true;
-            },
-            iconContent: '🇺🇲',
-          },
+            iconContent: lang.flagEmoji,
+          })),
+          // {
+          //   text: 'Türkçe',
+          //   action: () => {
+          //     EnvironmentController.getEnvironmentController().setLanguage(
+          //       'tr-tr'
+          //     );
+          //     return true;
+          //   },
+          //   iconContent: '🇹🇷',
+          // },
+          // {
+          //   text: 'English (US)',
+          //   action: () => {
+          //     EnvironmentController.getEnvironmentController().setLanguage(
+          //       'en-us'
+          //     );
+          //     return true;
+          //   },
+          //   iconContent: '🇺🇲',
+          // },
         ],
       },
       {

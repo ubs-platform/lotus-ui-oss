@@ -1,29 +1,29 @@
 <ng-template input-link let-carrier="carrier">
   @if (carrier.inputType == 'checkbox' || carrier.inputType == 'slider-toggle')
-  {
-  <div class="flex align-items-center">
+    {
+    <div class="flex align-items-center">
     <!-- <p-checkbox [label]="
             carrier.title | translate
           " [binary]="true" [disabled]="carrier.disable" [ngModel]="carrier.value"
-          (ngModelChange)="carrier.setValue($event)"></p-checkbox> -->
+    (ngModelChange)="carrier.setValue($event)"></p-checkbox> -->
     <toggle [label]="carrier.title" [checkboxStyle]="carrier.inputType == 'checkbox'" [value]="carrier.value"
       [disabled]="carrier.disable"
-      (valueChange)="carrier.setValue($event)"></toggle>
+    (valueChange)="carrier.setValue($event)"></toggle>
   </div>
-  } @else {
+} @else {
   <label class="block" [class.required]="carrier.validators?.includes('RequiredValidator')" [for]="carrier.path">
-    {{ carrier.title | translate }}</label>
+  {{ carrier.title | translate }}</label>
   } @switch (carrier.inputType) { @case ('checkbox-array-group') {
   <div class="flex flex-column gap-2">
     @for (item of ((feeds[carrier.path] | async) || []); track item.value; let
-    index = $index) {
-    <div class="flex align-items-center justify-content-start gap-2">
-      <input type="checkbox" [id]="carrier.path + '_' + index" [checked]="(carrier.value ?? []).includes(item.value)"
+      index = $index) {
+      <div class="flex align-items-center justify-content-start gap-2">
+        <input type="checkbox" [id]="carrier.path + '_' + index" [checked]="(carrier.value ?? []).includes(item.value)"
         [disabled]="carrier.disable" (change)="
           toggleArrayValue(carrier, item.value, $any($event).target.checked)
         " />
-      <label [for]="carrier.path + '_' + index">{{ item.text }}</label>
-    </div>
+        <label [for]="carrier.path + '_' + index">{{ item.text }}</label>
+      </div>
     }
   </div>
   } @case ('number') {
@@ -58,15 +58,15 @@
   <div class="w-100">
     <div class="flex flex-column gap-3">
       @for (item of ((feeds[carrier.path] | async) || []); track item.value; let
-      index = $index) {
-      <div>
-        <p-radioButton inputId="{{ carrier.path }}_{{ index }}" name="category" [value]="item.value"
-          [disabled]="carrier.disable"
-          [ngModel]="carrier.value" (ngModelChange)="carrier.setValue($event)" />
-        <label for="{{ carrier.path }}_{{ index }}" class="ml-2">
-          {{ item.text }}
-        </label>
-      </div>
+        index = $index) {
+        <div>
+          <p-radioButton inputId="{{ carrier.path }}_{{ index }}" name="category" [value]="item.value"
+            [disabled]="carrier.disable"
+            [ngModel]="carrier.value" (ngModelChange)="carrier.setValue($event)" />
+          <label for="{{ carrier.path }}_{{ index }}" class="ml-2">
+            {{ item.text }}
+          </label>
+        </div>
       }
     </div>
   </div>
@@ -74,15 +74,15 @@
   <div>
     <p-fileUpload mode="advanced" [attr.name]="carrier.name" [disabled]="carrier.disable" [showUploadButton]="false"
       (blur)="carrier.setTouched(true)" (onSelect)="carrier.setValue($event.files, carrier)" [multiple]="false"
-      chooseLabel="Dosya seç"></p-fileUpload>
+    chooseLabel="Dosya seç"></p-fileUpload>
   </div>
   } @case ('datetime') {
   <div>
     <p-calendar styleClass="w-full" [disabled]="carrier.disable" (ngModelChange)="carrier.setValue($event)" [ngModel]="carrier.value"
-      [showTime]="true" [showSeconds]="true"></p-calendar>
+    [showTime]="true" [showSeconds]="true"></p-calendar>
     <!-- <input pInputText type="datetime" [ngModel]="carrier.value" (ngModelChange)="carrier.setValue($event)"
-            (blur)="carrier.setTouched(true)" [class.ng-invalid]="carrier.validationErrors?.length"
-            [class.ng-dirty]="carrier.isTouched" /> -->
+    (blur)="carrier.setTouched(true)" [class.ng-invalid]="carrier.validationErrors?.length"
+    [class.ng-dirty]="carrier.isTouched" /> -->
   </div>
   } @case ('checkbox') {} @case ('slider-toggle') {} @case ('array') {} @case
   ('sub-object') {} @default {
@@ -94,7 +94,7 @@
         [class.ng-dirty]="carrier.isTouched" />
       <datalist [id]="'autocomplete-for-' + carrier.path">
         @for (item of ((feeds[carrier.path] | async) || []); track item.value) {
-        <option [value]="item.value">{{ item.text }}</option>
+          <option [value]="item.value">{{ item.text }}</option>
         }
       </datalist>
     </span>
@@ -103,8 +103,8 @@
   reform()!.touchMap.getPathStatus(carrier.path)) &&
   carrier.validationErrors?.length ) {
   <p-message styleClass="my-1 w-full" severity="error"
-    [text]="carrier.validationErrors[0].name | translate"></p-message>
-  }
+  [text]="carrier.validationErrors[0].name | translate"></p-message>
+}
 </ng-template>
 <ng-template button-link let-carrier="carrier">
   <block-button buttonClass="mb-1 mr-1" (click)="carrier.action()" [stringContent]="carrier.title | translate"
@@ -124,17 +124,18 @@
 </ng-template>
 <ng-template group-label-link let-title="title">
   <!-- <label class="block"><b>
-         
-        </b></label> -->
-  <h3>{{ title }}</h3>
+
+</b></label> -->
+<h3>{{ title }}</h3>
 </ng-template>
 
 
 <div class="mb-3">
-  <div *ngIf="viewInit && reform() && carriers" [style.gap]="gapPx()" class="form">
-    <ng-template #reformInputCarriers let-carrierList="carrierList">
-      @for (carrier of carrierList; track $index) {
-      <div class="form-item" [attr.carrier-type]="carrier.carrierType"
+  @if (viewInit && reform() && carriers) {
+    <div [style.gap]="gapPx()" class="form">
+      <ng-template #reformInputCarriers let-carrierList="carrierList">
+        @for (carrier of carrierList; track $index) {
+          <div class="form-item" [attr.carrier-type]="carrier.carrierType"
         [class.inline-block]="carrier.carrierType == 'ACTION'" [style.flex-basis]="
           carrier.carrierType != 'ACTION'
             ? 'calc(' +
@@ -144,46 +145,51 @@
               'px)'
             : null
         ">
-
-        <ng-container>
-          <div *ngIf="carrier.carrierType == 'ACTION'" style="flex-basis: 100%">
+            <ng-container>
+              @if (carrier.carrierType == 'ACTION') {
+                <div style="flex-basis: 100%">
             <div *ngTemplateOutlet="
                 decideButtonTemplate()!.template;
                 context: { carrier: carrier }
               "></div>
-          </div>
-          <div *ngIf="carrier.carrierType == 'GROUP'" >
-            <div class="w-full">
+                </div>
+              }
+              @if (carrier.carrierType == 'GROUP') {
+                <div >
+                  <div class="w-full">
               <div *ngTemplateOutlet="
                 decideGroupLabelTemplate()!.template;
                 context: { title: carrier.title }
               "></div>
-            </div>
-            <div class="flex flex-row flex-wrap" [style.gap]="gapPx()">
+                  </div>
+                  <div class="flex flex-row flex-wrap" [style.gap]="gapPx()">
               <div *ngTemplateOutlet="
                 reformInputCarriers;
                 context: { carrierList: carrier.items }
               " style="width: 100%"></div>
-            </div>
-
-          </div>
-          <div *ngIf="carrier.carrierType == 'INPUT' && !carrier.hidden" [attr.reform-path]="carrier.path">
+                  </div>
+                </div>
+              }
+              @if (carrier.carrierType == 'INPUT' && !carrier.hidden) {
+                <div [attr.reform-path]="carrier.path">
             <div *ngTemplateOutlet="
                 getRelatedInputTemplate(carrier).template;
                 context: { carrier: carrier }
               "></div>
+                </div>
+              }
+            </ng-container>
           </div>
-        </ng-container>
-      </div>
-      @if (carrier.carrierType == 'ACTION' && carrierList[$index + 1] &&
-      carrierList[$index + 1].carrierType != 'ACTION') {
-      <div class="flex-line-break"></div>
-      }
-      }
-    </ng-template>
+          @if (carrier.carrierType == 'ACTION' && carrierList[$index + 1] &&
+            carrierList[$index + 1].carrierType != 'ACTION') {
+            <div class="flex-line-break"></div>
+          }
+        }
+      </ng-template>
     <div *ngTemplateOutlet="
         reformInputCarriers;
         context: { carrierList: carriers }
       "></div>
-  </div>
+    </div>
+  }
 </div>

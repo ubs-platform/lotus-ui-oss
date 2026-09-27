@@ -11,7 +11,7 @@ import { MinkyReformNgxPrimeModule } from '@lotus/front-global/minky/reform-ngx-
 import {
   TranslatorRepositoryService,
   UbsTranslatorNgxModule,
-} from '@ubs-platform/translator-ngx';
+} from '@lotus/extra/ubs-translator-ngx';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 import { InitTabComponent } from './components/init-tab/init-tab.component';

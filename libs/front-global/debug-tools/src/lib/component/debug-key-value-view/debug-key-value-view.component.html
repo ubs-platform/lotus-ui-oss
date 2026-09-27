@@ -1,3 +1,7 @@
-<div *ngIf="values">
-  <div *ngFor="let kv of values | async">{{ kv.key }} {{ kv.value }}</div>
-</div>
+@if (values) {
+  <div>
+    @for (kv of values | async; track kv) {
+      <div>{{ kv.key }} {{ kv.value }}</div>
+    }
+  </div>
+}

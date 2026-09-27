@@ -7,7 +7,7 @@ import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { MessageModule } from 'primeng/message';
 import { EditorModule } from 'primeng/editor';
 import { FormsModule } from '@angular/forms';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { FrontGlobalMarkdownEditorModule } from '@lotus/front-global/markdown-editor';
 import { MarkdownEditorInputComponent } from './component/markdown-editor-input/markdown-editor-input.component';
 

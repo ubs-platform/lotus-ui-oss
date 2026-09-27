@@ -1,5 +1,5 @@
 import { Component, model, OnInit, output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ItemCrudService } from '@lotus/postral-core-frontend/client';
 import { ItemPriceDTO } from '@tk-postral/payment-common';
 

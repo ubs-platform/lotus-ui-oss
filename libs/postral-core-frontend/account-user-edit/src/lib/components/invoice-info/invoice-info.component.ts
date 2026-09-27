@@ -122,7 +122,7 @@ export class InvoiceInfoComponent implements OnInit {
           this.fileService
             .upload(file, 'POSTRAL_INVOICE', `${this.invoiceId}`)
             .subscribe({
-              next: (response) => {
+              next: () => {
                 this.basicOverlay.alert(
                   'general.success',
                   'postral.invoice.upload-success',
@@ -130,7 +130,7 @@ export class InvoiceInfoComponent implements OnInit {
                 );
                 this.hasInvoiceFile.set(true);
               },
-              error: (err) => {
+              error: (err: any) => {
                 this.basicOverlay.alert('general.error-occurred', err, 'error');
               },
             });

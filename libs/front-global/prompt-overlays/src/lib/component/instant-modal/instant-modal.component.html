@@ -1,49 +1,59 @@
 <div class="h-full w-full" #parent>
-  <div *ngIf="!closed" class="h-full w-full">
-    <div *ngIf="data?.templateRef" style="height: 100%; width: 100%">
-      <div
-        *ngTemplateOutlet="data!.templateRef!; context: { dialog: dial }"
-      ></div>
+  @if (!closed) {
+    <div class="h-full w-full">
+      @if (data?.templateRef) {
+        <div style="height: 100%; width: 100%">
+          <div
+            *ngTemplateOutlet="data!.templateRef!; context: { dialog: dial }"
+          ></div>
+        </div>
+      }
+      @if (safeUrl) {
+        <div class="p-3 h-full w-full">
+          <iframe
+            [height]="'100%'"
+            [width]="'100%'"
+            [frameBorder]="0"
+            [src]="safeUrl"
+          ></iframe>
+        </div>
+      }
+      @if (data && (data.htmlContent || data.htmlContentUrl)) {
+        <div
+          class="p-3 h-full w-full"
+          >
+          <instant-html
+            [htmlContent]="data.htmlContent!"
+            [htmlContentUrl]="data.htmlContentUrl!"
+            [yesButtonText]="data.yesButtonText"
+            [noButtonText]="data.noButtonText"
+            (buttonClicked)="closeDialog($event)"
+          ></instant-html>
+        </div>
+      }
+      @if (data && !(data.htmlContent || data.htmlContentUrl)) {
+        <div
+          class="flex gap-2 pt-1"
+          >
+          @if (data?.yesButtonText) {
+            <block-button
+              btnTabindex="-1"
+              buttonClass="primary"
+              (click)="closeDialog(true)"
+              >
+              {{ data.yesButtonText | translate }}</block-button
+              >
+            }
+            @if (data?.noButtonText) {
+              <block-button
+                btnTabindex="-1"
+                (click)="closeDialog(false)"
+                >
+                {{ data.noButtonText | translate }}</block-button
+                >
+              }
+            </div>
+          }
+        </div>
+      }
     </div>
-    <div *ngIf="safeUrl" class="p-3 h-full w-full">
-      <iframe
-        [height]="'100%'"
-        [width]="'100%'"
-        [frameBorder]="0"
-        [src]="safeUrl"
-      ></iframe>
-    </div>
-    <div
-      *ngIf="data && (data.htmlContent || data.htmlContentUrl)"
-      class="p-3 h-full w-full"
-    >
-      <instant-html
-        [htmlContent]="data.htmlContent!"
-        [htmlContentUrl]="data.htmlContentUrl!"
-        [yesButtonText]="data.yesButtonText"
-        [noButtonText]="data.noButtonText"
-        (buttonClicked)="closeDialog($event)"
-      ></instant-html>
-    </div>
-    <div
-      *ngIf="data && !(data.htmlContent || data.htmlContentUrl)"
-      class="flex gap-2 pt-1"
-    >
-      <block-button
-        btnTabindex="-1"
-        buttonClass="primary"
-        *ngIf="data?.yesButtonText"
-        (click)="closeDialog(true)"
-      >
-        {{ data.yesButtonText | translate }}</block-button
-      >
-      <block-button
-        btnTabindex="-1"
-        *ngIf="data?.noButtonText"
-        (click)="closeDialog(false)"
-      >
-        {{ data.noButtonText | translate }}</block-button
-      >
-    </div>
-  </div>
-</div>

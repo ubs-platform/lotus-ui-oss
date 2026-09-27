@@ -1,6 +1,8 @@
-<div class="watermark-container" *ngIf="shouldShow">
-  <div class="watermark-content">
-    <div class="watermark-title">{{ title | translate }}</div>
-    <div class="watermark-message">{{ message | translate }}</div>
+@if (shouldShow) {
+  <div class="watermark-container">
+    <div class="watermark-content">
+      <div class="watermark-title">{{ title | translate }}</div>
+      <div class="watermark-message">{{ message | translate }}</div>
+    </div>
   </div>
-</div>
+}

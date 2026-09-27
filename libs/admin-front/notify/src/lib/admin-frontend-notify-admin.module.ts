@@ -5,7 +5,7 @@ import { rota } from './lib.routes';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import { FrontGlobalTableModule } from '@lotus/front-global/table';
 import { MinkyReformNgxPrimeModule } from '@lotus/front-global/minky/reform-ngx-prime';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { MessageModule } from 'primeng/message';
 import { TemplateListComponent } from './component/template-list/template-list.component';
 import { TemplateEditorComponent } from './component/template-editor/template-editor.component';

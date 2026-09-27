@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   displayName: 'object-to-query-parameters',
   preset: '../../../jest.preset.js',
   testEnvironment: 'node',

@@ -85,5 +85,6 @@
   "nxCloudAccessToken": "ZWYyMTExNDAtZmUwZi00N2MwLThhZmUtOGEwMWZjOWQzN2YwfHJlYWQtd3JpdGU=",
   "useInferencePlugins": false,
   "defaultBase": "main",
-  "useLegacyCache": true
+  "useLegacyCache": true,
+  "analytics": true
 }

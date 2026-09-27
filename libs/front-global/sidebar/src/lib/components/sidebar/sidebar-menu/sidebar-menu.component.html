@@ -3,14 +3,14 @@
   [class.expanded]="open()"
   role="navigation"
   aria-label="Main menu"
->
+  >
   <button
     class="menu-toggle sidebar-item surface"
     (click)="toggleMenu()"
     type="button"
     [attr.aria-expanded]="open()"
     [attr.aria-label]="open() ? 'Collapse menu' : 'Expand menu'"
-  >
+    >
     <span class="toggle-icon">
       <lib-icon
         iconSize="25px"
@@ -22,36 +22,37 @@
   </button>
 
   @for (item of items(); track $index) { @if (item.type === 'category' && !(item.hidden | async)) { @if
-  (open()) {
-  <h6 class="my-2 p-0 font-uppercase">{{ item.title | translate }}</h6>
+    (open()) {
+    <h6 class="my-2 p-0 font-uppercase">{{ item.title | translate }}</h6>
   } @else {
-  <div class="my-3" style="border: 1px solid var(--fg); opacity: 0.2;"></div>
-  } } @if (item.type == null || item.type === 'button') {
-  <button
-    *ngIf="!(item.hidden | async)"
-    class="sidebar-item menu-item"
-    [class.surface]="item.path !== currentPath()"
-    [class.primary]="item.path === currentPath()"
-    [class.active]="item.path === currentPath()"
-    (click)="select(item.path)"
-    type="button"
-    [attr.aria-current]="item.path === currentPath() ? 'page' : null"
-    [attr.aria-label]="item.title"
-  >
-    <div class="item-icon">
-      <lib-icon
-        iconSize="25px"
-        [iconClass]="item.icon?.iconClass || 'material-symbols-outlined'" [iconContent]="item.icon?.iconClass || 'help'"
-        [iconContent]="item.icon?.iconContent || ''"
-        attr.aria-hidden="true"
-      >
-      </lib-icon>
-    </div>
-    <div class="item-title" [class.hidden]="!open()">
-      {{ item.title | translate }}
-    </div>
-  </button>
-  } }
-  <ng-container *ngFor="let item of items(); trackBy: trackByPath">
-  </ng-container>
-</nav>
+    <div class="my-3" style="border: 1px solid var(--fg); opacity: 0.2;"></div>
+    } } @if (item.type == null || item.type === 'button') {
+    @if (!(item.hidden | async)) {
+      <button
+        class="sidebar-item menu-item"
+        [class.surface]="item.path !== currentPath()"
+        [class.primary]="item.path === currentPath()"
+        [class.active]="item.path === currentPath()"
+        (click)="select(item.path)"
+        type="button"
+        [attr.aria-current]="item.path === currentPath() ? 'page' : null"
+        [attr.aria-label]="item.title"
+        >
+        <div class="item-icon">
+          <lib-icon
+            iconSize="25px"
+            [iconClass]="item.icon?.iconClass || 'material-symbols-outlined'" [iconContent]="item.icon?.iconClass || 'help'"
+            [iconContent]="item.icon?.iconContent || ''"
+            attr.aria-hidden="true"
+            >
+          </lib-icon>
+        </div>
+        <div class="item-title" [class.hidden]="!open()">
+          {{ item.title | translate }}
+        </div>
+      </button>
+    }
+    } }
+    @for (item of items(); track trackByPath($index, item)) {
+    }
+  </nav>

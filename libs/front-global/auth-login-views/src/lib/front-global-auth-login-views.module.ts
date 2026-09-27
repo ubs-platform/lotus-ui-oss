@@ -4,7 +4,7 @@ import { LoginDialogComponent } from './component/login-dialog/login-dialog.comp
 import { DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MinkyReformNgxPrimeModule } from '@lotus/front-global/minky/reform-ngx-prime';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { RouterModule } from '@angular/router';
 
 @NgModule({

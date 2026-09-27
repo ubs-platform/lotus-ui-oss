@@ -1,12 +1,12 @@
 import { Component, computed, HostBinding, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { GlobalPipesModule } from '@lotus/front-global/global-pipes';
 
 
 
 @Component({
   selector: 'lib-icon',
-  imports: [CommonModule, GlobalPipesModule],
+  imports: [GlobalPipesModule],
   templateUrl: './icon.component.html',
   styleUrls: ['./icon.component.scss'],
   standalone: true,

@@ -11,8 +11,8 @@ import {
 } from '@lotus/postral-core-frontend/forms';
 import { ItemDTO } from '@tk-postral/payment-common';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
-import { TranslatorText } from '@ubs-platform/translator-core';
-import { TranslatorRepositoryService } from '@ubs-platform/translator-ngx';
+import { TranslatorText } from '@lotus/extra/translator-core';
+import { TranslatorRepositoryService } from '@lotus/extra/ubs-translator-ngx';
 import { map } from 'rxjs';
 @Component({
   selector: 'lib-account-user-info',

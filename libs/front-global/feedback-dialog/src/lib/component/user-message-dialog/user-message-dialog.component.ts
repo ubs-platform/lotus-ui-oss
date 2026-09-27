@@ -5,7 +5,7 @@ import { AuthManagementService } from '@lotus/front-global/auth';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IUserMessageDto } from '@ubs-platform/feedback-common';
 import { UserMessageService } from '@lotus/front-global/feedback-front';
-import { TranslatorRepositoryService } from '@ubs-platform/translator-ngx';
+import { TranslatorRepositoryService } from '@lotus/extra/ubs-translator-ngx';
 import { WebdialogReference } from '@lotus/front-global/webdialog';
 
 @Component({

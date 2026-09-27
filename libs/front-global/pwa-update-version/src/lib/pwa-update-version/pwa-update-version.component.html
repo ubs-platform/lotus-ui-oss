@@ -1,26 +1,27 @@
-<div
-  *ngIf="
-    currentVersionStatus != 'NO_NEW_VERSION_DETECTED' &&
-    currentVersionStatus != 'VERSION_INSTALLATION_FAILED'
-  "
-  class="mona-card"
->
-  <div class="ruler">
-    <div
-      class="text-info flex flex-column justify-content-between align-items-center gap-1"
+@if (
+  currentVersionStatus != 'NO_NEW_VERSION_DETECTED' &&
+  currentVersionStatus != 'VERSION_INSTALLATION_FAILED'
+  ) {
+  <div
+    class="mona-card"
     >
-      <div class="text-align-center">{{ 'general.app-update.description' | translate }}</div>
+    <div class="ruler">
       <div
-        class="mt-2 flex flex-column sm:flex-row gap-2 align-items-center justify-content-center"
-      >
-        <block-button (click)="update()">{{ 'general.app-update.verb' | translate }}</block-button>
-        <!-- <block-button
+        class="text-info flex flex-column justify-content-between align-items-center gap-1"
+        >
+        <div class="text-align-center">{{ 'general.app-update.description' | translate }}</div>
+        <div
+          class="mt-2 flex flex-column sm:flex-row gap-2 align-items-center justify-content-center"
+          >
+          <block-button (click)="update()">{{ 'general.app-update.verb' | translate }}</block-button>
+          <!-- <block-button
           buttonClass="primary"
           iconClass="material-symbols-outlined" iconContent="download"
           (click)="install()"
           >Ekle</block-button
-        > -->
+          > -->
+        </div>
       </div>
     </div>
   </div>
-</div>
+}

@@ -2,23 +2,23 @@
   "name": "front-global-gui-primitive",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "libs/front-global/gui-primitive/src",
+  "sourceRoot": "libs/front-global/button/src",
   "prefix": "lotus-web",
   "tags": [],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/libs/front-global/gui-primitive"],
+      "outputs": ["{workspaceRoot}/coverage/libs/front-global/button"],
       "options": {
-        "jestConfig": "libs/front-global/gui-primitive/jest.config.ts"
+        "jestConfig": "libs/front-global/button/jest.config.ts"
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": [
-          "libs/front-global/gui-primitive/**/*.ts",
-          "libs/front-global/gui-primitive/**/*.html"
+          "libs/front-global/button/**/*.ts",
+          "libs/front-global/button/**/*.html"
         ]
       }
     },
@@ -26,7 +26,7 @@
       "executor": "@storybook/angular:start-storybook",
       "options": {
         "port": 4400,
-        "configDir": "libs/front-global/gui-primitive/.storybook",
+        "configDir": "libs/front-global/button/.storybook",
         "browserTarget": "front-global-gui-primitive:build-storybook",
         "compodoc": false
       },
@@ -41,7 +41,7 @@
       "outputs": ["{options.outputDir}"],
       "options": {
         "outputDir": "dist/storybook/front-global-tui-blocks",
-        "configDir": "libs/front-global/gui-primitive/.storybook",
+        "configDir": "libs/front-global/button/.storybook",
         "browserTarget": "front-global-gui-primitive:build-storybook",
         "compodoc": false,
         "styles": ["apps/lotus/src/styles.scss"]

@@ -1,5 +1,5 @@
 import { Component, computed, Inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { IWebDialogConfig, WEBDIALOG_CONFIG, WebdialogComponent } from '@lotus/front-global/webdialog';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
@@ -16,7 +16,7 @@ import { UserAdminService } from '@lotus/front-global/auth';
 
 @Component({
   selector: 'lib-admin-social-options',
-  imports: [CommonModule, FrontGlobalButtonModule],
+  imports: [FrontGlobalButtonModule],
   providers: [CommentAdminService, ApplicationSocialRestrictionAdminService, UserAdminService],
   templateUrl: './admin-social-options.component.html',
   styleUrl: './admin-social-options.component.css',

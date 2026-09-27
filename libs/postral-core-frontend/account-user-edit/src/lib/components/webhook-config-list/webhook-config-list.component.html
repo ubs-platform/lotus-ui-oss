@@ -6,7 +6,7 @@
       [cover]="true"
     >
       <column name="name">
-        <ng-template header> Hesap İsmi </ng-template>
+        <ng-template header content="postral.account-name"></ng-template>
         <ng-template data let-item="item">
           {{ item.name }}
         </ng-template>
@@ -18,7 +18,7 @@
           <block-button
             [routerLink]="['../webhook', item.id]"
             iconClass="material-symbols-outlined" iconContent="send"
-            stringContent="Webhook Ayarları"
+            stringContent="postral.webhook.settings"
           ></block-button>
         </ng-template>
       </column>

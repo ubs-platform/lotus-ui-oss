@@ -82,137 +82,140 @@
     <p class="text-secondary text-xs -mt-2">{{ 'postral.admin.cleanup.date-hint' | translate }}</p>
 
     <!-- Yükleniyor Durumu -->
-    <div *ngIf="paymentCleanupLoading" class="p-3 text-center">
-      <p class="text-secondary">{{ 'postral.admin.cleanup.loading' | translate }}</p>
-    </div>
+    @if (paymentCleanupLoading) {
+      <div class="p-3 text-center">
+        <p class="text-secondary">{{ 'postral.admin.cleanup.loading' | translate }}</p>
+      </div>
+    }
 
     <!-- Önizleme Sonucu -->
-    <div *ngIf="paymentCleanupPreview as preview" class="flex flex-column gap-3 pt-3 border-top">
-      <div class="flex justify-content-between align-items-center flex-wrap gap-2">
-        <h3 class="m-0">{{ 'postral.admin.cleanup.preview-result' | translate }}</h3>
-        <span class="text-sm font-semibold">{{ 'postral.admin.cleanup.payment-found' | translate:{ count: preview.paymentIds.length.toString() } }}</span>
-      </div>
-
-      <div class="info-grid gap-3">
-        <div class="info-item">
-          <span class="label">{{ 'postral.admin.cleanup.report-queries-preserved' | translate }}</span>
-          <span class="value font-bold">{{ preview.preservedReportQueryCount }}</span>
+    @if (paymentCleanupPreview; as preview) {
+      <div class="flex flex-column gap-3 pt-3 border-top">
+        <div class="flex justify-content-between align-items-center flex-wrap gap-2">
+          <h3 class="m-0">{{ 'postral.admin.cleanup.preview-result' | translate }}</h3>
+          <span class="text-sm font-semibold">{{ 'postral.admin.cleanup.payment-found' | translate:{ count: preview.paymentIds.length.toString() } }}</span>
         </div>
-        <div class="info-item">
-          <span class="label">{{ 'postral.admin.cleanup.reports-affected' | translate }}</span>
-          <span class="value font-bold">{{ preview.affectedReportIds.length }}</span>
+        <div class="info-grid gap-3">
+          <div class="info-item">
+            <span class="label">{{ 'postral.admin.cleanup.report-queries-preserved' | translate }}</span>
+            <span class="value font-bold">{{ preview.preservedReportQueryCount }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">{{ 'postral.admin.cleanup.reports-affected' | translate }}</span>
+            <span class="value font-bold">{{ preview.affectedReportIds.length }}</span>
+          </div>
         </div>
-      </div>
-
-      <!-- Sayım Tablosu (Counts Table) -->
-      <div class="mt-2">
-        <ubs-table-ngx [cover]="true" [items]="preview.counts | keyvalue">
-          <column name="item">
+        <!-- Sayım Tablosu (Counts Table) -->
+        <div class="mt-2">
+          <ubs-table-ngx [cover]="true" [items]="preview.counts | keyvalue">
+            <column name="item">
             <ng-template header content="general.name"></ng-template>
             <ng-template data let-item="item">
               {{ ('postral.admin.count.' + item.key) | translate }}
             </ng-template>
           </column>
           <column name="count">
-            <ng-template header content="postral.payment-item.quantity"></ng-template>
-            <ng-template data let-item="item">
-              <span class="font-bold">{{ item.value }}</span>
-            </ng-template>
-          </column>
-        </ubs-table-ngx>
-      </div>
-
-      <!-- Uyarılar -->
-      <ul *ngIf="preview.warnings.length > 0" class="payment-cleanup-warnings">
-        <li *ngFor="let warning of preview.warnings">{{ warning | translate }}</li>
-      </ul>
-
-      <div>
-        <block-button
-          buttonClass="bg-danger"
-          iconClass="material-symbols-outlined"
-          iconContent="delete"
-          stringContent="postral.admin.cleanup.clean"
-          (click)="cleanPaymentData()">
-        </block-button>
-      </div>
-    </div>
-
-    <!-- Aktif Arşiv Kartı -->
-    <div *ngIf="paymentArchive" class="flex justify-content-between align-items-center flex-wrap gap-3 p-3 border rounded surface-50">
-      <div>
-        <span class="font-semibold text-sm">{{ 'postral.admin.cleanup.archive-ready' | translate }}</span>
-        <p class="text-sm m-0 mt-1">{{ 'postral.admin.cleanup.checksum' | translate }}: <code>{{ paymentArchive.checksum }}</code></p>
-      </div>
-      <div class="flex gap-2 flex-wrap">
-        <block-button
-          buttonClass="primary"
-          iconClass="material-symbols-outlined"
-          iconContent="download"
-          stringContent="postral.admin.cleanup.download"
-          (click)="downloadPaymentArchive()">
-        </block-button>
-        <block-button
-          buttonClass="bg-danger"
-          iconClass="material-symbols-outlined"
-          iconContent="delete"
-          stringContent="postral.admin.cleanup.delete-archived"
-          (click)="deletePaymentData()">
-        </block-button>
-      </div>
-    </div>
-
-    <!-- Oluşturulan Arşivler Listesi (Table) -->
-    <div *ngIf="paymentArchives.length > 0" class="flex flex-column gap-3 pt-3 border-top">
-      <div class="flex justify-content-between align-items-center flex-wrap gap-2">
-        <h3 class="m-0">{{ 'postral.admin.cleanup.created-archives' | translate }}</h3>
-        <span class="text-sm font-semibold">{{ 'postral.admin.cleanup.archive-count' | translate:{ count: paymentArchives.length.toString() } }}</span>
-      </div>
-
-      <ubs-table-ngx [cover]="true" [items]="paymentArchives">
-        <column name="createdAt">
-          <ng-template header content="general.creation-date"></ng-template>
-          <ng-template data let-item="item">
-            {{ item.createdAt | date:'medium' }}
-          </ng-template>
-        </column>
-
-        <column name="paymentCount">
           <ng-template header content="postral.payment-item.quantity"></ng-template>
           <ng-template data let-item="item">
-            <span class="font-semibold">{{ item.paymentCount }}</span>
-          </ng-template>
-        </column>
-
-        <column name="before">
-          <ng-template header content="postral.admin.cleanup.before-date"></ng-template>
-          <ng-template data let-item="item">
-            {{ item.before ? (item.before | date:'medium') : ('general.default' | translate) }}
-          </ng-template>
-        </column>
-
-        <column name="checksum">
-          <ng-template header content="postral.admin.cleanup.checksum"></ng-template>
-          <ng-template data let-item="item">
-            <code>{{ item.checksum }}</code>
-          </ng-template>
-        </column>
-
-        <column name="actions">
-          <ng-template header content="general.actions"></ng-template>
-          <ng-template data let-item="item">
-            <div class="action-buttons">
-              <block-button
-                buttonClass="border"
-                iconClass="material-symbols-outlined"
-                iconContent="download"
-                stringContent="postral.admin.cleanup.download-short"
-                (click)="downloadArchiveById(item.id)">
-              </block-button>
-            </div>
+            <span class="font-bold">{{ item.value }}</span>
           </ng-template>
         </column>
       </ubs-table-ngx>
     </div>
+    <!-- Uyarılar -->
+    @if (preview.warnings.length > 0) {
+      <ul class="payment-cleanup-warnings">
+        @for (warning of preview.warnings; track warning) {
+          <li>{{ warning | translate }}</li>
+        }
+      </ul>
+    }
+    <div>
+      <block-button
+        buttonClass="bg-danger"
+        iconClass="material-symbols-outlined"
+        iconContent="delete"
+        stringContent="postral.admin.cleanup.clean"
+        (click)="cleanPaymentData()">
+      </block-button>
+    </div>
   </div>
+}
+
+<!-- Aktif Arşiv Kartı -->
+@if (paymentArchive) {
+  <div class="flex justify-content-between align-items-center flex-wrap gap-3 p-3 border rounded surface-50">
+    <div>
+      <span class="font-semibold text-sm">{{ 'postral.admin.cleanup.archive-ready' | translate }}</span>
+      <p class="text-sm m-0 mt-1">{{ 'postral.admin.cleanup.checksum' | translate }}: <code>{{ paymentArchive.checksum }}</code></p>
+    </div>
+    <div class="flex gap-2 flex-wrap">
+      <block-button
+        buttonClass="primary"
+        iconClass="material-symbols-outlined"
+        iconContent="download"
+        stringContent="postral.admin.cleanup.download"
+        (click)="downloadPaymentArchive()">
+      </block-button>
+      <block-button
+        buttonClass="bg-danger"
+        iconClass="material-symbols-outlined"
+        iconContent="delete"
+        stringContent="postral.admin.cleanup.delete-archived"
+        (click)="deletePaymentData()">
+      </block-button>
+    </div>
+  </div>
+}
+
+<!-- Oluşturulan Arşivler Listesi (Table) -->
+@if (paymentArchives.length > 0) {
+  <div class="flex flex-column gap-3 pt-3 border-top">
+    <div class="flex justify-content-between align-items-center flex-wrap gap-2">
+      <h3 class="m-0">{{ 'postral.admin.cleanup.created-archives' | translate }}</h3>
+      <span class="text-sm font-semibold">{{ 'postral.admin.cleanup.archive-count' | translate:{ count: paymentArchives.length.toString() } }}</span>
+    </div>
+    <ubs-table-ngx [cover]="true" [items]="paymentArchives">
+      <column name="createdAt">
+      <ng-template header content="general.creation-date"></ng-template>
+      <ng-template data let-item="item">
+        {{ item.createdAt | date:'medium' }}
+      </ng-template>
+    </column>
+    <column name="paymentCount">
+    <ng-template header content="postral.payment-item.quantity"></ng-template>
+    <ng-template data let-item="item">
+      <span class="font-semibold">{{ item.paymentCount }}</span>
+    </ng-template>
+  </column>
+  <column name="before">
+  <ng-template header content="postral.admin.cleanup.before-date"></ng-template>
+  <ng-template data let-item="item">
+    {{ item.before ? (item.before | date:'medium') : ('general.default' | translate) }}
+  </ng-template>
+</column>
+<column name="checksum">
+<ng-template header content="postral.admin.cleanup.checksum"></ng-template>
+<ng-template data let-item="item">
+  <code>{{ item.checksum }}</code>
+</ng-template>
+</column>
+<column name="actions">
+<ng-template header content="general.actions"></ng-template>
+<ng-template data let-item="item">
+  <div class="action-buttons">
+    <block-button
+      buttonClass="border"
+      iconClass="material-symbols-outlined"
+      iconContent="download"
+      stringContent="postral.admin.cleanup.download-short"
+      (click)="downloadArchiveById(item.id)">
+    </block-button>
+  </div>
+</ng-template>
+</column>
+</ubs-table-ngx>
+</div>
+}
+</div>
 </div>

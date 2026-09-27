@@ -1,6 +1,10 @@
-  <div class="flex flex-row justify-content-end align-items-center gap-1">
-    <block-button *ngIf="reformFilter()"  (click)="showFilter()"
-      stringContent="general.filter.options"></block-button>
-    <block-button *ngIf="reformFilter()"  (click)="clearFilter()" iconClass="material-symbols-outlined" iconContent="close"
-      stringContent="general.filter.clear"></block-button>
-  </div>
+<div class="flex flex-row justify-content-end align-items-center gap-1">
+  @if (reformFilter()) {
+    <block-button  (click)="showFilter()"
+    stringContent="general.filter.options"></block-button>
+  }
+  @if (reformFilter()) {
+    <block-button  (click)="clearFilter()" iconClass="material-symbols-outlined" iconContent="close"
+    stringContent="general.filter.clear"></block-button>
+  }
+</div>

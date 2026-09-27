@@ -1,24 +1,20 @@
 import { Component, Optional } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { SwUpdate } from '@angular/service-worker';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { LoadingIndicationService } from '@lotus/front-global/user-service-wraps';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 
 @Component({
   selector: 'lib-pwa-update-version',
-  imports: [CommonModule, FrontGlobalButtonModule, UbsTranslatorNgxModule],
+  imports: [FrontGlobalButtonModule, UbsTranslatorNgxModule],
   templateUrl: './pwa-update-version.component.html',
   styleUrl: './pwa-update-version.component.scss',
   standalone: true,
 })
 export class PwaUpdateVersionComponent {
-  currentVersionStatus:
-    | 'VERSION_DETECTED'
-    | 'VERSION_INSTALLATION_FAILED'
-    | 'VERSION_READY'
-    | 'NO_NEW_VERSION_DETECTED' = 'NO_NEW_VERSION_DETECTED';
+  currentVersionStatus: string = 'NO_NEW_VERSION_DETECTED';
   readonly maxTry = 3;
   tryCount = 0;
   onUpdate = false;

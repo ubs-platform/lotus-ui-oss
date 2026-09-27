@@ -4,7 +4,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { UserMessageDialogComponent } from './component/user-message-dialog/user-message-dialog.component';
 import { FeedbackDialogService } from './service/user-message-dialog.service';
 import { MinkyReformNgxPrimeModule } from '@lotus/front-global/minky/reform-ngx-prime';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { MessageModule } from 'primeng/message';
 import { MinkyReformNgxModule } from '@lotus/front-global/minky/reform-ngx';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';

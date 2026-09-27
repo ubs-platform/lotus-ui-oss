@@ -55,7 +55,7 @@ export class WebhookConfigInfoComponent {
             form,
             extraActions: [
                 {
-                    stringContent: 'Yeni Event Key oluştur',
+                    stringContent: 'postral.webhook.regenerate',
                     iconClass: 'material-symbols-outlined',
                     iconContent: 'key',
                     buttonClass: 'border',
@@ -63,7 +63,7 @@ export class WebhookConfigInfoComponent {
                     action: () => this.regenerateEventKey(),
                 },
                 {
-                    stringContent: 'Webhook konfigürasyonunu sil',
+                    stringContent: 'postral.webhook.delete',
                     iconClass: 'material-symbols-outlined',
                     iconContent: 'delete',
                     buttonClass: 'border text-danger',
@@ -72,7 +72,7 @@ export class WebhookConfigInfoComponent {
                 },
             ],
             onValidationError: (_form: Reform) => {
-                this.basicOverlay.alert('Hata', 'Lütfen formu kontrol edin.', 'error');
+                this.basicOverlay.alert('general.error', 'general.validation.error', 'error');
             },
             beforeSave: (_form: Reform) => true,
             saveMethod: (data: any) => {
@@ -83,7 +83,7 @@ export class WebhookConfigInfoComponent {
                 return this.webhookConfigService.create({ ...data, accountId });
             },
             afterSaveSuccess: (out: WebhookConfigDTO) => {
-                this.basicOverlay.alert('general.success', 'Webhook konfigürasyonu kaydedildi.', 'success');
+                this.basicOverlay.alert('general.success', 'postral.webhook.config.saved', 'success');
                 this.existingId.set(out.id);
                 if (out.eventKey && out.eventKey !== '***') {
                     this.createdEventKey.set(out.eventKey);
@@ -91,7 +91,7 @@ export class WebhookConfigInfoComponent {
                 form.patchValue(out);
             },
             afterSaveError: (_error: any, _data: any) => {
-                this.basicOverlay.alert('Hata', 'Webhook konfigürasyonu kaydedilemedi.', 'error');
+                this.basicOverlay.alert('general.error', 'postral.webhook.config.not-saved', 'error');
             },
         } as FormEditInstruction<WebhookConfigDTO, WebhookConfigDTO>);
     }
@@ -101,8 +101,8 @@ export class WebhookConfigInfoComponent {
         if (!id) return;
         this.basicOverlay
             .confirm(
-                'Emin misiniz?',
-                'Yeni bir Event Key oluşturulacak ve mevcut key geçersiz olacak. Devam edilsin mi?',
+                'general.confirmation',
+                'postral.webhook.regenerate.confirmation',
             )
             .subscribe((confirmed) => {
                 if (!confirmed) return;
@@ -111,12 +111,12 @@ export class WebhookConfigInfoComponent {
                         this.createdEventKey.set(out.eventKey);
                         this.basicOverlay.alert(
                             'general.success',
-                            'Yeni Event Key oluşturuldu.',
+                            'postral.webhook.regenerate.success',
                             'success',
                         );
                     },
                     error: () => {
-                        this.basicOverlay.alert('Hata', 'Event Key oluşturulamadı.', 'error');
+                        this.basicOverlay.alert('general.error', 'postral.webhook.regenerate.error', 'error');
                     },
                 });
             });
@@ -126,13 +126,13 @@ export class WebhookConfigInfoComponent {
         const id = this.existingId();
         if (!id) return;
         this.basicOverlay
-            .confirm('Emin misiniz?', 'Webhook konfigürasyonunu silmek istediğinize emin misiniz?')
+            .confirm('general.confirmation', 'postral.webhook.delete.confirmation')
             .subscribe((confirmed) => {
                 if (confirmed) {
                     this.webhookConfigService.delete(id).subscribe(() => {
                         this.existingId.set(null);
                         this.createdEventKey.set(null);
-                        this.basicOverlay.alert('Silindi', 'Webhook konfigürasyonu silindi.', 'success');
+                        this.basicOverlay.alert('general.success', 'postral.webhook.delete.success', 'success');
                         this.activatedRoute.params.subscribe((params) => {
                             this.loadConfig(params['accountId']);
                         });
@@ -144,12 +144,12 @@ export class WebhookConfigInfoComponent {
     copyEventKey() {
         const eventKey = this.createdEventKey();
         if (!this.programmaticCopyEnabled()) {
-            this.basicOverlay.alert('Hata', 'Kopyalama yalnızca HTTPS protokolü veya localhost üzerinde desteklenir.', 'error');
+            this.basicOverlay.alert('general.error', 'general.copy.warn.support', 'error');
             return
         }
         if (eventKey) {
             navigator.clipboard.writeText(eventKey).then(() => {
-                this.basicOverlay.alert('general.success', 'Event Key kopyalandı.', 'success');
+                this.basicOverlay.alert('general.success', 'postral.webhook.event-key.copied', 'success');
             });
         }
     }

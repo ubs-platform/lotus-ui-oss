@@ -27,7 +27,7 @@ export class UserGeneralForm implements UserGeneralInfoDTO {
     validators: [],
     widthRatio: '50%',
     disable: true,
-    label: 'Kullanıcı kimliği',
+    label: 'general.user-id',
   })
   id!: string;
 

@@ -12,7 +12,7 @@ import {
   TemplateRef,
   viewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { OnLoadDirective } from '@lotus/front-global/ui-element-utils';
 import {
   DialogVisibilityReference,
@@ -20,8 +20,8 @@ import {
 } from '../util/mod-util';
 import { DocumentSwipeListener } from '@lotus/front-global/mobile-gestures-util';
 import { Subscription } from 'rxjs';
-import { TranslatorText } from '@ubs-platform/translator-core';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { TranslatorText } from '@lotus/extra/translator-core';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 // export interface WebDialogConfig<INPUT> {
 //   data: INPUT;
 //   position?: 'center' | 'right' | 'left' | 'bottom';
@@ -30,11 +30,10 @@ import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
 @Component({
   selector: 'lib-webdialog',
   imports: [
-    CommonModule,
     FrontGlobalButtonModule,
     OnLoadDirective,
-    UbsTranslatorNgxModule,
-  ],
+    UbsTranslatorNgxModule
+],
   templateUrl: './webdialog.component.html',
   styleUrl: './webdialog.component.scss',
   standalone: true,

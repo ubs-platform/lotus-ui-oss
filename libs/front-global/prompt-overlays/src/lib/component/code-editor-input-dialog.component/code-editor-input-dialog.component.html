@@ -2,12 +2,13 @@
   <div class="flex-grow-1">
     <!-- <input pInputText [(ngModel)]="value" /> -->
     <div class="h-full">
-      <ngx-monaco-editor
-        style="height: 100%"
-        *ngIf="monacoOps"
-        [(ngModel)]="value"
-        [options]="monacoOps"
-      ></ngx-monaco-editor>
+      @if (monacoOps) {
+        <ngx-monaco-editor
+          style="height: 100%"
+          [(ngModel)]="value"
+          [options]="monacoOps"
+        ></ngx-monaco-editor>
+      }
     </div>
   </div>
   <div>
@@ -17,7 +18,7 @@
       (click)="close(value)"
       stringContent="general.ok"
       ></block-button
-    >
-    <block-button (click)="close()" stringContent="general.cancel"></block-button>
+      >
+      <block-button (click)="close()" stringContent="general.cancel"></block-button>
+    </div>
   </div>
-</div>

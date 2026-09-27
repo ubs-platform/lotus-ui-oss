@@ -17,7 +17,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { FrontGlobalMinkyReformNgxMonaModule } from '@lotus/front-global/minky/reform-ngx-mona';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import { CustomSelectComponent } from '@lotus/legendary-front/custom-select';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { ToggleComponent } from '@lotus/front-global/input/toggle';
 @NgModule({
   imports: [

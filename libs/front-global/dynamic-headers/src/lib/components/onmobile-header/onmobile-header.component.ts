@@ -1,14 +1,14 @@
 import { Component, ElementRef, model, OnInit, signal, viewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { HeaderAction, HeaderCommunicationService } from '../../services/header-communication.service';
-import { TranslatorText } from '@ubs-platform/translator-core';
-import { TranslatorRepositoryService, UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { TranslatorText } from '@lotus/extra/translator-core';
+import { TranslatorRepositoryService, UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { screenTypeStatus } from "@lotus/front-global/mona-mobile-experience-ng"
 import { FrontGlobalButtonModule } from "@lotus/front-global/button";
 
 @Component({
   selector: 'lib-onmobile-header',
-  imports: [CommonModule, UbsTranslatorNgxModule, FrontGlobalButtonModule, FrontGlobalButtonModule],
+  imports: [UbsTranslatorNgxModule, FrontGlobalButtonModule, FrontGlobalButtonModule],
   templateUrl: './onmobile-header.component.html',
   styleUrl: './onmobile-header.component.scss',
 })

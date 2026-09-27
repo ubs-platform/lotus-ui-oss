@@ -1,5 +1,5 @@
 import { Component, computed, model, OnChanges, SimpleChanges } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   AccountControllerService,
   CalculationService,

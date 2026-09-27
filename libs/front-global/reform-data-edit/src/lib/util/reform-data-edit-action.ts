@@ -1,6 +1,6 @@
 import { Signal } from '@angular/core';
 import { Reform } from '@lotus/front-global/minky/core';
-import { TranslatorText } from '@ubs-platform/translator-core';
+import { TranslatorText } from '@lotus/extra/translator-core';
 import { Observable } from 'rxjs';
 
 /** Aksiyon durumu sabit, signal, observable veya forma bakan fonksiyon olarak verilebilir */

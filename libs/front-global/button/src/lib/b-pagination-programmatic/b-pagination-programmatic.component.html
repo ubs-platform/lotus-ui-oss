@@ -3,30 +3,26 @@
   let-items="items"
   let-pagination="pagination"
   let-showBackButton="showBackButton"
->
-  <ng-container *ngFor="let item of items">
-    <ng-container *ngIf="item.templateContentName">
-      <ng-container
-        *ngIf="findTemplate(item.templateContentName); let template"
-      >
+  >
+  @for (item of items; track item) {
+    @if (item.templateContentName) {
+      @if (findTemplate(item.templateContentName); as template) {
         <div (click)="clickAction(item, pagination)">
           <div *ngTemplateOutlet="template"></div>
         </div>
-      </ng-container>
-    </ng-container>
-    <ng-container *ngIf="item.customTemplate">
+      }
+    }
+    @if (item.customTemplate) {
       <div (click)="clickAction(item, pagination)">
         <div *ngTemplateOutlet="item.customTemplate"></div>
       </div>
-    </ng-container>
-    <ng-container
-      *ngIf="
-        !item.templateContentName &&
-        !item.toggleValues &&
-        !item.customTemplate &&
-        (item.show == null || (item.show | async))
-      "
-    >
+    }
+    @if (
+      !item.templateContentName &&
+      !item.toggleValues &&
+      !item.customTemplate &&
+      (item.show == null || (item.show | async))
+      ) {
       <block-button
         [cover]="true"
         [iconClass]="
@@ -50,23 +46,24 @@
         [buttonClass]="item.buttonClass || 'surface'"
         iconPosition="RIGHT"
         (click)="clickAction(item, pagination)"
-      >
+        >
         <div [ngClass]="item.fontClass || []" [style]="item.fontStyle || []">
           {{ item.text | translate }}
         </div>
       </block-button>
-    </ng-container>
-  </ng-container>
-  <block-button
-    iconClass="material-symbols-outlined" iconContent="chevron_left"
-    *ngIf="showBackButton"
-    [cover]="true"
-    buttonClass="surface"
-    (click)="pagination.back()"
-    iconPosition="LEFT"
-  >
-    <b>{{ 'mona.back' | translate }}</b>
-  </block-button>
+    }
+  }
+  @if (showBackButton) {
+    <block-button
+      iconClass="material-symbols-outlined" iconContent="chevron_left"
+      [cover]="true"
+      buttonClass="surface"
+      (click)="pagination.back()"
+      iconPosition="LEFT"
+      >
+      <b>{{ 'mona.back' | translate }}</b>
+    </block-button>
+  }
 </ng-template>
 
 <ubs-touch-pagination
@@ -74,7 +71,7 @@
   [height]="height()"
   (pageChange)="isInFirst.emit($event == 'main')"
   #pagination
->
+  >
   <ng-template block-page="main">
     <div
       *ngTemplateOutlet="
@@ -84,11 +81,11 @@
     ></div>
   </ng-template>
 
-  <ng-template
-    *ngFor="let otherPage of childPaginationItems()"
-    [block-page]="otherPage.pageKey || ''"
-  >
-    <div
+  @for (otherPage of childPaginationItems(); track otherPage) {
+    <ng-template
+      [block-page]="otherPage.pageKey || ''"
+      >
+      <div
       *ngTemplateOutlet="
         pagefiller;
         context: {
@@ -99,4 +96,5 @@
       "
     ></div>
   </ng-template>
+}
 </ubs-touch-pagination>

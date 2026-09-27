@@ -5,13 +5,15 @@
     {{ title | translate }}
   </ng-template>
 </minky-reform-prime>
-<div class="action-buttons" *ngIf="reform">
-  <block-button
-    buttonClass="primary"
-    iconClass="material-symbols-outlined" iconContent="chevron_right"
-    iconPosition="RIGHT"
-    (click)="sendRequest()"
-    stringContent="general.next"
-    ></block-button
-  >
-</div>
+@if (reform) {
+  <div class="action-buttons">
+    <block-button
+      buttonClass="primary"
+      iconClass="material-symbols-outlined" iconContent="chevron_right"
+      iconPosition="RIGHT"
+      (click)="sendRequest()"
+      stringContent="general.next"
+      ></block-button
+      >
+    </div>
+  }

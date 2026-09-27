@@ -12,7 +12,7 @@ import { BasketViewComponent } from './components/basket-view/basket-view.compon
 import { PostralCoreFrontendClientModule } from '@lotus/postral-core-frontend/client';
 import { PaymentItemListComponent } from '@lotus/postral-core-frontend/payment-item-list';
 import { PostralReportsModule } from '@lotus/postral-core-frontend/reports';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 
 @NgModule({
   declarations: [

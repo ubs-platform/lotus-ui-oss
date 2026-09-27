@@ -6,7 +6,7 @@ import {
   input,
   model
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location as NgLocation } from '@angular/common';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';

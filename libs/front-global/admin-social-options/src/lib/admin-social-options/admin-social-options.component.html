@@ -1,33 +1,37 @@
-  <div class="flex flex-column gap-1 flex-wrap" *ngIf="socialDialogUser()">
-    <block-button
-      [hasContent]="true"
-      iconClass="material-symbols-outlined" iconContent="delete"
-      buttonClass="bg-danger"
-      *ngIf="!userIsAdmin()"
-      (click)="clearComments(socialDialogUser()!)"
-      >Yorumlarını temizle</block-button
-    >
-    <block-button
-      [hasContent]="true"
-      iconClass="material-symbols-outlined" iconContent="block"
-      buttonClass="bg-danger"
-      *ngIf="
+@if (socialDialogUser()) {
+  <div class="flex flex-column gap-1 flex-wrap">
+    @if (!userIsAdmin()) {
+      <block-button
+        [hasContent]="true"
+        iconClass="material-symbols-outlined" iconContent="delete"
+        buttonClass="bg-danger"
+        (click)="clearComments(socialDialogUser()!)"
+        >Yorumlarını temizle</block-button
+        >
+      }
+      @if (
         !socialDialogUserSocialRestriction() &&
         !userIsAdmin()
-      "
-      (click)="blockComments(socialDialogUser()!)"
-      >Yorumları engelle</block-button
-    >
-
-    <block-button
-      [hasContent]="true"
-      iconClass="material-symbols-outlined" iconContent="check"
-      buttonClass="bg-danger"
-      *ngIf="
-        socialDialogUserSocialRestriction() &&
-        !userIsAdmin()
-      "
-      (click)="unblockComments(socialDialogUser()!)"
-      >Yorumları etkinleştir</block-button
-    >
-  </div>
+        ) {
+        <block-button
+          [hasContent]="true"
+          iconClass="material-symbols-outlined" iconContent="block"
+          buttonClass="bg-danger"
+          (click)="blockComments(socialDialogUser()!)"
+          >Yorumları engelle</block-button
+          >
+        }
+        @if (
+          socialDialogUserSocialRestriction() &&
+          !userIsAdmin()
+          ) {
+          <block-button
+            [hasContent]="true"
+            iconClass="material-symbols-outlined" iconContent="check"
+            buttonClass="bg-danger"
+            (click)="unblockComments(socialDialogUser()!)"
+            >Yorumları etkinleştir</block-button
+            >
+          }
+        </div>
+      }

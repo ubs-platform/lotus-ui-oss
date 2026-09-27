@@ -1,9 +1,9 @@
 <div style="margin-bottom: 1rem;">
   <block-button iconClass="material-symbols-outlined" (click)="insertNew()" buttonClass="primary" iconContent="add">{{
-    'new' | translate }}</block-button>
-  <block-button 
-    buttonClass="secondary" 
-    iconClass="material-symbols-outlined" iconContent="upload" 
+  'new' | translate }}</block-button>
+  <block-button
+    buttonClass="secondary"
+    iconClass="material-symbols-outlined" iconContent="upload"
     (click)="importFromJson()"
     [disabled]="isImporting()"
     style="margin-left: 0.5rem;">
@@ -11,33 +11,32 @@
   </block-button>
 </div>
 
-<ng-container *ngFor="let globalVariable of globalVars">
+@for (globalVariable of globalVars; track globalVariable) {
   <div class="my-1 flex">
     <div class="flex-grow-1">
       <lotus-web-changeable-text [value]="globalVariable.name"
-        (valueChange)="rename(globalVariable, $event)"></lotus-web-changeable-text>
+      (valueChange)="rename(globalVariable, $event)"></lotus-web-changeable-text>
     </div>
     <block-button buttonClass="primary m-1" iconClass="material-symbols-outlined" iconContent="content_copy" (click)="dublicate(globalVariable)"></block-button>
   </div>
-
   <!-- <block-button buttonClass="surface m-1" (click)="rename(globalVariable)">
-    Yeniden isimlendir</block-button
+  Yeniden isimlendir</block-button
   > -->
   <ubs-table-ngx [items]="globalVariable.values | keyvalue">
     <column name="Language">
-      <ng-template header> Dil </ng-template>
-      <ng-template data let-item="item"> {{ item.key }} </ng-template>
-    </column>
-    <column name="Value">
-      <ng-template header> Değer </ng-template>
-      <ng-template data let-item="item"> {{ item.value }} </ng-template>
-    </column>
-    <column name="Actions">
-      <ng-template header content="general.actions"></ng-template>
-      <ng-template data let-item="item">
-        <block-button buttonClass="primary m-1" iconClass="material-symbols-outlined" iconContent="edit"
-          (click)="edit(globalVariable, item.key, item.value)"></block-button>
-      </ng-template>
-    </column>
-  </ubs-table-ngx>
-</ng-container>
+    <ng-template header> Dil </ng-template>
+    <ng-template data let-item="item"> {{ item.key }} </ng-template>
+  </column>
+  <column name="Value">
+  <ng-template header> Değer </ng-template>
+  <ng-template data let-item="item"> {{ item.value }} </ng-template>
+</column>
+<column name="Actions">
+<ng-template header content="general.actions"></ng-template>
+<ng-template data let-item="item">
+  <block-button buttonClass="primary m-1" iconClass="material-symbols-outlined" iconContent="edit"
+  (click)="edit(globalVariable, item.key, item.value)"></block-button>
+</ng-template>
+</column>
+</ubs-table-ngx>
+}

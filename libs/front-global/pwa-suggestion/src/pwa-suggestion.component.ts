@@ -1,13 +1,13 @@
 // catching trigger in time
 
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import { SwUpdate } from '@angular/service-worker';
 const SHOW_PWA_ADD_INFO = 'showPwaAdd';
 @Component({
   selector: 'lotus-web-pwa-suggestion',
-  imports: [CommonModule, FrontGlobalButtonModule],
+  imports: [FrontGlobalButtonModule],
   templateUrl: './pwa-suggestion.component.html',
   styleUrl: './pwa-suggestion.component.scss',
 })

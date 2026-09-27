@@ -3,16 +3,18 @@
     style="font-size: 2rem"
     [(ngModel)]="intervalValue"
     (focus)="focused = true"
-  />
-  <div *ngIf="focused" class="flex">
-    <block-button [cover]="false" (click)="changeValue()"
-      >Değiştir</block-button
-    >
-    <block-button
-      [cover]="false"
-      iconClass="material-symbols-outlined" iconContent="close"
-      (click)="intervalValue = value() || ''"
-      >İptal</block-button
-    >
-  </div>
-</div>
+    />
+  @if (focused) {
+    <div class="flex">
+      <block-button [cover]="false" (click)="changeValue()"
+        >Değiştir</block-button
+        >
+        <block-button
+          [cover]="false"
+          iconClass="material-symbols-outlined" iconContent="close"
+          (click)="intervalValue = value() || ''"
+          >İptal</block-button
+          >
+        </div>
+      }
+    </div>

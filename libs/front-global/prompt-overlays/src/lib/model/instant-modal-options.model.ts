@@ -1,5 +1,5 @@
 import { TemplateRef } from '@angular/core';
-import { TranslatorText } from '@ubs-platform/translator-core';
+import { TranslatorText } from '@lotus/extra/translator-core';
 
 export interface InstantModalOptions {
   templateRef?: TemplateRef<any>;

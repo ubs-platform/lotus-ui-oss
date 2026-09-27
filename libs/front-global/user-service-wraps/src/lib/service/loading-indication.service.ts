@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TranslatorRepositoryService } from '@ubs-platform/translator-ngx';
+import { TranslatorRepositoryService } from '@lotus/extra/ubs-translator-ngx';
 import {
   Observable,
   OperatorFunction,

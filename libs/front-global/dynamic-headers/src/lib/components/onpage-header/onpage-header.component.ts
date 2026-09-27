@@ -1,16 +1,16 @@
 import { Component, effect, model, OnDestroy, OnInit, signal, Signal } from '@angular/core';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
-import { CommonModule } from '@angular/common';
+
 import { HeaderAction, HeaderCommunicationService } from '../../services/header-communication.service';
-import { TranslatorText } from '@ubs-platform/translator-core';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { TranslatorText } from '@lotus/extra/translator-core';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { screenTypeStatus } from "@lotus/front-global/mona-mobile-experience-ng"
 import { IIcon } from '@lotus/front-global/icon-type';
 
 
 @Component({
   selector: 'onpage-header',
-  imports: [CommonModule, UbsTranslatorNgxModule, FrontGlobalButtonModule],
+  imports: [UbsTranslatorNgxModule, FrontGlobalButtonModule],
   templateUrl: './onpage-header.component.html',
   styleUrl: './onpage-header.component.css',
 })

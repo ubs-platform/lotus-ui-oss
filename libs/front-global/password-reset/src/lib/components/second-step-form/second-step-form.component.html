@@ -1,34 +1,39 @@
 <h1>Parola sıfırlama</h1>
-<div *ngIf="requestSent">
-  <div class="flex align-items-center flex-column">
-    <i class="success-tik text-green-400 material-symbols-outlined">check</i>
-
-    <h3>Parola sıfırlama tamamlandı</h3>
-    <p class="block text-align-center">
-      Artık sisteme yeni parolanız ile giriş yapabilirsiniz.
-    </p>
-    <!-- <block-button iconClass="material-symbols-outlined" iconContent="home" (click)="navigateHome()"
+@if (requestSent) {
+  <div>
+    <div class="flex align-items-center flex-column">
+      <i class="success-tik text-green-400 material-symbols-outlined">check</i>
+      <h3>Parola sıfırlama tamamlandı</h3>
+      <p class="block text-align-center">
+        Artık sisteme yeni parolanız ile giriş yapabilirsiniz.
+      </p>
+      <!-- <block-button iconClass="material-symbols-outlined" iconContent="home" (click)="navigateHome()"
       >Ana sayfa</block-button
-    >
-    <block-button iconClass="material-symbols-outlined" iconContent="chevron_left" (click)="navigateBack()"
-      >Geri</block-button
-    > -->
-  </div>
-</div>
-<div *ngIf="!requestSent">
-  <p>Yeni parolanızı aşağıdaki alanlara giriniz</p>
-  <minky-reform-prime [reform]="reform">
-    <ng-template title-link let-title="title">
-      {{ title | translate }}
-    </ng-template>
-  </minky-reform-prime>
-  <div *ngIf="reform">
-    <block-button
-      (click)="sendRequest()"
-      stringContent="general.next"
-      iconPosition="RIGHT"
-      buttonClass="primary"
-      iconClass="material-symbols-outlined" iconContent="chevron_right"
-    ></block-button>
-  </div>
-</div>
+      >
+      <block-button iconClass="material-symbols-outlined" iconContent="chevron_left" (click)="navigateBack()"
+        >Geri</block-button
+        > -->
+      </div>
+    </div>
+  }
+  @if (!requestSent) {
+    <div>
+      <p>Yeni parolanızı aşağıdaki alanlara giriniz</p>
+      <minky-reform-prime [reform]="reform">
+        <ng-template title-link let-title="title">
+          {{ title | translate }}
+        </ng-template>
+      </minky-reform-prime>
+      @if (reform) {
+        <div>
+          <block-button
+            (click)="sendRequest()"
+            stringContent="general.next"
+            iconPosition="RIGHT"
+            buttonClass="primary"
+            iconClass="material-symbols-outlined" iconContent="chevron_right"
+          ></block-button>
+        </div>
+      }
+    </div>
+  }

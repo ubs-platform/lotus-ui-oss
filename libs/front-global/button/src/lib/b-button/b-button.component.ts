@@ -10,7 +10,7 @@ import { IIcon } from '@lotus/front-global/icon-type';
 import {
   TranslationParameter,
   TranslatorText,
-} from '@ubs-platform/translator-core';
+} from '@lotus/extra/translator-core';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector

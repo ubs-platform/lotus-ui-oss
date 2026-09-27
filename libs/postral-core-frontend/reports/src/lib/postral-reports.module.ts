@@ -9,7 +9,7 @@ import { FrontGlobalStatusBadgeModule } from '@lotus/front-global/status-badge';
 import { FrontGlobalTableModule } from "@lotus/front-global/table";
 import { DatePipe, DecimalPipe } from "@angular/common";
 import { DataListLayoutModule } from "@lotus/front-global/ui/data-list-layout";
-import { UbsTranslatorNgxModule } from "@ubs-platform/translator-ngx";
+import { UbsTranslatorNgxModule } from "@lotus/extra/ubs-translator-ngx";
 import { TooltipModule } from 'primeng/tooltip';
 import { MoneyDisplayComponent } from './money-display/money-display.component';
 @NgModule({

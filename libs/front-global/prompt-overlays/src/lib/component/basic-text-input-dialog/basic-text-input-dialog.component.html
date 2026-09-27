@@ -1,13 +1,16 @@
 <div>
-  <input *ngIf="!longTextMode" pInputText [(ngModel)]="value" />
+  @if (!longTextMode) {
+    <input pInputText [(ngModel)]="value" />
+  }
   <!-- <input pInputText [(ngModel)]="value" /> -->
-  <textarea
-    *ngIf="longTextMode"
-    rows="5"
-    cols="30"
-    pInputTextarea
-    [(ngModel)]="value"
-  ></textarea>
+  @if (longTextMode) {
+    <textarea
+      rows="5"
+      cols="30"
+      pInputTextarea
+      [(ngModel)]="value"
+    ></textarea>
+  }
 </div>
 <div class="flex gap-1 py-2">
   <block-button
@@ -16,6 +19,6 @@
     (click)="close(value)"
     stringContent="general.ok"
     ></block-button
-  >
-  <block-button buttonClass="border" (click)="close()" stringContent="general.cancel"></block-button>
-</div>
+    >
+    <block-button buttonClass="border" (click)="close()" stringContent="general.cancel"></block-button>
+  </div>

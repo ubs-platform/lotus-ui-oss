@@ -1,5 +1,4 @@
 import { ReplaySubject } from "rxjs";
-import { TranslationEvent } from "./model";
 
 /**
  * Controls the whole system language and other stgs.

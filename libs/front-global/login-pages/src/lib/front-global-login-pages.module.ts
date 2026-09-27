@@ -5,7 +5,7 @@ import { frontGlobalLoginPagesRoutes } from './lib.routes';
 import { FrontGlobalAuthLoginViewsModule } from '@lotus/front-global/auth-login-views';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import { MinkyReformNgxPrimeModule } from '@lotus/front-global/minky/reform-ngx-prime';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { ButtonModule } from 'primeng/button';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { LoginPageComponent } from './login-page/login-page.component';

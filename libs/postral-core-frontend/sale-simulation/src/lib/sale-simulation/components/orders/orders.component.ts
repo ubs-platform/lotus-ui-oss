@@ -1,5 +1,5 @@
 import { Component, model } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ItemCrudService, PaymentControllerService } from '@lotus/postral-core-frontend/client';
 import { OrderManagement } from '../../util/order-management';
 @Component({

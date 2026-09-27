@@ -15,7 +15,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { FrontGlobalMarkdownEditorModule } from '@lotus/front-global/markdown-editor';
 
 import { MessageModule } from 'primeng/message';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { FrontGlobalMinkyReformNgxMonaModule } from '@lotus/front-global/minky/reform-ngx-mona';
 
 @NgModule({

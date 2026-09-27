@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
-import { TranslatorRepositoryService, UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { TranslatorRepositoryService, UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { of } from 'rxjs';
 import { AdminOperationsComponent } from './admin-operations.component';
 

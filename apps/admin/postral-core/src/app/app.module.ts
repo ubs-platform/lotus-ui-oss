@@ -1,5 +1,5 @@
 import { FrontGlobalPromptOverlaysModule } from '@lotus/front-global/prompt-overlays';
-import { NgModule } from '@angular/core';
+import { NgModule, provideZonelessChangeDetection } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -21,8 +21,8 @@ import {
   LANGUAGE_JSON_URL,
   TranslatorRepositoryService,
   UbsTranslatorNgxModule,
-} from '@ubs-platform/translator-ngx';
-import { EnvironmentController } from '@ubs-platform/translator-core';
+} from '@lotus/extra/ubs-translator-ngx';
+import { EnvironmentController } from '@lotus/extra/translator-core';
 import { FrontGlobaErrorStatusPagesModule } from '@lotus/front-global/error-status-pages';
 import {
   CustomHeaderHolderService,
@@ -101,6 +101,7 @@ registerLocaleData(turkish);
     ThemeManager,
     provideHttpClient(withInterceptorsFromDi()),
     MarkdownFileVolatilityService,
+    provideZonelessChangeDetection(),
   ],
 })
 export class AppModule { }

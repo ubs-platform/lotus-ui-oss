@@ -1,43 +1,51 @@
-<div *ngIf="carrier()">
-  <block-button
-    *ngIf="!sourceEditor()"
-    iconClass="material-symbols-outlined" iconContent="code"
-    (click)="sourceEditor.set(!sourceEditor())"
-    >Kaynağı düzenle</block-button
-  >
-  <block-button
-    *ngIf="sourceEditor()"
-    iconClass="material-symbols-outlined" iconContent="public"
-    (click)="sourceEditor.set(!sourceEditor())"
-    >WYSIWYG</block-button
-  >
-  <div *ngIf="sourceEditor()">
-    <ngx-monaco-editor
-      [options]="monacoOps()"
-      [ngModel]="carrier()!.value"
-      (ngModelChange)="carrier()!.setValue($event)"
-    ></ngx-monaco-editor>
-    <!-- <textarea
-      pInputText
-      [ngModel]="carrier.value"
-      (ngModelChange)="carrier.setValue($event)"
-      (blur)="carrier.setTouched(true)"
-    ></textarea> -->
-  </div>
-  <p-editor
-    *ngIf="!sourceEditor()"
-    [ngModel]="carrier()!.value"
-    (ngModelChange)="carrier()!.setValue($event)"
-    [style]="{ height: '320px' }"
-  ></p-editor>
+@if (carrier()) {
   <div>
-    <p-message
-      *ngIf="carrier()!.isTouched && carrier()!.validationErrors?.length"
-      styleClass="my-1 w-full"
-      severity="error"
-      [text]="carrier()!.validationErrors[0].name || '' | translate"
-    ></p-message>
-  </div>
-</div>
-<!-- reform?.allErrorsRevealed ||
-      carrier?.touchMap?.getPathStatus(carrier.path) -->
+    @if (!sourceEditor()) {
+      <block-button
+        iconClass="material-symbols-outlined" iconContent="code"
+        (click)="sourceEditor.set(!sourceEditor())"
+        >Kaynağı düzenle</block-button
+        >
+      }
+      @if (sourceEditor()) {
+        <block-button
+          iconClass="material-symbols-outlined" iconContent="public"
+          (click)="sourceEditor.set(!sourceEditor())"
+          >WYSIWYG</block-button
+          >
+        }
+        @if (sourceEditor()) {
+          <div>
+            <ngx-monaco-editor
+              [options]="monacoOps()"
+              [ngModel]="carrier()!.value"
+              (ngModelChange)="carrier()!.setValue($event)"
+            ></ngx-monaco-editor>
+            <!-- <textarea
+            pInputText
+            [ngModel]="carrier.value"
+            (ngModelChange)="carrier.setValue($event)"
+            (blur)="carrier.setTouched(true)"
+          ></textarea> -->
+        </div>
+      }
+      @if (!sourceEditor()) {
+        <p-editor
+          [ngModel]="carrier()!.value"
+          (ngModelChange)="carrier()!.setValue($event)"
+          [style]="{ height: '320px' }"
+        ></p-editor>
+      }
+      <div>
+        @if (carrier()!.isTouched && carrier()!.validationErrors?.length) {
+          <p-message
+            styleClass="my-1 w-full"
+            severity="error"
+            [text]="carrier()!.validationErrors[0].name || '' | translate"
+          ></p-message>
+        }
+      </div>
+    </div>
+  }
+  <!-- reform?.allErrorsRevealed ||
+  carrier?.touchMap?.getPathStatus(carrier.path) -->

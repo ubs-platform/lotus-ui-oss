@@ -22,7 +22,7 @@ import {
 } from '@lotus/front-global/circular-timer';
 import { ChangePasswordComponent } from './components/security-settings/change-password/change-password.component';
 import { PredefinedDataManager } from '@lotus/front-global/predefined-data';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 @NgModule({
   imports: [
     CommonModule,

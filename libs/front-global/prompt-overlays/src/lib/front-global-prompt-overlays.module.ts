@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConfirmDialogComponent } from './component/confirm-dialog/confirm-dialog.component';
 import { BasicTextInputDialogComponent } from './component/basic-text-input-dialog/basic-text-input-dialog.component';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { CodeEditorTextInputDialogComponent } from './component/code-editor-input-dialog.component/code-editor-input-dialog.component';

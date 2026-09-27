@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Inject, input, model } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import {
   CommentAddDTO,

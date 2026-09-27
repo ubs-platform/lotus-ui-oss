@@ -1,5 +1,5 @@
 import { Component, signal, viewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { AccountDTO } from '@tk-postral/payment-common';
 import {
   AccountControllerService,

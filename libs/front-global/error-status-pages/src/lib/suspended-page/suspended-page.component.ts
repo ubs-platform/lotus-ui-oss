@@ -14,7 +14,7 @@ export class SuspendedPageComponent implements OnInit {
 
   ngOnInit(): void {
     const navigationState =
-      this.router.getCurrentNavigation()?.extras?.state?.['suspendReason'];
+      this.router.currentNavigation()?.extras?.state?.['suspendReason'];
     const historyState = history.state?.['suspendReason'];
     const sessionState = sessionStorage.getItem('suspendReason');
 

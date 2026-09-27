@@ -1,5 +1,5 @@
 import { Directive, TemplateRef, input } from '@angular/core';
-import { TranslatorText } from '@ubs-platform/translator-core';
+import { TranslatorText } from '@lotus/extra/translator-core';
 
 @Directive({
     selector: '[header]',

@@ -2,8 +2,7 @@
   @if (createdEventKey()) {
   <div class="mona-card" severity="warn">
     <p>
-      Event Key yalnızca bir kez gösterilir. Lütfen bu bilgiyi güvenli bir yerde
-      saklayın. Oluşturulan Event Key:
+      {{ 'postral.webhook.event-key-warning' | translate }}
     </p>
     <div class="bg-1 bg-1-text monospace p-2 mb-2">
       {{ createdEventKey() }}
@@ -14,14 +13,13 @@
       buttonClass="border"
       (click)="copyEventKey()"
       [disabled]="isCopyDisabled()"
-      stringContent="Kopyala"
+      stringContent="admin.account-user-edit.webhook-config-info.copy"
       iconClass="material-symbols-outlined"
       iconContent="content_copy"
     ></block-button>
     } @else {
     <sub class="text-muted">
-      Kopyalama yalnızca HTTPS protokolü veya localhost üzerinde desteklenir.
-      Sizin seçerek kopyalamanız gerekir.
+      {{ 'general.copy.warn.support' | translate }}
     </sub>
     }
   </div>
@@ -32,6 +30,6 @@
     ></lib-reform-data-edit>
   </div>
   } @else {
-  <p>Yükleniyor...</p>
+  <p>{{ 'general.loading' | translate }}</p>
   }
 </div>

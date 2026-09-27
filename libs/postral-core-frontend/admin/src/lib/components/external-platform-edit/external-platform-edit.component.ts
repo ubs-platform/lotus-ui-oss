@@ -21,7 +21,7 @@ export class ExternalPlatformEditComponent {
     private router: Router,
     private basicOverlay: BasicOverlayService
   ) {
-    const state = this.router.getCurrentNavigation()?.extras?.state as
+    const state = this.router.currentNavigation()?.extras?.state as
       | ExternalPlatformDTO
       | undefined;
 

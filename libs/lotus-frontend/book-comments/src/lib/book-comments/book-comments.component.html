@@ -4,22 +4,28 @@
     <div style="height: 100%; overflow: hidden">
       <searchable-data-table [url]="url" [size]="10" [cover]="true" [reformFilter]="searchReform" #commentsTable>
         <column name="commentContent">
-          <ng-template data let-item="item">
-            <div class="text-left">
-              <div *ngIf="!deleted[item._id]">
+        <ng-template data let-item="item">
+          <div class="text-left">
+            @if (!deleted[item._id]) {
+              <div>
                 <lib-single-comment [item]="item" (commentRemoval)="deleted[item._id] = true"></lib-single-comment>
                 <block-button buttonClass="primary" iconClass="material-symbols-outlined" iconContent="open_in_new"
-                  stringContent="Yorum kaynağını yeni sekmede aç" (click)="goToQuestion(item)"></block-button>
-                <block-button *ngIf="adminMode()" buttonClass="secondary" iconClass="material-symbols-outlined" iconContent="forum"
+                stringContent="Yorum kaynağını yeni sekmede aç" (click)="goToQuestion(item)"></block-button>
+                @if (adminMode()) {
+                  <block-button buttonClass="secondary" iconClass="material-symbols-outlined" iconContent="forum"
                   stringContent="Admin sosyal seçenekler" (click)="socialOptions(item)"></block-button>
+                }
               </div>
-              <div *ngIf="deleted[item._id]">
+            }
+            @if (deleted[item._id]) {
+              <div>
                 <i>Yorum silindi</i>
               </div>
-            </div>
-          </ng-template>
-        </column>
-      </searchable-data-table>
-    </div>
+            }
+          </div>
+        </ng-template>
+      </column>
+    </searchable-data-table>
   </div>
+</div>
 </div>

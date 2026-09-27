@@ -7,7 +7,7 @@ import { BPaginationProgrammaticComponent } from './b-pagination-programmatic/b-
 import { CustomItemDirective } from './b-pagination-programmatic/custom-item-directive.directive';
 import { ButtonModule } from 'primeng/button';
 import { UbsTouchNgxModule } from '@lotus/front-global/ubs-touch-ngx';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { IconComponent } from '@lotus/front-global/icon';
 import { GlobalPipesModule } from '@lotus/front-global/global-pipes';
 

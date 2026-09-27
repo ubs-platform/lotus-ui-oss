@@ -20,7 +20,7 @@ import { TabViewComponent } from '@lotus/front-global/tab-view';
 import { EntityCapabilityGroupSelectorComponent } from './team-members/entity-capability-group-selector/entity-capability-group-selector.component';
 import { TeamMemberCapabilityDialogComponent } from './team-members/team-member-capability-dialog/team-member-capability-dialog.component';
 import { FrontGlobalStatusBadgeModule } from '@lotus/front-global/status-badge';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 
 @NgModule({
   imports: [

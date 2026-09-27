@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import {
   Component,
   EventEmitter,
@@ -16,7 +16,7 @@ import { FrontGlobalButtonModule } from '@lotus/front-global/button';
     selector: 'lotus-web-changeable-text',
     templateUrl: './renameable-component.component.html',
     styleUrls: ['./renameable-component.component.scss'],
-    imports: [CommonModule, FrontGlobalButtonModule, FormsModule]
+    imports: [FrontGlobalButtonModule, FormsModule]
 })
 export class ChangeableTextComponent {
   readonly value = model<string>();

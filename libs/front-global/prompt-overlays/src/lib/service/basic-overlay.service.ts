@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { TranslatorText } from '@ubs-platform/translator-core';
-import { TranslatorRepositoryService } from '@ubs-platform/translator-ngx';
+import { TranslatorText } from '@lotus/extra/translator-core';
+import { TranslatorRepositoryService } from '@lotus/extra/ubs-translator-ngx';
 import { MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { BasicTextInputDialogComponent } from '../component/basic-text-input-dialog/basic-text-input-dialog.component';

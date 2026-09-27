@@ -7,7 +7,7 @@ import { MinkyReformNgxPrimeModule } from '@lotus/front-global/minky/reform-ngx-
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import { FrontGlobalMarkdownEditorModule } from '@lotus/front-global/markdown-editor';
 import { MessageModule } from 'primeng/message';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { MinkyReformNgxModule } from '@lotus/front-global/minky/reform-ngx';
 import { FrontGlobalMinkyReformNgxMonaModule } from '@lotus/front-global/minky/reform-ngx-mona';
 import { OnpageHeaderComponent } from '@lotus/front-global/dynamic-headers';

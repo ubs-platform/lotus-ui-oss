@@ -5,34 +5,36 @@ import {
   SimpleChanges,
   input
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { ReplaySubject } from 'rxjs';
-import { TranslatorText } from '@ubs-platform/translator-core';
+import { TranslatorText } from '@lotus/extra/translator-core';
 
 @Component({
   selector: 'instant-html',
   template: `
     <div [innerHTML]="trustedHtml"></div>
     <div class="flex gap-2">
-      <block-button
-        buttonClass="primary"
-        *ngIf="yesButtonText()"
-        (click)="buttonClicked.emit(true)"
-        btnTabindex="-1"
-      >
-        {{ yesButtonText() | translate }}</block-button
-      >
-      <block-button
-        btnTabindex="-1"
-        *ngIf="noButtonText()"
-        (click)="buttonClicked.emit(false)"
-      >
-        {{ noButtonText() | translate }}</block-button
-      >
-    </div>
-  `,
+      @if (yesButtonText()) {
+        <block-button
+          buttonClass="primary"
+          (click)="buttonClicked.emit(true)"
+          btnTabindex="-1"
+          >
+          {{ yesButtonText() | translate }}</block-button
+          >
+        }
+        @if (noButtonText()) {
+          <block-button
+            btnTabindex="-1"
+            (click)="buttonClicked.emit(false)"
+            >
+            {{ noButtonText() | translate }}</block-button
+            >
+          }
+        </div>
+    `,
   standalone: false,
 })
 export class InstantHtmlComponent {

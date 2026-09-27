@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   displayName: 'account-user-edit',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],

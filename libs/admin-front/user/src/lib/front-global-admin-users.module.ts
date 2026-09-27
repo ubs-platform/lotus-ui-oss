@@ -11,7 +11,7 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
 import { MinkyReformNgxPrimeModule } from '@lotus/front-global/minky/reform-ngx-prime';
 import { PredefinedDataManager } from '@lotus/front-global/predefined-data';
 import { FrontGlobalTableModule } from '@lotus/front-global/table';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { FrontGlobalImagesModule } from '@lotus/front-global/images';
 import { CommentAdminService } from '@lotus/front-global/social-comments';
 import { WebdialogComponent } from '../../../../front-global/webdialog/src/lib/webdialog/webdialog.component';

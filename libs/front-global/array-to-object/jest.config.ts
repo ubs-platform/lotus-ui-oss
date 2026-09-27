@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   displayName: 'array-to-object',
   preset: '../../../jest.preset.js',
   testEnvironment: 'node',

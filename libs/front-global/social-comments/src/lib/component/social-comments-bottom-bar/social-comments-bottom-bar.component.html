@@ -5,15 +5,16 @@
   height="600px"
   position="bottom-center"
   title="Yorumlar"
->
+  >
   <div class="p-1 h-full">
-    <social-comments-component
-      *ngIf="internalShow"
-      [childEntityId]="childEntityId()"
-      [childEntityName]="childEntityName()"
-      [mainEntityId]="mainEntityId()"
-      [mainEntityName]="mainEntityName()"
-      [entityGroup]="entityGroup()"
-    ></social-comments-component>
+    @if (internalShow) {
+      <social-comments-component
+        [childEntityId]="childEntityId()"
+        [childEntityName]="childEntityName()"
+        [mainEntityId]="mainEntityId()"
+        [mainEntityName]="mainEntityName()"
+        [entityGroup]="entityGroup()"
+      ></social-comments-component>
+    }
   </div>
 </lib-webdialog>

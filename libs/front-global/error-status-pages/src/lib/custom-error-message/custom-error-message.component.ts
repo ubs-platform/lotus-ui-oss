@@ -1,9 +1,9 @@
 import { Component, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   TranslationParameter,
   TranslatorText,
-} from '@ubs-platform/translator-core';
+} from '@lotus/extra/translator-core';
 import { IIcon } from '@lotus/front-global/icon-type';
 
 @Component({

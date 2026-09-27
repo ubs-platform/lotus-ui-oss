@@ -1,5 +1,5 @@
 <div class="touch-host-pagination">
-  <ng-container *ngFor="let blockPage of blockPages()">
+  @for (blockPage of blockPages(); track blockPage) {
     <div
       (touchstart)="mouseDownGroup($event)"
       (touchend)="mouseUpGroup($event)"
@@ -21,8 +21,8 @@
           blockPage.name() == foreground()
         )
       }"
-    >
+      >
       <div *ngTemplateOutlet="blockPage.template"></div>
     </div>
-  </ng-container>
+  }
 </div>

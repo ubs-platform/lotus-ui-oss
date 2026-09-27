@@ -2,7 +2,7 @@ import { TranslationKeys } from 'primeng/api';
 import { Label } from '../label';
 import { PropertyMeta } from '../property-meta';
 import { Reform } from './reform';
-import { TranslatorText } from '@ubs-platform/translator-core';
+import { TranslatorText } from '@lotus/extra/translator-core';
 
 export interface IValidatorResult {
   valid: boolean;

@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HttpClient } from '@angular/common/http';
-import { TranslatorRepositoryService } from '@ubs-platform/translator-ngx';
+import { TranslatorRepositoryService } from '@lotus/extra/ubs-translator-ngx';
 import { CustomHeaderHolderService } from '@lotus/front-global/ui/page-container';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { environment } from '@lotus-web/environment';

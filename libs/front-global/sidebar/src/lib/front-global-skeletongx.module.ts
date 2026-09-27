@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SidebarMenuComponent } from './components/sidebar/sidebar-menu/sidebar-menu.component';
 import { SidebarModule } from 'primeng/sidebar';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { ButtonModule } from 'primeng/button';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import { OnpageHeaderComponent } from '@lotus/front-global/dynamic-headers';

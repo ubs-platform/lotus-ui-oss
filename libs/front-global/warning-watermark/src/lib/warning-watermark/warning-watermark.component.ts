@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 
 @Component({
   selector: 'lib-warning-watermark',
-  imports: [CommonModule, UbsTranslatorNgxModule],
+  imports: [UbsTranslatorNgxModule],
   templateUrl: './warning-watermark.component.html',
   styleUrl: './warning-watermark.component.css',
 })

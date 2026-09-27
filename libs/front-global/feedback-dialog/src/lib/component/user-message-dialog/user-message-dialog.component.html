@@ -1,49 +1,53 @@
-<div *ngIf="sent">
-  <p-message
-    severity="success"
-    text="Bildiriminiz için çok teşekkür ederiz 🙏. Kaydadeğer bir gelişme olduğunda size e-posta üzerinden bilgilendireceğiz"
-  ></p-message>
-  <div class="mt-1">
-    <block-button
-      buttonClass="primary"
-      (click)="closeDialog()"
-      iconClass="material-symbols-outlined" iconContent="check"
-      >Anlaşıldı</block-button
-    >
-  </div>
-</div>
-<div class="p-2" *ngIf="!sent && reform">
-  <div class="flex flex-column w-full">
-    <div class="mb-2">
-      Görüşlerinizi ve düşüncelerinizi önemsiyoruz, ve onları duymak istiyoruz.
-      Burada formu doldurup uygulama ile ilgili herhangi bir konu hakkında geri
-      bildirim sağlayabilirsiniz.
-    </div>
-    <div class="flex-grow-1">
-      <minky-reform-prime [reform]="reform">
-        <ng-template
-          input-link
-          [overrideDefault]="false"
-          path="message"
-          let-carrier="carrier"
-        >
-          <lotus-web-markdown-editor-input
-            imageCategory="USER_MESSAGE"
-            [carrier]="carrier"
-          ></lotus-web-markdown-editor-input>
-        </ng-template>
-      </minky-reform-prime>
-    </div>
-    <div class="mt-1 action-buttons">
+@if (sent) {
+  <div>
+    <p-message
+      severity="success"
+      text="Bildiriminiz için çok teşekkür ederiz 🙏. Kaydadeğer bir gelişme olduğunda size e-posta üzerinden bilgilendireceğiz"
+    ></p-message>
+    <div class="mt-1">
       <block-button
         buttonClass="primary"
-        iconClass="material-symbols-outlined" iconContent="send"
-        (click)="sendFeedback()"
-        >Gönder</block-button
-      >
-      <block-button iconClass="material-symbols-outlined" iconContent="close" (click)="closeDialog()"
-        >İptal</block-button
-      >
+        (click)="closeDialog()"
+        iconClass="material-symbols-outlined" iconContent="check"
+        >Anlaşıldı</block-button
+        >
+      </div>
     </div>
-  </div>
-</div>
+  }
+  @if (!sent && reform) {
+    <div class="p-2">
+      <div class="flex flex-column w-full">
+        <div class="mb-2">
+          Görüşlerinizi ve düşüncelerinizi önemsiyoruz, ve onları duymak istiyoruz.
+          Burada formu doldurup uygulama ile ilgili herhangi bir konu hakkında geri
+          bildirim sağlayabilirsiniz.
+        </div>
+        <div class="flex-grow-1">
+          <minky-reform-prime [reform]="reform">
+            <ng-template
+              input-link
+              [overrideDefault]="false"
+              path="message"
+              let-carrier="carrier"
+              >
+              <lotus-web-markdown-editor-input
+                imageCategory="USER_MESSAGE"
+                [carrier]="carrier"
+              ></lotus-web-markdown-editor-input>
+            </ng-template>
+          </minky-reform-prime>
+        </div>
+        <div class="mt-1 action-buttons">
+          <block-button
+            buttonClass="primary"
+            iconClass="material-symbols-outlined" iconContent="send"
+            (click)="sendFeedback()"
+            >Gönder</block-button
+            >
+            <block-button iconClass="material-symbols-outlined" iconContent="close" (click)="closeDialog()"
+              >İptal</block-button
+              >
+            </div>
+          </div>
+        </div>
+      }

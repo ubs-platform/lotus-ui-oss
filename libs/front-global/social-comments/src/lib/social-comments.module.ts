@@ -11,7 +11,7 @@ import { MenuModule } from 'primeng/menu';
 import { SingleCommentComponent } from './component/single-comment/single-comment.component';
 import { CommentTextboxComponent } from './component/comment-textbox/comment-textbox.component';
 import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { FrontGlobalMarkdownEditorModule } from '@lotus/front-global/markdown-editor';
 import { RouterModule } from '@angular/router';
 import { CommentDialogComponent } from './component/comment-dialog/comment-dialog.component';

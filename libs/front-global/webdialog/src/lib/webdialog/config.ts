@@ -1,4 +1,4 @@
-import { TranslatorText } from '@ubs-platform/translator-core';
+import { TranslatorText } from '@lotus/extra/translator-core';
 
 export interface IWebDialogConfig<INPUT_DATA, OUT_VALUE> {
   position?:

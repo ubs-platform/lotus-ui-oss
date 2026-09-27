@@ -38,7 +38,6 @@
             "output": "dependencies/katex"
           }
         ],
-
         "styles": ["apps/admin/postral-core/src/styles.scss"],
         "stylePreprocessorOptions": {
           "includePaths": ["libs/front-global/base-style/style"]
@@ -95,7 +94,8 @@
       "defaultConfiguration": "development",
       "options": {
         "proxyConfig": "apps/admin/postral-core/proxy.conf.json"
-      }
+      },
+      "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",

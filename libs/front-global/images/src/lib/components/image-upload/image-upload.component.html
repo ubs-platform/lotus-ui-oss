@@ -4,56 +4,56 @@
   (change)="onFileChange($event)"
   hidden
   #imageUploader
-/>
+  />
 
-<div class="image-upload-card">
-  <div class="card-header">
-    <div class="titles">
-      <div class="title">Görsel yükle</div>
-      <div class="subtitle">PNG veya JPG · 5MB sınırı</div>
-    </div>
-    <div class="actions">
-      <block-button
-        [cover]="false"
-        class="pr-2"
-        buttonClass="surface text-black-alpha-90 border"
-        (click)="imageUploader.click()"
-        iconClass="material-symbols-outlined" iconContent="add"
-        >Gözat</block-button
-      >
-      <block-button
-        *ngIf="selectedFile() || imageUrlAlready()"
-        [cover]="false"
-        buttonClass="surface text-black-alpha-90 border"
-        (click)="removeImage($event)"
-        iconClass="material-symbols-outlined" iconContent="close"
-        >Temizle</block-button
-      >
-    </div>
-  </div>
-
-  <div class="preview-shell" (click)="imageUploader.click()" tabindex="0">
-    <ng-container *ngIf="selectedFileReview(); else currentImage">
-      <div class="badge">Önizleme</div>
-      <img [src]="selectedFileReview()!" alt="Seçili önizleme" />
-    </ng-container>
-
-    <ng-template #currentImage>
-      <ng-container *ngIf="name(); else emptyState">
-        <div class="badge secondary">Şu anki</div>
-        <img
-          *ngIf="imageUrlAlready()"
-          [src]="imageUrlAlready()"
-          alt="Kayıtlı görsel"
-        />
-      </ng-container>
-      <ng-template #emptyState>
-        <div class="empty">
-          <i class="material-symbols-outlined">image</i>
-          <span>Henüz görsel yok</span>
-          <span class="hint">Gözat ile seç</span>
+  <div class="image-upload-card">
+    <div class="card-header">
+      <div class="titles">
+        <div class="title">Görsel yükle</div>
+        <div class="subtitle">PNG veya JPG · 5MB sınırı</div>
+      </div>
+      <div class="actions">
+        <block-button
+          [cover]="false"
+          class="pr-2"
+          buttonClass="surface text-black-alpha-90 border"
+          (click)="imageUploader.click()"
+          iconClass="material-symbols-outlined" iconContent="add"
+          >Gözat</block-button
+          >
+          @if (selectedFile() || imageUrlAlready()) {
+            <block-button
+              [cover]="false"
+              buttonClass="surface text-black-alpha-90 border"
+              (click)="removeImage($event)"
+              iconClass="material-symbols-outlined" iconContent="close"
+              >Temizle</block-button
+              >
+          }
         </div>
-      </ng-template>
-    </ng-template>
-  </div>
-</div>
+      </div>
+
+      <div class="preview-shell" (click)="imageUploader.click()" tabindex="0">
+        @if (selectedFileReview()) {
+          <div class="badge">Önizleme</div>
+          <img [src]="selectedFileReview()!" alt="Seçili önizleme" />
+        } @else {
+          @if (name()) {
+            <div class="badge secondary">Şu anki</div>
+            @if (imageUrlAlready()) {
+              <img
+                [src]="imageUrlAlready()"
+                alt="Kayıtlı görsel"
+                />
+            }
+          } @else {
+            <div class="empty">
+              <i class="material-symbols-outlined">image</i>
+              <span>Henüz görsel yok</span>
+              <span class="hint">Gözat ile seç</span>
+            </div>
+          }
+        }
+
+      </div>
+    </div>

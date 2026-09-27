@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 import { Menu } from 'primeng/menu';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
-import { EnvironmentController } from '@ubs-platform/translator-core';
+import { EnvironmentController } from '@lotus/extra/translator-core';
 import { Reform } from '@lotus/front-global/minky/core';
 import { FlagForm } from '../../forms/flag.form';
 import { FeedbackDialogService } from '@lotus/front-global/feedback-dialog';

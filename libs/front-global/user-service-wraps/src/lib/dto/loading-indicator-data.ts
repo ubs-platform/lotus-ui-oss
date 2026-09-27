@@ -1,7 +1,7 @@
 import {
   TranslationParameter,
   TranslatorText,
-} from '@ubs-platform/translator-core';
+} from '@lotus/extra/translator-core';
 
 export class LoadingData {
   constructor(

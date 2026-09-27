@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   displayName: 'date-utils',
   preset: '../../../jest.preset.js',
   testEnvironment: 'node',

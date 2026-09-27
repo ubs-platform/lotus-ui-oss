@@ -11,13 +11,16 @@
   [btnTabindex]="btnTabindex()"
   [hideContentAtLowScr]="hideContentAtLowScr()"
   [contentClass]="contentClass()"
->
-  <div class="part-content flex align-items-center" *ngIf="hasContent()">
-    <div *ngIf="stringContent(); else loadDefaultContent">
-      {{ stringContent() | translate }}
+  >
+  @if (hasContent()) {
+    <div class="part-content flex align-items-center">
+      @if (stringContent()) {
+        <div>
+          {{ stringContent() | translate }}
+        </div>
+      } @else {
+        <ng-content></ng-content>
+      }
     </div>
-    <ng-template #loadDefaultContent>
-      <ng-content></ng-content>
-    </ng-template>
-  </div>
+  }
 </lotus-web-block-part-base-button>

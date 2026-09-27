@@ -1,19 +1,18 @@
 import { Component, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FrontGlobalTableModule } from '@lotus/front-global/table';
 import { PaymentItemDTO } from '@tk-postral/payment-common';
 import { PostralReportsModule } from '@lotus/postral-core-frontend/reports';
-import { UbsTranslatorNgxModule } from '@ubs-platform/translator-ngx';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { UNIT_TYPE_CODES } from '@lotus/postral-core-frontend/forms';
 
 @Component({
   selector: 'lib-payment-item-list',
   imports: [
-    CommonModule,
     FrontGlobalTableModule,
     PostralReportsModule,
-    UbsTranslatorNgxModule,
-  ],
+    UbsTranslatorNgxModule
+],
   templateUrl: './payment-item-list.component.html',
   styleUrl: './payment-item-list.component.css',
 })

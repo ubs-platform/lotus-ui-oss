@@ -17,7 +17,7 @@ import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import {
   LANGUAGE_JSON_URL,
   UbsTranslatorNgxModule,
-} from '@ubs-platform/translator-ngx';
+} from '@lotus/extra/ubs-translator-ngx';
 import { FrontGlobalDebugToolsModule } from '@lotus/front-global/debug-tools';
 import { ApplicationLogoDirective } from './application-logo.directive';
 import { ApplicationFooterDirective } from './application-footer.directive';

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, signal, viewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   InvoiceControllerService,
@@ -122,7 +122,7 @@ export class TransactionInfoComponent implements OnInit {
               `${transaction.paymentId}_${transaction.id}`
             )
             .subscribe({
-              next: (response) => {
+              next: () => {
                 this.basicOverlay.alert(
                   'general.success',
                   'postral.invoice.upload-success',
@@ -130,7 +130,7 @@ export class TransactionInfoComponent implements OnInit {
                 );
                 this.hasInvoice.set(true);
               },
-              error: (err) => {
+              error: (err : any) => {
                 this.basicOverlay.alert('general.error-occurred', err, 'error');
               },
             });

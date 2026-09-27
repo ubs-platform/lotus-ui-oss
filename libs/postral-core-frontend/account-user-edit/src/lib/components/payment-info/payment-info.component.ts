@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, signal, viewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentControllerService } from '@lotus/postral-core-frontend/client';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
