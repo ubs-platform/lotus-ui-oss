@@ -10,15 +10,14 @@ import { FrontGlobalTableModule } from "@lotus/front-global/table";
 import { DatePipe, DecimalPipe } from "@angular/common";
 import { DataListLayoutModule } from "@lotus/front-global/ui/data-list-layout";
 import { UbsTranslatorNgxModule } from "@lotus/extra/ubs-translator-ngx";
-import { TooltipModule } from 'primeng/tooltip';
 import { MoneyDisplayComponent } from './money-display/money-display.component';
+import { PTooltipDirective } from "@lotus/front-global/overlay-panel";
 @NgModule({
   declarations: [QueryListComponent, QueryInfoComponent, ReportInfoComponent, ReportListComponent, MoneyDisplayComponent],
   exports: [QueryListComponent, QueryInfoComponent, ReportInfoComponent, ReportListComponent, MoneyDisplayComponent],
   imports: [FrontGlobalButtonModule, ReformDataEditComponent,
     FrontGlobalStatusBadgeModule, FrontGlobalTableModule,
-    DecimalPipe, DatePipe, DataListLayoutModule, UbsTranslatorNgxModule,
-    TooltipModule],
+    DecimalPipe, DatePipe, DataListLayoutModule, UbsTranslatorNgxModule, PTooltipDirective],
   providers: [DecimalPipe, DatePipe]
 })
 export class PostralReportsModule { }

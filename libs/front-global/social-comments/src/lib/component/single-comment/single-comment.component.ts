@@ -1,32 +1,27 @@
 import {
+  ChangeDetectorRef,
   Component,
-  Directive,
   ElementRef,
   EventEmitter,
-  Host,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
-  viewChild,
   ViewChild,
   input,
   model
 } from '@angular/core';
-import { Menu } from 'primeng/menu';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { EnvironmentController } from '@lotus/extra/translator-core';
 import { Reform } from '@lotus/front-global/minky/core';
 import { FlagForm } from '../../forms/flag.form';
-import { FeedbackDialogService } from '@lotus/front-global/feedback-dialog';
 import { UserMessageService } from '@lotus/front-global/feedback-front';
 import { AuthManagementService } from '@lotus/front-global/auth';
 import { UserDTO } from '@ubs-platform/users-common';
 import { CommentDTO, CommentSearchDTO } from '@ubs-platform/social-common';
 import { CommentService } from '../../service/comment.service';
 import { CommentDialogComponent } from '../comment-dialog/comment-dialog.component';
-import { OverlayPanel } from 'primeng/overlaypanel';
-
+import { OverlayPanelComponent } from '@lotus/front-global/overlay-panel';
 @Component({
   selector: 'lib-single-comment',
   templateUrl: './single-comment.component.html',
@@ -40,28 +35,29 @@ export class SingleCommentComponent implements OnChanges, OnInit {
   creationDate: string = '';
   editDate: string = '';
   @Output() commentRemoval = new EventEmitter();
-  @ViewChild("extraOptions") extraOptionsView?: OverlayPanel;
+  @ViewChild("extraOptions") extraOptionsView?: OverlayPanelComponent;
   menus: any[] = [];
   language: string = '';
   commentIsDownVoted = false;
   showAnswers = false;
   user?: UserDTO;
-  childCommentsParentDiv = viewChild<ElementRef<HTMLDivElement>>(
-    'childCommentsParentDiv'
-  );
+  @ViewChild('childCommentsParentDiv') childCommentsParentDiv?: ElementRef<HTMLDivElement>;
   existCommentAbility: any;
 
   constructor(
     private commentService: CommentService,
     private overlay: BasicOverlayService,
     private umessageService: UserMessageService,
-    private authService: AuthManagementService
+    private authService: AuthManagementService,
+    private changeDetectorRef: ChangeDetectorRef
   ) { }
 
   toggleExistCommentAbilities(clickEvent: MouseEvent) {
+    const anchor = (clickEvent.currentTarget ?? clickEvent.target) as HTMLElement;
     this.commentService.checkExistCommentAbility(this.item()!._id).subscribe(a => {
       this.existCommentAbility = a;
-      this.extraOptionsView?.toggle(clickEvent);
+      this.changeDetectorRef.detectChanges();
+      this.extraOptionsView?.toggleDialog(anchor);
     })
     // 
   }
@@ -97,7 +93,7 @@ export class SingleCommentComponent implements OnChanges, OnInit {
 
   private highlightChildren() {
     setTimeout(() => {
-      this.childCommentsParentDiv()?.nativeElement.scrollIntoView();
+      this.childCommentsParentDiv?.nativeElement.scrollIntoView();
     }, 200);
   }
 

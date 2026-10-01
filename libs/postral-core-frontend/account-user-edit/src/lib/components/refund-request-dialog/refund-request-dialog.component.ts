@@ -122,4 +122,12 @@ export class RefundRequestDialogComponent {
       }
     });
   }
+
+  mathmax(...numbers: number[]): number {
+    return Math.max(...numbers);
+  }
+
+  mathmin(...numbers: number[]): number {
+    return Math.min(...numbers);
+  }
 }

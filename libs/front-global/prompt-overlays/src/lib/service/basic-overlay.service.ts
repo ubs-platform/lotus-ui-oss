@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TranslatorText } from '@lotus/extra/translator-core';
 import { TranslatorRepositoryService } from '@lotus/extra/ubs-translator-ngx';
-import { MessageService } from 'primeng/api';
+import { ToastService } from '@lotus/front-global/toast';
 import { Observable } from 'rxjs';
 import { BasicTextInputDialogComponent } from '../component/basic-text-input-dialog/basic-text-input-dialog.component';
 import { CodeEditorTextInputDialogComponent } from '../component/code-editor-input-dialog.component/code-editor-input-dialog.component';
@@ -23,7 +23,7 @@ import { ConfirmConfig } from '../model/confirm-config.model';
 @Injectable()
 export class BasicOverlayService {
   constructor(
-    private messageService: MessageService,
+    private toastService: ToastService,
     private translator: TranslatorRepositoryService,
     private webdialogHandler: WebdialogHandler
   ) {
@@ -143,7 +143,7 @@ export class BasicOverlayService {
     disableAutoClose = false,
     key?: string
   ) {
-    this.messageService.add({
+    this.toastService.add({
       severity: type,
       summary: this.translator.getString(title),
       detail: this.translator.getString(description),
@@ -152,10 +152,10 @@ export class BasicOverlayService {
     });
   }
   removeAllAlerts() {
-    this.messageService.clear();
+    this.toastService.clear();
   }
   removeAlertByKey(key: string) {
-    this.messageService.clear(key);
+    this.toastService.clear(key);
   }
 
   textInputBasic(

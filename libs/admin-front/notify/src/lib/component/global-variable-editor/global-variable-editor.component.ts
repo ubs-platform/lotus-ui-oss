@@ -1,11 +1,8 @@
 import { Component, signal } from '@angular/core';
 import { GlobalVariableService } from '../../service/global-variable.service';
-import { DialogService } from 'primeng/dynamicdialog';
-import { GlobalVariableChangeModalComponent } from '../global-variable-change-modal/global-variable-change-modal.component';
 import {
   GlobalVariableDTO,
   GlobalVariableJsonDTO,
-  GlobalVariableWriteDTO,
 } from '@ubs-platform/notify-common';
 import { forkJoin, Observable } from 'rxjs';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';

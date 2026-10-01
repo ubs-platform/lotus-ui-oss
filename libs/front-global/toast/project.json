@@ -1,0 +1,20 @@
+{
+  "name": "front-global-toast",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/front-global/toast/src",
+  "prefix": "lotus-web",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/front-global/toast"],
+      "options": {
+        "jestConfig": "libs/front-global/toast/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

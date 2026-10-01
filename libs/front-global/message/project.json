@@ -1,0 +1,8 @@
+{
+  "name": "front-global-message",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/front-global/message/src",
+  "prefix": "lotus-web",
+  "projectType": "library",
+  "tags": []
+}

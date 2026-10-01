@@ -4,8 +4,7 @@ import { CodeEditorInputComponent } from './component/code-editor-input/code-edi
 import { MinkyReformNgxModule } from '@lotus/front-global/minky/reform-ngx';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
-import { MessageModule } from 'primeng/message';
-import { EditorModule } from 'primeng/editor';
+import { FrontGlobalMessageModule } from '@lotus/front-global/message';
 import { FormsModule } from '@angular/forms';
 import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { FrontGlobalMarkdownEditorModule } from '@lotus/front-global/markdown-editor';
@@ -17,8 +16,7 @@ import { MarkdownEditorInputComponent } from './component/markdown-editor-input/
     MinkyReformNgxModule,
     FrontGlobalButtonModule,
     MonacoEditorModule.forRoot(),
-    MessageModule,
-    EditorModule,
+    FrontGlobalMessageModule,
     FormsModule,
     UbsTranslatorNgxModule,
     FrontGlobalMarkdownEditorModule,

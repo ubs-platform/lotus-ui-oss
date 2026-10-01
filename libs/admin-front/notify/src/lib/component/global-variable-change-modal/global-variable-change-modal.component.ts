@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
-import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { Component, Inject } from '@angular/core';
 import { GlobalVariableService } from '../../service/global-variable.service';
 import { Reform } from '@lotus/front-global/minky/core';
 import { GlobalVariableWriteForm } from '../../form/global-variable-write.form';
 import { GlobalVariableWriteDTO } from '@ubs-platform/notify-common';
+import {
+  IWebDialogConfig,
+  WEBDIALOG_CONFIG,
+  WebdialogReference,
+} from '@lotus/front-global/webdialog';
 
 @Component({
     selector: 'lotus-web-global-variable-change-modal',
@@ -16,12 +20,14 @@ export class GlobalVariableChangeModalComponent {
   reform!: Reform<GlobalVariableWriteForm>;
 
   constructor(
-    public ref: DynamicDialogRef,
-    public config: DynamicDialogConfig<
+    public ref: WebdialogReference<void>,
+    @Inject(WEBDIALOG_CONFIG)
+    public config: IWebDialogConfig<
       GlobalVariableWriteDTO & {
         _otherLanguages: string[];
         _otherNames: string[];
-      }
+      },
+      void
     >,
     private gbService: GlobalVariableService
   ) {}

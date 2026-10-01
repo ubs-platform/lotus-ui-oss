@@ -1,4 +1,3 @@
-<!-- <p-button (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v"/> -->
 
 <div class="comments-view-wrap">
   <ng-template
@@ -11,12 +10,12 @@
       buttonClass="compact {{
         sortField == field && sortRotation == rotation ? 'primary' : 'border'
       }}"
-      (click)="setSorting(field, rotation); sortingStgs.hide()"
+      (click)="setSorting(field, rotation); sortingStgs.hideDialog()"
       [stringContent]="generateTextForSort(field, rotation)"
     ></block-button>
   </ng-template>
 
-  <p-overlayPanel #sortingStgs>
+  <lib-overlay-panel #sortingStgs>
     <div
       class="flex gap-1 flex-column md:flex-row align-items-center justify-content-center"
       >
@@ -58,13 +57,13 @@
         "
 ></div>
 </div>
-</p-overlayPanel>
+</lib-overlay-panel>
 <div class="comments-view w-full h-full flex flex-column">
   <div class="flex-grow-1 overflow-auto">
     <block-button
       style="margin-left: 46px"
       buttonClass="border compact"
-      (click)="sortingStgs.toggle($event)"
+      (click)="sortingStgs.toggleDialog($event)"
       >Sıralama: {{ activeSortingText }}</block-button
       >
       @for (item of comments; track item) {

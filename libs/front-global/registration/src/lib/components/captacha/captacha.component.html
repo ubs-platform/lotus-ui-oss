@@ -19,57 +19,47 @@
       kullanabilecesiniz. Başlamadan önce kullanım şartlarını kabul etmeniz ve
       robot olmadığınızı teyit etmeniz gerekmektedir.
     </p>
-    <div
-      (click)="showEULAUpAndEnable()"
-      class="mb-1 flex justify-content-center"
-    >
-      <div [style.pointer-events]="eulaEnabled ? null : 'none'">
-        <p-checkbox
-          label="Kullanım şartlarını okudum ve kabul ediyorum"
-          [ngModel]="agreed"
-          [binary]="true"
-          (ngModelChange)="agreed = $event"
-        ></p-checkbox>
-      </div>
-    </div>
-    <br />
-    <div
-      (click)="showPrivacyUpAndEnable()"
-      class="mb-1 flex justify-content-center"
-    >
-      <div [style.pointer-events]="privacyEnabled ? null : 'none'">
-        <p-checkbox
-          label="Gizlilik politikasını okudum ve kabul ediyorum"
-          [ngModel]="privacyAccepted"
-          [binary]="true"
-          (ngModelChange)="privacyAccepted = $event"
-        ></p-checkbox>
-      </div>
+
+    <div class="mb-1 flex flex-column align-items-center justify-content-center">
+      <toggle
+        [checkboxStyle]="true"
+        [value]="agreed"
+        [checkOnClickInput]="false"
+        [checkOnClickText]="false"
+        (click)="!agreed ? showEULAUpAndEnable() : (agreed = !agreed)"
+        label="Kullanım şartlarını okudum ve kabul ediyorum"
+      >
+      </toggle>
+      <toggle
+        [checkboxStyle]="true"
+        [value]="privacyAccepted"
+        [checkOnClickInput]="false"
+        [checkOnClickText]="false"
+        (click)="
+          !privacyAccepted
+            ? showPrivacyUpAndEnable()
+            : (privacyAccepted = !privacyAccepted)
+        "
+        label="Gizlilik politikasını okudum ve kabul ediyorum"
+      >
+      </toggle>
     </div>
 
+
     <div class="m-3">
-      <!-- <p-captcha
-      *ngIf="!developar"
-      siteKey="6LeTAnEnAAAAAK3mlQmYg6ILLyn9mwAPN8IPeuth"
-      (onResponse)="notBot = true"
-      (onExpire)="expire()"
-    ></p-captcha> -->
-      <!-- <block-button
-      *ngIf="developar && !notBot"
-      (click)="notBot = true"
-      iconClass="material-symbols-outlined" iconContent="smart_toy"
-      >Sanane benim robot olup olmadığımdan 🅰️ ırkçısı seni!</block-button
-    > -->
+
     </div>
     <div class="action-buttons">
       <block-button
-        iconClass="material-symbols-outlined" iconContent="chevron_right"
+        [cover]="true"
+        iconClass="material-symbols-outlined"
+        iconContent="chevron_right"
+        iconPosition="RIGHT"
         [disabled]="!(agreed && notBot)"
         (click)="nextStep(null)"
         buttonClass="primary"
         stringContent="general.next"
-        ></block-button
-      >
+      ></block-button>
     </div>
   </div>
 </div>

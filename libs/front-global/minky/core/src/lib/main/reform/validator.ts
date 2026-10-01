@@ -1,5 +1,3 @@
-import { TranslationKeys } from 'primeng/api';
-import { Label } from '../label';
 import { PropertyMeta } from '../property-meta';
 import { Reform } from './reform';
 import { TranslatorText } from '@lotus/extra/translator-core';

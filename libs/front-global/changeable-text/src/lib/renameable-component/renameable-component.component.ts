@@ -20,7 +20,7 @@ import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 })
 export class ChangeableTextComponent {
   readonly value = model<string>();
-  @Output() valueChange = new EventEmitter<string>();
+  // @Output() valueChange = new EventEmitter<string>();
   intervalValue = '';
   focused = false;
 
@@ -38,7 +38,7 @@ export class ChangeableTextComponent {
   }
 
   changeValue() {
-    this.valueChange.emit(this.intervalValue);
+    // this.valueChange.emit(this.intervalValue);
     this.value.set(this.intervalValue);
     this.focused = false;
   }

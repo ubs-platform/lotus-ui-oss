@@ -6,7 +6,6 @@ import {
   IUserMessageSearch,
 } from '@ubs-platform/feedback-common';
 import { Reform } from '@lotus/front-global/minky/core';
-import { OverlayService } from 'primeng/api';
 import { UserMessageSearchForm } from '../../forms/user-message-search.form';
 import { SearchableDataTableComponent } from '@lotus/front-global/table';
 

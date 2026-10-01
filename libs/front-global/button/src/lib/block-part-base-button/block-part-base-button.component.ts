@@ -7,7 +7,9 @@ import {
   SimpleChanges,
   ViewEncapsulation,
   input,
+  signal,
 } from '@angular/core';
+import { TranslatorText } from '@lotus/extra/translator-core';
 import { IIcon } from '@lotus/front-global/icon-type';
 
 @Component({
@@ -31,6 +33,7 @@ export class BlockPartBaseButtonComponent implements OnInit {
   readonly btnTabindex = input<string>();
   readonly hideContentAtLowScr = input(false);
   readonly contentClass = input<string | null | undefined>(undefined);
+  readonly pTooltipx = input<TranslatorText>(undefined, {"alias": "pTooltip"});
   // readonly iconSizeAuto = computed(() => {
   //   if (this.iconClass() == null) return "0.85rem";
   //   return this.iconClass().includes('material-symbols') ? "1.40rem" : "0.85rem";
@@ -41,6 +44,7 @@ export class BlockPartBaseButtonComponent implements OnInit {
       this.contentClass() +
       (this.hideContentAtLowScr() ? 'hidden md:block' : '')
   );
+  mouseInBtn = signal(false);
   constructor() { }
 
   ngOnInit(): void { }

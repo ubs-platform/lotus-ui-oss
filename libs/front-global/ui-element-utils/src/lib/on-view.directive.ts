@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Output, OnInit, OnDestroy } from '@angular/core';
 import { OnViewManager } from './on-view-manager';
 
 @Directive({
@@ -6,7 +6,7 @@ import { OnViewManager } from './on-view-manager';
   standalone: true,
   providers: [OnViewManager],
 })
-export class OnViewDirective {
+export class OnViewDirective implements OnInit, OnDestroy {
   @Output() onView = new EventEmitter<IntersectionObserverEntry>();
   @Output() outOfView = new EventEmitter<IntersectionObserverEntry>();
   @Output() viewVisibilityChange =
@@ -15,15 +15,22 @@ export class OnViewDirective {
     private _hostElement: ElementRef<HTMLElement>,
     private ovm: OnViewManager
   ) {
-    ovm.register(
-      _hostElement.nativeElement,
+
+  }
+
+  getHostElement() {
+    return this._hostElement;
+  }
+
+  ngOnInit(): void {
+    this.ovm.register(
+      this._hostElement.nativeElement,
       this.onView,
       this.outOfView,
       this.viewVisibilityChange
     );
   }
-
-  getHostElement() {
-    return this._hostElement;
+  ngOnDestroy(): void {
+    this.ovm.unregister(this._hostElement.nativeElement);
   }
 }

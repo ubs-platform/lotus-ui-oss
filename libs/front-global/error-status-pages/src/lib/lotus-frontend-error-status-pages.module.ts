@@ -5,7 +5,6 @@ import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import { RouterModule } from '@angular/router';
 import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { SuspendedPageComponent } from './suspended-page/suspended-page.component';
-import { MessageModule } from 'primeng/message';
 import { CustomErrorMessageComponent } from './custom-error-message/custom-error-message.component';
 import { IconComponent } from "@lotus/front-global/icon";
 
@@ -15,7 +14,6 @@ import { IconComponent } from "@lotus/front-global/icon";
     FrontGlobalButtonModule,
     RouterModule,
     UbsTranslatorNgxModule,
-    MessageModule,
     IconComponent
 ],
   declarations: [

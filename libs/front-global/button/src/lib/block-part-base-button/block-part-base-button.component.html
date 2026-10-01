@@ -9,15 +9,27 @@
   }}</i>
 </ng-container>
 </ng-template> -->
-<button class="block block-view block-fill" [ngClass]="[buttonClass()]" [class.w-full]="cover()" [class.flex]="cover()"
-  [class.inline-flex]="!cover()" [class.disabled]="disabled()" [attr.tabindex]="btnTabindex()">
+
+<button
+  class="block block-view block-fill"
+  [ngClass]="[buttonClass()]"
+  [class.w-full]="cover()"
+  [class.flex]="cover()"
+  [lib-tooltip]="pTooltipx()"
+  [class.inline-flex]="!cover()"
+  [class.disabled]="disabled()"
+  [attr.tabindex]="btnTabindex()"
+>
   <div class="flex align-items-center justify-content-center gap-2 w-full">
-    @if (
-      iconPosition() == 'LEFT' && (iconClass() || iconContent() || iconImageSource())
-      ) {
-      <div>
-        <lib-icon [iconClass]="iconClass()" [iconContent]="iconContent()" [iconImageSource]="iconImageSource()"></lib-icon>
-      </div>
+    @if ( iconPosition() == 'LEFT' && (iconClass() || iconContent() ||
+    iconImageSource()) ) {
+    <div>
+      <lib-icon
+        [iconClass]="iconClass()"
+        [iconContent]="iconContent()"
+        [iconImageSource]="iconImageSource()"
+      ></lib-icon>
+    </div>
     }
     <div class="btn-left" [class.flex-grow-1]="growLeft()">
       <ng-content select=".left"></ng-content>
@@ -28,12 +40,15 @@
     <div class="btn-right" [class.flex-grow-1]="growRight()">
       <ng-content select=".right"></ng-content>
     </div>
-    @if (
-      iconPosition() == 'RIGHT' && (iconClass() || iconContent() || iconImageSource())
-      ) {
-      <div>
-        <lib-icon [iconClass]="iconClass()" [iconContent]="iconContent()" [iconImageSource]="iconImageSource()"></lib-icon>
-      </div>
+    @if ( iconPosition() == 'RIGHT' && (iconClass() || iconContent() ||
+    iconImageSource()) ) {
+    <div>
+      <lib-icon
+        [iconClass]="iconClass()"
+        [iconContent]="iconContent()"
+        [iconImageSource]="iconImageSource()"
+      ></lib-icon>
+    </div>
     }
   </div>
 </button>

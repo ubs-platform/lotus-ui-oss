@@ -1,19 +1,18 @@
 // ...existing code...
 @import 'material-symbols';
 // primeicons removed — migrated to material-symbols
-@import 'primeng/resources/primeng.min.css';
 @import 'libs/front-global/base-style/theme.css';
+@import 'primeflex/themes/primeone-light.css';
 @import 'primeflex/primeflex.css';
+@import './style/status-card.scss';
 @import './style/block.scss';
 @import './style/main.scss';
 @import './style/placeholders';
 @import './style/ubs-touch.scss';
-@import '@fontsource/jetbrains-mono/200.css';
-@import '@fontsource/jetbrains-mono/200-italic.css';
-@import '@fontsource/jetbrains-mono/400.css';
-@import '@fontsource/jetbrains-mono/400-italic.css';
-@import '@fontsource/jetbrains-mono/700.css';
-@import '@fontsource/jetbrains-mono/700-italic.css';
+@import '@fontsource/jetbrains-mono/latin-400.css';
+@import '@fontsource/jetbrains-mono/latin-ext-400.css';
+@import '@fontsource/jetbrains-mono/latin-700.css';
+@import '@fontsource/jetbrains-mono/latin-ext-700.css';
 
 // Material Symbols spin animation (replaces pi-spin)
 @keyframes mi-spin {
@@ -22,6 +21,40 @@
 }
 .mi-spin {
   animation: mi-spin 1s linear infinite;
+}
+
+.reform-radio {
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  accent-color: var(--primary-color, #3b82f6);
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='color']):not([type='file']):not([type='button']):not([type='submit']):not([type='reset']):not([type='image']):not([type='hidden']),
+textarea:not(.inputarea),
+select {
+  padding: 0.5rem 0.75rem;
+  color: var(--fg, #212529);
+  background: var(--bg-surface, #fff);
+  border: 1px solid var(--bg-3, #ced4da);
+  border-radius: var(--border-radius, 3px);
+  font: inherit;
+}
+
+input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='color']):not([type='file']):not([type='button']):not([type='submit']):not([type='reset']):not([type='image']):not([type='hidden']):focus,
+textarea:not(.inputarea):focus,
+select:focus {
+  border-color: var(--primary-color, #3b82f6);
+  outline: 0;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-color, #3b82f6) 20%, transparent);
+}
+
+input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='color']):not([type='file']):not([type='button']):not([type='submit']):not([type='reset']):not([type='image']):not([type='hidden']):disabled,
+textarea:not(.inputarea):disabled,
+select:disabled {
+  background: var(--bg-1, #f1f5f9);
+  cursor: not-allowed;
 }
 
 // ...existing code...
@@ -94,3 +127,4 @@ table {
     word-break: break-all;
   }
 }
+

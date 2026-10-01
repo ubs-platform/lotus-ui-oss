@@ -1,11 +1,16 @@
 <lib-webdialog [(show)]="visible" position="center" title="İade talebi oluştur">
   <div class="flex flex-column gap-3">
     <p class="text-sm text-color-secondary">
-      Lütfen iade etmek istediğiniz kalemleri ve adetlerini seçiniz.
-      Seçtiğiniz kalemler için iade talebi oluşturulacak ve ilgili birimler iade sürecine dahil edilecektir.
+      Lütfen iade etmek istediğiniz kalemleri ve adetlerini seçiniz. Seçtiğiniz
+      kalemler için iade talebi oluşturulacak ve ilgili birimler iade sürecine
+      dahil edilecektir.
     </p>
   </div>
-  <lib-custom-select [options]="sellerAccounts()" [(ngModel)]="selectedAccountId" placeholder="Lütfen satıcı hesabı seçin"></lib-custom-select>
+  <lib-custom-select
+    [options]="sellerAccounts()"
+    [(ngModel)]="selectedAccountId"
+    placeholder="Lütfen satıcı hesabı seçin"
+  ></lib-custom-select>
   <div class="flex flex-column gap-3 mt-3">
     @if (items().length === 0) {
     <div class="text-center p-3 text-muted">
@@ -13,7 +18,9 @@
     </div>
     } @else {
     <div class="flex flex-column gap-2">
-      <span class="font-semibold">{{ 'postral.refund.reasons' | translate }}</span>
+      <span class="font-semibold">{{
+        'postral.refund.reasons' | translate
+      }}</span>
       @for (reason of reasonOptions; track reason.key) {
       <label class="flex align-items-center gap-2">
         <input type="checkbox" [(ngModel)]="selectedReasons[reason.key]" />
@@ -37,35 +44,57 @@
           <label for="refundCount{{ i }}" class="font-medium text-sm"
             >İade Adedi</label
           >
-          <p-inputNumber
-            [(ngModel)]="refundSelections[item.id!]"
-            [showButtons]="true"
-            buttonLayout="horizontal"
-            [min]="0"
-            [max]="item.quantity - (item.refundCount || 0)"
-            inputStyleClass="w-3rem text-center"
+          <block-button
+            stringContent="Azalt"
+            iconClass="material-symbols-outlined"
+            iconContent="remove"
+            buttonClass="secondary"
+            (click)="
+              refundSelections[item.id!] = mathmax(
+                0,
+                (refundSelections[item.id!] || 0) - 1
+              )
+            "
           >
-          </p-inputNumber>
+          </block-button>
+          <input
+            id="refundCount{{ i }}"
+            type="number"
+            [(ngModel)]="refundSelections[item.id!]"
+            min="0"
+            [max]="item.quantity - (item.refundCount || 0)"
+            class="w-3rem text-center"
+          />
+          <block-button
+            stringContent="Arttır"
+            iconClass="material-symbols-outlined"
+            iconContent="add"
+            buttonClass="secondary"
+            (click)="
+              refundSelections[item.id!] = mathmin(
+                item.quantity - (item.refundCount || 0),
+                (refundSelections[item.id!] || 0) + 1
+              )
+            "
+          >
+          </block-button>
         </div>
       </div>
       }
     </div>
     <div class="flex flex-column gap-2">
-      <span class="font-semibold">{{ 'postral.refund.request-note' | translate }}</span>
-      <lotus-web-markdown-editor [(value)]="requestNote"></lotus-web-markdown-editor>
+      <span class="font-semibold">{{
+        'postral.refund.request-note' | translate
+      }}</span>
+      <lotus-web-markdown-editor
+        [(value)]="requestNote"
+      ></lotus-web-markdown-editor>
     </div>
     <div class="action-buttons">
-      <!-- <p-button
-        label="İptal"
-        severity="secondary"
-        icon="pi pi-times"
-        styleClass="mr-2"
-        (click)="close()"
-      >
-      </p-button> -->
       <block-button
         stringContent="İptal"
-        iconClass="material-symbols-outlined" iconContent="close"
+        iconClass="material-symbols-outlined"
+        iconContent="close"
         buttonClass="surface border"
         (click)="close()"
       >
@@ -73,21 +102,13 @@
 
       <block-button
         stringContent="İade İsteğini Gönder"
-        iconClass="material-symbols-outlined" iconContent="check"
+        iconClass="material-symbols-outlined"
+        iconContent="check"
         buttonClass="primary"
         [disabled]="!hasSelectedAny() || !hasSelectedReason() || submitting()"
         (click)="submitRefundRequest()"
       >
       </block-button>
-      <!-- <p-button
-        label="İade İsteğini Gönder"
-        severity="primary"
-        icon="pi pi-check"
-        [loading]="submitting()"
-        [disabled]="!hasSelectedAny()"
-        (click)="submitRefundRequest()"
-      >
-      </p-button> -->
     </div>
     }
   </div>

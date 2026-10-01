@@ -11,10 +11,9 @@ import { FeedbackFilterComponent } from './component/feedback-filter/feedback-fi
 import { ReformNgxPrimeComponent } from 'libs/front-global/minky/reform-ngx-prime/src/lib/reform-ngx-prime/reform-ngx-prime.component';
 import { MinkyReformNgxModule } from '@lotus/front-global/minky/reform-ngx';
 import { MinkyReformNgxPrimeModule } from '@lotus/front-global/minky/reform-ngx-prime';
-import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { FrontGlobalMarkdownEditorModule } from '@lotus/front-global/markdown-editor';
 
-import { MessageModule } from 'primeng/message';
+import { FrontGlobalMessageModule } from '@lotus/front-global/message';
 import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { FrontGlobalMinkyReformNgxMonaModule } from '@lotus/front-global/minky/reform-ngx-mona';
 
@@ -27,9 +26,8 @@ import { FrontGlobalMinkyReformNgxMonaModule } from '@lotus/front-global/minky/r
     FrontGlobalTableModule,
     FrontGlobalButtonModule,
     MinkyReformNgxPrimeModule,
-    OverlayPanelModule,
     FrontGlobalMarkdownEditorModule,
-    MessageModule,
+    FrontGlobalMessageModule,
     UbsTranslatorNgxModule,
     MinkyReformNgxModule,
     FrontGlobalMinkyReformNgxMonaModule,

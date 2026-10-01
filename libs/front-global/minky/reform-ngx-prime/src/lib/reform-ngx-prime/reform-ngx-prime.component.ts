@@ -142,5 +142,32 @@ export class ReformNgxPrimeComponent implements OnInit, AfterViewInit, OnChanges
     );
   }
 
+  dateTimeInputValue(value: unknown): string {
+    if (value == null || value === '') {
+      return '';
+    }
+
+    const date = value instanceof Date ? value : new Date(value as string | number);
+    if (Number.isNaN(date.getTime())) {
+      return '';
+    }
+
+    const pad = (part: number) => String(part).padStart(2, '0');
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
+      date.getDate()
+    )}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(
+      date.getSeconds()
+    )}`;
+  }
+
+  setDateTimeValue(carrier: InputLinkCarrier, value: string): void {
+    carrier.setValue(value ? new Date(value) : null);
+  }
+
+  setFiles(carrier: InputLinkCarrier, event: Event): void {
+    const files = (event.target as HTMLInputElement).files;
+    carrier.setValue(files ? Array.from(files) : []);
+  }
+
   ngOnInit(): void { }
 }

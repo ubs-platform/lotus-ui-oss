@@ -26,7 +26,7 @@ export class ImageUploadComponent {
   // @Input() endpointUrl!: string;
   readonly category = input.required<string>();
   readonly objectId = input<string>();
-  @Output() imageUrlAlreadyChange = new EventEmitter<string>();
+  // @Output() imageUrlAlreadyChange = new EventEmitter<string>();
 
   @Output() reviewImageChange = new EventEmitter<string | ArrayBuffer>();
   readonly imageUrlAlready = model<string | null>();
@@ -95,6 +95,6 @@ export class ImageUploadComponent {
 
   setAlready(url: string | null) {
     this.imageUrlAlready.set(url);
-    this.imageUrlAlreadyChange.emit(url!);
+    // this.imageUrlAlreadyChange.emit(url!);
   }
 }

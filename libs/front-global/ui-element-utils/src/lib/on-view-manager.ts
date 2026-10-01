@@ -30,6 +30,11 @@ export class OnViewManager {
     this._observer.observe(element);
   }
 
+  unregister(element: HTMLElement) {
+    this.map.delete(element);
+    this._observer.unobserve(element);
+  }
+
   initializeObserverIfNotReady() {
     // Create an Intersection Observer instance
     if (this._observer == null) {

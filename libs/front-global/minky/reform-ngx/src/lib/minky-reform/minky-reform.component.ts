@@ -30,10 +30,8 @@ import {
   Reform,
   RootPropertyMeta,
 } from '@lotus/front-global/minky/core';
-import { ButtonDirective } from 'primeng/button';
 import { ButtonFieldLinkDirective } from '../button-field-link/button-field-link.directive';
 import { InputFieldLinkDirective } from '../input-field-link/input-field-link.directive';
-import { Observable } from 'rxjs';
 
 import { GroupLabelFieldLinkDirective } from '../group-label-field-link/group-label-field-link.directive';
 

@@ -9,7 +9,7 @@ import { IndexAutoLoadElement, IndexAutoLoader } from '@lotus/front-global/ngx-i
     standalone: false
 })
 export class CodeEditorInputComponent implements OnInit {
-  readonly sourceEditor = model(false);
+  readonly sourceEditor = model(true);
   readonly monacoOps = model({ theme: 'vs-dark', language: 'html' });
   readonly carrier = input<InputLinkCarrier>();
   constructor(public indexAutoLoader: IndexAutoLoader) {}

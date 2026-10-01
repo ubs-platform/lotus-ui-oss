@@ -6,7 +6,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { InstantModalOptions } from '../../model/instant-modal-options.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ReplaySubject } from 'rxjs';
@@ -32,7 +31,6 @@ export class InstantModalComponent {
   constructor(
     public dial: WebdialogReference<boolean>,
     protected _sanitizer: DomSanitizer,
-    // private dialogConfig: DynamicDialogConfig<InstantModalOptions>
     @Inject(WEBDIALOG_CONFIG)
     private dialogConfig: IWebDialogConfig<InstantModalOptions, boolean>
   ) {

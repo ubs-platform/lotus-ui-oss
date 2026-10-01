@@ -1,0 +1,17 @@
+<!-- This template displays the overlay content and is connected to the button -->
+@if (origin()) {
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="origin()!"
+  [cdkConnectedOverlayOpen]="show()"
+  [cdkConnectedOverlayPositions]="positions()"
+  [cdkConnectedOverlayViewportMargin]="margin()"
+  [cdkConnectedOverlayPush]="true"
+  (overlayOutsideClick)="hideDialog()"
+  (detach)="show.set(false)"
+>
+  <div class="overlay-content">
+    <ng-content></ng-content>
+  </div>
+</ng-template>
+}

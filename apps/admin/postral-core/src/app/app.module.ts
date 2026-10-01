@@ -9,8 +9,7 @@ import {
 } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
+import { FrontGlobalToastModule } from '@lotus/front-global/toast';
 import {
   AuthManagementService,
   AuthModule,
@@ -62,7 +61,7 @@ registerLocaleData(turkish);
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    ToastModule,
+    FrontGlobalToastModule,
     AuthModule,
     FrontGlobalUiPageContainerModule,
     LoadingIndicatorModule,
@@ -86,7 +85,6 @@ registerLocaleData(turkish);
   providers: [
     // { provide: LOCALE_ID, useValue: 'TR-tr' },
     WebdialogHandler,
-    MessageService,
     {
       provide: LANGUAGE_JSON_URL,
       useValue: [(lang: string) => 'localization/' + lang + '.json'],

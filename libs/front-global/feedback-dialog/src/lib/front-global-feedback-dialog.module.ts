@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DialogService } from 'primeng/dynamicdialog';
 import { UserMessageDialogComponent } from './component/user-message-dialog/user-message-dialog.component';
 import { FeedbackDialogService } from './service/user-message-dialog.service';
 import { MinkyReformNgxPrimeModule } from '@lotus/front-global/minky/reform-ngx-prime';
 import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
-import { MessageModule } from 'primeng/message';
+import { FrontGlobalMessageModule } from '@lotus/front-global/message';
 import { MinkyReformNgxModule } from '@lotus/front-global/minky/reform-ngx';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import { FrontGlobalFeedbackFrontModule } from '@lotus/front-global/feedback-front';
@@ -18,12 +17,12 @@ import { FrontGlobalMinkyReformNgxMonaModule } from '@lotus/front-global/minky/r
     MinkyReformNgxModule,
     UbsTranslatorNgxModule,
     // FrontGlobalMarkdownEditorModule,
-    MessageModule,
+    FrontGlobalMessageModule,
     FrontGlobalButtonModule,
     FrontGlobalFeedbackFrontModule,
     FrontGlobalMinkyReformNgxMonaModule,
   ],
-  providers: [DialogService, FeedbackDialogService],
+  providers: [FeedbackDialogService],
   declarations: [UserMessageDialogComponent],
 })
 export class FrontGlobalFeedbackDialogModule {}

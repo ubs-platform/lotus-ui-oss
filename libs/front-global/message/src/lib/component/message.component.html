@@ -1,0 +1,22 @@
+<div
+  class="lotus-status-card low-padding lotus-status-card--info lotus-message"
+  [class.lotus-status-card--success]="severity === 'success'"
+  [class.lotus-status-card--warn]="severity === 'warn'"
+  [class.lotus-status-card--error]="severity === 'error'"
+  [class.lotus-status-card--neutral]="severity === 'secondary' || severity === 'contrast'"
+  [ngClass]="styleClass"
+  [ngStyle]="style"
+  [attr.role]="severity === 'error' || severity === 'warn' ? 'alert' : 'status'"
+  aria-atomic="true"
+>
+  <span class="lotus-status-card__icon material-symbols-outlined" aria-hidden="true">
+    {{ iconFor(severity) }}
+  </span>
+  <div class="lotus-status-card__content">
+    @if (escape) {
+      <span class="lotus-status-card__text">{{ text }}</span>
+    } @else {
+      <span class="lotus-status-card__text" [innerHTML]="text"></span>
+    }
+  </div>
+</div>

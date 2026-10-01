@@ -7,16 +7,16 @@
       >
       <div class="w-full">
         @if (showWarning) {
-          <p-message
+          <lotus-web-message
             severity="warn"
             [text]="'mona.need-to-login-to-show-page' | translate"
-          ></p-message>
+          ></lotus-web-message>
         }
         @if (activated) {
-          <p-message
+          <lotus-web-message
             severity="success"
             [text]="'mona.account-activated' | translate"
-          ></p-message>
+          ></lotus-web-message>
         }
         <h1>{{ 'mona.login' | translate }}</h1>
         <lotus-web-login-dialog
@@ -30,10 +30,10 @@
       class="mona-centered-card p-4 overflow-auto"
       >
       <div class="div flex flex-column align-items-center justify-content-center">
-        <p-message
+        <lotus-web-message
           severity="info"
           text="Şu an zaten giriş yapmış olarak görünüyorsunuz."
-        ></p-message>
+        ></lotus-web-message>
         @if (user) {
           <div
             class="flex justify-content-center align-items-center animated delay-1 p-2"

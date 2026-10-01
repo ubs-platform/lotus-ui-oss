@@ -35,5 +35,6 @@ export class BButtonComponent {
   readonly stringContent = input<string | TranslatorText>();
   readonly hideContentAtLowScr = input(false);
   readonly contentClass = input<string | undefined>(undefined);
+  readonly pTooltip = input<string | TranslatorText | undefined>(undefined);
   contentClassSys = '';
 }

@@ -8,7 +8,6 @@ import {
   Reform,
   RequiredValidator,
 } from '@lotus/front-global/minky/core';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import {
   LoadingIndicationService,
   LoadingIndicatorState,
@@ -51,7 +50,6 @@ export class LoginDialogComponent implements OnInit {
   @Output() loginSuccess = new EventEmitter<boolean>();
   loading: Observable<LoadingIndicatorState>;
   constructor(
-    private dialogRef: DynamicDialogRef,
     private authManager: AuthManagementService,
     private basicOverlay: BasicOverlayService,
     private loadingIndicationService: LoadingIndicationService
@@ -85,7 +83,6 @@ export class LoginDialogComponent implements OnInit {
         next: (u) => {
           this.basicOverlay.alert('mona.login-success', '', 'success');
           this.loginSuccess.emit(true);
-          this.dialogRef?.close();
         },
         error: (e) => {
           this.basicOverlay.alert(

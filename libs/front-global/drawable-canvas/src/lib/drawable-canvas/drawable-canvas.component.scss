@@ -111,6 +111,12 @@
   text-align: center;
 }
 
+.draw-settings-range {
+  width: 100%;
+  accent-color: var(--primary-color);
+  cursor: pointer;
+}
+
 input.color-ball[type="color"] {
   width: 24px;
   height: 24px;

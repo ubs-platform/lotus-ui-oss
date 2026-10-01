@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableComponent } from './components/table/table.component';
-import { TableModule } from 'primeng/table';
 import { ColumnComponent } from './components/column/column.component';
 import { DataDirective } from './directives/data.drective';
 import { HeaderDirective } from './directives/header.drective';
@@ -15,7 +14,6 @@ import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 @NgModule({
   imports: [
     CommonModule,
-    TableModule,
     FrontGlobalButtonModule,
     FrontGlobalPromptOverlaysModule,
     UbsTranslatorNgxModule,

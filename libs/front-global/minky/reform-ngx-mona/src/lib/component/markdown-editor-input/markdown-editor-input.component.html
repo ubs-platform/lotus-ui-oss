@@ -10,11 +10,11 @@
       ></lotus-web-markdown-editor>
     </div>
     @if (carrier()!.isTouched && carrier()!.validationErrors?.length) {
-      <p-message
+      <lotus-web-message
         styleClass="my-1 w-full"
         severity="error"
         [text]="carrier()!.validationErrors[0].name | translate"
-      ></p-message>
+      ></lotus-web-message>
     }
   </div>
 }

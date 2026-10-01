@@ -1,6 +1,5 @@
 import { KeyValue } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { DialogService } from 'primeng/dynamicdialog';
 import { Subject } from 'rxjs';
 export type KeyValueArray = {
   key: string;
@@ -11,7 +10,7 @@ export class UconsoleService {
   private valueMap: Map<string, any> = new Map();
   private valueMapSubject = new Subject<KeyValueArray>();
 
-  constructor(private dialogService: DialogService) {
+  constructor() {
     this.valueMapSubject.next([]);
   }
 

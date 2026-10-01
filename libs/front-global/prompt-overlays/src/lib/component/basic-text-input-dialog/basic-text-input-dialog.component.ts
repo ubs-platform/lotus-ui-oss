@@ -1,5 +1,4 @@
 import { Component, Inject } from '@angular/core';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import {
   IWebDialogConfig,
   WEBDIALOG_CONFIG,

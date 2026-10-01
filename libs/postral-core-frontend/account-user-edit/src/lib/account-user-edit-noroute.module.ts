@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AccountUserInfoComponent } from './components/account-user-info/account-user-info.component';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { ButtonModule } from 'primeng/button';
 import { ReformDataEditComponent } from '@lotus/front-global/reform-data-edit';
 import { AccountsComponent } from './components/accounts/accounts.component';
 import { FrontGlobalTableModule } from '@lotus/front-global/table';
@@ -34,7 +32,6 @@ import { RefundRequestDialogComponent } from './components/refund-request-dialog
 import { RefundRequestListComponent } from './components/refund-request-list/refund-request-list.component';
 import { RefundRequestInfoComponent } from './components/refund-request-info/refund-request-info.component';
 import { WebdialogComponent } from '@lotus/front-global/webdialog';
-import { SelectButtonModule } from 'primeng/selectbutton';
 import { CustomSelectComponent } from '@lotus/legendary-front/custom-select';
 import { PostralReportsModule } from '@lotus/postral-core-frontend/reports';
 import { SidebarPageActionHolderComponent } from './components/sidebar-page-action-holder/sidebar-page-action-holder.component';
@@ -57,11 +54,8 @@ import { RefundRequestResolutionDialogComponent } from './components/refund-requ
     PaymentItemListComponent,
     InvoiceModule,
     FrontGlobalStatusBadgeModule,
-    InputNumberModule,
-    ButtonModule,
     FormsModule,
     WebdialogComponent,
-    SelectButtonModule,
     CustomSelectComponent,
     UbsTranslatorNgxModule,
     PostralReportsModule,

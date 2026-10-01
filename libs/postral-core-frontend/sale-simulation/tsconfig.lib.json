@@ -2,8 +2,6 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../../dist/out-tsc",
-    "target": "es2022",
-    "moduleResolution": "bundler",
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
@@ -16,5 +14,7 @@
     "jest.config.ts",
     "src/**/*.test.ts"
   ],
-  "include": ["src/**/*.ts"]
+  "include": [
+    "src/**/*.ts"
+  ]
 }

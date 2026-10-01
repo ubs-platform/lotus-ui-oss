@@ -26,18 +26,18 @@ export class SidebarMenuComponent {
   readonly open = model<boolean>();
 
   // Outputs
-  @Output() readonly currentPathChange = new EventEmitter<string>();
-  @Output() readonly openChange = new EventEmitter<boolean>();
+  // @Output() readonly currentPathChange = new EventEmitter<string>();
+  // @Output() readonly openChange = new EventEmitter<boolean>();
 
   // Computed values
   readonly isMobile = computed(() => window.innerWidth < this.MOBILE_BREAKPOINT);
 
   /**
-   * Selects a menu item and emits the path change
+   * Selects a menu item and emits the path change (currently commented out)
    */
   select(path: string): void {
     this.currentPath.set(path);
-    this.currentPathChange.emit(path);
+    // this.currentPathChange.emit(path);
     this.hideMenuIfMobile();
   }
 
@@ -55,7 +55,7 @@ export class SidebarMenuComponent {
    */
   toggleMenu(): void {
     this.open.update(isOpen => !isOpen);
-    this.openChange.emit(this.open());
+    // this.openChange.emit(this.open());
   }
 
   /**

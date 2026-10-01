@@ -5,7 +5,7 @@
     "types": [],
     "target": "ES2022",
     "useDefineForClassFields": false,
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
   },
   "files": ["src/main.ts", "src/polyfills.ts"],
   "include": ["src/**/*.d.ts"],

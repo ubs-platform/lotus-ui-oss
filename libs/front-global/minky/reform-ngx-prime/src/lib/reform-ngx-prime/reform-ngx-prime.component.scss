@@ -1,6 +1,32 @@
-// input {
-//   margin-bottom: 10px !important;
-// }
+.reform-control {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 0.5rem 0.75rem;
+  color: var(--fg, #212529);
+  background: var(--bg-surface, #fff);
+  border: 1px solid var(--bg-3, #ced4da);
+  border-radius: var(--border-radius, 3px);
+  font: inherit;
+}
+
+.reform-control:focus {
+  border-color: var(--primary-color, #3b82f6);
+  outline: 0;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-color, #3b82f6) 20%, transparent);
+}
+
+.reform-control.ng-invalid.ng-dirty {
+  border-color: var(--red-500, #ef4444);
+}
+
+.reform-control:disabled {
+  background: var(--bg-1, #f1f5f9);
+  cursor: not-allowed;
+}
+
+.reform-file-control {
+  padding: 0;
+}
 
 label {
   margin: 0.5em 0px;
@@ -11,7 +37,7 @@ label {
   }
 }
 
-input:not([type="checkbox"]) {
+input:not([type="checkbox"]):not([type="radio"]) {
   width: 100%;
   margin-bottom: 10px;
 }

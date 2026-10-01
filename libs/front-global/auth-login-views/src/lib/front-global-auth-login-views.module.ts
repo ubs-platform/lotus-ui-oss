@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginDialogComponent } from './component/login-dialog/login-dialog.component';
-import { DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MinkyReformNgxPrimeModule } from '@lotus/front-global/minky/reform-ngx-prime';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
@@ -10,7 +9,6 @@ import { RouterModule } from '@angular/router';
 @NgModule({
   imports: [
     CommonModule,
-    DynamicDialogModule,
     MinkyReformNgxPrimeModule,
     FrontGlobalButtonModule,
     UbsTranslatorNgxModule,
@@ -18,6 +16,6 @@ import { RouterModule } from '@angular/router';
   ],
   declarations: [LoginDialogComponent],
   exports: [LoginDialogComponent],
-  providers: [DynamicDialogRef],
+  providers: [],
 })
 export class FrontGlobalAuthLoginViewsModule {}

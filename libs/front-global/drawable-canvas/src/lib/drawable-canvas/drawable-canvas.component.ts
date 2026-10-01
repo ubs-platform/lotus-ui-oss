@@ -14,13 +14,11 @@ import {
 } from '@angular/core';
 import { UconsoleService } from '@lotus/front-global/debug-tools';
 import C2S, { SVGRenderingContext2D } from '@mithrandirii/canvas2svg';
-import { OverlayPanel } from 'primeng/overlaypanel';
 import { ThemeManager } from '@lotus/front-global/theme-management';
 import { UndoRedoHelper } from '@lotus/front-global/undo-redo-helper';
 import { Placement } from '../placement';
-import { EventManager } from '@angular/platform-browser';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
-import { set } from 'mongoose';
+import { OverlayPanelComponent } from '@lotus/front-global/overlay-panel';
 
 @Component({
   selector: 'lotus-web-drawable-canvas',
@@ -47,10 +45,8 @@ export class DrawableCanvasComponent
   }>();
   readonly click = output<TouchEvent | MouseEvent>();
   readonly canvasWrap = viewChild<ElementRef<HTMLElement>>('canvas');
-  readonly colorSettingsOverlay = viewChild<OverlayPanel>(
-    'colorSettingsOverlay'
-  );
-  readonly overlaySettingsOverlay = viewChild<OverlayPanel>(
+
+  readonly overlaySettingsOverlay = viewChild<OverlayPanelComponent>(
     'overlaySettingsOverlay'
   );
   readonly colorPickerInput =
@@ -164,6 +160,14 @@ export class DrawableCanvasComponent
     // this.insertRecentColor(input.value);
   }
 
+  updateSize(event: Event) {
+    this.size.set((event.target as HTMLInputElement).valueAsNumber);
+  }
+
+  updateOpacity(event: Event) {
+    this.opacity.set((event.target as HTMLInputElement).valueAsNumber);
+  }
+
   reinit() {
     this.svgElement.remove();
     this.initializeCanvas();
@@ -239,7 +243,7 @@ export class DrawableCanvasComponent
     this.placement.set(newPlacement);
     this.placementChange.emit(newPlacement);
     localStorage.setItem('drawing-bar-placement', newPlacement);
-    this.overlaySettingsOverlay()?.hide();
+    this.overlaySettingsOverlay()?.hideDialog();
   }
 
   svgElementMouseDown = (e: MouseEvent) => {
@@ -491,7 +495,6 @@ export class DrawableCanvasComponent
 
   // PointerEvents için yeni metodlar - Samsung S Pen desteği
   pointerStart(e: PointerEvent) {
-    this.colorSettingsOverlay()?.hide();
     this.anyMotion = false;
     this.uConsole.setValue(
       'canvas draw',
@@ -606,12 +609,9 @@ export class DrawableCanvasComponent
     this.colorPickerInput()?.nativeElement.click();
   }
 
-  toggleColorSettings(event: Event) {
-    this.colorSettingsOverlay()?.toggle(event);
-  }
 
   toggleOverlaySettings(event: Event) {
-    this.overlaySettingsOverlay()?.toggle(event);
+    this.overlaySettingsOverlay()?.toggleDialog(event as MouseEvent);
   }
 
   calculateSvgPathSizeAndPosition(path: SVGPathElement[]): { x: number; y: number; width: number; height: number } {

@@ -1,4 +1,4 @@
-<p-overlayPanel #overlaySettingsOverlay>
+<lib-overlay-panel #overlaySettingsOverlay>
   <div class="flex" [class.flex-column]="placement() == 'bottom'" [class.flex-column-reverse]="placement() != 'bottom'">
     <div class="aligment-other-settings">
       <h4>Yerleşim</h4>
@@ -36,12 +36,26 @@
     </div>
     <div class="color-settings">
       <h4>Kalınlık ({{ size() }})</h4>
-      <p-slider [min]="1" [max]="100" [ngModel]="size()" (ngModelChange)="size.set($event)"></p-slider>
+        <input
+          class="draw-settings-range"
+          type="range"
+          min="1"
+          max="100"
+          [value]="size()"
+          (input)="updateSize($event)"
+        />
       <h4>Opaklık ({{ opacity() }}%)</h4>
-      <p-slider [min]="0" [max]="100" [ngModel]="opacity()" (ngModelChange)="opacity.set($event)"></p-slider>
+        <input
+          class="draw-settings-range"
+          type="range"
+          min="0"
+          max="100"
+          [value]="opacity()"
+          (input)="updateOpacity($event)"
+        />
     </div>
   </div>
-</p-overlayPanel>
+</lib-overlay-panel>
 
 <div [tabIndex]="0" (keydown)="keyDown($event)" class="canvas-parent" [style.cursor]="cursorStyle()"
 ubs-document-swipe="disable" #canvas></div>

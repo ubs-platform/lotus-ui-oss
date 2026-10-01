@@ -1,6 +1,5 @@
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Output,
@@ -10,8 +9,6 @@ import { AuthManagementService } from '@lotus/front-global/auth';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { CommentDTO, CommentSearchDTO } from '@ubs-platform/social-common';
 import { UserDTO } from '@ubs-platform/users-common';
-import { OverlayService } from 'primeng/api';
-import { DialogVisibilityReference } from '@lotus/front-global/webdialog';
 import { CommentDialogComponent } from '../comment-dialog/comment-dialog.component';
 
 @Component({

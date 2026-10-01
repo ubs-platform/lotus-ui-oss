@@ -1,0 +1,38 @@
+@if (toastService.messages().length > 0) {
+  <section class="toast-stack" aria-label="Bildirimler">
+    @for (toast of toastService.messages(); track toast.id) {
+      <article
+        class="lotus-status-card toast"
+        [class.lotus-status-card--info]="toast.severity === 'info'"
+        [class.lotus-status-card--success]="toast.severity === 'success'"
+        [class.lotus-status-card--warn]="toast.severity === 'warn'"
+        [class.lotus-status-card--error]="toast.severity === 'error'"
+        [class.lotus-status-card--neutral]="toast.severity === 'neutral'"
+        [class.toast--leaving]="toast.closing"
+        [attr.role]="toast.severity === 'error' || toast.severity === 'warn' ? 'alert' : 'status'"
+        aria-atomic="true"
+      >
+        <span class="lotus-status-card__icon material-symbols-outlined" aria-hidden="true">
+          {{ iconFor(toast.severity) }}
+        </span>
+        <div class="lotus-status-card__content">
+          @if (toast.summary) {
+            <strong class="lotus-status-card__title">{{ toast.summary }}</strong>
+          }
+          @if (toast.detail) {
+            <span class="lotus-status-card__text">{{ toast.detail }}</span>
+          }
+        </div>
+        <button
+          class="lotus-status-card__close"
+          data-testid="toast-close"
+          type="button"
+          [attr.aria-label]="toast.summary ? toast.summary + ' bildirimini kapat' : 'Bildirimi kapat'"
+          (click)="toastService.dismiss(toast.id)"
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        </button>
+      </article>
+    }
+  </section>
+}

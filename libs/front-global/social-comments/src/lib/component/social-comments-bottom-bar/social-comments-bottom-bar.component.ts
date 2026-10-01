@@ -25,7 +25,7 @@ export class SocialCommentsBottomBarComponent {
   readonly childEntityId = input<string>('');
   readonly show = model(false);
   internalShow = false;
-  @Output() showChange = new EventEmitter<boolean>(true);
+  // @Output() showChange = new EventEmitter<boolean>(true);
   readonly queryParameterName = input('comments-show');
   backButtonTracker?: DialogVisibilityReference<void>;
 
@@ -59,7 +59,7 @@ export class SocialCommentsBottomBarComponent {
 
   visibleChange($event: boolean) {
     this.show.set($event);
-    this.showChange.emit(this.show());
+    // this.showChange.emit(this.show());
     if (!$event) {
       this.internalShow = false;
       this.backButtonTracker = undefined;

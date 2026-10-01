@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Reform } from '@lotus/front-global/minky/core';
 import { FeedbackForm } from '../../forms/feedback.form';
 import { AuthManagementService } from '@lotus/front-global/auth';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IUserMessageDto } from '@ubs-platform/feedback-common';
 import { UserMessageService } from '@lotus/front-global/feedback-front';
 import { TranslatorRepositoryService } from '@lotus/extra/ubs-translator-ngx';

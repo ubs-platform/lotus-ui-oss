@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { Reform } from '@lotus/front-global/minky/core';
 import { TranslatorText } from '@lotus/extra/translator-core';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { BasicOverlayService } from '../../service';
 import {
   IWebDialogConfig,

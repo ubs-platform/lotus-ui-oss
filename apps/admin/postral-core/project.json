@@ -27,16 +27,6 @@
             "input": "common/localization",
             "output": "localization"
           },
-          {
-            "glob": "**/*",
-            "input": "node_modules/chart.js/dist",
-            "output": "dependencies/chart-js"
-          },
-          {
-            "glob": "**/*",
-            "input": "node_modules/katex/dist/",
-            "output": "dependencies/katex"
-          }
         ],
         "styles": ["apps/admin/postral-core/src/styles.scss"],
         "stylePreprocessorOptions": {

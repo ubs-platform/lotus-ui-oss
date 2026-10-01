@@ -3,9 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UsersPageComponent } from './components/users-page/users-page.component';
 import { RouterModule } from '@angular/router';
 import { rota } from './lib.routes';
-import { TableModule } from 'primeng/table';
 import { UserCardComponent } from './components/user-card/user-card.component';
-import { MenuModule } from 'primeng/menu';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { MinkyReformNgxPrimeModule } from '@lotus/front-global/minky/reform-ngx-prime';
@@ -23,8 +21,6 @@ import { OnmobileHeaderComponent, OnpageHeaderComponent } from "@lotus/front-glo
   imports: [
     CommonModule,
     RouterModule.forChild(rota),
-    TableModule,
-    MenuModule,
     FrontGlobalButtonModule,
     MinkyReformNgxPrimeModule,
     FrontGlobalTableModule,

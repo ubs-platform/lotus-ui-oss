@@ -10,8 +10,10 @@ input.toggle-style {
   border: 1px solid var(--fg);
 
   -webkit-appearance: none;
-  // transition: background .3s;rgba(0,0,0,0.15);
+  transition: background .3s, border-color .3s;
+  ;
 }
+
 input.toggle-style::after {
   content: '';
   position: absolute;
@@ -22,10 +24,10 @@ input.toggle-style::after {
   border-radius: 50%;
   width: 1rem;
   height: 1rem;
-  background-color: #868686;
-  
+  background-color: var(--primary-color-text, #fff);
+
   // border: 1px solid var(--border-color);
-  transition: left 0.3s;
+  transition: background-color 0.3s, left 0.3s;
 }
 
 input.toggle-style:checked {
@@ -36,7 +38,7 @@ input.toggle-style:checked {
 
 input.toggle-style:checked::after {
   left: 70%;
-  background-color: white;
+  background-color: var(--bg-surface, #fff);
 }
 
 // input.checkbox-style {
@@ -92,3 +94,6 @@ input.toggle-style:checked::after {
 //   cursor: pointer;
 
 // }
+.label {
+  line-height: 1.5rem;
+}
