@@ -3,7 +3,7 @@ import { CrudBaseServiceGenerator } from "@lotus/front-global/front-bases"
 import { environment } from "@lotus-web/environment";
 import { Injectable } from "@angular/core";
 import { EntityOwnershipGroupCommonDTO, EntityOwnershipGroupSearchDTO } from "@ubs-platform/users-common";
-import { merge, mergeMap } from "rxjs";
+import { merge, mergeMap, ReplaySubject } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -11,9 +11,11 @@ import { merge, mergeMap } from "rxjs";
 export class PublisherTeamService extends CrudBaseServiceGenerator<EntityOwnershipGroupCommonDTO, EntityOwnershipGroupCommonDTO, EntityOwnershipGroupSearchDTO>(`${environment.authUrl}entity-ownership-group`) {
 
     private _activeTeamId: string | null | undefined;
-
+    private _currentTeamObserver = new ReplaySubject<string | null | undefined>();
+    
     /**
-     *
+     * PublisherTeamService constructor.
+     * @param http Angular HttpClient for making HTTP requests.
      */
     constructor(override http: HttpClient) {
         super(http);
@@ -23,10 +25,15 @@ export class PublisherTeamService extends CrudBaseServiceGenerator<EntityOwnersh
     // Bir obje eklenirken veya güncellenirken, eğer yetkisi varsa takım seçip ona göre ekleme yapabilmesi için aktif takım bilgisini tutuyoruz. Bu bilgi, ekleme veya güncelleme işlemi sırasında backend'e gönderiliyor ve backend de bu bilgiye göre işlemi gerçekleştiriyor.
     setActiveTeam(teamId?: string) {
         this._activeTeamId = teamId;
+        this._currentTeamObserver.next(teamId);
     }
 
     getActiveTeamId() {
         return this._activeTeamId;
+    }
+
+    getActiveTeamObserver() {
+        return this._currentTeamObserver.asObservable();
     }
 
 

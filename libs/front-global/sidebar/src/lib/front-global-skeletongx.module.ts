@@ -6,6 +6,7 @@ import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import { OnpageHeaderComponent } from '@lotus/front-global/dynamic-headers';
 import { IconComponent } from "@lotus/front-global/icon";
+import { PTooltipDirective } from "@lotus/front-global/overlay-panel";
 
 @NgModule({
   imports: [
@@ -13,9 +14,10 @@ import { IconComponent } from "@lotus/front-global/icon";
     UbsTranslatorNgxModule,
     FrontGlobalButtonModule,
     OnpageHeaderComponent,
-    IconComponent
-],
+    IconComponent,
+    PTooltipDirective
+  ],
   declarations: [SidebarComponent, SidebarMenuComponent],
   exports: [SidebarComponent],
 })
-export class FrontGlobalSidebarModule {}
+export class FrontGlobalSidebarModule { }

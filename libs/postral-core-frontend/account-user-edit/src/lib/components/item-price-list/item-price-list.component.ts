@@ -1,14 +1,10 @@
-import { Component, input, signal, viewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, input, output, signal, viewChild } from '@angular/core';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { SearchableDataTableComponent } from '@lotus/front-global/table';
 import {
-  ItemAdminControllerService,
   ItemCrudService,
 } from '@lotus/postral-core-frontend/client';
 import {
-  AccountDTO,
-  AccountAddressDto,
   ItemPriceDTO,
 } from '@tk-postral/payment-common';
 import { FormEditInstruction } from '@lotus/front-global/reform-data-edit';
@@ -24,6 +20,7 @@ import { ItemPriceForm } from '@lotus/postral-core-frontend/forms';
 export class ItemPriceListComponent {
   table = viewChild<SearchableDataTableComponent>('table');
   itemId = input<string>('');
+  readonly pricesChanged = output<void>();
   admin = signal<boolean>(false);
   prices = signal<ItemPriceDTO[]>([]);
   instruction = signal<FormEditInstruction | null>(null);
@@ -82,6 +79,7 @@ export class ItemPriceListComponent {
         'success'
       );
       this.loadPrices();
+      this.pricesChanged.emit();
     });
   }
 
@@ -109,6 +107,7 @@ export class ItemPriceListComponent {
         );
         this.selectedPage.set('list');
         this.loadPrices();
+        this.pricesChanged.emit();
       },
       afterSaveError: (error, data) => {
         this.overlayService.alert('general.error', 'postral.item-price.save-error', 'error');

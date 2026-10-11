@@ -5,7 +5,8 @@ import { map } from 'rxjs';
 export function getAccountIdsRelated(
   env: any,
   fieldPaymentSide: 'SELLER' | 'CUSTOMER' | 'USER' | 'ADMIN' = 'USER',
-  accountType: 'INDIVIDUAL' | 'COMMERCIAL' | undefined = undefined
+  accountType: 'INDIVIDUAL' | 'COMMERCIAL' | undefined = undefined,
+  publisherTeamId?: string,
 ) {
   const accountService = (env.app?.['injector'] as Injector).get(
     AccountControllerService
@@ -13,8 +14,9 @@ export function getAccountIdsRelated(
 
   if (fieldPaymentSide === 'CUSTOMER') {
     return accountService.paymentRelatedAccounts({
-        selectFrom: "TARGET",
-        filterRelatedAccountIdsIn: "SOURCE"
+      selectFrom: "TARGET",
+      filterRelatedAccountIdsIn: "SOURCE",
+      relatedAccountIds: publisherTeamId ? [publisherTeamId] : []
     }).pipe(
       map((accounts) =>
         accounts.map((account) => ({
@@ -29,7 +31,7 @@ export function getAccountIdsRelated(
     return accountService.paymentRelatedAccounts(
       {
         selectFrom: "SOURCE",
-        filterRelatedAccountIdsIn: "TARGET"
+        filterRelatedAccountIdsIn: "TARGET",
       }
     ).pipe(
       map((accounts) =>
@@ -43,7 +45,11 @@ export function getAccountIdsRelated(
 
   if (fieldPaymentSide === 'ADMIN' || fieldPaymentSide === 'USER') {
     return accountService
-      .getAll({ admin: fieldPaymentSide === 'ADMIN' ? 'true' : 'false', type: accountType })
+      .getAll({
+        admin: fieldPaymentSide === 'ADMIN' ? 'true' : 'false', type: accountType,
+        entityOwnershipGroupId: publisherTeamId
+
+      })
       .pipe(
         map((accounts) =>
           accounts.map((account) => ({

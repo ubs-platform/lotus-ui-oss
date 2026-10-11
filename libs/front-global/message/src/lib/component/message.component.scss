@@ -1,8 +1,10 @@
 :host {
   display: block;
+  width: 100%;
 }
 
 .lotus-message {
   width: fit-content;
+  // min-width: 50vw;
   max-width: 100%;
 }

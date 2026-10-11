@@ -1,7 +1,8 @@
 <lotus-web-data-list-layout>
   <ng-template action>
-    <lotus-web-searchable-data-table-filter-config-holder [searchableDataTableComponent]="dataTable">
-
+    <lotus-web-searchable-data-table-filter-config-holder
+      [searchableDataTableComponent]="dataTable"
+    >
     </lotus-web-searchable-data-table-filter-config-holder>
   </ng-template>
   <ng-container content>
@@ -21,13 +22,18 @@
       <column name="paymentDate">
         <ng-template header content="postral.payment.date"></ng-template>
         <ng-template data let-item="item">
-          {{ item.createdAt | date : 'short' }}
+          {{ item.createdAt | date: 'short' }}
         </ng-template>
       </column>
       <column name="type">
         <ng-template header content="postral.payment.type"></ng-template>
         <ng-template data let-item="item">
-          {{ (item.type === 'PURCHASE' ? 'postral.payment.type-purchase' : 'postral.payment.type-refund') | translate }}
+          {{
+            (item.type === 'PURCHASE'
+              ? 'postral.payment.type-purchase'
+              : 'postral.payment.type-refund'
+            ) | translate
+          }}
         </ng-template>
       </column>
       <column name="amount">
@@ -48,18 +54,29 @@
             [color]="
               item.paymentStatus == 'COMPLETED'
                 ? 'green'
-                : (item.paymentStatus == 'WAITING' || item.paymentStatus == 'INITIATED')
-                ? 'gray'
-                : 'gray'
+                : item.paymentStatus == 'WAITING' ||
+                    item.paymentStatus == 'INITIATED'
+                  ? 'gray'
+                  : 'gray'
             "
             [label]="
               (item.paymentStatus == 'COMPLETED'
                 ? 'postral.payment.status-completed'
-                : (item.paymentStatus == 'WAITING' || item.paymentStatus == 'INITIATED')
-                ? 'postral.payment.status-waiting'
-                : 'postral.payment.status-failed') | translate
+                : item.paymentStatus == 'WAITING' ||
+                    item.paymentStatus == 'INITIATED'
+                  ? 'postral.payment.status-waiting'
+                  : 'postral.payment.status-failed'
+              ) | translate
             "
           ></lotus-web-status-badge>
+          @if (item.externalPlatformId) {
+            <div>
+              <lotus-web-status-badge
+                color="orange"
+                label="Dış platform"
+              ></lotus-web-status-badge>
+            </div>
+          }
         </ng-template>
       </column>
       <column name="customerId">
@@ -75,7 +92,8 @@
             buttonClass="secondary"
             (click)="goPaymentInfo(item.id)"
             stringContent="general.detail"
-            iconClass="material-symbols-outlined" iconContent="visibility"
+            iconClass="material-symbols-outlined"
+            iconContent="visibility"
           >
           </block-button>
         </ng-template>

@@ -202,10 +202,11 @@ export class BasicOverlayService {
   reformDialog(
     reform: Reform,
     header: TranslatorText,
-    extraCheckError: () => TranslatorText | null = () => null
+    extraCheckError: () => TranslatorText | null = () => null,
+    beforeSubmit: (reform: Reform) => void | Promise<void> = () => undefined
   ) {
     const dialog = this.webdialogHandler.open(ReformDialogComponent, {
-      data: { reform, extraCheckError },
+      data: { reform, extraCheckError, beforeSubmit },
       title: header,
       position: this.dialogPosition(),
       defaultOutValue: false,

@@ -12,6 +12,7 @@ import {
   TaxDTO,
   PaymentChannelStatusDTO,
   PaymentFullDTO,
+  CreateExternalPlatformPaymentDTO,
 } from '@tk-postral/payment-common';
 
 import { Injectable } from '@angular/core';
@@ -36,6 +37,13 @@ export class PaymentControllerService {
     let urlAltered = this.interceptUrl('');
 
     return this.http.post<PaymentDTO>(urlAltered, requestBody);
+  }
+
+  createExternalPlatformPayment(requestBody: CreateExternalPlatformPaymentDTO): Observable<PaymentDTO> {
+    return this.http.post<PaymentDTO>(
+      this.interceptUrl('external-platform'),
+      requestBody
+    );
   }
 
   checkOperation(id: string): Observable<PaymentDTO> {

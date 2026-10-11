@@ -21,6 +21,7 @@ import { catchError, of } from 'rxjs';
   styleUrls: ['./transaction-history.component.scss'],
 })
 export class TransactionHistoryComponent {
+  readonly sellerMode = signal(false);
   instruction = signal<FormEditInstruction | null>(null);
   selectedPage = signal<string>('information');
   itemId = signal<string>('');
@@ -39,6 +40,9 @@ export class TransactionHistoryComponent {
   ) {}
 
   ngOnInit(): void {
+    this.sellerMode.set(!this.activatedRoute.pathFromRoot.some(
+      route => route.snapshot.data['paymentMode'] === 'customer'
+    ));
 
     this.activatedRoute.data.subscribe((data) => {
       // console.log(data);

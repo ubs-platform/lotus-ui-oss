@@ -4,7 +4,7 @@
  * Feel free to feedback any issues to https://github.com/ubs-platform/ubs-mona-mr
  * Generated on: 2025-09-29T17:39:22.064Z
  */
-import { AccountDTO, AccountSearchParamsDTO, ItemDTO, ItemSearchDTO, ItemTaxDTO, ItemTaxSearchDTO } from '@tk-postral/payment-common';
+import { ItemTaxDTO, ItemTaxSearchDTO } from '@tk-postral/payment-common';
 
 import { CrudBaseServiceGenerator } from '@lotus/front-global/front-bases';
 import { Injectable } from '@angular/core';

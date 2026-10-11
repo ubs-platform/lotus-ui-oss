@@ -1,6 +1,198 @@
 import { minky, minkyRoot } from '../../decorations/decorators';
 import { RequiredValidator } from './validators/required';
 import { Reform } from './reform';
+import { CombinedEnvironment } from '../state-environment';
+
+const initialChange = jest.fn(
+  (_value: unknown, _oldValue: unknown, environment: CombinedEnvironment): undefined => {
+    environment.state.setDisabled?.('target', true);
+    environment.state.setHidden?.('target', true);
+    environment.state.setData?.('target', { initialized: true });
+    return undefined;
+  }
+);
+const regularChange = jest.fn();
+const normalizeInitialChange = jest.fn((value: string) => value.toUpperCase());
+
+@minkyRoot({
+  fallbackConstruction: () => ({ source: 'fallback' }),
+})
+class InitialChangeFields {
+  @minky({ emitInitialValueChange: true, onValueChange: initialChange })
+  source?: string | number | boolean | null;
+
+  @minky({ onValueChange: regularChange })
+  target?: string;
+
+  @minky({ emitInitialValueChange: false, onValueChange: regularChange })
+  quietSource?: string;
+
+  @minky({ hide: true, emitInitialValueChange: true, onValueChange: initialChange })
+  hiddenSource?: string;
+
+  @minky({ emitInitialValueChange: true, onValueChange: normalizeInitialChange })
+  normalized?: string;
+
+  @minky({ inputType: 'file', emitInitialValueChange: true, onValueChange: initialChange })
+  file?: string;
+}
+
+@minkyRoot()
+class InitialChangeContainer {
+  @minky({ inputType: 'sub-object', subObjectKey: InitialChangeFields })
+  child?: InitialChangeFields;
+
+  @minky({ inputType: 'array', subObjectKey: InitialChangeFields })
+  items?: InitialChangeFields[];
+}
+
+describe('Initial value change callbacks', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('waits for carrier generation and runs once with the prepared environment', () => {
+    const form = new Reform<InitialChangeFields>(InitialChangeFields, {
+      source: 'initial',
+      target: 'existing',
+    });
+    const app = { ready: true };
+    form.setApplicationEnvironment(app);
+    form.getParameterMap().set('parameter', 'ready');
+    const updates = jest.fn();
+    form.valueUpdate.subscribe(updates);
+
+    expect(initialChange).not.toHaveBeenCalled();
+    const carriers = form.generateInputCarriers();
+    const target = carriers.find((carrier) =>
+      carrier.carrierType === 'INPUT' && carrier.path === 'target'
+    );
+
+    expect(initialChange).toHaveBeenCalledTimes(1);
+    expect(initialChange).toHaveBeenCalledWith('initial', 'initial', expect.objectContaining({
+      app,
+      parameters: form.getParameterMap(),
+      state: expect.objectContaining({ formValue: form.value }),
+    }));
+    expect(target).toMatchObject({
+      disable: true,
+      hidden: true,
+      isTouched: false,
+      data: { initialized: true },
+    });
+    expect(updates).toHaveBeenCalledWith(form.value);
+    expect(regularChange).not.toHaveBeenCalled();
+
+    form.generateInputCarriers();
+    form.setValueByPath('source', 'programmatic');
+    form.generateInputCarriers();
+    expect(initialChange).toHaveBeenCalledTimes(1);
+
+    const source = carriers.find((carrier) =>
+      carrier.carrierType === 'INPUT' && carrier.path === 'source'
+    );
+    if (source?.carrierType !== 'INPUT') throw new Error('Source carrier missing');
+    source.setValue('edited');
+    expect(initialChange).toHaveBeenCalledTimes(2);
+    expect(initialChange.mock.calls[1].slice(0, 2)).toEqual(['edited', 'programmatic']);
+  });
+
+  it('preserves callback overrides without replacing the saved initial value', () => {
+    const form = new Reform<InitialChangeFields>(InitialChangeFields, {
+      normalized: 'initial',
+    });
+
+    const carriers = form.generateInputCarriers();
+
+    expect(form.value.normalized).toBe('INITIAL');
+    expect(form.initialValue.normalized).toBe('initial');
+    expect(carriers.find((carrier) =>
+      carrier.carrierType === 'INPUT' && carrier.path === 'normalized'
+    )).toMatchObject({ value: 'INITIAL' });
+    expect(normalizeInitialChange).toHaveBeenCalledTimes(1);
+  });
+
+  it.each([false, 0, ''])('includes non-null falsy initial value %p', (source) => {
+    const form = new Reform<InitialChangeFields>(InitialChangeFields, { source });
+    form.generateInputCarriers();
+    expect(initialChange.mock.calls[0].slice(0, 2)).toEqual([source, source]);
+  });
+
+  it.each([{}, { source: null }, { source: undefined }, { file: 'existing' }])(
+    'skips missing, null, undefined and file values: %p',
+    (value) => {
+      const form = new Reform<InitialChangeFields>(InitialChangeFields, value);
+      form.generateInputCarriers();
+      form.generateInputCarriers();
+      expect(initialChange).not.toHaveBeenCalled();
+    }
+  );
+
+  it('includes nested objects and every existing array item', () => {
+    const form = new Reform<InitialChangeContainer>(InitialChangeContainer, {
+      child: { source: 'nested' },
+      items: [{ source: 'first' }, { source: 'second' }],
+    });
+    form.generateInputCarriers();
+    form.generateInputCarriers();
+    expect(initialChange.mock.calls.map((call) => call[0])).toEqual([
+      'nested', 'first', 'second',
+    ]);
+  });
+
+  it('includes fallback-construction values', () => {
+    const form = new Reform<InitialChangeFields>(InitialChangeFields);
+    form.generateInputCarriers();
+    expect(initialChange.mock.calls[0].slice(0, 2)).toEqual(['fallback', 'fallback']);
+  });
+
+  it('includes hidden fields but respects explicit opt-out', () => {
+    const form = new Reform<InitialChangeFields>(InitialChangeFields, {
+      hiddenSource: 'hidden',
+      quietSource: 'quiet',
+    });
+    const carriers = form.generateInputCarriers();
+    expect(initialChange.mock.calls[0].slice(0, 2)).toEqual(['hidden', 'hidden']);
+    expect(regularChange).not.toHaveBeenCalled();
+    expect(carriers.some((carrier) =>
+      carrier.carrierType === 'INPUT' && carrier.path === 'hiddenSource'
+    )).toBe(false);
+  });
+
+  it('does not overwrite state mutations when a callback returns undefined', () => {
+    initialChange.mockImplementationOnce((_value, _oldValue, environment) => {
+      environment.state.formValue.source = 'changed by callback';
+      return undefined;
+    });
+    const form = new Reform<InitialChangeFields>(InitialChangeFields, { source: 'initial' });
+    form.generateInputCarriers();
+    expect(form.value.source).toBe('changed by callback');
+    expect(form.initialValue.source).toBe('initial');
+  });
+
+  it('does not repeat callbacks if a valueUpdate subscriber regenerates carriers', () => {
+    const form = new Reform<InitialChangeFields>(InitialChangeFields, { source: 'initial' });
+    form.valueUpdate.subscribe(() => form.generateInputCarriers());
+    form.generateInputCarriers();
+    expect(initialChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('reapplies initialization state after reset and resetToValue', () => {
+    const form = new Reform<InitialChangeFields>(InitialChangeFields, { source: 'initial' });
+    form.generateInputCarriers();
+    form.reset();
+    expect(form.getDataByPath('target')).toBeUndefined();
+    form.generateInputCarriers();
+    expect(form.getDataByPath('target')).toEqual({ initialized: true });
+    expect(initialChange).toHaveBeenCalledTimes(2);
+
+    form.resetToValue({ source: 'replacement' });
+    form.generateInputCarriers();
+    form.generateInputCarriers();
+    expect(initialChange).toHaveBeenCalledTimes(3);
+    expect(initialChange.mock.calls[2].slice(0, 2)).toEqual(['replacement', 'replacement']);
+  });
+});
 
 @minkyRoot({
   fallbackConstruction: () => new Serie('', ''),

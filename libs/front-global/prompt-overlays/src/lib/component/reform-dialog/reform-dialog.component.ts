@@ -12,6 +12,7 @@ export interface ReformDialogData {
   header: TranslatorText;
   reform: Reform;
   extraCheckError: () => TranslatorText | null;
+  beforeSubmit?: (reform: Reform) => void | Promise<void>;
 }
 
 @Component({
@@ -31,8 +32,20 @@ export class ReformDialogComponent {
     private overlay: BasicOverlayService
   ) {}
 
-  complete() {
-    const valErrors = this.dialogConfig.data!.reform.allValidationErrors();
+  async complete(): Promise<void> {
+    const reform = this.dialogConfig.data!.reform;
+    try {
+      await this.dialogConfig.data?.beforeSubmit?.(reform);
+    } catch {
+      this.overlay.alert(
+        'Gönderim hazırlanamadı',
+        'Form gönderilmeden önceki işlem tamamlanamadı.',
+        'error'
+      );
+      return;
+    }
+
+    const valErrors = reform.allValidationErrors();
     const extraError = this.dialogConfig.data?.extraCheckError();
     if (valErrors.length > 0) {
       this.overlay.alert(

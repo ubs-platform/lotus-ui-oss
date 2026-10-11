@@ -8,6 +8,7 @@ import { Option } from '@lotus/legendary-front/custom-select';
   selector: 'lib-refund-request-dialog',
   standalone: false,
   templateUrl: './refund-request-dialog.component.html',
+  styleUrls: ['./refund-request-dialog.component.scss'],
 })
 export class RefundRequestDialogComponent {
 

@@ -2,6 +2,7 @@ export * from './constants/account-types';
 export * from './constants/unit-types';
 export * from './types/search-from-stringified.type';
 export * from './utils/get-account-ids-related.util';
+export * from './utils/address-ubl-mapper.util';
 
 export * from './forms/item-price.form';
 export * from './forms/item-tax-variation.form';

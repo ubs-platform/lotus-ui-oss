@@ -107,7 +107,7 @@ export class AccountForm extends AccountDTO {
 
   @minky({
     label: 'Vergi Dairesi',
-    disable: true,
+    // disable: true,
   })
   override taxOffice = '';
 

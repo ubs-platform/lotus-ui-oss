@@ -22,6 +22,7 @@ import { QueryListComponent, QueryInfoComponent, ReportInfoComponent, ReportList
 import { NotFoundPageComponent } from '@lotus/front-global/error-status-pages';
 import { WebhookConfigInfoComponent } from './components/webhook-config-info/webhook-config-info.component';
 import { WebhookConfigListComponent } from './components/webhook-config-list/webhook-config-list.component';
+import { ExternalPlatformPaymentComponent } from './components/external-platform-payment/external-platform-payment.component';
 
 @NgModule({
   imports: [
@@ -55,6 +56,9 @@ import { WebhookConfigListComponent } from './components/webhook-config-list/web
             path: "transaction/history", component: TransactionHistoryComponent, data: {
               admin: false
             }
+          },
+          {
+            path: 'transaction/external-platform', component: ExternalPlatformPaymentComponent,
           },
           {
             path: "transaction/:sellerPaymentOrderId", component: TransactionInfoComponent,

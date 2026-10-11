@@ -13,6 +13,7 @@ import {
 import { AccountDTO } from '@tk-postral/payment-common';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { lastValueFrom, map, merge, mergeMap } from 'rxjs';
+import { PublisherTeamService } from '@lotus/front-global/publisher-teams/client';
 @Component({
   selector: 'lib-account-user-info',
   standalone: false,
@@ -30,7 +31,8 @@ export class AccountUserInfoComponent {
     private activatedRoute: ActivatedRoute,
     private basicOverlay: BasicOverlayService,
     private addressService: AddressControllerService,
-    private router: Router
+    private router: Router,
+    private publisherTeamService: PublisherTeamService
   ) { }
 
   ngOnInit(): void {
@@ -61,6 +63,7 @@ export class AccountUserInfoComponent {
       },
       beforeSave: (form: Reform) => true,
       saveMethod: (data) => {
+        data.entityOwnershipGroupId = this.publisherTeamService.getActiveTeamId()!;
         if (data.id) {
           return this.accountService.update(data);
         }

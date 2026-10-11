@@ -3,71 +3,89 @@
 >
   <div class="flex flex-column gap-4 flex-grow-1">
     @if (transactionInfo()) {
-    <div class="payment-info-section mona-card">
-      <h2>{{ 'postral.payment.info' | translate }}</h2>
-      <div class="info-grid gap-3">
-        <div class="info-item">
-          <span class="label">{{ 'postral.seller-order-id' | translate }}:</span>
-          <span class="value">{{ transactionInfo()!.id }}</span>
-        </div>
-        <div class="info-item">
-          <span class="label">{{ 'postral.invoice.payment-id' | translate }}:</span>
-          <span class="value">{{ transactionInfo()!.paymentId }}</span>
-        </div>
-        <div class="info-item">
-          <span class="label">{{ 'postral.currency' | translate }}:</span>
-          <span class="value">{{ transactionInfo()!.currency }}</span>
-        </div>
-        <div class="info-item">
-          <span class="label">{{ 'postral.amount' | translate }}:</span>
-          <span class="value">
-            <lib-money-display
-              [amount]="transactionInfo()!.amount"
-              [currency]="transactionInfo()!.currency"
-            ></lib-money-display>
-          </span>
-        </div>
-        <div class="info-item">
-          <span class="label">{{ 'postral.transaction.type' | translate }}:</span>
-          <span class="value">{{ transactionInfo()!.transactionType }}</span>
-        </div>
+      <div class="payment-info-section mona-card">
+        <h2>{{ 'postral.payment.info' | translate }}</h2>
 
-        <div class="info-item">
-          <span class="label">{{ 'postral.transaction.target-account' | translate }}:</span>
-          <span class="value">
-            <!-- 
+        <div class="info-grid gap-3">
+          <div class="info-item">
+            <span class="label"
+              >{{ 'postral.seller-order-id' | translate }}:</span
+            >
+            <span class="value">{{ transactionInfo()!.id }}</span>
+            @if (transactionInfo()?.externalPlatformId) {
+              <lotus-web-status-badge
+                color="orange"
+                label="Dış platform"
+              ></lotus-web-status-badge>
+            }
+          </div>
+          <div class="info-item">
+            <span class="label"
+              >{{ 'postral.invoice.payment-id' | translate }}:</span
+            >
+            <span class="value">{{ transactionInfo()!.paymentId }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">{{ 'postral.currency' | translate }}:</span>
+            <span class="value">{{ transactionInfo()!.currency }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">{{ 'postral.amount' | translate }}:</span>
+            <span class="value">
+              <lib-money-display
+                [amount]="transactionInfo()!.amount"
+                [currency]="transactionInfo()!.currency"
+              ></lib-money-display>
+            </span>
+          </div>
+          <div class="info-item">
+            <span class="label"
+              >{{ 'postral.transaction.type' | translate }}:</span
+            >
+            <span class="value">{{ transactionInfo()!.transactionType }}</span>
+          </div>
+
+          <div class="info-item">
+            <span class="label"
+              >{{ 'postral.transaction.target-account' | translate }}:</span
+            >
+            <span class="value">
+              <!-- 
 export type SellerPaymentOrderType = "CREDIT_TO_SELLER" | "DEBIT_FROM_SELLER";
             
             -->
 
-            {{
-              transactionInfo()!.transactionType == 'CREDIT_TO_SELLER'
-                ? transactionInfo()!.targetAccountName
-                : transactionInfo()!.sourceAccountName
-            }}
-          </span>
-        </div>
-        <div class="info-item">
-          <span class="label">{{ 'postral.transaction.source-account' | translate }}:</span>
-          <span class="value">
-            {{
-              transactionInfo()!.transactionType == 'CREDIT_TO_SELLER'
-                ? transactionInfo()!.sourceAccountName
-                : transactionInfo()!.targetAccountName
-            }}
-          </span>
+              {{
+                transactionInfo()!.transactionType == 'CREDIT_TO_SELLER'
+                  ? transactionInfo()!.targetAccountName
+                  : transactionInfo()!.sourceAccountName
+              }}
+            </span>
+          </div>
+          <div class="info-item">
+            <span class="label"
+              >{{ 'postral.transaction.source-account' | translate }}:</span
+            >
+            <span class="value">
+              {{
+                transactionInfo()!.transactionType == 'CREDIT_TO_SELLER'
+                  ? transactionInfo()!.sourceAccountName
+                  : transactionInfo()!.targetAccountName
+              }}
+            </span>
+          </div>
         </div>
       </div>
-    </div>
-    } @if (paymentItems().length > 0) {
-    <div class="payment-items-section flex-grow-1 mona-card">
-      <h2>{{ 'postral.payment.items' | translate }}</h2>
-      <lib-payment-item-list
-        [items]="paymentItems()"
-        [showSellerPaymentId]="false"
-        [currency]="transactionInfo()?.currency || 'TRY'"
-      ></lib-payment-item-list>
-    </div>
+    }
+    @if (paymentItems().length > 0) {
+      <div class="payment-items-section flex-grow-1 mona-card">
+        <h2>{{ 'postral.payment.items' | translate }}</h2>
+        <lib-payment-item-list
+          [items]="paymentItems()"
+          [showSellerPaymentId]="false"
+          [currency]="transactionInfo()?.currency || 'TRY'"
+        ></lib-payment-item-list>
+      </div>
     }
   </div>
   <div class="flex flex-column gap-4 side-minimal">
@@ -79,16 +97,17 @@ export type SellerPaymentOrderType = "CREDIT_TO_SELLER" | "DEBIT_FROM_SELLER";
           #invoiceListMinimal
         ></lib-invoice-list-minimal>
         @if (invoiceHasBeenFinalized()) {
-        <div class="text-sm text-muted">
-          {{ 'postral.invoice.already-finalized-warning' | translate }}
-        </div>
+          <div class="text-sm text-muted">
+            {{ 'postral.invoice.already-finalized-warning' | translate }}
+          </div>
         } @else {
-        <block-button
-          (click)="createInvoice()"
-          [cover]="true"
-          stringContent="postral.invoice.create-new"
-          iconClass="material-symbols-outlined" iconContent="add"
-        ></block-button>
+          <block-button
+            (click)="createInvoice()"
+            [cover]="true"
+            stringContent="postral.invoice.create-new"
+            iconClass="material-symbols-outlined"
+            iconContent="add"
+          ></block-button>
         }
       </div>
     </div>
@@ -96,13 +115,17 @@ export type SellerPaymentOrderType = "CREDIT_TO_SELLER" | "DEBIT_FROM_SELLER";
     <div class="payment-info-section mona-card">
       <h2>{{ 'general.actions' | translate }}</h2>
       <div class="info-grid flex flex-column gap-3">
-        @if (paymentInfo()?.openPayment && paymentInfo()?.paymentStatus === 'WAITING') {
-        <block-button
-          (click)="confirmOpenPayment()"
-          [cover]="true"
-          stringContent="postral.invoice.confirm-open"
-          iconClass="material-symbols-outlined" iconContent="check"
-        ></block-button>
+        @if (
+          paymentInfo()?.openPayment &&
+          paymentInfo()?.paymentStatus === 'WAITING'
+        ) {
+          <block-button
+            (click)="confirmOpenPayment()"
+            [cover]="true"
+            stringContent="postral.invoice.confirm-open"
+            iconClass="material-symbols-outlined"
+            iconContent="check"
+          ></block-button>
         }
         <!-- TODO:Satıcı tarafı iade başlatabilir... Ya -->
         <!-- <block-button
@@ -110,13 +133,19 @@ export type SellerPaymentOrderType = "CREDIT_TO_SELLER" | "DEBIT_FROM_SELLER";
           stringContent="postral.transaction.dispute"
           iconClass="material-symbols-outlined" iconContent="warning"
         ></block-button> -->
-        @if (paymentInfo()?.paymentStatus === 'COMPLETED') {
-        <block-button
-          (click)="showRefundDialog()"
-          [cover]="true"
-          stringContent="postral.refund.start"
-          iconClass="material-symbols-outlined" iconContent="undo"
-        ></block-button>
+        @if (paymentInfo()?.externalPlatformId) {
+          <p>
+            Harici platform satışlarında iade henüz desteklenmiyor. İadeyi
+            satışın yapıldığı platform üzerinden gerçekleştirin.
+          </p>
+        } @else if (paymentInfo()?.paymentStatus === 'COMPLETED') {
+          <block-button
+            (click)="showRefundDialog()"
+            [cover]="true"
+            stringContent="postral.refund.start"
+            iconClass="material-symbols-outlined"
+            iconContent="undo"
+          ></block-button>
         }
       </div>
     </div>
@@ -124,10 +153,10 @@ export type SellerPaymentOrderType = "CREDIT_TO_SELLER" | "DEBIT_FROM_SELLER";
 </div>
 
 @if (paymentInfo()) {
-<lib-refund-request-dialog
-  [visible]="refundDialogVisible"
-  [paymentId]="paymentInfo()!.id"
-  [paymentItems]="paymentItems()"
-  (visibleChange)="refundDialogVisible = false"
-></lib-refund-request-dialog>
+  <lib-refund-request-dialog
+    [visible]="refundDialogVisible"
+    [paymentId]="paymentInfo()!.id"
+    [paymentItems]="paymentItems()"
+    (visibleChange)="refundDialogVisible = false"
+  ></lib-refund-request-dialog>
 }

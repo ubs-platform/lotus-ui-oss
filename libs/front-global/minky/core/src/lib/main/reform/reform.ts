@@ -8,10 +8,7 @@ import { Reviewer } from './reviewer';
 import { IValidatorResult, ValidatorResult } from './validator';
 import { ReplaySubject, Subject } from 'rxjs';
 import { TouchMap } from './touch-map';
-import {
-  DefaultEnvironmentControl,
-  IEnvironmentControl,
-} from './environment-control';
+
 import { ReformUtils } from './utils';
 import { MetaPath } from './metapath';
 import { CarrierManager } from './carriers/carrier-manager';
@@ -21,6 +18,10 @@ import {
   CombinedEnvironment,
   StateEnvironment,
 } from '../state-environment';
+
+export class ReformOptions {
+  parameters?: Map<string, any> | Record<string, any>;
+}
 
 export class Reform<T = any> {
   propertyMetas: PropertyMeta<T>[];
@@ -38,14 +39,14 @@ export class Reform<T = any> {
   private _disableOverrides = new Map<string, boolean>();
   private _hiddenOverrides = new Map<string, boolean>();
   private _dataOverrides = new Map<string, any>();
+  private _initialValueChangesEmitted = false;
 
   constructor(
     private metaKey: MetaKey,
     baseObject?: T,
-    private environmentControl?: IEnvironmentControl
+    private options?: ReformOptions
   ) {
-    if (!environmentControl)
-      environmentControl = new DefaultEnvironmentControl();
+
     this.propertyMetas = getPropertyMetaHolder().getMetas(metaKey);
     this.structureRootMeta = getStructureRootMetaHolder().getMetas(metaKey);
     if (this.structureRootMeta?.fallbackConstruction && baseObject == null) {
@@ -54,6 +55,22 @@ export class Reform<T = any> {
       this._value = baseObject;
     } else {
       throw `MINKY REFORM: unable to find related structural meta ${metaKey} with 'fallbackConstruction', it is required for construct baseObject properly`;
+    }
+
+    if (this.options?.parameters) {
+      if (this.options.parameters instanceof Map) {
+        const entryIteroator = this.options.parameters.entries();
+        while (true) {
+          const next = entryIteroator.next();
+          if (next.done) break;
+          const [key, value] = next.value;
+          this._parameters.set(key, value);
+        }
+      } else {
+        for (const key of Object.keys(this.options.parameters)) {
+          this._parameters.set(key, (this.options.parameters as Record<string, any>)[key]);
+        }
+      }
     }
 
     this._initialValue = JSON.parse(JSON.stringify(this._value));
@@ -86,11 +103,7 @@ export class Reform<T = any> {
         console.warn('MINKY: Unable to find related meta for select items');
         return () => [];
       },
-      combinedEnvironment: () => ({
-        app: this.appEnv,
-        parameters: this._parameters,
-        state: this.getStateEnvironment(),
-      }),
+      combinedEnvironment: () => this.getCombinedEnvironment(),
     });
   }
 
@@ -314,6 +327,7 @@ export class Reform<T = any> {
     this._hiddenOverrides.clear();
     this._dataOverrides.clear();
     this.allErrorsRevealed = false;
+    this._initialValueChangesEmitted = false;
     this.valueBigUpdate.next(this.value);
   }
 
@@ -323,7 +337,70 @@ export class Reform<T = any> {
   }
 
   generateInputCarriers(propertyMetas = this.propertyMetas, prefix = '') {
+    this.emitInitialValueChanges();
     return this.carrierManager.generateInputCarriers(propertyMetas, prefix);
+  }
+
+  private emitInitialValueChanges(): void {
+    if (this._initialValueChangesEmitted) return;
+    const initialChanges = this.collectInitialValueChanges(
+      this.propertyMetas,
+      this.value
+    );
+    this._initialValueChangesEmitted = true;
+    for (const { meta, path, value } of initialChanges) {
+      const overrideValue = meta.onValueChange?.(
+        value,
+        value,
+        this.getCombinedEnvironment()
+      );
+      if (overrideValue !== undefined) {
+        this.setValueByPath(path, overrideValue);
+      } else {
+        this.valueUpdate.next(this.value);
+      }
+    }
+  }
+
+  private collectInitialValueChanges(
+    propertyMetas: PropertyMeta[],
+    value: unknown,
+    prefix = ''
+  ): Array<MetaPath & { value: unknown }> {
+    if (value === null || typeof value !== 'object') return [];
+    const changes: Array<MetaPath & { value: unknown }> = [];
+    for (const meta of propertyMetas) {
+      if (!meta.name || !(meta.name in value)) continue;
+      const fieldValue: unknown = Reflect.get(value, meta.name);
+      if (fieldValue == null) continue;
+      const path = this.buildPath(prefix, meta.name);
+      if (meta.emitInitialValueChange && meta.onValueChange && meta.inputType !== 'file') {
+        changes.push({ meta, path, value: fieldValue });
+      }
+      if (meta.subObjectKey) {
+        const childMetas = getPropertyMetaHolder().getMetas(meta.subObjectKey);
+        if (meta.inputType === 'array' && Array.isArray(fieldValue)) {
+          fieldValue.forEach((item: unknown, index: number) => {
+            changes.push(...this.collectInitialValueChanges(
+              childMetas,
+              item,
+              this.buildPath(path, index)
+            ));
+          });
+        } else if (meta.inputType !== 'array') {
+          changes.push(...this.collectInitialValueChanges(childMetas, fieldValue, path));
+        }
+      }
+    }
+    return changes;
+  }
+
+  private getCombinedEnvironment(): CombinedEnvironment {
+    return {
+      app: this.appEnv,
+      parameters: this._parameters,
+      state: this.getStateEnvironment(),
+    };
   }
 
   private getStateEnvironment(): StateEnvironment {

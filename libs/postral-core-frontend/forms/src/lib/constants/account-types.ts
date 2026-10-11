@@ -5,6 +5,10 @@ export const accountTypes = [
   { text: 'Ticari', value: 'COMMERCIAL' },
 ];
 
+export const accountTypeIndividual = [
+  { text: 'Kişisel', value: 'INDIVIDUAL' },
+];
+
 export const currencyOptions = [
   { text: 'TRY', value: 'TRY' },
   { text: 'USD', value: 'USD' },

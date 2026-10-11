@@ -3,101 +3,120 @@
 >
   <div class="flex flex-column gap-4 flex-grow-1">
     @if (paymentInfo()) {
-    <div class="payment-info-section mona-card">
-      <h2>{{ 'postral.payment.info' | translate }}</h2>
-      <div class="info-grid gap-3">
-        <div class="info-item">
-          <span class="label">{{ 'postral.invoice.payment-id' | translate }}:</span>
-          <span class="value">{{ paymentInfo()!.id }}</span>
-        </div>
-        <div class="info-item">
-          <span class="label">{{ 'postral.currency' | translate }}:</span>
-          <span class="value">{{ paymentInfo()!.currency }}</span>
-        </div>
-        <!-- <div class="info-item">
+      <div class="payment-info-section mona-card">
+        <h2>{{ 'postral.payment.info' | translate }}</h2>
+
+        <div class="info-grid gap-3">
+          <div class="info-item">
+            <span class="label"
+              >{{ 'postral.invoice.payment-id' | translate }}:</span
+            >
+            <span class="value">{{ paymentInfo()!.id }}</span>
+            @if (paymentInfo()?.externalPlatformId) {
+              <lotus-web-status-badge
+                color="orange"
+                label="Dış platform"
+              ></lotus-web-status-badge>
+            }
+          </div>
+          <div class="info-item">
+            <span class="label">{{ 'postral.currency' | translate }}:</span>
+            <span class="value">{{ paymentInfo()!.currency }}</span>
+          </div>
+          <!-- <div class="info-item">
         <span class="label">Satış Modu:</span>
         <span class="value">{{ paymentInfo()!.saleMode }}</span>
       </div> -->
-        <div class="info-item">
-          <span class="label">{{ 'general.type' | translate }}:</span>
-          <span class="value">{{ paymentInfo()!.type }}</span>
-        </div>
-        @if (paymentInfo()!.customerAccountId) {
-        <div class="info-item">
-          <span class="label">{{ 'postral.customer-account' | translate }}:</span>
-          <span class="value">{{ paymentInfo()!.customerAccountName || paymentInfo()!.customerAccountId }}</span>
-        </div>
-        }
-      </div>
-    </div>
-    } @if (paymentItems().length > 0) {
-    <div class="payment-items-section flex-grow-1 mona-card">
-      <h2>{{ 'postral.payment.items' | translate }}</h2>
-      <lib-payment-item-list
-        [showSellerPaymentId]="true"
-        [items]="paymentItems()"
-        [currency]="paymentInfo()?.currency || 'TRY'"
-      ></lib-payment-item-list>
-    </div>
-    } @if (taxes().length > 0) {
-    <div class="taxes-section mona-card">
-      <h3 class="mb-2">{{ 'postral.menu.taxes' | translate }}</h3>
-      <ubs-table-ngx [cover]="true" [items]="taxes()">
-        <column name="taxInfo">
-          <ng-template header content="postral.tax.info"></ng-template>
-          <ng-template data let-tax="item">
-            {{ tax.taxName || 'Vergi' }} <br />
-            <span class="text-sm text-muted"> Oran: {{ tax.percent }} </span>
-          </ng-template>
-        </column>
-
-        <column name="taxAmount">
-          <ng-template header content="postral.tax.amount"></ng-template>
-          <ng-template data let-tax="item">
-            <lib-money-display
-              [amount]="tax.taxAmount"
-              [currency]="paymentInfo()?.currency || 'TRY'"
-            ></lib-money-display>
-          </ng-template>
-        </column>
-
-        <column name="untaxAmount">
-          <ng-template header content="postral.tax.untax-amount"></ng-template>
-          <ng-template data let-tax="item">
-            <lib-money-display
-              [amount]="tax.untaxAmount"
-              [currency]="paymentInfo()?.currency || 'TRY'"
-            ></lib-money-display>
-          </ng-template>
-        </column>
-      </ubs-table-ngx>
-    </div>
-    } @if (paymentInfo()) {
-    <div class="payment-summary mona-card">
-      <div
-        class="flex flex-row justify-content-between align-items-center gap-4"
-      >
-        <div class="summary-item">
-          <span class="label">{{ 'postral.total-amount' | translate }}:</span>
-          <span class="value total">
-            <lib-money-display
-              [amount]="paymentInfo()!.totalAmount"
-              [currency]="paymentInfo()?.currency || 'TRY'"
-            ></lib-money-display>
-          </span>
-        </div>
-        <div class="summary-item">
-          <span class="label">{{ 'postral.total-tax' | translate }}:</span>
-          <span class="value">
-            <lib-money-display
-              [amount]="paymentInfo()!.taxAmount"
-              [currency]="paymentInfo()?.currency || 'TRY'"
-            ></lib-money-display>
-          </span>
+          <div class="info-item">
+            <span class="label">{{ 'general.type' | translate }}:</span>
+            <span class="value">{{ paymentInfo()!.type }}</span>
+          </div>
+          @if (paymentInfo()!.customerAccountId) {
+            <div class="info-item">
+              <span class="label"
+                >{{ 'postral.customer-account' | translate }}:</span
+              >
+              <span class="value">{{
+                paymentInfo()!.customerAccountName ||
+                  paymentInfo()!.customerAccountId
+              }}</span>
+            </div>
+          }
         </div>
       </div>
-    </div>
+    }
+    @if (paymentItems().length > 0) {
+      <div class="payment-items-section flex-grow-1 mona-card">
+        <h2>{{ 'postral.payment.items' | translate }}</h2>
+        <lib-payment-item-list
+          [showSellerPaymentId]="true"
+          [items]="paymentItems()"
+          [currency]="paymentInfo()?.currency || 'TRY'"
+        ></lib-payment-item-list>
+      </div>
+    }
+    @if (taxes().length > 0) {
+      <div class="taxes-section mona-card">
+        <h3 class="mb-2">{{ 'postral.menu.taxes' | translate }}</h3>
+        <ubs-table-ngx [cover]="true" [items]="taxes()">
+          <column name="taxInfo">
+            <ng-template header content="postral.tax.info"></ng-template>
+            <ng-template data let-tax="item">
+              {{ tax.taxName || 'Vergi' }} <br />
+              <span class="text-sm text-muted"> Oran: {{ tax.percent }} </span>
+            </ng-template>
+          </column>
 
+          <column name="taxAmount">
+            <ng-template header content="postral.tax.amount"></ng-template>
+            <ng-template data let-tax="item">
+              <lib-money-display
+                [amount]="tax.taxAmount"
+                [currency]="paymentInfo()?.currency || 'TRY'"
+              ></lib-money-display>
+            </ng-template>
+          </column>
+
+          <column name="untaxAmount">
+            <ng-template
+              header
+              content="postral.tax.untax-amount"
+            ></ng-template>
+            <ng-template data let-tax="item">
+              <lib-money-display
+                [amount]="tax.untaxAmount"
+                [currency]="paymentInfo()?.currency || 'TRY'"
+              ></lib-money-display>
+            </ng-template>
+          </column>
+        </ubs-table-ngx>
+      </div>
+    }
+    @if (paymentInfo()) {
+      <div class="payment-summary mona-card">
+        <div
+          class="flex flex-row justify-content-between align-items-center gap-4"
+        >
+          <div class="summary-item">
+            <span class="label">{{ 'postral.total-amount' | translate }}:</span>
+            <span class="value total">
+              <lib-money-display
+                [amount]="paymentInfo()!.totalAmount"
+                [currency]="paymentInfo()?.currency || 'TRY'"
+              ></lib-money-display>
+            </span>
+          </div>
+          <div class="summary-item">
+            <span class="label">{{ 'postral.total-tax' | translate }}:</span>
+            <span class="value">
+              <lib-money-display
+                [amount]="paymentInfo()!.taxAmount"
+                [currency]="paymentInfo()?.currency || 'TRY'"
+              ></lib-money-display>
+            </span>
+          </div>
+        </div>
+      </div>
     }
   </div>
 
@@ -112,13 +131,19 @@
     <div class="payment-info-section mona-card">
       <h2>{{ 'general.actions' | translate }}</h2>
       <div class="info-grid gap-3">
-        @if (paymentInfo()?.paymentStatus === 'COMPLETED') {
-        <block-button
-          stringContent="postral.refund.start"
-          iconClass="material-symbols-outlined" iconContent="undo"
-          [cover]="true"
-          (click)="showRefundDialog()"
-        ></block-button>
+        @if (paymentInfo()?.externalPlatformId) {
+          <p>
+            Harici platform satışlarında iade henüz desteklenmiyor. İadeyi
+            satışın yapıldığı platform üzerinden gerçekleştirin.
+          </p>
+        } @else if (paymentInfo()?.paymentStatus === 'COMPLETED') {
+          <block-button
+            stringContent="postral.refund.start"
+            iconClass="material-symbols-outlined"
+            iconContent="undo"
+            [cover]="true"
+            (click)="showRefundDialog()"
+          ></block-button>
         }
       </div>
     </div>
@@ -132,6 +157,5 @@
     [paymentItems]="paymentItems()"
     (visibleChange)="refundDialogVisible = false"
     (onSuccess)="onRefundSuccess()"
-    
   ></lib-refund-request-dialog>
 }

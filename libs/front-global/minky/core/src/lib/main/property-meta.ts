@@ -65,6 +65,13 @@ export interface PropertyMeta<T = any> extends Label {
   ) => Observable<FeederItem[]> | Promise<FeederItem[]> | FeederItem[];
 
   /**
+   * Invoke onValueChange once for a non-null initial value when carriers are
+   * first generated, and again after reset. Both callback arguments receive
+   * the initial value. Defaults to false.
+   */
+  emitInitialValueChange?: boolean;
+
+  /**
    * Callback function invoked when the value changes
    * @param newValue The new value of the property
    * @param oldValue The old value of the property

@@ -17,7 +17,6 @@ import {
 import { PaginationItem } from '../pagination-item';
 import { CustomItemDirective } from './custom-item-directive.directive';
 import { TouchPaginationComponent } from '@lotus/front-global/ubs-touch-ngx';
-import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 
 interface ChildPaginationItem {
   pagiationItems: Array<PaginationItem | null>;

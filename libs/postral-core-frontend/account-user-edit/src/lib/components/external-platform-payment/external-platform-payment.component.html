@@ -1,0 +1,16 @@
+<section class="external-payment">
+  <onpage-header topMinimal="postral.menu.payment-and-sales" [content]="'Harici platform satışı'"></onpage-header>
+  <!-- <h2>Harici platform satışı <lotus-web-status-badge color="yellow" label="Yapım aşamasında"></lotus-web-status-badge></h2> -->
+  <p class="notice">Bu özellik deneme aşamasındadır. Harici platformda tahsil edilmiş bir satışı kaydeder; yeniden ödeme almaz. Aynı platform siparişini yalnızca bir kez kaydedin.</p>
+  <block-button buttonClass="secondary" [routerLink]="['../../transaction/history']" stringContent="Satıcı siparişlerine dön"></block-button>
+  @if (loadError()) {
+    <p role="alert">{{ loadError() }}</p>
+  } @else if (instruction(); as formInstruction) {
+    <div [attr.aria-busy]="busy()" [class.busy]="busy()">
+      <lib-reform-data-edit [formInstruction]="formInstruction" saveButtonPosition="bottom"></lib-reform-data-edit>
+    </div>
+    @if (busy()) { <p role="status">Onay / kayıt işlemi bekleniyor...</p> }
+  } @else {
+    <p role="status">Form hazırlanıyor...</p>
+  }
+</section>

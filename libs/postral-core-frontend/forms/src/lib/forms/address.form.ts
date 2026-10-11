@@ -30,11 +30,13 @@ export class AddressForm extends AccountAddressDto {
     selectItems: (env) => {
       return fetchCountries(env);
     },
+    emitInitialValueChange: true,
     onValueChange: (value, oldVal, combined) => {
-       fetchIsCountrySubdivision(combined, value).subscribe((hasSubdivisions) => {
-         combined.state.setData?.('countryCodeUserInput', { hasSubdivisions });
-         combined.state.setDisabled?.('citySubdivisionName', !hasSubdivisions);
-       });
+      fetchIsCountrySubdivision(combined, value).subscribe((hasSubdivisions) => {
+        // İlçe ayarı eğer subdivision yoksa otomatik doldurulacak şekilde ayarlanıyor. Ancak Subdivision kullanılacaksa kullanıcı tarafından girilmesi gerekiyor. 
+        // Popüler bir örnek: ABD (ülke) => Colorado (state/subdivision) => Fairplay (şehir) => SOUTH PARK (ilçe) 
+        combined.state.setDisabled?.('citySubdivisionName', !hasSubdivisions);
+      });
     },
   })
   countryCodeUserInput!: string;

@@ -21,36 +21,6 @@
           "libs/front-global/button/**/*.html"
         ]
       }
-    },
-    "storybook": {
-      "executor": "@storybook/angular:start-storybook",
-      "options": {
-        "port": 4400,
-        "configDir": "libs/front-global/button/.storybook",
-        "browserTarget": "front-global-gui-primitive:build-storybook",
-        "compodoc": false
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      }
-    },
-    "build-storybook": {
-      "executor": "@storybook/angular:build-storybook",
-      "outputs": ["{options.outputDir}"],
-      "options": {
-        "outputDir": "dist/storybook/front-global-tui-blocks",
-        "configDir": "libs/front-global/button/.storybook",
-        "browserTarget": "front-global-gui-primitive:build-storybook",
-        "compodoc": false,
-        "styles": ["apps/lotus/src/styles.scss"]
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      }
     }
   }
 }
