@@ -2,8 +2,9 @@ import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReportControllerService } from '@lotus/postral-core-frontend/client';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
-import { ReportDTO, ReportFullDTO, ReportTaxGroupDTO } from '@tk-postral/payment-common';
+import { EXTERNAL_ITEM_CLASS_COMISSION_PREFIX, EXTERNAL_PLATFORM_COMISSION_PREFIX, POSTRAL_INSTANCE, ReportFullDTO } from '@tk-postral/payment-common';
 import { Optional } from '@ubs-platform/crud-base-common/utils';
+import { TranslationParameter, TranslatorText } from '@lotus/extra/translator-core';
 
 @Component({
   selector: 'lib-report-info',
@@ -12,6 +13,7 @@ import { Optional } from '@ubs-platform/crud-base-common/utils';
   styleUrls: ['./report-info.component.scss'],
 })
 export class ReportInfoComponent implements OnInit {
+  readonly postralInstance = POSTRAL_INSTANCE;
   reportId: string = '';
   reportInfo = signal<Optional<ReportFullDTO>>(null);
   loading = signal<boolean>(true);
@@ -22,7 +24,7 @@ export class ReportInfoComponent implements OnInit {
     private router: Router,
     private reportControllerService: ReportControllerService,
     private basicOverlay: BasicOverlayService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.activeRoute.params.subscribe((params) => {
@@ -67,6 +69,28 @@ export class ReportInfoComponent implements OnInit {
         );
       },
     });
+  }
+
+  expenseTranslationParams(expenseKey: string): TranslatorText {
+    const parts = expenseKey.split(':');
+    const partPrefix = parts[0];
+    const translationKey = "postral.expense." + partPrefix;
+    let params: Record<string, any> = {};
+    // alert(parts.join(', '))
+    if (expenseKey.startsWith(EXTERNAL_PLATFORM_COMISSION_PREFIX)) {
+      params["platform"] = decodeURIComponent(parts[1]);
+    }
+    else if (expenseKey.startsWith(EXTERNAL_ITEM_CLASS_COMISSION_PREFIX)) {
+      params["platform"] = decodeURIComponent(parts[1]);
+      params["itemClass"] = decodeURIComponent(parts[2]);
+    } else {
+      params["itemClass"] = parts[1];
+    }
+
+    return {
+      key: translationKey,
+      parameters: params
+    }
   }
 
   private notFound() {

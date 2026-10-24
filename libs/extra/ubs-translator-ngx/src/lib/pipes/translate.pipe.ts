@@ -33,11 +33,12 @@ export class TranslatePipe implements PipeTransform, OnDestroy {
       let _key, _parameters;
       if (typeof key != 'string') {
         _key = key.key;
-        _parameters = key.parameters;
+        _parameters = { ...parameters, ...key.parameters };
       } else {
         _key = key;
         _parameters = parameters;
       }
+      // console.info("Translating key:", _key, "with parameters:", _parameters);
       this.disposeOld();
       this.subscription = this.translator
         .getStringListenChanges({ key: _key, parameters: _parameters })

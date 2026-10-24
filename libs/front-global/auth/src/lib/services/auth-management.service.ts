@@ -40,6 +40,10 @@ export class AuthManagementService {
     }
   }
 
+  hasLoggedUserNow() {
+    return this._user.asObservable().pipe(map(user => !!user));
+  }
+
   login(a: UserAuth) {
     return this.authService.authenticate(a).pipe(
       switchMap((b) => {

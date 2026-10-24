@@ -101,6 +101,7 @@ export class GenericAppHeaderComponent
   appFooter?: ApplicationFooterDirective;
   // hideLogoAtScroll = input(false);
   enableUserLoginOperations = input(true);
+  logoutRedirectUrl = input('/');
   bgColor = input('');
   logoSrc = input('');
   showHomepageMenu = input(true);
@@ -182,8 +183,8 @@ export class GenericAppHeaderComponent
         if (status) {
           this.authManager.logout().subscribe(() => {
             this.hideMenuRaw();
-            if (location.pathname != '' && location.pathname != '/') {
-              this.router.navigate(['']);
+            if (this.router.url !== this.logoutRedirectUrl()) {
+              this.router.navigateByUrl(this.logoutRedirectUrl());
             }
           });
         }

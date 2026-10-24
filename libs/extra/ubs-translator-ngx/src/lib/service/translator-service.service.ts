@@ -13,7 +13,7 @@ import {
   TranslationRepository,
 } from '@ubs-platform/translator-core';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TranslatorRepositoryService extends TranslationRepository {
   registeredMap: { [key: string]: boolean } = {};
   constructor(

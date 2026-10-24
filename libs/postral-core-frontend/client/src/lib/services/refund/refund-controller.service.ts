@@ -7,6 +7,7 @@ import {
   RefundRequestSearchDTO,
   ResolveRefundRequestDTO,
 } from '@tk-postral/payment-common';
+import { SearchResult } from '@ubs-platform/crud-base-common';
 
 @Injectable({
   providedIn: 'root',
@@ -37,9 +38,9 @@ export class RefundControllerService {
     return this.http.post<RefundRequestDTO>(urlAltered, body);
   }
 
-  searchRefundRequests(searchBody: RefundRequestSearchDTO): Observable<{ data: RefundRequestDTO[], total: number }> {
+  searchRefundRequests(searchBody: RefundRequestSearchDTO): Observable<SearchResult<RefundRequestDTO>> {
     const urlAltered = this.interceptUrl(`request/_search`);
-    return this.http.post<{ data: RefundRequestDTO[], total: number }>(urlAltered, searchBody);
+    return this.http.get<SearchResult<RefundRequestDTO>>(urlAltered, { params: searchBody as any });
   }
 
   getRefundRequestById(id: string): Observable<RefundRequestDTO> {

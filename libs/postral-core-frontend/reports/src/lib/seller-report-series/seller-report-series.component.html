@@ -1,0 +1,140 @@
+<section class="seller-series">
+  <!-- <h2>{{ 'postral.menu.report-summary' | translate }}</h2> -->
+  @if (customerMode()) {
+    <p role="alert">{{ 'postral.seller-series.seller-only' | translate }}</p>
+  } @else {
+    @if (instruction(); as filtersInstruction) {
+      <div class="mona-card">
+        <lib-reform-data-edit
+          [formInstruction]="filtersInstruction"
+          saveButtonPosition="hidden"
+        ></lib-reform-data-edit>
+        <p>{{ 'postral.seller-series.size-help' | translate }}</p>
+        <block-button
+          stringContent="postral.seller-series.refresh"
+          (click)="retry()"
+          [disabled]="loading()"
+        ></block-button>
+      </div>
+    }
+    @if (loading()) {
+      <p role="status">{{ 'general.loading' | translate }}</p>
+    } @else if (error()) {
+      <div role="alert">
+        <p>{{ error() | translate }}</p>
+        <block-button
+          stringContent="postral.seller-series.retry"
+          (click)="retry()"
+        ></block-button>
+      </div>
+    } @else if (noAccounts()) {
+      <p>{{ 'postral.seller-series.no-accounts' | translate }}</p>
+      <block-button
+        buttonClass="primary"
+        [routerLink]="['../account/create']"
+        stringContent="postral.menu.accounts.new"
+      ></block-button>
+    } @else if (!filters().accountId) {
+      <p>{{ 'postral.seller-series.choose-account' | translate }}</p>
+    } @else if (series(); as data) {
+      @if (!data.queries.length) {
+        <p>{{ 'postral.seller-series.no-source' | translate }}</p>
+        <p>{{ 'postral.seller-series.create-query-help' | translate }}</p>
+        <block-button
+          buttonClass="primary"
+          stringContent="postral.report-setup.prepare-missing"
+          (click)="setupReports()"
+        ></block-button>
+        <block-button
+          buttonClass="primary"
+          [routerLink]="['../report-query/create']"
+          [queryParams]="queryCreateParams()"
+          stringContent="postral.seller-series.create-query"
+        ></block-button>
+      } @else if (!data.selectedQueryId) {
+        <p>{{ 'postral.seller-series.choose-source' | translate }}</p>
+      } @else {
+        @if (data.hasPendingRecords) {
+          <p role="status">{{ 'postral.seller-series.pending' | translate }}</p>
+        }
+        @if (data.hasFailedRecords) {
+          <p role="alert">{{ 'postral.seller-series.failed' | translate }}</p>
+        }
+
+        @if (hasData()) {
+          <div class="flex flex-column md:flex-row gap-4">
+            <div class="flex-grow-1">
+              <h3>{{ metricLabel() | translate }} ({{ data.currency }})</h3>
+              <p>{{ 'postral.seller-series.current-help' | translate }}</p>
+              <div class="chart-container mona-card">
+                <lib-chart
+                  [type]="chartType()"
+                  [data]="chartData()"
+                  [options]="chartOptions()"
+                ></lib-chart>
+              </div>
+            </div>
+            <div class="flex-grow-1">
+              <h3>{{ 'postral.seller-series.breakdown' | translate }}</h3>
+              <p>{{ 'postral.seller-series.breakdown-help' | translate }}</p>
+              <div class="chart-container mona-card">
+                <lib-chart
+                  type="bar"
+                  [data]="compositionChartData()"
+                  [options]="compositionChartOptions()"
+                ></lib-chart>
+              </div>
+            </div>
+          </div>
+        } @else {
+          <p>{{ 'postral.seller-series.no-reports' | translate }}</p>
+          <block-button
+            buttonClass="secondary"
+            [routerLink]="['../report-query', data.selectedQueryId]"
+            stringContent="postral.seller-series.view-query"
+          ></block-button>
+        }
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>{{ 'postral.seller-series.period' | translate }}</th>
+                <th>{{ 'postral.seller-series.gross-sales' | translate }}</th>
+                <th>{{ 'postral.seller-series.report' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (period of data.periods; track period.periodLabel) {
+                <tr>
+                  <th scope="row">
+                    {{ period.periodLabel
+                    }}{{ period.isCurrentPeriod ? ' *' : '' }}
+                  </th>
+                  @if (period.report; as report) {
+                    <td>
+                      <lib-money-display
+                        [amount]="report.totalSaleAmount"
+                        [currency]="data.currency"
+                      ></lib-money-display>
+                    </td>
+                    <td>
+                      <block-button
+                        buttonClass="border"
+                        [routerLink]="['../reports', report.id]"
+                        stringContent="postral.seller-series.detail"
+                      ></block-button>
+                    </td>
+                  } @else {
+                    <td colspan="2">
+                      {{ 'postral.seller-series.missing' | translate }}
+                    </td>
+                  }
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    }
+  }
+</section>

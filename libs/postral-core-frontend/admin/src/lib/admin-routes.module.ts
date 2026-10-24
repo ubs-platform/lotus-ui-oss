@@ -6,16 +6,7 @@ import { HomepageComponent } from './components/home-page/homepage.component';
 import { ExternalPlatformListComponent } from './components/external-platform-list/external-platform-list.component';
 import {
   NotFoundPageComponent,
-  SuspendedPageComponent,
 } from '@lotus/front-global/error-status-pages';
-import {
-  AccountsComponent,
-  AccountUserInfoComponent,
-  AddressListComponent,
-} from '@lotus/postral-core-frontend/account-user-edit';
-import { ItemListComponent } from 'libs/postral-core-frontend/account-user-edit/src/lib/components/item-list/item-list.component';
-import { ItemInfoComponent } from 'libs/postral-core-frontend/account-user-edit/src/lib/components/item-info/item-info.component';
-import { AddressInfoComponent } from 'libs/postral-core-frontend/account-user-edit/src/lib/components/address-info/address-info.component';
 import { ComissionListComponent } from './components/comission-list/comission-list.component';
 import { ComissionEditComponent } from './components/comission-edit/comission-edit.component';
 import { AdminSettingsEditComponent } from './components/admin-settings-edit/admin-settings-edit.component';
@@ -24,10 +15,14 @@ import { QueryInfoComponent, QueryListComponent, ReportInfoComponent, ReportList
 import { PaymentChannelConfigListComponent } from './components/payment-channel-config-list/payment-channel-config-list.component';
 import { PaymentChannelConfigEditComponent } from './components/payment-channel-config-edit/payment-channel-config-edit.component';
 import { ExternalPlatformEditComponent } from './components/external-platform-edit/external-platform-edit.component';
+import { PlatformSetupComponent } from './platform-setup/platform-setup.component';
+import { platformSetupAdminGuard } from './platform-setup/platform-setup.guard';
 
 @NgModule({
   imports: [
     RouterModule.forChild([
+      { path: 'setup', component: PlatformSetupComponent, canActivate: [platformSetupAdminGuard] },
+
       {
         path: '',
         component: AdminFrameComponent,

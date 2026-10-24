@@ -106,6 +106,12 @@ export class PaymentSettingsWrapComponent {
       icon: fromMaterialSymbol('settings'),
     },
     {
+      title: 'postral.menu.report-summary',
+      path: 'report-summary',
+      hidden: of(false),
+      icon: fromMaterialSymbol('bar_chart'),
+    },
+    {
       title: 'postral.menu.report-queries',
       path: 'report-query',
       hidden: of(false),

@@ -14,7 +14,7 @@ import { IWebDialogConfig } from './config';
 import { WEBDIALOG_CONFIG } from './tokens';
 import { WebdialogReference } from './reference';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class WebdialogHandler {
   /**
    *

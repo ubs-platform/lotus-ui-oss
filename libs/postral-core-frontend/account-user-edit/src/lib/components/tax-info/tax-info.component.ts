@@ -56,6 +56,17 @@ export class TaxInfoComponent {
         );
       },
       beforeSave: (form: Reform) => true,
+      teamSelectionRequired: (data) => !data.id,
+      teamSelectionDialog: {
+        title: 'Takım seçimi',
+        description:
+          'Yeni vergi için sahip belirtilmesi gerekiyor. Bunu sonradan değiştiremezsiniz, bu nedenle doğru seçtiğinizden emin olun.',
+      },
+      onTeamSelected: (result, data) => {
+        data.entityOwnershipGroupId = result.usePersonalInsteadTeam
+          ? undefined
+          : result.selectedTeamId;
+      },
       saveMethod: (data) => {
         if (data.id) {
           return this.itemTaxService.update(data);

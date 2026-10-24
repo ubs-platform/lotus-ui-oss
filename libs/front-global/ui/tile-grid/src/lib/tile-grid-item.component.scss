@@ -1,0 +1,77 @@
+:host {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  --tile-background: var(--bg-1);
+  --tile-foreground: var(--fg);
+}
+
+:host(.wide) {
+  grid-column: span 2;
+}
+
+:host(.primary) {
+  --tile-background: var(--primary-color);
+  --tile-foreground: var(--primary-color-text-on-bg, #fff);
+}
+
+:host(.accent) {
+  --tile-background: var(--primary-color-card-bg);
+  --tile-foreground: var(--primary-color-text);
+}
+
+.tile {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.65rem;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  box-sizing: border-box;
+  padding: .5rem;
+  border: 1px solid transparent;
+  border-radius: var(--border-radius, 2px);
+  background: var(--tile-background);
+  color: var(--tile-foreground);
+  font: inherit;
+  text-align: start;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.tile-label {
+  font-size: 1rem;
+  // font-weight: 600;
+}
+
+.tile-description {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+a.tile,
+button.tile {
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    border-color: currentColor;
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--primary-color-text);
+    outline-offset: 3px;
+  }
+}
+
+button.tile:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+@container (width < 24.75rem) {
+  :host(.wide) {
+    grid-column: span 1;
+  }
+}

@@ -4,3 +4,5 @@ export * from './lib/report-info/report-info.component';
 export * from './lib/report-list/report-list.component';
 export * from './lib/money-display/money-display.component';
 export * from './lib/postral-reports.module';
+export * from './lib/seller-report-series/seller-report-series.component';
+export * from './lib/report-setup/report-setup-wizard.service';

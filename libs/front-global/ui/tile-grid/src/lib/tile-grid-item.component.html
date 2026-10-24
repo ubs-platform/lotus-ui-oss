@@ -1,0 +1,47 @@
+<ng-template #content>
+  @if (customContent(); as custom) {
+    <ng-container [ngTemplateOutlet]="custom" />
+  } @else {
+    <div
+      class="tile-action-content w-full h-full flex flex-column"
+      [lib-tooltip]="description()"
+    >
+      <div
+        class="tile-icon flex-grow-1 flex justify-content-center align-items-center"
+      >
+        <lib-icon
+          aria-hidden="true"
+          iconClass="material-symbols-outlined"
+          [iconContent]="icon() || 'question_mark'"
+          iconSize="2.25rem"
+        />
+        @if (count() && count()! > 0) {
+          <span class="tile-count" style="font-size: 2.25rem">{{
+            count()
+          }}</span>
+        }
+      </div>
+      <span class="tile-label">{{ label() }}</span>
+    </div>
+  }
+  <ng-content />
+</ng-template>
+
+@if (routerLink(); as path) {
+  <a class="tile" [routerLink]="path">
+    <ng-container [ngTemplateOutlet]="content" />
+  </a>
+} @else if (action()) {
+  <button
+    class="tile"
+    type="button"
+    [disabled]="disabled()"
+    (click)="activated.emit()"
+  >
+    <ng-container [ngTemplateOutlet]="content" />
+  </button>
+} @else {
+  <div class="tile">
+    <ng-container [ngTemplateOutlet]="content" />
+  </div>
+}

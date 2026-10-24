@@ -18,6 +18,7 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
   });
   refreshOnChange = input<boolean>(true);
   refreshOnResize = input<boolean>(true);
+  options = input<ChartJs.ChartOptions>({});
 
   chartType = input<ChartJs.ChartType>('line', { alias: 'type' });
 
@@ -61,6 +62,7 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
         this.activeChartType === chartType
       ) {
         this.chartActive.data = this.data();
+        this.chartActive.options = this.options();
         this.chartActive.update();
         return;
       }
@@ -73,7 +75,7 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
     this.chartActive = new ChartJs.Chart(canvas, {
       type: chartType,
       data: this.data(),
-      options: {}
+      options: this.options()
     });
     this.activeChartType = chartType;
   }

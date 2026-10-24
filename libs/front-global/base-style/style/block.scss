@@ -1,6 +1,7 @@
 // the block
 .block-view {
   border: 0px;
+  box-sizing: content-box;
   text-align: start;
   // padding: 10px 15px;
   padding: 0.5rem;

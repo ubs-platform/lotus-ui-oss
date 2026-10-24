@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoadingIndicationService, MessageWrapService } from './service';
+import { MessageWrapService } from './service';
 
 @NgModule({
   imports: [CommonModule],
-  providers: [LoadingIndicationService, MessageWrapService],
+  providers: [MessageWrapService],
 })
 export class FrontGlobalUserServiceWrapsModule {}

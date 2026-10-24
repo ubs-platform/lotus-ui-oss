@@ -41,6 +41,9 @@ input:not([type="checkbox"]):not([type="radio"]) {
   width: 100%;
   margin-bottom: 10px;
 }
+input[type="file"] {
+  padding: 0.5rem 0.75rem;
+}
 .input-title {
   margin-bottom: 10px;
 }
@@ -63,3 +66,4 @@ input:not([type="checkbox"]):not([type="radio"]) {
     }
   }
 }
+

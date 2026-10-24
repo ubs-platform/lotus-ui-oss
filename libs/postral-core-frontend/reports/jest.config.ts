@@ -1,14 +1,15 @@
 module.exports = {
-  displayName: 'payment-item-list',
+  displayName: 'reports',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   coverageDirectory:
-    '../../../coverage/libs/postral-core-frontend/payment-item-list',
+    '../../../coverage/libs/postral-core-frontend/reports',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
       {
         tsconfig: '<rootDir>/tsconfig.spec.json',
+        isolatedModules: true,
         stringifyContentPathRegex: '\\.(html|svg)$',
       },
     ],

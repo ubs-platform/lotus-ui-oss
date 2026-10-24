@@ -1,3 +1,12 @@
 .mona-centered-card {
   max-width: 600px;
 }
+
+@media screen and (min-width: 768px) {
+  .login-screen-wrap {
+    background-image: var(--image-url);
+    background-size: cover;
+    background-repeat: repeat;
+    background-position: center;
+  }
+}

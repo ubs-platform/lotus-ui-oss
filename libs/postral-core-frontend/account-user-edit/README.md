@@ -9,6 +9,16 @@ Run `nx test account-user-edit` to execute the unit tests.
 `ItemPriceListComponent.pricesChanged` emits after successfully saving or deleting
 a price so consumers can refresh their price-readiness checks.
 
+The seller-only `report-summary` menu opens the report charts from the reports
+library. Customer mode hides the menu and does not load report/account data.
+
+After creating an active, non-external commercial account in seller mode, the
+saved account detail opens the standard sales-report setup dialog. Daily is
+mandatory; monthly/yearly default to selected and currency defaults to TRY.
+The same dialog is available from account detail without saving the account
+again. Skipping or failing report setup preserves the account. Individual,
+external, deactivated accounts and customer mode do not expose this action.
+
 ## Experimental external sales
 
 Seller orders (`transaction/history`) offers an **under construction** external

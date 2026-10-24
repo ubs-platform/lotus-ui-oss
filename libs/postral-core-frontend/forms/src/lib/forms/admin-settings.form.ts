@@ -1,5 +1,5 @@
 import { Injector } from "@angular/core";
-import { MaxValidator, minky, minkyRoot, MinValidator } from "@lotus/front-global/minky/core";
+import { minky, minkyRoot, ValidatorResult } from "@lotus/front-global/minky/core";
 import { AccountControllerService, ItemTaxControllerService, ReportQueryControllerService } from "@lotus/postral-core-frontend/client";
 import { AdminSettingsDto } from "@tk-postral/payment-common";
 import { map } from "rxjs";
@@ -88,7 +88,13 @@ export class AdminSettingsForm extends AdminSettingsDto {
     @minky({
         inputType: "array",
         arrayItemInputType: "number",
-        validators: [new MinValidator(2), new MaxValidator(28)],
+        validators: [{
+            labelKey: 'postral.platform-setup.billing-days-help',
+            validate: (value: unknown) => new ValidatorResult(
+                'postral.platform-setup.billing-days-help',
+                value == null || (Array.isArray(value) && value.every(day => Number.isInteger(day) && day >= 1 && day <= 28)),
+            ),
+        }],
         label: 'postral.billing-dates',
     })
     override billingDays?: number[] | undefined;

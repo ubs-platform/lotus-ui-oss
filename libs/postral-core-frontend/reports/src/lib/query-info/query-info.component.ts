@@ -7,6 +7,8 @@ import { FormEditInstruction } from '@lotus/front-global/reform-data-edit';
 import { Reform } from '@lotus/front-global/minky/core';
 import {
   ReportQueryForm,
+  currencyOptions,
+  reportDateGroupingOptions,
 } from '@lotus/postral-core-frontend/forms';
 import { ReportQueryDTO } from '@tk-postral/payment-common';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
@@ -36,11 +38,16 @@ export class QueryInfoComponent {
       this.id.set(id);
       this.isNew.set(id === "create" || id === "new");
       if (this.isNew()) {
-        this.initializeForm({
-          id: '',
-          name: '',
-          query: '',
-        } as any);
+        const defaults = new ReportQueryForm();
+        const params = this.activatedRoute.snapshot.queryParamMap;
+        defaults.ownerAccountId = params.get('ownerAccountId') || undefined;
+        const currency = params.get('currency');
+        if (currencyOptions.some(option => option.value === currency)) {
+          defaults.currency = currency ?? undefined;
+        }
+        const grouping = reportDateGroupingOptions.find(option => option.value === params.get('dateGrouping'));
+        if (grouping) defaults.dateGrouping = grouping.value;
+        this.initializeForm(defaults);
         return;
       }
       this.reportQueryService.get(params['id']).subscribe((data) => {

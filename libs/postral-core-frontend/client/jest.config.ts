@@ -8,6 +8,7 @@ module.exports = {
       'jest-preset-angular',
       {
         tsconfig: '<rootDir>/tsconfig.spec.json',
+        isolatedModules: true,
         stringifyContentPathRegex: '\\.(html|svg)$',
       },
     ],

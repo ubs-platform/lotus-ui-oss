@@ -11,7 +11,7 @@ import {
 import { MessageInput } from '../dto/error-input';
 import { LoadingData } from '../dto/loading-indicator-data';
 import { LoadingIndicatorState } from '../dto/loading-indicator-state';
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LoadingIndicationService {
   private loadingIndicationChange = new ReplaySubject<LoadingIndicatorState>(1);
   private _list: { [key: string]: LoadingData | undefined } = {};

@@ -11,7 +11,7 @@ const RIGHT: ConnectedPosition = { originX: 'end', originY: 'top', overlayX: 'st
 const LEFT: ConnectedPosition = { originX: 'start', originY: 'top', overlayX: 'end', overlayY: 'top', offsetX: -8 };
 const POSITIONS: Record<PopupPosition, ConnectedPosition[]> = {
   AUTO: [DOWN, UP, RIGHT, LEFT],
-  DOWN: [DOWN, UP, RIGHT, LEFT],
+  DOWN: [DOWN, UP],
   UP: [UP, DOWN, RIGHT, LEFT],
   RIGHT: [RIGHT, LEFT, DOWN, UP],
   LEFT: [LEFT, RIGHT, DOWN, UP],

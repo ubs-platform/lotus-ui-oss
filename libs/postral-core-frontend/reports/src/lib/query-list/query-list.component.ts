@@ -1,9 +1,11 @@
-import { Component, signal, viewChild } from '@angular/core';
+import { Component, DestroyRef, inject, signal, viewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { SearchableDataTableComponent } from '@lotus/front-global/table';
 import { ItemCrudService, ReportQueryControllerService } from '@lotus/postral-core-frontend/client';
 import { ReportQueryDTO } from '@tk-postral/payment-common';
+import { ReportSetupWizardService } from '../report-setup/report-setup-wizard.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'lib-query-list',
   standalone: false,
@@ -11,6 +13,9 @@ import { ReportQueryDTO } from '@tk-postral/payment-common';
   styleUrl: './query-list.component.scss',
 })
 export class QueryListComponent {
+  private readonly setupWizard = inject(ReportSetupWizardService);
+  private readonly destroyRef = inject(DestroyRef);
+  readonly customerMode = signal(false);
 
   admin = signal<boolean>(false);
   table = viewChild<SearchableDataTableComponent>('table');
@@ -23,11 +28,19 @@ export class QueryListComponent {
   ) { }
 
   ngOnInit(): void {
+    this.customerMode.set(this.activatedRoute.pathFromRoot.some(route => route.snapshot.data['paymentMode'] === 'customer'));
     this.activatedRoute.data.subscribe((data) => {
       // console.log(data);
       if (data['admin']) {
         this.admin.set(true);
       }
+    });
+  }
+
+  setupReports(): void {
+    if (this.admin() || this.customerMode()) return;
+    this.setupWizard.open().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(completed => {
+      if (completed) this.table()?.loadData();
     });
   }
 

@@ -1,59 +1,88 @@
-<div class="sidebar-content">
-  <div class="flex sm:flex-row flex-column gap-4 items-center">
-    <!-- <img src="assets/intro-tr.gif" height="300px" /> -->
-    <div>
-      <h2>Postral Core'un Beta sürümüne hoş geldiniz</h2>
-      <p>
-        Postral Core sistemi, UBS Mona platformu ile uyumlu çalışan, güçlü bir
-        ödeme altyapısıdır. Bu ödeme altyapısı, çeşitli ödeme yöntemlerini
-        destekler ve esnek çözümler sunar.
-      </p>
-      <ul>
-        <li>
-          Stripe, İyizico ya da Paytr gibi e-ticaret ödeme sağlayıcıları ile
-          entegrasyon sağlama imkanı. Eğer yeterli gelmezse, kendi
-          entegrasyonunuzu Engine5 ile geliştirebilirsiniz
-        </li>
-        <li>
-          Gelişmiş ödeme yönetimi özellikleri, kullanıcıların ödeme hesaplarını
-          kolayca yönetmelerine olanak tanır.
-        </li>
-        <li>
-          Güvenli ödeme işlemleri, kullanıcıların finansal bilgilerini korumak
-          için en son güvenlik standartlarına uygun olarak tasarlanmıştır.
-        </li>
-        <li>
-          Esnek API yapısı, geliştiricilerin ihtiyaçlarına göre
-          özelleştirilebilir ve genişletilebilir bir ödeme altyapısı sunar.
-        </li>
-      </ul>
-      <div>
-        Postral Core altyapısı, kendi ihtiyaçlarınıza göre özelleştirilebilir ve
-        genişletilebilir. Eğer sunduğumuz API'ler yeterli gelmezse, kendi özel
-        çözümlerinizi sisteme dilediğiniz gibi ekleyip düzenleyebilirsiniz.
-        Postral Core'un arka uç altyapısı, Github üzerinde ücretsiz ve açık
-        kaynak olarak dağıtılmaktadır.
-      </div>
-      <div class="flex gap-1">
-        <block-button buttonClass="primary mt-4" stringContent="Postral Core Github Sayfası (Arka uç)" target="_blank"
-          iconClass="material-symbols-outlined" iconContent="priority_high" iconPosition="LEFT"
-          (click)="openGithub()"></block-button>
-        <block-button buttonClass="primary mt-4" stringContent="Postral Core Github Sayfası (Ön uç)" target="_blank"
-          iconClass="material-symbols-outlined" iconContent="priority_high" iconPosition="LEFT"
-          (click)="openGithubFrontend()"></block-button>
-        <block-button buttonClass="primary mt-4" stringContent="Tanıtım videosu" target="_blank"
-          iconClass="material-symbols-outlined" iconContent="priority_high" iconPosition="LEFT"
-          (click)="openIntroductionVideo()"></block-button>
-      </div>
-      <div>
-        Ayrıca yaşadığınız sorunları bize yazmaktan lütfen çekinmeyin. Postral
-        Core'u sizin ihtiyaçlarınıza göre şekillendirmek istiyoruz!
-      </div>
+<ng-template #reportView>
+  <div class="flex flex-column h-full w-full">
+    <div class="hidden sm:block mb-2">
+      <b>{{"postral.reports.summary.today" | translate}}</b>
     </div>
+    <div class="flex-grow-1">
+      <lib-report-summary-rotator [reports]="reportSummary()" />
+    </div>
+    <div>{{"postral.menu.reports" | translate}}</div>
   </div>
-  <p>Aşağıdaki bağlantılarla başlayabilirsiniz:</p>
-  <div class="flex flex-column gap-2">
-    <block-button buttonClass="primary" stringContent="Giriş yapan kullanıcı ödeme hesabı paneli"
-      [routerLink]="'../user/payment-accounts/account'"></block-button>
+</ng-template>
+
+<div class="homepage">
+  <div class="homepage-header">
+    <header>
+      <h1>{{ 'postral.home.welcome' | translate }}</h1>
+      <p>{{ 'postral.home.intro' | translate }}</p>
+    </header>
   </div>
+  <section aria-labelledby="seller-heading" class="mt-4">
+    <h2 id="seller-heading">{{ 'postral.home.seller' | translate }}</h2>
+    <lotus-web-tile-grid>
+      @for (tile of sellerTiles(); track tile.key) {
+        <lotus-web-tile-grid-item
+          [label]="'postral.home.' + tile.key | translate"
+          [description]="
+            'postral.home.' + tile.key + '-description' | translate
+          "
+          [icon]="tile.icon"
+          [routerLink]="tile.path"
+          [size]="tile.size"
+          [tone]="tile.tone"
+          [count]="tile.count"
+          [customContent]="tile.customContent"
+        />
+      }
+    </lotus-web-tile-grid>
+  </section>
+
+  @if (isAdmin()) {
+    <section aria-labelledby="admin-heading">
+      <h2 id="admin-heading">{{ 'postral.home.admin' | translate }}</h2>
+      <lotus-web-tile-grid>
+        @for (tile of adminTiles(); track tile.key) {
+          <lotus-web-tile-grid-item
+            [label]="'postral.home.' + tile.key | translate"
+            [description]="
+              'postral.home.' + tile.key + '-description' | translate
+            "
+            [icon]="tile.icon"
+            [routerLink]="tile.path"
+            [size]="tile.size"
+            [tone]="tile.tone"
+            [customContent]="tile.customContent"
+          />
+        }
+      </lotus-web-tile-grid>
+    </section>
+  }
+
+  <footer>
+    <h2>{{ 'postral.home.about' | translate }}</h2>
+    <p>{{ 'postral.home.about-description' | translate }}</p>
+    <nav [attr.aria-label]="'postral.home.about' | translate">
+      <a
+        href="https://www.github.com/ubs-platform/postral-core"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {{ 'postral.home.backend' | translate }}
+      </a>
+      <a
+        href="https://www.github.com/ubs-platform/lotus-ui-oss"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {{ 'postral.home.frontend' | translate }}
+      </a>
+      <a
+        href="https://www.youtube.com/watch?v=JGH5RflwFqk"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {{ 'postral.home.video' | translate }}
+      </a>
+    </nav>
+  </footer>
 </div>

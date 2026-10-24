@@ -1,6 +1,72 @@
+@import 'placeholders';
 
-@import "placeholders";
-// Invoice Info Component Styles
 :host {
   @extend %page-host;
+  display: block;
 }
+
+.homepage {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  // max-width: 80rem;
+  // margin-inline: auto;
+  // padding: 1.5rem;
+  color: var(--fg);
+  .homepage-header {
+
+    @media (min-width: 768px) {
+      position: absolute;
+      top: 0px;
+      background-color: var(--bg-surface);
+    }
+  }
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+h2 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+p {
+  margin-top: 0.75rem;
+  line-height: 1.6;
+}
+
+footer {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  margin-top: 1rem;
+}
+
+a {
+  color: var(--primary-color-text);
+  text-underline-offset: 0.2em;
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+}
+
+// @media (max-width: 600px) {
+//   .homepage {
+//     padding: 1rem;
+//   }
+// }

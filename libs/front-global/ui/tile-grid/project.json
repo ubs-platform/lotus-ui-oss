@@ -1,0 +1,13 @@
+{
+  "name": "front-global-ui-tile-grid",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/front-global/ui/tile-grid/src",
+  "prefix": "lotus-web",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

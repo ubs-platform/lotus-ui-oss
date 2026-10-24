@@ -1,26 +1,47 @@
-<onpage-header
-  [content]="'Yayıncı ol'"
-></onpage-header>
-@if (!sent) {
-  <div class="p-1">
-    <p>
-      Bir yayınevinde yetkili misiniz? Ya da soru hazırlayıp yayınlamak isteyen
-      bir öğretmen misiniz? Buradan bu formu doldurarak başvurabilirsiniz.
-    </p>
-    @if (reform) {
-      <minky-reform-prime [reform]="reform">
-        <ng-template
-          input-link
-          [overrideDefault]="false"
-          path="message"
-          let-carrier="carrier"
+<div class="h-full w-full overflow-auto">
+  <!-- <onpage-header [content]="'Yayıncı ol'"></onpage-header> -->
+  <div
+    class="flex justify-content-between align-items-end publisher-request-banner"
+  >
+    <div>
+      <h1 style="padding-right: 100px">Güvenilir yayıncı başvurusu</h1>
+    </div>
+    <div class="hana-wrap">
+      <img
+        src="assets/hana-reads-book.png"
+        alt="Güvenilir yayıncı başvurusu"
+        class="hana"
+      />
+    </div>
+  </div>
+  <p style="padding-right: 100px">
+    Bir yayınevinde yetkili misiniz? Ya da soru hazırlayıp yayınlamak isteyen
+    bir öğretmen misiniz? Buradan bu formu doldurarak başvurabilirsiniz.
+  </p>
+  @if (!sent) {
+    <div class="p-1">
+      @if (reform) {
+        <minky-reform-prime [reform]="reform">
+          <ng-template
+            input-link
+            [overrideDefault]="false"
+            path="message"
+            let-carrier="carrier"
           >
-          <lotus-web-markdown-editor-input
-            [carrier]="carrier"
-          ></lotus-web-markdown-editor-input> </ng-template
+            <lotus-web-markdown-editor-input
+              [carrier]="carrier"
+            ></lotus-web-markdown-editor-input> </ng-template
         ></minky-reform-prime>
       }
-      <block-button (click)="submit()">Gönder</block-button>
+      <div class="action-buttons">
+        <block-button
+          buttonClass="primary"
+          iconContent="send"
+          iconClass="material-symbols-outlined"
+          (click)="submit()"
+          >Gönder</block-button
+        >
+      </div>
     </div>
   }
   @if (sent) {
@@ -32,3 +53,4 @@
       <block-button routerLink="/" stringContent="general.home"></block-button>
     </div>
   }
+</div>

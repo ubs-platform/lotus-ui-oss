@@ -23,11 +23,15 @@ import { ExternalPlatformListComponent } from './components/external-platform-li
 import { ExternalPlatformEditComponent } from './components/external-platform-edit/external-platform-edit.component';
 import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { FrontGlobalMessageModule, MessageComponent } from '@lotus/front-global/message';
+import { TileGridComponent, TileGridItemComponent } from '@lotus/front-global/ui/tile-grid';
+import { ReportSummaryRotatorComponent } from './components/home-page/report-summary-rotator/report-summary-rotator.component';
 // import { AccountsComponent } from "@lotus/postral-core-frontend/account-user-edit"
 
 @NgModule({
   imports: [
     CommonModule,
+    TileGridComponent,
+    TileGridItemComponent,
     FrontGlobalTableModule,
     FrontGlobalButtonModule,
     RouterModule,
@@ -40,7 +44,8 @@ import { FrontGlobalMessageModule, MessageComponent } from '@lotus/front-global/
     DataListLayoutModule,
     UbsTranslatorNgxModule,
     FrontGlobalMessageModule,
-    MessageComponent
+    MessageComponent,
+    ReportSummaryRotatorComponent
 ],
   declarations: [HomepageComponent, AdminFrameComponent, ComissionListComponent, ComissionEditComponent, AdminSettingsEditComponent, AdminOperationsComponent, PaymentChannelConfigListComponent, PaymentChannelConfigEditComponent,
     ExternalPlatformListComponent, ExternalPlatformEditComponent

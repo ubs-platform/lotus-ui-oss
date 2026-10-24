@@ -1,0 +1,75 @@
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: url(/assets/background.png) no-repeat center center;
+  background-size: cover;
+}
+
+// .setup {
+//   max-width: 960px;
+//   margin: 0 auto;
+//   padding: 1rem;
+//   color: var(--fg);
+// }
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  padding: 1rem 2rem;
+  border-right: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  min-width: 250px;
+  height: 100%;
+  overflow-y: auto;
+  margin: 0;
+}
+
+[aria-current='step'] {
+  font-weight: 700;
+  color: var(--primary-color-text);
+}
+
+fieldset {
+  min-width: 0;
+  border: 0;
+  padding: 0;
+}
+
+aside,
+[role='alert'] {
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  background: var(--bg-1);
+}
+
+dt {
+  font-weight: 600;
+  margin-top: 0.75rem;
+}
+
+.mona-centered-card {
+  height: auto;
+}
+
+.setup {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+// The global theme switches the card to `width: unset` from 768px, which made it shrink to each step's content.
+@media (min-width: 768px) {
+  .mona-centered-card {
+    width: 100%;
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .mona-centered-card {
+    max-width: 992px;
+    height: 70dvh;
+  }
+}

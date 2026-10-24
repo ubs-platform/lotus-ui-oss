@@ -20,6 +20,7 @@ import {
   standalone: false
 })
 export class BButtonComponent {
+  // material-symbols-outlined
   readonly iconClass = input<string | null | undefined>(undefined);
   readonly iconContent = input<string | null | undefined>(undefined);
   readonly iconImageSource = input<string | null | undefined>(undefined);

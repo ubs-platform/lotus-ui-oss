@@ -1,4 +1,5 @@
 export * from './lib/auth.module';
+export * from './lib/common/token-getter';
 export * from './lib/services/auth-management.service';
 export * from './lib/services/auth.service';
 export * from './lib/services/user-register.service';

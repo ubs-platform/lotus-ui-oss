@@ -200,7 +200,10 @@ td {
   background: var(--primary-color);
   border: 1px solid var(--primary-color);
   font-size: 1rem;
-  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    box-shadow 0.15s;
   border-radius: var(--border-radius);
   display: flex;
   align-items: center;
@@ -247,7 +250,10 @@ td {
   background: #6c757d;
   border: 1px solid #6c757d;
   color: #ffffff;
-  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    box-shadow 0.15s;
 }
 .fc.fc-unthemed .fc-toolbar .fc-button.fc-dayGridMonth-button:hover,
 .fc.fc-unthemed .fc-toolbar .fc-button.fc-timeGridWeek-button:hover,
@@ -402,7 +408,10 @@ td {
   background: var(--primary-color);
   border: 1px solid var(--primary-color);
   font-size: 1rem;
-  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    box-shadow 0.15s;
   border-radius: var(--border-radius);
 }
 .fc.fc-theme-standard .fc-toolbar .fc-button:enabled:hover {
@@ -453,7 +462,10 @@ td {
   background: #6c757d;
   border: 1px solid #6c757d;
   color: #ffffff;
-  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    box-shadow 0.15s;
 }
 .fc.fc-theme-standard .fc-toolbar .fc-button.fc-dayGridMonth-button:hover,
 .fc.fc-theme-standard .fc-toolbar .fc-button.fc-timeGridWeek-button:hover,
@@ -544,9 +556,23 @@ textarea {
   height: 100%;
   overflow: scroll;
   max-height: 100%;
+  border-radius: var(--border-radius);
   /* background-color: var(--bg-1); */
   /* border: 1px solid var(--border-color); */
   /* box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08) !important; */
+}
+
+.mona-centered-card.no-mobile-version {
+  /* width: unset; */
+  height: unset;
+  position: relative;
+  top: 0px;
+  background-color: var(--bg-1);
+  border: 1px solid var(--border-color);
+  box-shadow:
+    0px 3px 5px rgba(0, 0, 0, 0.02),
+    0px 0px 2px rgba(0, 0, 0, 0.05),
+    0px 1px 4px rgba(0, 0, 0, 0.08) !important;
 }
 @media screen and (min-width: 768px) {
   .mona-centered-card {
@@ -554,14 +580,18 @@ textarea {
     height: unset;
     background-color: var(--bg-1);
     border: 1px solid var(--border-color);
-    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05),
+    box-shadow:
+      0px 3px 5px rgba(0, 0, 0, 0.02),
+      0px 0px 2px rgba(0, 0, 0, 0.05),
       0px 1px 4px rgba(0, 0, 0, 0.08) !important;
   }
 }
 
-.mona-card h1, .mona-card h2, .mona-card h3 {
-  margin-top: .3rem;
-  margin-bottom: .5rem;
+.mona-card h1,
+.mona-card h2,
+.mona-card h3 {
+  margin-top: 0.3rem;
+  margin-bottom: 0.5rem;
 }
 
 .mona-card {
@@ -571,7 +601,7 @@ textarea {
   padding: 0.5rem;
 }
 .mona-card::after {
-  font-family: "material-symbols-outlined";
+  font-family: 'material-symbols-outlined';
 }
 .mona-card[severity='warn'] {
   border: 1px solid var(--orange-400);
@@ -599,6 +629,7 @@ textarea {
   color: var(--fg);
 }
 
-.monospaced, .monospace {
+.monospaced,
+.monospace {
   font-family: monospace;
 }

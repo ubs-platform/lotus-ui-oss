@@ -1,0 +1,32 @@
+<p>{{ 'postral.report-setup.intro' | translate }}</p>
+<p>{{ 'postral.report-setup.help' | translate }}</p>
+@if (instruction(); as formInstruction) {
+  <lib-reform-data-edit [formInstruction]="formInstruction" saveButtonPosition="hidden"></lib-reform-data-edit>
+}
+@if (loading()) {
+  <p role="status">{{ 'postral.report-setup.loading' | translate }}</p>
+}
+@if (error()) {
+  <p role="alert">{{ error() | translate }}</p>
+  <block-button stringContent="postral.report-setup.retry" (click)="retry()" [disabled]="saving()"></block-button>
+}
+@if (preview(); as state) {
+  <ul>
+    @for (grouping of groupings; track grouping) {
+      <li>
+        {{ groupingLabels[grouping] | translate }}:
+        {{ (state.missing.includes(grouping) ? 'postral.report-setup.missing' : 'postral.report-setup.existing') | translate }}
+      </li>
+    }
+  </ul>
+}
+<p>{{ 'postral.report-setup.history-help' | translate }}</p>
+<div class="action-buttons">
+  <block-button stringContent="postral.report-setup.later" (click)="cancel()" [disabled]="saving()"></block-button>
+  <block-button
+    buttonClass="primary"
+    stringContent="postral.report-setup.prepare"
+    [disabled]="loading() || saving() || !!error() || !preview()"
+    (click)="editor()?.saveForm()"
+  ></block-button>
+</div>

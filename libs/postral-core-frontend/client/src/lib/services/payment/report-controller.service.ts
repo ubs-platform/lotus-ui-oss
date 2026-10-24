@@ -9,7 +9,8 @@ import {
   ReportDTO,
   ReportFullDTO,
   ReportQueryDTO,
-  ReportQuerySearchDTO,ReportSearchPaginationDTO
+  ReportQuerySearchDTO,ReportSearchPaginationDTO,
+  SellerReportSeriesDTO, SellerReportSeriesSearchDTO
 } from '@tk-postral/payment-common';
 
 import { CrudBaseServiceGenerator } from '@lotus/front-global/front-bases';
@@ -24,6 +25,19 @@ import { SearchResult } from '@ubs-platform/crud-base-common';
 export class ReportControllerService {
   readonly baseUrl = '/service/payment/api/report';
   constructor(private http: HttpClient) {
+  }
+
+  sellerSeries(q: SellerReportSeriesSearchDTO): Observable<SellerReportSeriesDTO> {
+    return this.http.get<SellerReportSeriesDTO>(`${this.baseUrl}/seller-series`, {
+      params: {
+        accountId: q.accountId,
+        currency: q.currency,
+        dateGrouping: q.dateGrouping,
+        reportSize: q.reportSize,
+        ...(q.queryId ? { queryId: q.queryId } : {}),
+        ...(q.skipUnavailableReports !== undefined ? { skipUnavailableReports: q.skipUnavailableReports } : {}),
+      },
+    });
   }
 
   reconstructReports(reportId: string, findNotExistingPaymentsForAccountId = false): Observable<ReportDTO[]> {

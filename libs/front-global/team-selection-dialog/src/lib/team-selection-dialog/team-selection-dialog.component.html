@@ -1,0 +1,23 @@
+<!-- <h1>{{ dialogConfig.data?.title }}</h1> -->
+<p>{{ dialogConfig.data?.description }}</p>
+<lib-custom-select
+  [options]="selectItems()"
+  [(selectedModel)]="selectedTeam"
+></lib-custom-select>
+<div class="action-buttons mt-2">
+  <block-button
+    stringContent="general.cancel"
+    buttonClass="border"
+    iconContent="close"
+    iconClass="material-symbols-outlined"
+    (click)="close()"
+  ></block-button>
+  <block-button
+    stringContent="general.next"
+    buttonClass="primary border"
+    iconContent="chevron_right"
+    iconPosition="RIGHT"
+    iconClass="material-symbols-outlined"
+    (click)="close(selectedTeam())"
+  ></block-button>
+</div>

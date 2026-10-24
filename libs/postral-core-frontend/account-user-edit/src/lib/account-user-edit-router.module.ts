@@ -23,6 +23,7 @@ import { NotFoundPageComponent } from '@lotus/front-global/error-status-pages';
 import { WebhookConfigInfoComponent } from './components/webhook-config-info/webhook-config-info.component';
 import { WebhookConfigListComponent } from './components/webhook-config-list/webhook-config-list.component';
 import { ExternalPlatformPaymentComponent } from './components/external-platform-payment/external-platform-payment.component';
+import { SellerReportSeriesComponent } from '@lotus/postral-core-frontend/reports';
 
 @NgModule({
   imports: [
@@ -71,6 +72,9 @@ import { ExternalPlatformPaymentComponent } from './components/external-platform
           },
           {
             path: "report-query/:queryId/reports", component: ReportListComponent
+          },
+          {
+            path: "report-summary", component: SellerReportSeriesComponent
           },
           {
             path: "reports", component: ReportListComponent

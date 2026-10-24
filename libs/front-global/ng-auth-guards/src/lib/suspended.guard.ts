@@ -4,7 +4,10 @@ import { environment } from '@lotus-web/environment';
 import { map, of } from 'rxjs';
 import { AuthService, RoleService } from '@lotus/front-global/auth';
 import { inject } from '@angular/core';
-export const rolesGuard: CanActivateFn = (route, state) => {
+export const suspendedGuard: CanActivateFn = (route, state) => {
+  alert('Suspended guard activated');
+  // TODO: Burada suspended mi diye kontrol edilecek (banlandı ise)
+  return true;
   const roleList = route.data?.['roles'] as string[];
   if (roleList) {
     const roleService: RoleService = inject(RoleService);

@@ -1,5 +1,8 @@
 <lotus-web-data-list-layout>
   <ng-template action>
+    @if (!admin() && !customerMode()) {
+      <block-button stringContent="postral.report-setup.standard" (click)="setupReports()"></block-button>
+    }
     <block-button
       stringContent="Yeni sorgu"
       (click)="createItem()"

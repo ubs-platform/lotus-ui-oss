@@ -4,7 +4,7 @@
  * Feel free to feedback any issues to https://github.com/ubs-platform/ubs-mona-mr
  * Generated on: 2025-09-29T17:39:22.064Z
  */
-import { AccountDTO, AccountSearchParamsDTO, PaymentSearchFlatDTO, RelatedAccountFilterDto } from '@tk-postral/payment-common';
+import { AccountDTO, AccountSearchParamsDTO, PaymentSearchFlatDTO, RelatedAccountFilterDto, SellerReportSetupDTO, SellerReportSetupResultDTO } from '@tk-postral/payment-common';
 
 import { CrudBaseServiceGenerator } from '@lotus/front-global/front-bases';
 import { Injectable } from '@angular/core';
@@ -24,6 +24,18 @@ export class AccountControllerService extends CrudBaseServiceGenerator<AccountDT
    */
   constructor(http: HttpClient) {
     super(http);
+  }
+
+  previewReportSetup(accountId: string, currency: string): Observable<SellerReportSetupResultDTO> {
+    return this.http.get<SellerReportSetupResultDTO>(
+      `${this.baseUrl}/${encodeURIComponent(accountId)}/report-setup`, { params: { currency } },
+    );
+  }
+
+  setupReports(accountId: string, input: SellerReportSetupDTO): Observable<SellerReportSetupResultDTO> {
+    return this.http.post<SellerReportSetupResultDTO>(
+      `${this.baseUrl}/${encodeURIComponent(accountId)}/report-setup`, input,
+    );
   }
 
 

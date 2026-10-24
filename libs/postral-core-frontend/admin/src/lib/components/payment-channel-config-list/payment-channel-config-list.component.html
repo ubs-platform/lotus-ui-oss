@@ -11,6 +11,7 @@
     </block-button>
   </ng-template>
   <ng-container content>
+    <p role="note">{{ 'postral.platform-setup.dummy-warning' | translate }}</p>
     <searchable-data-table
       url="/service/payment/api/payment-channel-config/_search"
       [cover]="true"

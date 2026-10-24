@@ -50,6 +50,14 @@ describe('OverlayPanelComponent', () => {
     expect(component.positions()[1]).toMatchObject({ originX: 'start', overlayX: 'end' });
   });
 
+  it('keeps DOWN placement below the anchor or flips vertically', () => {
+    component.showDialog(anchor, 'DOWN');
+
+    expect(component.positions()).toHaveLength(2);
+    expect(component.positions()[0]).toMatchObject({ originY: 'bottom', overlayY: 'top' });
+    expect(component.positions()[1]).toMatchObject({ originY: 'top', overlayY: 'bottom' });
+  });
+
   it('anchors to the clicked control rather than its child', () => {
     const icon = document.createElement('span');
     anchor.appendChild(icon);

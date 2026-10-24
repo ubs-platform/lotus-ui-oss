@@ -1,10 +1,9 @@
 <div
-  class="h-full w-full flex flex-row align-items-center justify-content-center"
-  >
+  class="login-screen-wrap h-full w-full flex flex-row align-items-center justify-content-center"
+  [style.--image-url]="customBg()"
+>
   @if ((currentUser | async) == null) {
-    <div
-      class="mona-centered-card p-4 overflow-auto"
-      >
+    <div class="mona-centered-card p-4 overflow-auto">
       <div class="w-full">
         @if (showWarning) {
           <lotus-web-message
@@ -26,10 +25,10 @@
     </div>
   }
   @if (currentUser | async; as user) {
-    <div
-      class="mona-centered-card p-4 overflow-auto"
+    <div class="mona-centered-card p-4 overflow-auto bg-surface">
+      <div
+        class="div flex flex-column align-items-center justify-content-center"
       >
-      <div class="div flex flex-column align-items-center justify-content-center">
         <lotus-web-message
           severity="info"
           text="Şu an zaten giriş yapmış olarak görünüyorsunuz."
@@ -37,18 +36,18 @@
         @if (user) {
           <div
             class="flex justify-content-center align-items-center animated delay-1 p-2"
-            >
+          >
             <img
               alt="logo"
-          style="
-            height: 100px;
-            width: 100px;
-            margin-right: 10px;
-            border-radius: 100%;
-          "
+              style="
+                height: 100px;
+                width: 100px;
+                margin-right: 10px;
+                border-radius: 100%;
+              "
               src="/api/file/PROFILE_PHOTO/{{ user.id }}"
               class="account-image"
-              />
+            />
             <div>
               <h1 class="m-0">{{ user.name }} {{ user.surname }}</h1>
             </div>
@@ -57,37 +56,40 @@
       </div>
       <block-button
         [cover]="true"
-        iconClass="material-symbols-outlined" iconContent="manage_accounts"
+        iconClass="material-symbols-outlined"
+        iconContent="manage_accounts"
         iconPosition="RIGHT"
         routerLink="/account/information"
         >Hesap ayarları</block-button
-        >
+      >
+      <block-button
+        [cover]="true"
+        iconClass="material-symbols-outlined"
+        iconContent="logout"
+        iconPosition="RIGHT"
+        (click)="logout()"
+        >Çıkış yap ve ya farklı bir hesapla devam et</block-button
+      >
+      <block-button
+        [cover]="true"
+        iconClass="material-symbols-outlined"
+        iconContent="home"
+        iconPosition="RIGHT"
+        [buttonClass]="!redirectTo || redirectTo == '/' ? 'primary' : ''"
+        routerLink="/"
+        stringContent="general.home"
+      ></block-button>
+      @if (redirectTo && redirectTo != '/') {
         <block-button
           [cover]="true"
-          iconClass="material-symbols-outlined" iconContent="logout"
+          iconClass="material-symbols-outlined"
+          iconContent="north_east"
           iconPosition="RIGHT"
-          (click)="logout()"
-          >Çıkış yap ve ya farklı bir hesapla devam et</block-button
-          >
-          <block-button
-            [cover]="true"
-            iconClass="material-symbols-outlined" iconContent="home"
-            iconPosition="RIGHT"
-            [buttonClass]="!redirectTo || redirectTo == '/' ? 'primary' : ''"
-            routerLink="/"
-            stringContent="general.home"
-            ></block-button
-            >
-            @if (redirectTo && redirectTo != '/') {
-              <block-button
-                [cover]="true"
-                iconClass="material-symbols-outlined" iconContent="north_east"
-                iconPosition="RIGHT"
-                buttonClass="primary"
-                (click)="successLogin()"
-                >Bu hesapla devam et</block-button
-                >
-              }
-            </div>
-          }
-        </div>
+          buttonClass="primary"
+          (click)="successLogin()"
+          >Bu hesapla devam et</block-button
+        >
+      }
+    </div>
+  }
+</div>

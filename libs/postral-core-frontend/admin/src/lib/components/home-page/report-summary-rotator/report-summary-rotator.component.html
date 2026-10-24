@@ -1,0 +1,32 @@
+<div class="report-items" aria-live="polite" aria-atomic="true">
+  @for (item of visibleReports(); track item.id) {
+    <div
+      class="report-item"
+      animate.enter="report-item-enter"
+      animate.leave="report-item-leave"
+    >
+      <div class="w-full flex flex-column">
+        <div class="flex flex-column sm:flex-row justify-content-between">
+          <div style="font-weight: bold">{{ item.accountName }}</div>
+          <div>
+            <lib-money-display
+              [amount]="item.netSaleAmount"
+              [currency]="item.currency"
+            ></lib-money-display>
+          </div>
+        </div>
+        <div class="hidden sm:block" style="font-size: 12px">
+          ({{ 'postral.reports.summary.net-revenue' | translate }}:
+          <lib-money-display
+            [amount]="item.netRevenueWithoutExpense"
+            [currency]="item.currency"
+          ></lib-money-display> - 
+          {{
+            'postral.reports.summary.count'
+              | translate: { count: item.paymentCount }
+          }})
+        </div>
+      </div>
+    </div>
+  }
+</div>

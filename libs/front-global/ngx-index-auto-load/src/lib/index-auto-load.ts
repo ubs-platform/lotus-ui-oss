@@ -11,7 +11,7 @@ export class IndexAutoLoadElement {
   ) {}
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class IndexAutoLoader {
   private loads: IndexAutoLoadElement[] = [];
 

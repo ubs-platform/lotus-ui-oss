@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   AuthManagementService,
@@ -20,6 +20,7 @@ export class LoginPageComponent {
   redirectTo: string = '/';
   showWarning: boolean = false;
   activated: boolean = false;
+  customBg = signal('');
   currentUser?: Observable<UserDTO | null | undefined>;
   constructor(
     private activeROute: ActivatedRoute,
@@ -27,10 +28,17 @@ export class LoginPageComponent {
     private router: Router,
     private authService: AuthManagementService,
     private secondOverlay: BasicOverlayService,
-    private userRegisterService: UserRegisterService
+    private userRegisterService: UserRegisterService,
   ) {}
 
   ngOnInit(): void {
+    this.activeROute.data.subscribe((data) => {
+      if (data) {
+        if (data['customBackground']) {
+          this.customBg.set(data['customBackground']);
+        }
+      }
+    });
     this.currentUser = this.authService.userChange();
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
@@ -60,5 +68,8 @@ export class LoginPageComponent {
 
   successLogin() {
     this.router.navigateByUrl(this.redirectTo || '/');
+  }
+
+  ngOnDestroy() {
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ThemeManager {
   readonly KEY_THEME = 'theme';
   readonly KEY_AMOLED = 'amoled';

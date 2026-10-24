@@ -1,0 +1,183 @@
+<!-- Reform editor + primary "continue" action shared by every form step. -->
+<ng-template #formStep let-instruction>
+  <fieldset [disabled]="busy()">
+    <lib-reform-data-edit [formInstruction]="instruction" saveButtonPosition="hidden"></lib-reform-data-edit>
+  </fieldset>
+  <div class="action-buttons">
+    <block-button buttonClass="primary" stringContent="postral.platform-setup.continue" (click)="editor()?.saveForm()"
+      [disabled]="busy()" iconContent="edit" iconClass="material-symbols-outlined"></block-button>
+  </div>
+</ng-template>
+
+<div class="flex flex-column h-full w-full">
+  <onpage-header content="{{ 'postral.platform-setup.title' | translate }}"></onpage-header>
+  <div class="flex-grow-1 flex flex-row lg:align-items-center justify-content-center">
+    <div class="mona-centered-card flex gap-4 flex-column lg:flex-row p-4">
+      <div>
+        <ol class="steps" [attr.aria-label]="'postral.platform-setup.title' | translate">
+          @for (step of visibleSteps(); track step) {
+          <li [attr.aria-current]="screen() !== 'WELCOME' && state()?.step === step ? 'step' : null">
+            {{ 'postral.platform-setup.step-' + step | translate }}
+          </li>
+          }
+        </ol>
+      </div>
+
+      <section class="setup" style="overflow: auto">
+        @if (loading()) {
+        <p role="status">{{ 'postral.report-setup.loading' | translate }}</p>
+        }
+        @if (error()) {
+        <div role="alert">
+          <p>{{ error() | translate }}</p>
+          @if (serverError()) {
+          <p>{{ serverError() }}</p>
+          }
+          <div class="action-buttons">
+            <block-button stringContent="postral.platform-setup.resume" (click)="load()"
+              [disabled]="busy()"></block-button>
+          </div>
+        </div>
+        }
+
+        @if (state(); as current) {
+        @if (screen() !== 'WELCOME' && screen() !== 'COMPLETED') {
+        <h2>{{ 'postral.platform-setup.step-' + current.step | translate }}</h2>
+        }
+
+        @switch (screen()) {
+        @case ('WELCOME') {
+        <h2>{{ 'postral.platform-setup.welcome' | translate }}</h2>
+        <p>{{ 'postral.platform-setup.intro' | translate }}</p>
+        <p>{{ 'postral.platform-setup.resume-help' | translate }}</p>
+        @if (current.legacyAvailable) {
+        <aside>
+          <p>{{ 'postral.platform-setup.legacy-help' | translate }}</p>
+          <block-button stringContent="postral.platform-setup.keep-existing" (click)="keepExisting()"
+            [disabled]="busy()"></block-button>
+        </aside>
+        } @else {
+        <div class="action-buttons">
+          <block-button buttonClass="primary" stringContent="postral.platform-setup.start" (click)="start()"
+            iconContent="play_arrow" iconClass="material-symbols-outlined" [disabled]="busy()"></block-button>
+        </div>
+        }
+        }
+
+        @case ('TEAM') {
+        @if (teamForm(); as instruction) {
+        <ng-container *ngTemplateOutlet="formStep; context: { $implicit: instruction }"></ng-container>
+        }
+        }
+
+        @case ('ADDRESS') {
+        @if (addressForm(); as instruction) {
+        <h3>{{ 'postral.platform-setup.address' | translate }}</h3>
+        @if (current.step === 'SELLER') {
+        <block-button stringContent="postral.platform-setup.reuse-address" (click)="usePlatformAddress()"
+          [disabled]="busy()"></block-button>
+        }
+        <ng-container *ngTemplateOutlet="formStep; context: { $implicit: instruction }"></ng-container>
+        }
+        }
+
+        @case ('ACCOUNT') {
+        @if (accountForm(); as instruction) {
+        <h3>{{ 'postral.platform-setup.account' | translate }}</h3>
+        <p>
+          {{ (shareAddress() ? 'postral.platform-setup.shared-address' : 'postral.platform-setup.address-ready') |
+          translate }}
+        </p>
+        <block-button stringContent="postral.platform-setup.edit-address" (click)="editAddress()" iconContent="edit"
+          iconClass="material-symbols-outlined" [disabled]="busy()"></block-button>
+        <ng-container *ngTemplateOutlet="formStep; context: { $implicit: instruction }"></ng-container>
+        }
+        }
+
+        @case ('OWNERSHIP') {
+        <p>{{ 'postral.platform-setup.ownership-help' | translate }}</p>
+        <div class="action-buttons">
+          <block-button stringContent="postral.platform-setup.resume" (click)="repairOwnership()" [disabled]="busy()"
+            iconContent="edit" iconClass="material-symbols-outlined"></block-button>
+        </div>
+        }
+
+        @case ('SETTINGS') {
+        @if (settingsForm(); as instruction) {
+        <p>{{ 'postral.platform-setup.report-help' | translate }}</p>
+        <ng-container *ngTemplateOutlet="formStep; context: { $implicit: instruction }"></ng-container>
+        }
+        }
+
+        @case ('REVIEW') {
+        @if (current.settings; as config) {
+        <dl>
+          @for (line of summaryLines(); track line.step) {
+          <dt>{{ 'postral.platform-setup.step-' + line.step | translate }}</dt>
+          <dd>{{ line.value }}</dd>
+          }
+          <dt>{{ 'postral.platform-setup.mode' | translate }}</dt>
+          <dd>
+            {{ (config.mode === 'SELF' ? 'postral.platform-setup.self' : 'postral.platform-setup.marketplace') |
+            translate }}
+          </dd>
+          <dt>{{ 'postral.report-setup.currency' | translate }}</dt>
+          <dd>{{ config.currency }}</dd>
+          <dt>{{ 'postral.platform-setup.commission' | translate }}</dt>
+          <dd>{{ config.commissionPercent }}%</dd>
+          @if (config.mode === 'MARKETPLACE') {
+          <dt>{{ 'postral.platform-setup.tax' | translate }}</dt>
+          <dd>{{ config.taxRate }}%</dd>
+          <dt>{{ 'postral.platform-setup.billing-days' | translate }}</dt>
+          <dd>{{ config.billingDays.join(', ') }}</dd>
+          }
+          <dt>{{ 'postral.platform-setup.seller-reports' | translate }}</dt>
+          <dd>{{ (config.sellerReports ? 'general.yes' : 'general.no') | translate }}</dd>
+          <dt>{{ 'postral.platform-setup.periods' | translate }}</dt>
+          <dd>
+            @for (grouping of config.dateGroupings; track grouping) {
+            <span>{{ 'postral.platform-setup.grouping-' + grouping | translate }} </span>
+            }
+          </dd>
+        </dl>
+        @if (config.additionalTaxes?.length) {
+        <h3>{{ 'postral.platform-setup.additional-taxes' | translate }}</h3>
+        <ul>
+          @for (tax of config.additionalTaxes; track $index) {
+          <li>{{ tax.taxName }}: {{ tax.taxRate }}% (DEFAULT)</li>
+          }
+        </ul>
+        }
+        <p>{{ 'postral.platform-setup.review-help' | translate }}</p>
+        @if (channelsForm(); as instruction) {
+        <h3>{{ 'postral.platform-setup.payment-channels' | translate }}</h3>
+        <p>{{ 'postral.platform-setup.channels-help' | translate }}</p>
+        <fieldset [disabled]="busy()">
+          <lib-reform-data-edit [formInstruction]="instruction" saveButtonPosition="hidden"></lib-reform-data-edit>
+        </fieldset>
+        <p role="note">{{ 'postral.platform-setup.dummy-warning' | translate }}</p>
+        }
+        <div class="action-buttons">
+          <block-button buttonClass="primary" stringContent="postral.platform-setup.finish" (click)="finish()"
+            [disabled]="busy()"></block-button>
+        </div>
+        }
+        }
+
+        @case ('COMPLETED') {
+        <div class="flex flex-column h-full justify-content-center align-items-center">
+          <lib-icon iconContent="check" iconSize="8em" iconClass="material-symbols-outlined"></lib-icon>
+          <h2 class="text-center">{{ 'postral.platform-setup.complete' | translate }}</h2>
+          <p>{{ 'postral.platform-setup.complete-help' | translate }}</p>
+          <div class="action-buttons">
+            <block-button buttonClass="primary" iconContent="home" iconClass="material-symbols-outlined"
+              stringContent="postral.platform-setup.go-admin" routerLink="/admin" [disabled]="busy()"></block-button>
+          </div>
+        </div>
+        }
+        }
+        }
+      </section>
+    </div>
+  </div>
+</div>
