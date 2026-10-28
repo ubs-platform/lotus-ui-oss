@@ -9,6 +9,19 @@ Run `nx test account-user-edit` to execute the unit tests.
 `ItemPriceListComponent.pricesChanged` emits after successfully saving or deleting
 a price so consumers can refresh their price-readiness checks.
 
+Item detail uses one navigation row for information, the price list, and the
+price editor. `ItemPriceEditComponent` owns the shared create/edit form and emits
+`saved` only after a successful save. Selecting a price to edit opens the editor
+tab; switching tabs preserves its draft. Saving refreshes the list, returns to
+it, and resets the editor for a new price. Unsaved items cannot create prices.
+Cancel discards the current draft without saving and returns to the price list,
+also clearing the selected price and resetting the editor to new-price defaults.
+`ItemPriceListComponent.externalEditor` hides its embedded navigation and emits
+`editRequested` instead. Embedded consumers (such as book sale settings) keep
+their existing navigation and `pricesChanged` events using the same editor.
+Forms scroll within their available height with bottom save actions visible;
+wide price tables scroll horizontally without widening the surrounding page.
+
 The seller-only `report-summary` menu opens the report charts from the reports
 library. Customer mode hides the menu and does not load report/account data.
 

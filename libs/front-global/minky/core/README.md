@@ -36,3 +36,29 @@ Repeated carrier generation does not rerun callbacks. `reset()` and `resetToValu
 allow callbacks to run again on the next carrier generation.
 
 Without `emitInitialValueChange: true`, initialization behavior is unchanged.
+
+## Warning and info messages
+
+Fields can show non-blocking `warning` and `info` messages below the input. They
+never affect `hasErrors()`.
+
+```ts
+@minky({
+  warningValidators: [new MyWarningValidator()],
+  infoValidators: [new MyInfoValidator()],
+})
+price!: number;
+```
+
+A message set on the `Reform` instance takes precedence over the decorator's
+validators for that path and severity:
+
+```ts
+reform.setWarningByPath('price', 'price.belowCost');
+reform.setInfoByPath('price', 'price.includesVat');
+reform.setWarningByPath('price', undefined); // falls back to warningValidators
+```
+
+Inside `onValueChange`, use `environment.state.setWarning?.(path, msg)` and
+`environment.state.setInfo?.(path, msg)`. `reset()` clears messages set this way.
+See `docs/reform-flow.md` for details.

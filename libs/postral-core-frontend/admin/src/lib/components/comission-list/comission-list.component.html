@@ -16,31 +16,21 @@
       [cover]="true"
       #table
     >
-      <!-- <column name="id">
-        <ng-template header> Id </ng-template>
-        <ng-template header content="general.id"></ng-template>
-        <ng-template data let-item="item">
-          {{ item.id }}
-        </ng-template>
-      </column> -->
       <column name="externalPlatformId">
         <ng-template header content="postral.commission.external-platform"></ng-template>
         <ng-template data let-item="item">
-          {{ item.externalPlatformName ?? 'Postral Örneği' }}
           {{ item.externalPlatformName ?? ('postral.commission.default-sample' | translate) }}
         </ng-template>
       </column>
       <column name="sellerAccountName">
         <ng-template header content="postral.commission.seller-account"></ng-template>
         <ng-template data let-item="item">
-          {{ item.sellerAccountName || 'Varsayılan' }}
           {{ item.sellerAccountName || ('general.default' | translate) }}
         </ng-template>
       </column>
       <column name="itemClass">
         <ng-template header content="postral.commission.item-class"></ng-template>
         <ng-template data let-item="item">
-          {{ item.itemClass || 'Varsayılan' }}
           {{ item.itemClass || ('general.default' | translate) }}
         </ng-template>
       </column>

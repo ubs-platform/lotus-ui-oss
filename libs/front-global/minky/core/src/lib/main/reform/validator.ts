@@ -7,6 +7,12 @@ export interface IValidatorResult {
   name: TranslatorText;
 }
 
+/**
+ * Non-blocking field message levels. Unlike validation errors, they never
+ * affect `hasErrors()`.
+ */
+export type ReformMessageSeverity = 'warning' | 'info';
+
 export class ValidatorResult implements IValidatorResult {
   constructor(public name: TranslatorText, public valid: boolean) {}
 }

@@ -5,6 +5,7 @@ import { minky, minkyRoot } from '@lotus/front-global/minky/core';
 import { ItemTaxControllerService } from '@lotus/postral-core-frontend/client';
 import { map, min } from 'rxjs';
 import { getAccountIdsRelated } from '../utils/get-account-ids-related.util';
+import { currencyOptions } from '../forms';
 
 @minkyRoot()
 export class ItemForm extends ItemDTO {
@@ -23,21 +24,13 @@ export class ItemForm extends ItemDTO {
 
   @minky({
     defaultValueConstructor: () => '',
+    inputType: 'select',
     widthRatio: '50%',
+    selectItems: (env) => {
+      return getAccountIdsRelated(env, 'USER', 'COMMERCIAL');
+    },
   })
-  override entityGroup: string = '';
-
-  @minky({
-    defaultValueConstructor: () => '',
-    widthRatio: '50%',
-  })
-  override entityName: string = '';
-
-  @minky({
-    defaultValueConstructor: () => '',
-    widthRatio: '100%',
-  })
-  override entityId: string = '';
+  override sellerAccountId: string = '';
 
   @minky({
     defaultValueConstructor: () => '',
@@ -47,22 +40,6 @@ export class ItemForm extends ItemDTO {
     },
   })
   override unit: string = '';
-
-  @minky({
-    defaultValueConstructor: () => '',
-    inputType: 'select',
-    widthRatio: '50%',
-    selectItems: (env) => {
-      return getAccountIdsRelated(env, "USER", "COMMERCIAL");
-    },
-  })
-  override sellerAccountId: string = '';
-
-  @minky({
-    defaultValueConstructor: () => '',
-    widthRatio: '50%',
-  })
-  override baseCurrency: string = '';
 
   @minky({
     defaultValueConstructor: () => '',
@@ -88,7 +65,7 @@ export class ItemForm extends ItemDTO {
     widthRatio: '50%',
     selectItems: (env) => {
       const itemTaxService = (env.app?.['injector'] as Injector).get(
-        ItemTaxControllerService
+        ItemTaxControllerService,
       );
 
       return itemTaxService.getAll().pipe(
@@ -102,10 +79,37 @@ export class ItemForm extends ItemDTO {
                 .map((v) => v.taxMode + ': ' + v.taxRate + '%')
                 .join(', ') +
               ')',
-          }))
-        )
+          })),
+        ),
       );
     },
   })
   override itemTaxId: string = '';
+
+  @minky({
+    defaultValueConstructor: () => '',
+    selectItems: () => currencyOptions,
+    widthRatio: '50%',
+    inputType: "select"
+  })
+  override baseCurrency: string = '';
+
+  @minky({
+    defaultValueConstructor: () => '',
+    widthRatio: '50%',
+  })
+  override entityGroup: string = '';
+
+  @minky({
+    defaultValueConstructor: () => '',
+    widthRatio: '50%',
+  })
+  override entityName: string = '';
+
+  @minky({
+    defaultValueConstructor: () => '',
+    widthRatio: '50%',
+  })
+  override entityId: string = '';
+
 }

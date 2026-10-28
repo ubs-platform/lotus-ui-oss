@@ -23,7 +23,7 @@ import {
 import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import { CscdClientService } from '@lotus/front-global/cscd-client';
-import { Reform, RequiredValidator } from '@lotus/front-global/minky/core';
+import { Reform } from '@lotus/front-global/minky/core';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import {
   FormEditInstruction,
@@ -281,11 +281,6 @@ export class PlatformSetupComponent implements OnInit {
       this.address() ?? {},
     );
     const form = new Reform(AddressForm, initial);
-    form.propertyMetas = form.propertyMetas.map((meta) =>
-      meta.name === 'streetName' || meta.name === 'countryCodeUserInput'
-        ? { ...meta, validators: [new RequiredValidator()] }
-        : meta,
-    );
     const instruction = this.instruction<AddressForm, AddressForm>(
       form,
       (data) => of(data),

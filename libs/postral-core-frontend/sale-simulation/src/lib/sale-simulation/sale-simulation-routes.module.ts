@@ -3,6 +3,7 @@ import { Route, RouterModule } from '@angular/router';
 import { OrdersComponent } from './components/orders/orders.component';
 import { SaleSimulationWrapComponent } from './components/sale-simulation-wrap/sale-simulation-wrap.component';
 import { PaymentComponent } from './components/payment/payment.component';
+import { PaymentReturnComponent } from './components/payment-return/payment-return.component';
 import { FrontGlobalTableModule } from '@lotus/front-global/table';
 import { BlockPartBaseButtonComponent } from 'libs/front-global/button/src/lib/block-part-base-button/block-part-base-button.component';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
@@ -11,6 +12,10 @@ import { FrontGlobalButtonModule } from '@lotus/front-global/button';
   imports: [
     
     RouterModule.forChild([
+      {
+        path: 'payment-return',
+        component: PaymentReturnComponent,
+      },
       {
         path: '',
         component: SaleSimulationWrapComponent,

@@ -8,13 +8,11 @@ import { GroupLabelFieldLinkDirective } from './group-label-field-link/group-lab
 @NgModule({
   imports: [CommonModule, FormsModule],
   declarations: [
-    // MinkyReformComponent,
     InputFieldLinkDirective,
     ButtonFieldLinkDirective,
     GroupLabelFieldLinkDirective,
   ],
   exports: [
-    // MinkyReformComponent,
     InputFieldLinkDirective,
     ButtonFieldLinkDirective,
     GroupLabelFieldLinkDirective,

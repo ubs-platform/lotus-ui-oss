@@ -36,6 +36,37 @@ describe('ItemPriceListComponent price changes', () => {
     expect(emit).not.toHaveBeenCalled();
   });
 
+  it('opens a new price from the form navigation action', () => {
+    component.openPriceForm();
+    expect(component.selectedPage()).toBe('form');
+    expect(component.editingPrice()).toBeNull();
+  });
+
+  it('preserves the current editor when its navigation action is clicked again', () => {
+    const price = { id: 'price-1', itemId: 'item-1', variation: '6months', itemPrice: 125, currency: 'TRY' };
+    component.editPrice(price);
+    component.openPriceForm();
+    expect(component.editingPrice()).toBe(price);
+    expect(component.selectedPage()).toBe('form');
+  });
+
+  it('clears the editor on returning to the list', () => {
+    component.openPriceForm();
+    component.backToList();
+    expect(component.selectedPage()).toBe('list');
+    expect(component.editingPrice()).toBeNull();
+  });
+
+  it('delegates edits without opening an embedded form in external-editor mode', () => {
+    fixture.componentRef.setInput('externalEditor', true);
+    const emit = jest.spyOn(component.editRequested, 'emit');
+    const price = { id: 'price-1', itemId: 'item-1', variation: 'default', itemPrice: 125, currency: 'TRY' };
+    component.editPrice(price);
+    expect(emit).toHaveBeenCalledWith(price);
+    expect(component.selectedPage()).toBe('list');
+    expect(component.editingPrice()).toBeNull();
+  });
+
   it('emits only after a price is successfully deleted', () => {
     const emit = jest.spyOn(component.pricesChanged, 'emit');
     const deleted = new Subject<object>();
@@ -55,17 +86,15 @@ describe('ItemPriceListComponent price changes', () => {
     expect(emit).not.toHaveBeenCalled();
   });
 
-  it('emits after a successful price save but not after a failed save', () => {
+  it('refreshes and emits when the embedded editor reports a successful save', () => {
     const emit = jest.spyOn(component.pricesChanged, 'emit');
     component.createPrice();
-    const instruction = component.instruction();
-    if (!instruction) {
-      throw new Error('Expected the price editing form');
-    }
-    const data = instruction.form.value;
-    instruction.afterSaveError(new Error('Save failed'), data);
     expect(emit).not.toHaveBeenCalled();
-    instruction.afterSaveSuccess(data, data);
+    const loads = itemService.getDefaultPrices.mock.calls.length;
+    component.onPriceSaved();
     expect(emit).toHaveBeenCalledTimes(1);
+    expect(itemService.getDefaultPrices).toHaveBeenCalledTimes(loads + 1);
+    expect(component.selectedPage()).toBe('list');
+    expect(component.editingPrice()).toBeNull();
   });
 });

@@ -80,6 +80,7 @@ export class PlatformTaxForm implements PlatformSetupTaxDTO {
   @minky({
     label: 'postral.platform-setup.tax-name',
     validators: [new RequiredValidator()],
+    widthRatio: "50%",
   })
   taxName = '';
 
@@ -87,6 +88,7 @@ export class PlatformTaxForm implements PlatformSetupTaxDTO {
     label: 'postral.platform-setup.tax-rate',
     inputType: 'number',
     validators: [new IntegerPercentValidator()],
+    widthRatio: "50%",
   })
   taxRate = 0;
 }

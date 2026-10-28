@@ -2,7 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReportControllerService } from '@lotus/postral-core-frontend/client';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
-import { EXTERNAL_ITEM_CLASS_COMISSION_PREFIX, EXTERNAL_PLATFORM_COMISSION_PREFIX, POSTRAL_INSTANCE, ReportFullDTO } from '@tk-postral/payment-common';
+import { EXTERNAL_ITEM_CLASS_COMISSION_PREFIX, EXTERNAL_PLATFORM_COMISSION_PREFIX, PAYMENT_CHANNEL_FEE_PREFIX, POSTRAL_INSTANCE, ReportFullDTO } from '@tk-postral/payment-common';
 import { Optional } from '@ubs-platform/crud-base-common/utils';
 import { TranslationParameter, TranslatorText } from '@lotus/extra/translator-core';
 
@@ -83,6 +83,8 @@ export class ReportInfoComponent implements OnInit {
     else if (expenseKey.startsWith(EXTERNAL_ITEM_CLASS_COMISSION_PREFIX)) {
       params["platform"] = decodeURIComponent(parts[1]);
       params["itemClass"] = decodeURIComponent(parts[2]);
+    } else if (expenseKey.startsWith(PAYMENT_CHANNEL_FEE_PREFIX)) {
+      params["channel"] = decodeURIComponent(parts[1]);
     } else {
       params["itemClass"] = parts[1];
     }

@@ -46,6 +46,18 @@ export interface PropertyMeta<T = any> extends Label {
   validators?: Validator[];
 
   /**
+   * Non-blocking validators; failing results are shown as warnings unless a
+   * warning was set for the path through `Reform.setWarningByPath`.
+   */
+  warningValidators?: Validator[];
+
+  /**
+   * Non-blocking validators; failing results are shown as info messages unless
+   * an info message was set for the path through `Reform.setInfoByPath`.
+   */
+  infoValidators?: Validator[];
+
+  /**
    * hide at the form
    */
   hide?: boolean;

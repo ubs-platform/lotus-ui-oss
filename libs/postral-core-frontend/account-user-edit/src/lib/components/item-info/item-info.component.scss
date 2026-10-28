@@ -1,9 +1,46 @@
-@import "placeholders";
-
 :host {
-    @extend %page-host;
-    height: 100%;
-    width: 100%;
-    position: relative;
-    display: block;
+  height: 100%;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+  display: block;
+  background: var(--bg-surface, #fff);
 }
+
+.item-info-container {
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+}
+
+.information-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+//   max-width: 64rem;
+  // padding: 1rem;
+  padding: .5rem 0;
+  box-sizing: border-box;
+  gap: 0.75rem;
+  overflow-wrap: anywhere;
+
+  lib-reform-data-edit {
+    display: block;
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+  }
+}
+
+.unit-description {
+  flex-shrink: 0;
+  overflow-wrap: anywhere;
+}
+
+// @media (max-width: 600px) {
+//   .information-view {
+//     padding: 0.5rem;
+//   }
+// }

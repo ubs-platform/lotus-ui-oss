@@ -62,6 +62,8 @@ export class CarrierManager<T extends any> {
         path,
         meta: propertyMeta,
       }),
+      warnings: this.bridge.messagesByPath({ path, meta: propertyMeta }, 'warning'),
+      infos: this.bridge.messagesByPath({ path, meta: propertyMeta }, 'info'),
       isTouched: this.bridge.touchMap().getPathStatus(path),
       validators: propertyMeta.validators?.map((a) => a.labelKey) || [],
       title: propertyMeta.label || propertyMeta.name,
@@ -91,6 +93,8 @@ export class CarrierManager<T extends any> {
           path,
           meta: propertyMeta,
         });
+        carrierLink.warnings = this.bridge.messagesByPath({ path, meta: propertyMeta }, 'warning');
+        carrierLink.infos = this.bridge.messagesByPath({ path, meta: propertyMeta }, 'info');
         if (propertyMeta.onValueChange) {
           this.bridge.emitBigUpdate(this.bridge.value());
         }

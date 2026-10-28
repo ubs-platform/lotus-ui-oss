@@ -74,6 +74,9 @@ export class ReformNgxPrimeComponent implements OnInit, AfterViewInit, OnChanges
       this.reform()?.valueBigUpdate.subscribe(() => {
         this.updateReformPaths();
       });
+      this.reform()?.fieldPropertyChanged.subscribe(() => {
+        this.updateReformPaths();
+      });
     }
   }
 

@@ -1,102 +1,79 @@
 <div class="price-list-container">
+  @if (!externalEditor()) {
+  <div class="price-navigation">
+    <block-button (click)="backToList()" [buttonClass]="selectedPage() === 'list' ? 'primary' : 'surface'"
+      iconClass="material-symbols-outlined" iconContent="list" stringContent="postral.item.price-list">
+    </block-button>
+    <block-button (click)="openPriceForm()" iconClass="material-symbols-outlined"
+      [iconContent]="editingPrice()?.id ? 'edit' : 'add'"
+      [buttonClass]="selectedPage() === 'form' ? 'primary' : 'surface'"
+      [stringContent]="editingPrice()?.id ? 'postral.item-price.edit-title' : 'postral.item-price.add-new'">
+    </block-button>
+  </div>
+  }
   @if (selectedPage() === 'list') {
   <div class="list-view">
-    <ubs-table-ngx [items]="prices()">
-      <column name="variation">
-        <ng-template header content="postral.item-price.variation"></ng-template>
-        <ng-template data let-item="item">
-          {{ item.variation }}
-        </ng-template>
-      </column>
-      <column name="itemPrice">
-        <ng-template header content="postral.item-price.price"></ng-template>
-        <ng-template data let-item="item">
-          {{ item.itemPrice }}
-        </ng-template>
-      </column>
-      <column name="currency">
-        <ng-template header content="postral.currency"></ng-template>
-        <ng-template data let-item="item">
-          {{ item.currency }}
-        </ng-template>
-      </column>
-      <!-- <column name="taxPercent">
+
+    <div class="price-table">
+      <ubs-table-ngx [items]="prices()">
+        <column name="variation">
+          <ng-template header content="postral.item-price.variation"></ng-template>
+          <ng-template data let-item="item">
+            {{ item.variation }}
+          </ng-template>
+        </column>
+        <column name="itemPrice">
+          <ng-template header content="postral.item-price.price"></ng-template>
+          <ng-template data let-item="item">
+            {{ item.itemPrice }}
+          </ng-template>
+        </column>
+        <column name="currency">
+          <ng-template header content="postral.currency"></ng-template>
+          <ng-template data let-item="item">
+            {{ item.currency }}
+          </ng-template>
+        </column>
+        <!-- <column name="taxPercent">
           <ng-template header> Vergi % </ng-template>
           <ng-template data let-item="item">
             {{ item.taxPercent }}
           </ng-template>
         </column> -->
-      <column name="region">
-        <ng-template header content="postral.item-price.region"></ng-template>
-        <ng-template data let-item="item">
-          {{ item.region }}
-        </ng-template>
-      </column>
-      <column name="activityOrder">
-        <ng-template header content="postral.item-price.priority"></ng-template>
-        <ng-template data let-item="item">
-          {{ item.activityOrder }}
-        </ng-template>
-      </column>
+        <column name="region">
+          <ng-template header content="postral.item-price.region"></ng-template>
+          <ng-template data let-item="item">
+            {{ item.region }}
+          </ng-template>
+        </column>
+        <column name="activityOrder">
+          <ng-template header content="postral.item-price.priority"></ng-template>
+          <ng-template data let-item="item">
+            {{ item.activityOrder }}
+          </ng-template>
+        </column>
 
-      <column name="actions">
-        <ng-template header content="general.actions"></ng-template>
-        <ng-template data let-item="item">
-          <div class="action-buttons">
-            <block-button
-              (click)="editPrice(item)"
-              iconClass="material-symbols-outlined"
-              iconContent="edit"
-              buttonClass="bg-info"
-              stringContent="general.edit.verb"
-            >
-            </block-button>
-            <block-button
-              (click)="deletePrice(item.id)"
-              style="margin-left: 10px"
-              buttonClass="bg-danger"
-              iconClass="material-symbols-outlined"
-              iconContent="close"
-              stringContent="general.delete"
-            >
-            </block-button>
-          </div>
-        </ng-template>
-      </column>
-    </ubs-table-ngx>
-    <block-button
-      (click)="createPrice()"
-      iconClass="material-symbols-outlined"
-      iconContent="add"
-      buttonClass="primary"
-      stringContent="postral.item-price.add-new"
-    >
-    </block-button>
+        <column name="actions">
+          <ng-template header content="general.actions"></ng-template>
+          <ng-template data let-item="item">
+            <div class="action-buttons">
+              <block-button (click)="editPrice(item)" iconClass="material-symbols-outlined" iconContent="edit"
+                buttonClass="bg-info" stringContent="general.edit.verb">
+              </block-button>
+              <block-button (click)="deletePrice(item.id)" buttonClass="bg-danger"
+                iconClass="material-symbols-outlined" iconContent="close" stringContent="general.delete">
+              </block-button>
+            </div>
+          </ng-template>
+        </column>
+      </ubs-table-ngx>
+    </div>
+
   </div>
   } @else if (selectedPage() === 'form') {
   <div class="form-view">
-    <div class="form-header">
-      <block-button
-        (click)="backToList()"
-        iconClass="material-symbols-outlined"
-        iconContent="arrow_back"
-        buttonClass="bg-secondary"
-        stringContent="general.back"
-      >
-      </block-button>
-      <h3>
-        {{
-          (instruction()?.form?.value?.id ? 'postral.item-price.edit-title' : 'postral.item-price.add-new') | translate
-        }}
-      </h3>
-    </div>
-
-    @if (instruction()) {
-    <lib-reform-data-edit
-      [formInstruction]="instruction()!"
-      saveButtonPosition="bottom"
-    ></lib-reform-data-edit>
-    }
+    <lib-item-price-edit [itemId]="itemId()" [price]="editingPrice()" (saved)="onPriceSaved()"
+      (cancelled)="backToList()"></lib-item-price-edit>
   </div>
   }
 </div>

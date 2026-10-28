@@ -18,3 +18,4 @@ export * from './lib/services/payment/webhook-config-controller.service';
 export * from './lib/services/payment/payment-channel-config-controller.service';
 export * from './lib/services/payment/external-platform-controller.service';
 export * from './lib/services/payment/platform-setup.service';
+export * from './lib/util/payment-redirect-url';

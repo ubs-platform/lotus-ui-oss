@@ -8,12 +8,21 @@ export const accountTypes = [
 export const accountTypeIndividual = [
   { text: 'Kişisel', value: 'INDIVIDUAL' },
 ];
-
+const currencyi18nPrefix = "postral.currencies."
 export const currencyOptions = [
-  { text: 'TRY', value: 'TRY' },
-  { text: 'USD', value: 'USD' },
-  { text: 'Euro', value: 'EUR' },
-  { text: 'GBP', value: 'GBP' },
+  { text: currencyi18nPrefix + 'TRY', value: 'TRY' },
+  { text: currencyi18nPrefix + 'USD', value: 'USD' },
+  { text: currencyi18nPrefix + 'EUR', value: 'EUR' },
+  { text: currencyi18nPrefix + 'GBP', value: 'GBP' },
+  { text: currencyi18nPrefix + 'JPY', value: 'JPY' },
+  { text: currencyi18nPrefix + 'CNY', value: 'CNY' },
+  { text: currencyi18nPrefix + 'KRW', value: 'KRW' },
+  { text: currencyi18nPrefix + 'AUD', value: 'AUD' },
+  { text: currencyi18nPrefix + 'CAD', value: 'CAD' },
+  { text: currencyi18nPrefix + 'CHF', value: 'CHF' },
+  { text: currencyi18nPrefix + 'SEK', value: 'SEK' },
+  { text: currencyi18nPrefix + 'NOK', value: 'NOK' },
+  { text: currencyi18nPrefix + 'DKK', value: 'DKK' },
 ];
 
 export const reportDateGroupingOptions = [

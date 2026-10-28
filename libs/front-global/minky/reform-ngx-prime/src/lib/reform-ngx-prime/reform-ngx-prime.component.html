@@ -89,7 +89,7 @@
         [class.ng-dirty]="carrier.isTouched" />
       <datalist [id]="'autocomplete-for-' + carrier.path">
         @for (item of ((feeds[carrier.path] | async) || []); track item.value) {
-          <option [value]="item.value">{{ item.text }}</option>
+          <option [value]="item.value">{{ item.text | translate}} ({{ item.value }})</option>
         }
       </datalist>
     </span>
@@ -99,6 +99,14 @@
   carrier.validationErrors?.length ) {
   <lotus-web-message styleClass="my-1 w-full" severity="error"
   [text]="carrier.validationErrors[0].name | translate"></lotus-web-message>
+}
+@if (carrier.warnings?.length) {
+  <lotus-web-message styleClass="my-1 w-full" severity="warn"
+  [text]="carrier.warnings[0].name | translate"></lotus-web-message>
+}
+@if (carrier.infos?.length) {
+  <lotus-web-message styleClass="my-1 w-full" severity="info"
+  [text]="carrier.infos[0].name | translate"></lotus-web-message>
 }
 </ng-template>
 <ng-template button-link let-carrier="carrier">

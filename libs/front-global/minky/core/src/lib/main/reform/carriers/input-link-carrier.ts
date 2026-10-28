@@ -23,6 +23,8 @@ export interface InputLinkCarrier extends BaseLinkCarrier {
   getFiles: () => File[];
   validators: string[];
   validationErrors: IValidatorResult[];
+  warnings: IValidatorResult[];
+  infos: IValidatorResult[];
   inputType: PropertyInputType;
   isTouched: boolean;
   setTouched: (b: boolean) => void;

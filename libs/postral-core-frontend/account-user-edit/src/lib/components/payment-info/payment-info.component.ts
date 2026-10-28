@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, signal, viewChild } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { PaymentControllerService } from '@lotus/postral-core-frontend/client';
+import { PaymentControllerService, resolvePaymentRedirectUrl } from '@lotus/postral-core-frontend/client';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { PaymentDTO, PaymentItemDTO, TaxDTO } from '@tk-postral/payment-common';
 import { Optional } from '@ubs-platform/crud-base-common/utils';
@@ -122,11 +122,8 @@ export class PaymentInfoComponent implements OnInit {
       })
       .subscribe({
         next: (paymentRes) => {
-          // TODO: Change with configurable value
-          const prefix = 'http://localhost:3767/api/';
-
           paymentRes.redirectUrl &&
-            window.open(prefix + paymentRes.redirectUrl, '_blank');
+            window.open(resolvePaymentRedirectUrl(paymentRes.redirectUrl), '_blank');
 
           this.checkPaymentStatus();
 

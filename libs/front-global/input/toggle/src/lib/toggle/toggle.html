@@ -1,8 +1,9 @@
-<div class="flex gap-2 items-center my-2" [ngClass]="contentClass()">
+<div class="flex gap-2 items-center my-2" [ngClass]="contentClass()" [class.disabled]="disabled()">
   <div>
     <input
       type="checkbox"
       [(ngModel)]="value"
+      [disabled]="disabled()"
       [class.checkbox-style]="checkboxStyle()"
       [class.toggle-style]="!checkboxStyle()"
       [style.pointerEvents]="!disabled() && checkOnClickInput() ? null : 'none'"

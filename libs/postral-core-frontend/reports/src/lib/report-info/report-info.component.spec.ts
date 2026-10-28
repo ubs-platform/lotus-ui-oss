@@ -4,13 +4,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { ReportControllerService } from '@lotus/postral-core-frontend/client';
-import { EXTERNAL_ITEM_CLASS_COMISSION_PREFIX, EXTERNAL_PLATFORM_COMISSION_PREFIX, PLATFORM_COMISSION_TOTAL, POSTRAL_INSTANCE, ReportExpenseDTO, ReportFullDTO, ReportItemDTO, ReportPlatformDTO } from '@tk-postral/payment-common';
+import { EXTERNAL_ITEM_CLASS_COMISSION_PREFIX, EXTERNAL_PLATFORM_COMISSION_PREFIX, PAYMENT_CHANNEL_FEE_PREFIX, PAYMENT_SERVICE_FEE, PLATFORM_COMISSION_TOTAL, POSTRAL_INSTANCE, ReportExpenseDTO, ReportFullDTO, ReportItemDTO, ReportPlatformDTO } from '@tk-postral/payment-common';
 import { of } from 'rxjs';
 import { ReportInfoComponent } from './report-info.component';
 
 @Pipe({ name: 'translate' })
 class TranslateStubPipe implements PipeTransform {
-  transform(value: string, params?: { platform?: string; itemClass?: string }): string {
+  transform(text: string | { key: string; parameters?: { platform?: string; itemClass?: string; channel?: string } }): string {
+    const value = typeof text === 'string' ? text : text.key;
+    const params = typeof text === 'string' ? undefined : text.parameters;
+    if (value === 'postral.expense.PAYMENT_CHANNEL_FEE') {
+      return `${params?.channel} payment service fee`;
+    }
     if (value === 'postral.expense.EXTERNAL_PLATFORM_COMISSION') {
       return `${params?.platform} commission (total)`;
     }
@@ -148,5 +153,19 @@ describe('ReportInfoComponent sales breakdown', () => {
     ]);
     const amounts = Array.from(element.querySelectorAll('.expense-item lib-money-display')).map(node => node.textContent?.trim());
     expect(amounts).toEqual(['20 TRY', '50 TRY', '15 TRY']);
+  });
+
+  it('labels per-channel payment service fees with the decoded channel id', async () => {
+    const element = await render({ expenses: [
+      Object.assign(new ReportExpenseDTO(), { expenseKey: PAYMENT_SERVICE_FEE, expenseAmount: 7 }),
+      Object.assign(new ReportExpenseDTO(), { expenseKey: PAYMENT_CHANNEL_FEE_PREFIX + 'iyzico', expenseAmount: 5 }),
+      Object.assign(new ReportExpenseDTO(), { expenseKey: PAYMENT_CHANNEL_FEE_PREFIX + 'market%3Atr', expenseAmount: 2 }),
+    ] });
+    const titles = Array.from(element.querySelectorAll('.expense-item h3')).map(node => node.textContent?.trim());
+    expect(titles).toEqual([
+      'postral.expense.PAYMENT_SERVICE_FEE',
+      'iyzico payment service fee',
+      'market:tr payment service fee',
+    ]);
   });
 });

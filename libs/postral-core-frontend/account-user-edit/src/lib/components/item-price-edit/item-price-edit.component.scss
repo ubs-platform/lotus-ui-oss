@@ -1,0 +1,17 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  padding: 1rem 0;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+}
+
+lib-reform-data-edit {
+  display: block;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+}

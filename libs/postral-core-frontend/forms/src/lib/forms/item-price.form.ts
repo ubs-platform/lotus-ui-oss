@@ -17,27 +17,33 @@ export class ItemPriceForm implements ItemPriceDTO {
   @minky({
     disable: true,
     defaultValueConstructor: () => '',
+    widthRatio: '50%',
   })
   itemId = '';
 
   @minky({
     defaultValueConstructor: () => '',
     validators: [new RequiredValidator()],
+    widthRatio: '50%',
   })
   variation = '';
+  
+  @minky({
+    defaultValueConstructor: () => '',
+    validators: [new RequiredValidator()],
+    widthRatio: '50%',
+  })
+  currency = '';
 
   @minky({
     defaultValueConstructor: () => 0,
     inputType: 'number',
     validators: [new RequiredValidator(), new MinValidator(0)],
+    widthRatio: '50%',
   })
   itemPrice = 0;
 
-  @minky({
-    defaultValueConstructor: () => '',
-    validators: [new RequiredValidator()],
-  })
-  currency = '';
+
 
   @minky({
     defaultValueConstructor: () => '',

@@ -86,6 +86,13 @@ export class AccountUserInfoComponent {
     });
 
     this.instruction.set({
+      extraActions:[
+        {
+          renderIf: () => this.canSetupReports(),
+          action: () => this.setupReports(),
+          stringContent: 'postral.report-setup.configure'
+        }
+      ],
       form: form,
       onValidationError: (form: Reform) => {
         this.basicOverlay.alert(

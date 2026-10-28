@@ -19,6 +19,7 @@ export class BankAccountForm extends BankAccountDTO {
     validators: [new RequiredValidator()],
     selectItems: () => currencyOptions,
     widthRatio: '50%',
+    inputType: 'select',
   })
   override currency?: string | undefined;
 
@@ -73,25 +74,42 @@ export class BankAccountForm extends BankAccountDTO {
 export class AccountForm extends AccountDTO {
   @minky({
     disable: true,
+    widthRatio: '50%',
   })
   override id = '';
 
   @minky({
     validators: [new RequiredValidator()],
+    widthRatio: '50%',
   })
   override legalIdentity = '';
 
   @minky({
     validators: [new RequiredValidator()],
+    widthRatio: '50%',
   })
   override name = '';
 
-  @minky({ inputType: 'select', selectItems: () => accountTypes })
+  @minky({ inputType: 'select', selectItems: () => accountTypes, widthRatio: '50%' })
   override type: 'INDIVIDUAL' | 'COMMERCIAL' = 'COMMERCIAL';
+
+  @minky({
+    validators: [new RequiredValidator()],
+    widthRatio: '50%',
+  })
+  override emailAddress = '';
+
+  @minky({
+    validators: [new RequiredValidator()],
+    widthRatio: '50%',
+  })
+  override phone = '';
 
   @minky({
     inputType: 'select',
     validators: [new RequiredValidator()],
+    widthRatio: '50%',
+
     selectItems: (env: CombinedEnvironment) => {
       const addressService = (env.app?.['injector'] as Injector).get(
         AddressControllerService
@@ -107,6 +125,8 @@ export class AccountForm extends AccountDTO {
 
   @minky({
     label: 'Vergi Dairesi',
+    widthRatio: '50%',
+
     // disable: true,
   })
   override taxOffice = '';

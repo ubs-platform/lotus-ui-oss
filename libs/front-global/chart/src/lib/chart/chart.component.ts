@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, OnDestroy, ElementRef, ViewChild, input } from '@angular/core';
 import * as ChartJs from 'chart.js';
-
+import { TranslatorRepositoryService } from '@ubs-platform/translator-ngx';
 ChartJs.Chart.register(...ChartJs.registerables);
 
 @Component({
@@ -23,6 +23,8 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
   chartType = input<ChartJs.ChartType>('line', { alias: 'type' });
 
   @ViewChild('canvas', { static: true }) canvas?: ElementRef<HTMLCanvasElement>;
+
+  constructor(private ngxTranslateService: TranslatorRepositoryService) { }
 
   ngAfterViewInit(): void {
     this.loadChart();
@@ -49,6 +51,30 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
   }
 
   private loadChart(): void {
+    const translator = this.ngxTranslateService;
+    const optionsInject = {
+      plugins: {
+        legend: {
+          labels: {
+            generateLabels: function (chart: ChartJs.Chart) {
+              // Chart.js'in varsayılan legend dizisini alıyoruz
+              const originalLabels = ChartJs.Chart.defaults.plugins.legend.labels.generateLabels(chart);
+
+              // Her bir legend öğesinin metnini sözlüğe göre güncelliyoruz
+              return originalLabels.map(label => {
+                const translationKey = label.text; // 'revenue' veya 'expenses'
+
+                // Eğer sözlükte karşılığı varsa çeviriyi koy, yoksa orijinali bırak
+                label.text = translator?.getString(translationKey || '') as string;
+                return label;
+              });
+              // generateLabels: (label: string) => this.ngxTranslateService?.getString(label || '') as string
+            }
+            // formatter: (label: string) => this.ngxTranslateService?.getString(label || '') as string
+          }
+        }
+      }
+    };
     const canvas = this.canvas?.nativeElement;
     const chartType = this.chartType();
     if (!canvas) {
@@ -62,7 +88,7 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
         this.activeChartType === chartType
       ) {
         this.chartActive.data = this.data();
-        this.chartActive.options = this.options();
+        this.chartActive.options = { ...this.options(), ...optionsInject };
         this.chartActive.update();
         return;
       }
@@ -75,7 +101,7 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
     this.chartActive = new ChartJs.Chart(canvas, {
       type: chartType,
       data: this.data(),
-      options: this.options()
+      options: { ...this.options(), ...optionsInject }
     });
     this.activeChartType = chartType;
   }

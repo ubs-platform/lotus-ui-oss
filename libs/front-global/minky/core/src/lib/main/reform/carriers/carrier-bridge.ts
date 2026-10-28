@@ -3,7 +3,7 @@ import { PropertyMeta } from '../../property-meta';
 import { MetaPath } from '../metapath';
 import { ListFunction } from '../select-feeder';
 import { TouchMap } from '../touch-map';
-import { IValidatorResult } from '../validator';
+import { IValidatorResult, ReformMessageSeverity } from '../validator';
 import { CombinedEnvironment } from '../../state-environment';
 
 export interface ICarrierBridge {
@@ -19,6 +19,7 @@ export interface ICarrierBridge {
   getDataByPath(path: string): any;
   getValueByPath(path: string): any;
   validationErrorByPath(path: MetaPath): IValidatorResult[];
+  messagesByPath(path: MetaPath, severity: ReformMessageSeverity): IValidatorResult[];
   emitBigUpdate(val: any): void;
   emitUpdate(val: any): void;
   value(): any;

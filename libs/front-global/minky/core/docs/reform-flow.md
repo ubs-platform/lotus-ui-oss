@@ -173,6 +173,16 @@ sequenceDiagram
 - `allValidationErrors()` tüm meta path'lerini gezip aynı kuralı uygular; bu nedenle dinamik olarak gizlenen/pasifleştirilen alanlar formun genel geçerliliğini bloklamaz.
 - `hidden` olan carrier'lar `CarrierManager` tarafından hâlâ üretilir (listeden çıkarılmaz); renderer template'leri `*ngIf="... && !carrier.hidden"` ile bunları DOM'da göstermez. Statik `PropertyMeta.hide` ise carrier'ı üretim aşamasında tamamen atlar.
 
+## Uyarı ve Bilgi Mesajları
+
+Hata dışında, formu bloklamayan iki mesaj seviyesi vardır: `warning` ve `info` (`ReformMessageSeverity`).
+
+- **Reform üzerinden (öncelikli):** `reform.setWarningByPath(path, msg)` / `reform.setInfoByPath(path, msg)` (genel hali `setMessageByPath(path, severity, msg)`). `onValueChange` içinde `environment.state.setWarning` / `setInfo` ile de çağrılabilir. `undefined` geçmek mesajı temizler; `fieldPropertyChanged` yayını renderer'ı yeniler. `reset()` tüm mesajları temizler.
+- **Dekoratör üzerinden:** `@minky({ warningValidators: [...], infoValidators: [...] })`. Bunlar normal `Validator` arayüzünü kullanır; başarısız sonucun `name` alanı mesaj olarak gösterilir.
+- `Reform.messagesByPath(path, severity)` önce reform'da atanmış mesaja bakar, yoksa ilgili validator'ları çalıştırır. Validator kaynaklı mesajlar disabled/hidden path'lerde atlanır; reform'da atanmış mesajlar gösterilmeye devam eder.
+- Carrier'da `warnings` ve `infos` (`IValidatorResult[]`) olarak taşınır; `setValue` sonrası yeniden hesaplanır. `hasErrors()` / `allValidationErrors()` bunlardan etkilenmez; toplu liste için `allMessages(severity)` kullanılır.
+- `ReformNgxPrimeComponent` alan altında hatadan sonra ilk uyarıyı (`warn`) ve ilk bilgiyi (`info`) touch durumundan bağımsız olarak gösterir.
+
 ## Path Sözleşmesi
 
 - Path'ler nokta ile ayrılmış alan adlarıdır (`serie.name`, `friends.0.name`). `Reform.getValueByPath`/`setValueByPath`/`getPropertyMeta` aynı path çözümleme mantığını (array/sub-object aşamalarını) paylaşır.

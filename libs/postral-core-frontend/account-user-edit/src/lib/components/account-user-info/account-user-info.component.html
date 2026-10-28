@@ -1,8 +1,8 @@
 @if (instruction()) {
 
-@if (canSetupReports()) {
+<!-- @if (canSetupReports()) {
   <block-button stringContent="postral.report-setup.configure" (click)="setupReports()"></block-button>
-}
+} -->
 <lib-reform-data-edit [formInstruction]="instruction()!"></lib-reform-data-edit>
 } @else {
 <p>{{ 'no-form-instructions' | translate }}</p>

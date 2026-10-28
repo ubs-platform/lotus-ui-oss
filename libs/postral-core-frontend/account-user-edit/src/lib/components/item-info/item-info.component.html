@@ -1,26 +1,40 @@
-<div class="h-full w-full" style="display: block">
-  <lib-tab-view>
-    <ng-template block-page="information" title="postral.item.info">
+<div class="item-info-container">
+  <lib-tab-view #tabs>
+    <ng-template block-page="information" title="postral.item.info" iconContent="assignment"
+      iconClass="material-symbols-outlined">
       @if (instruction()) {
-      <div class="flex flex-column">
-        <div class="flex-grow-1 overflow-auto">
-          <lib-reform-data-edit
-            [formInstruction]="instruction()!"
-            saveButtonPosition="bottom"
-          ></lib-reform-data-edit>
-        </div>
-        @if (unitDescription()) {
-        <div>{{ 'postral.item.info-label' | translate }}: {{ unitDescription() | translate }}</div>
-        }
+      <div class="information-view">
+        <lib-reform-data-edit [formInstruction]="instruction()!" saveButtonPosition="bottom"></lib-reform-data-edit>
+        <!-- @if (unitDescription()) {
+        <lotus-web-message [severity]="unitDescriptionSeverity()"
+          [text]="(unitDescription() | translate)"></lotus-web-message>
+        } -->
       </div>
       } @else {
       <p>{{ 'postral.item.no-form-instruction' | translate }}</p>
       }
     </ng-template>
-    <ng-template block-page="pricing" title="postral.item.price-list">
-      @if (itemId()) {
-      <lib-item-price-list [itemId]="itemId()"></lib-item-price-list>
-      }
+    <ng-template block-page="pricing" title="postral.item.price-list" iconContent="list"
+      iconClass="material-symbols-outlined">
+      <div class="pt-2">
+        @if (itemId() && itemId() !== 'new') {
+        <lib-item-price-list [itemId]="itemId()" [externalEditor]="true"
+          (editRequested)="editPrice($event)"></lib-item-price-list>
+        } @else {
+        <lotus-web-message severity="warn" [text]="'postral.item.save-before-pricing'"></lotus-web-message>
+        }
+      </div>
+    </ng-template>
+    <ng-template block-page="price-form" iconContent="currency_lira" iconClass="material-symbols-outlined"
+      [title]="editingPrice() ? 'postral.item-price.edit-title' : 'postral.item-price.add-new'">
+      <div class="pt-2">
+        @if (itemId() && itemId() !== 'new') {
+        <lib-item-price-edit [itemId]="itemId()" [price]="editingPrice()" (saved)="onPriceSaved()"
+          (cancelled)="onPriceCancelled()"></lib-item-price-edit>
+        } @else {
+        <lotus-web-message severity="warn" [text]="'postral.item.save-before-pricing'"></lotus-web-message>
+        }
+      </div>
     </ng-template>
   </lib-tab-view>
 </div>

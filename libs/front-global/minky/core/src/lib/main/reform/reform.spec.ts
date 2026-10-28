@@ -407,3 +407,87 @@ describe('Reform Instance', () => {
     });
   });
 });
+
+const nonEmptyWarning = {
+  labelKey: 'NonEmptyWarning',
+  validate: (value: unknown) => ({ valid: value !== '', name: 'warning.empty' }),
+};
+const shortInfo = {
+  labelKey: 'ShortInfo',
+  validate: (value: unknown) => ({ valid: String(value ?? '').length > 3, name: 'info.short' }),
+};
+
+@minkyRoot({ fallbackConstruction: () => ({ code: '', note: '' }) })
+class MessageFields {
+  @minky({
+    warningValidators: [nonEmptyWarning],
+    infoValidators: [shortInfo],
+    onValueChange: (value: string, _old, environment) => {
+      environment.state.setWarning?.('note', value === 'warn' ? 'warning.fromCallback' : undefined);
+      return undefined;
+    },
+  })
+  code?: string;
+
+  @minky({ warningValidators: [nonEmptyWarning] })
+  note?: string;
+}
+
+describe('Reform warning and info messages', () => {
+  const inputCarrier = (form: Reform<MessageFields>, path: string) =>
+    (form.generateInputCarriers() as any[]).find((carrier) => carrier.path === path);
+
+  it('uses warning and info validators without blocking validation', () => {
+    const form = new Reform<MessageFields>(MessageFields);
+    const carrier = inputCarrier(form, 'code');
+
+    expect(carrier.warnings.map((m: any) => m.name)).toEqual(['warning.empty']);
+    expect(carrier.infos.map((m: any) => m.name)).toEqual(['info.short']);
+    expect(form.hasErrors()).toBe(false);
+    expect(form.allMessages('warning')).toHaveLength(2);
+
+    carrier.setValue('long value');
+    expect(carrier.warnings).toEqual([]);
+    expect(carrier.infos).toEqual([]);
+  });
+
+  it('prefers messages set on the reform over validator messages', () => {
+    const form = new Reform<MessageFields>(MessageFields);
+    const changes: unknown[] = [];
+    form.fieldPropertyChanged.subscribe((change) => changes.push(change));
+
+    form.setWarningByPath('code', 'warning.manual');
+    form.setInfoByPath('code', 'info.manual');
+
+    const carrier = inputCarrier(form, 'code');
+    expect(carrier.warnings.map((m: any) => m.name)).toEqual(['warning.manual']);
+    expect(carrier.infos.map((m: any) => m.name)).toEqual(['info.manual']);
+    expect(changes).toEqual([
+      { path: 'code', warning: 'warning.manual' },
+      { path: 'code', info: 'info.manual' },
+    ]);
+
+    form.setWarningByPath('code', undefined);
+    expect(inputCarrier(form, 'code').warnings.map((m: any) => m.name)).toEqual(['warning.empty']);
+  });
+
+  it('allows callbacks to set messages and clears them on reset', () => {
+    const form = new Reform<MessageFields>(MessageFields, { code: '', note: 'filled' });
+    inputCarrier(form, 'code').setValue('warn');
+
+    expect(inputCarrier(form, 'note').warnings.map((m: any) => m.name)).toEqual(['warning.fromCallback']);
+
+    form.reset();
+    expect(form.getMessageByPath('note', 'warning')).toBeUndefined();
+    expect(inputCarrier(form, 'note').warnings).toEqual([]);
+  });
+
+  it('keeps reform messages but skips validator messages for disabled paths', () => {
+    const form = new Reform<MessageFields>(MessageFields);
+    form.setDisableByPath('note', true);
+    expect(inputCarrier(form, 'note').warnings).toEqual([]);
+
+    form.setWarningByPath('note', 'warning.disabledReason');
+    expect(inputCarrier(form, 'note').warnings.map((m: any) => m.name)).toEqual(['warning.disabledReason']);
+  });
+});

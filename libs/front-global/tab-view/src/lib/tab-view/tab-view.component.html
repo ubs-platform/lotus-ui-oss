@@ -2,6 +2,10 @@
   <div class="flex gap-2">
     @for (item of blockPages(); track $index) {
     <block-button
+      [iconClass]="item.iconClass()"
+      [iconContent]="item.iconContent()"
+      [iconImageSource]="item.iconImageSource()"
+      
       [buttonClass]="selectedTabName() === item.name() ? 'primary' : ''"
       (click)="onTabHeaderClick(item.name())"
     >

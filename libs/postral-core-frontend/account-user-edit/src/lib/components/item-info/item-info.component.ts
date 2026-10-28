@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal, viewChild } from '@angular/core';
 import {
   ItemCrudService,
 } from '@lotus/postral-core-frontend/client';
@@ -9,11 +9,14 @@ import {
   ItemForm,
   UNIT_TYPE_CODES,
 } from '@lotus/postral-core-frontend/forms';
-import { ItemDTO } from '@tk-postral/payment-common';
+import { ItemDTO, ItemPriceDTO } from '@tk-postral/payment-common';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { TranslatorText } from '@lotus/extra/translator-core';
 import { TranslatorRepositoryService } from '@lotus/extra/ubs-translator-ngx';
 import { map } from 'rxjs';
+import { TabViewComponent } from '@lotus/front-global/tab-view';
+import { ItemPriceListComponent } from '../item-price-list/item-price-list.component';
+import { ItemPriceEditComponent } from '../item-price-edit/item-price-edit.component';
 @Component({
   selector: 'lib-account-user-info',
   standalone: false,
@@ -24,7 +27,10 @@ export class ItemInfoComponent {
   instruction = signal<FormEditInstruction | null>(null);
   selectedPage = signal<string>('information');
   itemId = signal<string>('');
-  unitDescription = signal<TranslatorText>('');
+  readonly editingPrice = signal<ItemPriceDTO | null>(null);
+  readonly tabs = viewChild<TabViewComponent>('tabs');
+  readonly priceList = viewChild(ItemPriceListComponent);
+  readonly priceEditor = viewChild(ItemPriceEditComponent);
   private currentData?: ItemDTO | null;
   /**
    *
@@ -35,13 +41,14 @@ export class ItemInfoComponent {
     private basicOverlay: BasicOverlayService,
     private router: Router,
     private translator: TranslatorRepositoryService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.translator.changeDetection().subscribe(() => {
       this.setUnitDescription(this.currentData);
     });
     this.activatedRoute.params.subscribe((params) => {
+      this.editingPrice.set(null);
       const itemId = params['id'];
       if (itemId === 'new') {
         this.itemId.set(itemId);
@@ -53,6 +60,23 @@ export class ItemInfoComponent {
         this.generateForm(data);
       });
     });
+  }
+
+  editPrice(price: ItemPriceDTO): void {
+    this.editingPrice.set(price);
+    this.tabs()?.select('price-form');
+  }
+
+  onPriceSaved(): void {
+    this.editingPrice.set(null);
+    this.priceEditor()?.resetForm();
+    this.priceList()?.loadPrices();
+    this.tabs()?.select('pricing');
+  }
+
+  onPriceCancelled(): void {
+    this.editingPrice.set(null);
+    this.tabs()?.select('pricing');
   }
 
   private generateForm(data: ItemDTO) {
@@ -78,7 +102,7 @@ export class ItemInfoComponent {
         }
         return this.itemService.create(data).pipe(map((res) => res));
       },
-      
+
       afterSaveSuccess: (out, data) => {
         this.basicOverlay.alert(
           'general.success',
@@ -98,7 +122,7 @@ export class ItemInfoComponent {
           return a;
         });
       },
-      afterSaveError: (error, data) => { 
+      afterSaveError: (error, data) => {
         this.basicOverlay.alert(
           'general.error',
           'postral.item.error-while-save',
@@ -110,28 +134,34 @@ export class ItemInfoComponent {
 
   private setUnitDescription(data: ItemDTO | null | undefined) {
     this.currentData = data;
+    const form = this.instruction()?.form;
+    form?.setInfoByPath('unit', undefined);
+    form?.setWarningByPath('unit', undefined);
     if (!data) {
       return;
     }
     if (!data.unit) {
-      this.unitDescription.set('');
       return;
     }
     const isValidUnit = (UNIT_TYPE_CODES as readonly string[]).includes(data.unit);
     if (!isValidUnit) {
-      this.unitDescription.set({
-        key: 'postral.item.unit-not-found',
-        parameters: { unit: data.unit },
-      });
+      form?.setWarningByPath('unit',
+        {
+          key: 'postral.item.unit-not-found',
+          parameters: { unit: data.unit },
+        }
+      )
       return;
     }
     const desc = this.translator.getString(`postral.units.${data.unit}`);
-    this.unitDescription.set({
-      key: 'postral.item.unit-defined',
-      parameters: {
-        unit: data.unit,
-        desc: desc,
-      },
-    });
+    form?.setInfoByPath('unit',
+      {
+        key: 'postral.item.unit-defined',
+        parameters: {
+          unit: data.unit,
+          desc: desc,
+        },
+      }
+    )
   }
 }

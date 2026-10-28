@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { UbsTranslatorNgxModule } from '@lotus/extra/ubs-translator-ngx';
 
 type MessageSeverity =
   | 'success'
@@ -17,7 +18,7 @@ type MessageSeverity =
 @Component({
   selector: 'lotus-web-message',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, UbsTranslatorNgxModule],
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.scss'],
 })

@@ -5,7 +5,8 @@ import { getPropertyMetaHolder, PropertyMetaHolder } from '../property-holder';
 import { RootPropertyMeta } from '../root-property-meta';
 import { InputLinkCarrier } from './carriers/input-link-carrier';
 import { Reviewer } from './reviewer';
-import { IValidatorResult, ValidatorResult } from './validator';
+import { IValidatorResult, ReformMessageSeverity, Validator, ValidatorResult } from './validator';
+import { TranslatorText } from '@lotus/extra/translator-core';
 import { ReplaySubject, Subject } from 'rxjs';
 import { TouchMap } from './touch-map';
 
@@ -28,6 +29,15 @@ export class Reform<T = any> {
   structureRootMeta?: RootPropertyMeta<T>;
   private _value: any;
   private _initialValue: any;
+  // Path zorunlu ancak değişiklik olan field dolu olacak, örn disabled değiştiyse disabled dolu olacak... ya da değer... ama şimdilik disabled olarak ekelyeceğim...
+  fieldPropertyChanged = new Subject<{
+    path: string;
+    value?: any;
+    disabled?: boolean;
+    visible?: boolean;
+    warning?: TranslatorText;
+    info?: TranslatorText;
+  }>();
   valueUpdate = new Subject<T>();
   valueBigUpdate = new Subject<T>();
   touchMap = new TouchMap();
@@ -39,6 +49,10 @@ export class Reform<T = any> {
   private _disableOverrides = new Map<string, boolean>();
   private _hiddenOverrides = new Map<string, boolean>();
   private _dataOverrides = new Map<string, any>();
+  private _messageOverrides: Record<ReformMessageSeverity, Map<string, TranslatorText>> = {
+    warning: new Map(),
+    info: new Map(),
+  };
   private _initialValueChangesEmitted = false;
 
   constructor(
@@ -79,6 +93,7 @@ export class Reform<T = any> {
       setValueByPath: (p, value) => this.setValueByPath(p, value),
       emitBigUpdate: (va) => this.valueBigUpdate.next(va),
       validationErrorByPath: (path) => this.validationErrorByPath(path),
+      messagesByPath: (path, severity) => this.messagesByPath(path, severity),
       currentPropertyMetas: () => this.propertyMetas,
       touchMap: () => this.touchMap,
       value: () => this.value,
@@ -136,6 +151,36 @@ export class Reform<T = any> {
 
   getDataByPath(path: string): any {
     return this._dataOverrides.get(path);
+  }
+
+  /**
+   * Sets a non-blocking message for the path. It takes precedence over the
+   * related `warningValidators`/`infoValidators`; pass `undefined` to clear it.
+   */
+  setMessageByPath(
+    path: string,
+    severity: ReformMessageSeverity,
+    message: TranslatorText | undefined
+  ): void {
+    const overrides = this._messageOverrides[severity];
+    if (message === undefined || message === null || message === '') {
+      overrides.delete(path);
+    } else {
+      overrides.set(path, message);
+    }
+    this.fieldPropertyChanged.next({ path, [severity]: overrides.get(path) });
+  }
+
+  getMessageByPath(path: string, severity: ReformMessageSeverity): TranslatorText | undefined {
+    return this._messageOverrides[severity].get(path);
+  }
+
+  setWarningByPath(path: string, message: TranslatorText | undefined): void {
+    this.setMessageByPath(path, 'warning', message);
+  }
+
+  setInfoByPath(path: string, message: TranslatorText | undefined): void {
+    this.setMessageByPath(path, 'info', message);
   }
 
 
@@ -294,11 +339,37 @@ export class Reform<T = any> {
 
   validationErrorByPath(path: MetaPath) {
     if (this.isDisabledOrHidden(path.path, path.meta)) return [];
+    return this.runValidators(path, path.meta.validators);
+  }
+
+  /**
+   * Returns non-blocking messages for the path. A message set through
+   * `setMessageByPath` wins; otherwise failing `warningValidators` or
+   * `infoValidators` results are returned. Validator-based messages are
+   * skipped for disabled or hidden paths.
+   */
+  messagesByPath(path: MetaPath, severity: ReformMessageSeverity): IValidatorResult[] {
+    const override = this._messageOverrides[severity].get(path.path);
+    if (override !== undefined) return [new ValidatorResult(override, false)];
+    if (this.isDisabledOrHidden(path.path, path.meta)) return [];
+    const validators = severity === 'warning'
+      ? path.meta.warningValidators
+      : path.meta.infoValidators;
+    return this.runValidators(path, validators);
+  }
+
+  allMessages(severity: ReformMessageSeverity): IValidatorResult[] {
+    //@ts-ignore
+    return this.getAllMetasPaths().flatMap((path) => this.messagesByPath(path, severity));
+  }
+
+  private runValidators(path: MetaPath, validators: Validator[] | undefined): ValidatorResult[] {
+    if (!validators?.length) return [];
     const value = path.meta.inputType === 'file'
       ? this.getFiles().find((a) => a.key === path.path)?.files[0]
       : this.getValueByPath(path.path);
     const validations: ValidatorResult[] = [];
-    path.meta.validators?.forEach((validator) => {
+    validators.forEach((validator) => {
       const result = validator.validate(value, this, path.meta);
       if (!result.valid) validations.push(result);
     });
@@ -326,6 +397,8 @@ export class Reform<T = any> {
     this._disableOverrides.clear();
     this._hiddenOverrides.clear();
     this._dataOverrides.clear();
+    this._messageOverrides.warning.clear();
+    this._messageOverrides.info.clear();
     this.allErrorsRevealed = false;
     this._initialValueChangesEmitted = false;
     this.valueBigUpdate.next(this.value);
@@ -411,6 +484,8 @@ export class Reform<T = any> {
       setDisabled: (path, value) => this.setDisableByPath(path, value),
       setData: (path, value) => this.setDataByPath(path, value),
       getData: (path) => this.getDataByPath(path),
+      setWarning: (path, message) => this.setWarningByPath(path, message),
+      setInfo: (path, message) => this.setInfoByPath(path, message),
     };
   }
 
@@ -424,6 +499,7 @@ export class Reform<T = any> {
     } else {
       overrides.set(path, value);
     }
+    this.fieldPropertyChanged.next({ path, value: undefined, disabled: this._disableOverrides.get(path) ?? false, visible: this._hiddenOverrides.get(path) ?? true });
   }
 
   private isDisabledOrHidden(path: string, meta: PropertyMeta): boolean {

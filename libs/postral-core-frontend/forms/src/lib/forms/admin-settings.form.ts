@@ -13,13 +13,13 @@ export class AdminSettingsForm extends AdminSettingsDto {
 
     @minky({
         inputType: "slider-toggle",
-        label: "Komisyon brüt yerine netten hesaplanır",
+        label: "postral.platform-setup.commission-from-net",
     })
     override comissionsCalculatedFromNet: boolean = false;
 
     @minky({
         inputType: "slider-toggle",
-        label: "Satıcı ödeme hizmeti ücretini öder",
+        label: "postral.platform-setup.seller-pays-payment-service-fee",
     })
     override sellerPaysPaymentServiceFee: boolean = false;
 
@@ -46,7 +46,7 @@ export class AdminSettingsForm extends AdminSettingsDto {
 
     @minky({
         inputType: "select",
-        label: "Komisyonlarda kullanılacak vergi oranı",
+        label: "postral.platform-setup.commission-tax",
         selectItems: (env) => {
             const itemTaxService = (env.app?.['injector'] as Injector).get(
                 ItemTaxControllerService
@@ -101,7 +101,7 @@ export class AdminSettingsForm extends AdminSettingsDto {
 
     @minky({
         inputType: "select",
-        label: "Faturalama hesabı",
+        label: "postral.platform-setup.billing-account",
         selectItems: (env) => {
             return getAccountIdsRelated(env, "USER", "COMMERCIAL");
         },

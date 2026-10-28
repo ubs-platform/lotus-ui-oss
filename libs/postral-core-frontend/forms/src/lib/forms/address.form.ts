@@ -13,11 +13,13 @@ export interface AddressDtoWithUserInput extends AccountAddressDto {
 export class AddressForm extends AccountAddressDto {
   @minky({
     disable: true,
+    widthRatio: '50%'
   })
   override id = undefined;
 
   @minky({
     validators: [new RequiredValidator()],
+    widthRatio: '50%'
   })
   override name = '';
 
@@ -25,8 +27,10 @@ export class AddressForm extends AccountAddressDto {
   // Bu alanlar cscd servisi tarafından seçenekler sağlanacak. Seçilen alana göre de diğer ilgili değerler güncellenecek. 
   @minky({
     label: 'Ülke',
+    validators: [new RequiredValidator()],
     widthRatio: '50%',
     inputType: "select",
+    
     selectItems: (env) => {
       return fetchCountries(env);
     },
@@ -71,6 +75,57 @@ export class AddressForm extends AccountAddressDto {
   })
   override citySubdivisionName = '';
 
+
+
+  @minky({
+    validators: [new RequiredValidator()],
+    widthRatio: '50%',
+  })
+  override postalZone = '';
+
+  @minky({
+    validators: [new RequiredValidator()],
+    widthRatio: '50%',
+  })
+  override streetName = '';
+
+  @minky({
+    widthRatio: '50%',
+  })
+  override buildingNumber = '';
+
+  @minky({
+    widthRatio: '50%',
+  })
+  override blockName = '';
+
+  @minky({
+    widthRatio: '50%',
+  })
+  override floor = '';
+
+  @minky({
+    widthRatio: '50%',
+  })
+  override room = '';
+
+
+  @minky({
+    widthRatio: '50%',
+  })
+  override postbox = '';
+
+  @minky({
+    widthRatio: '50%',
+  })
+  override buildingName = '';
+
+  @minky({
+    widthRatio: '50%',
+  })
+  override additionalStreetName?: string | undefined;
+
+
   @minky({
     // validators: [new RequiredValidator()],
     disable: true,
@@ -100,6 +155,7 @@ export class AddressForm extends AccountAddressDto {
   })
   override countrySubentityCode = '';
 
+
   @minky({
     validators: [new RequiredValidator()],
     disable: true,
@@ -108,42 +164,4 @@ export class AddressForm extends AccountAddressDto {
   })
   override cityName = '';
 
-
-  @minky({
-    validators: [new RequiredValidator()],
-  })
-  override postalZone = '';
-
-  @minky({
-  })
-  override streetName = '';
-
-  @minky({
-  })
-  override buildingNumber = '';
-
-  @minky({
-  })
-  override blockName = '';
-
-  @minky({
-  })
-  override floor = '';
-
-  @minky({
-  })
-  override room = '';
-
-
-  @minky({
-  })
-  override postbox = '';
-
-  @minky({
-  })
-  override buildingName = '';
-
-  @minky({
-  })
-  override additionalStreetName?: string | undefined;
 }

@@ -14,7 +14,7 @@
   </span>
   <div class="lotus-status-card__content">
     @if (escape) {
-      <span class="lotus-status-card__text">{{ text }}</span>
+      <span class="lotus-status-card__text">{{ text | translate}}</span>
     } @else {
       <span class="lotus-status-card__text" [innerHTML]="text"></span>
     }

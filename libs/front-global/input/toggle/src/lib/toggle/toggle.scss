@@ -41,6 +41,23 @@ input.toggle-style:checked::after {
   background-color: var(--bg-surface, #fff);
 }
 
+input.toggle-style:disabled {
+  border-color: var(--gray-500);
+}
+
+input.toggle-style:disabled:checked {
+  background-color: var(--gray-700);
+}
+
+input.toggle-style:disabled::after {
+  background-color: var(--gray-500);
+}
+
+.disabled .label {
+  color: var(--gray-600);
+  cursor: not-allowed;
+}
+
 // input.checkbox-style {
 //   cursor: pointer;
 //   margin: 0;

@@ -27,11 +27,23 @@
     "pathRewrite": { "^/service/cscd": "" },
     "secure": false
   },
+  "/service/payment/api/iyzico": {
+    "target": "http://localhost:3768",
+    "pathRewrite": {
+      "^/service/payment": ""
+    },
+    "secure": false
+  },
   "/service/payment": {
     "target": "http://localhost:3767",
     "pathRewrite": {
       "^/service/payment": ""
     },
+    "secure": false
+  },
+  "/service/iyzico": {
+    "target": "http://localhost:3768",
+    "pathRewrite": { "^/service/iyzico": "" },
     "secure": false
   }
 }

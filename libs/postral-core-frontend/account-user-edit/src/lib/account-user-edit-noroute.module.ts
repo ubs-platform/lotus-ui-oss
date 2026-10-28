@@ -18,6 +18,7 @@ import { TaxInfoComponent } from './components/tax-info/tax-info.component';
 import { UbsTouchNgxModule } from '@lotus/front-global/ubs-touch-ngx';
 import { TabViewComponent } from '@lotus/front-global/tab-view';
 import { ItemPriceListComponent } from './components/item-price-list/item-price-list.component';
+import { ItemPriceEditComponent } from './components/item-price-edit/item-price-edit.component';
 import { DataListLayoutModule } from '@lotus/front-global/ui/data-list-layout';
 import { PaymentHistoryComponent } from './components/payment-history/payment-history.component';
 import { TransactionHistoryComponent } from './components/transaction-history/transaction-history.component';
@@ -40,8 +41,10 @@ import { WebhookConfigInfoComponent } from './components/webhook-config-info/web
 import { WebhookConfigListComponent } from './components/webhook-config-list/webhook-config-list.component';
 import { FrontGlobalMarkdownEditorModule } from '@lotus/front-global/markdown-editor';
 import { RefundRequestResolutionDialogComponent } from './components/refund-request-resolution-dialog/refund-request-resolution-dialog.component';
+import { MessageComponent } from '@lotus/front-global/message';
 @NgModule({
   imports: [
+    ItemPriceEditComponent,
     CommonModule,
     ReformDataEditComponent,
     FrontGlobalTableModule,
@@ -59,7 +62,8 @@ import { RefundRequestResolutionDialogComponent } from './components/refund-requ
     CustomSelectComponent,
     UbsTranslatorNgxModule,
     PostralReportsModule,
-    FrontGlobalMarkdownEditorModule
+    FrontGlobalMarkdownEditorModule,
+    MessageComponent
 ],
   declarations: [
     AccountUserInfoComponent,
@@ -87,6 +91,7 @@ import { RefundRequestResolutionDialogComponent } from './components/refund-requ
     WebhookConfigListComponent,
   ],
   exports: [
+    ItemPriceEditComponent,
     AccountUserInfoComponent,
     AccountsComponent,
     AddressListComponent,

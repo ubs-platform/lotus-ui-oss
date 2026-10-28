@@ -1,11 +1,16 @@
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
-
+import { Component, HostListener, OnDestroy, OnInit, signal } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PaymentChannelConfigControllerService, PaymentControllerService } from '@lotus/postral-core-frontend/client';
+import {
+  PaymentChannelConfigControllerService,
+  PaymentControllerService,
+  resolvePaymentRedirectUrl,
+} from '@lotus/postral-core-frontend/client';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { PaymentChannelConfigDTO, PaymentDTO, PaymentItemDTO, TaxDTO } from '@tk-postral/payment-common';
 import { Optional } from '@ubs-platform/crud-base-common/utils';
 import { Observable, Subscription } from 'rxjs';
+import { PAYMENT_RETURN_MESSAGE_TYPE } from '../payment-return/payment-return.component';
 @Component({
   selector: 'lib-payment',
   standalone: false,
@@ -33,8 +38,22 @@ export class PaymentComponent implements OnInit, OnDestroy {
     private router: Router,
     private paymentService: PaymentControllerService,
     private paymentChannelService: PaymentChannelConfigControllerService,
-    private basicOverlay: BasicOverlayService
+    private basicOverlay: BasicOverlayService,
+    private location: Location
   ) { }
+
+  @HostListener('window:message', ['$event'])
+  onPaymentReturnMessage(event: MessageEvent): void {
+    if (
+      event.origin !== location.origin ||
+      event.data?.type !== PAYMENT_RETURN_MESSAGE_TYPE
+    ) {
+      return;
+    }
+    this.paymentDialogRef?.close();
+    this.paymentDialogRef = null;
+    this.checkPaymentStatus();
+  }
 
   ngOnInit(): void {
     this.activeRoute.params.subscribe((params) => {
@@ -140,7 +159,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
         );
       },
       error: (err) => {
-        this.basicOverlay.alert('Ödeme iptal edilemedi', err, 'error');
+        this.basicOverlay.alert('Ödeme iptal edilemedi', err?.error?.message ?? err, 'error');
       },
     });
   }
@@ -209,11 +228,17 @@ export class PaymentComponent implements OnInit, OnDestroy {
       })
       .subscribe({
         next: (paymentRes) => {
-          // TODO: Change with configurable value
-          const prefix = location.protocol + '//' + location.host + '/service/payment/api/';
           if (paymentRes.redirectUrl) {
+            const returnPath = this.location.prepareExternalUrl(
+              this.router.serializeUrl(
+                this.router.createUrlTree(['payment-return'], { relativeTo: this.activeRoute.parent })
+              )
+            );
             this.paymentDialogRef = this.basicOverlay.showInstantModal({
-              url: prefix + paymentRes.redirectUrl + '?redirectUrl=' + encodeURIComponent(location.href),
+              url: resolvePaymentRedirectUrl(
+                paymentRes.redirectUrl,
+                new URL(returnPath, location.origin).toString()
+              ),
               width: '90%',
               height: '80%',
               header: true,
