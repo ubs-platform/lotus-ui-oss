@@ -75,12 +75,12 @@
             (click)="showMenu()"
             iconPosition="NONE"
             >
-            @if (imgUrl(); as imgUrl_) {
-              <img
-                alt="logo"
-                [src]="imgUrl_"
+            @if (user(); as currentUser) {
+              <lotus-web-user-display
+                [user]="currentUser"
+                [showIdentity]="false"
                 class="account-image"
-                />
+              />
             }
             @if (!enableUserLoginOperations()) {
               <div>Ana menü</div>
@@ -144,10 +144,11 @@
                   buttonClass="light-1"
                   >
                   <div class="left">
-                    <img
-                      [src]="imgUrl()"
-                      style="height: 96px; width: 96px; border-radius: 100%"
-                      />
+                    <lotus-web-user-display
+                      [user]="user()"
+                      [showIdentity]="false"
+                      style="--user-avatar-size: 96px"
+                    />
                   </div>
                   <div class="part-content">
                     <div style="font-size: 20px">

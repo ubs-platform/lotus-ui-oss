@@ -12,9 +12,6 @@ import { accountTypes, currencyOptions } from '../constants/account-types';
 
 @minkyRoot()
 export class BankAccountForm extends BankAccountDTO {
-
-
-
   @minky({
     validators: [new RequiredValidator()],
     selectItems: () => currencyOptions,
@@ -39,8 +36,7 @@ export class BankAccountForm extends BankAccountDTO {
         { value: 'ING', text: 'ING' },
         { value: 'HSBC', text: 'HSBC' },
       ];
-    }
-
+    },
   })
   override bankName = '';
 
@@ -67,17 +63,10 @@ export class BankAccountForm extends BankAccountDTO {
     widthRatio: '50%',
   })
   override id = undefined;
-
 }
 
 @minkyRoot()
 export class AccountForm extends AccountDTO {
-  @minky({
-    disable: true,
-    widthRatio: '50%',
-  })
-  override id = '';
-
   @minky({
     validators: [new RequiredValidator()],
     widthRatio: '50%',
@@ -90,7 +79,11 @@ export class AccountForm extends AccountDTO {
   })
   override name = '';
 
-  @minky({ inputType: 'select', selectItems: () => accountTypes, widthRatio: '50%' })
+  @minky({
+    inputType: 'select',
+    selectItems: () => accountTypes,
+    widthRatio: '50%',
+  })
   override type: 'INDIVIDUAL' | 'COMMERCIAL' = 'COMMERCIAL';
 
   @minky({
@@ -112,12 +105,12 @@ export class AccountForm extends AccountDTO {
 
     selectItems: (env: CombinedEnvironment) => {
       const addressService = (env.app?.['injector'] as Injector).get(
-        AddressControllerService
+        AddressControllerService,
       );
       return addressService
         .getAll()
         .pipe(
-          map((a) => a.map((addr) => ({ value: addr.id!, text: addr.name })))
+          map((a) => a.map((addr) => ({ value: addr.id!, text: addr.name }))),
         );
     },
   })
@@ -132,10 +125,10 @@ export class AccountForm extends AccountDTO {
   override taxOffice = '';
 
   @minky({
-    inputType: "array",
-    arrayItemInputType: "sub-object",
+    inputType: 'array',
+    arrayItemInputType: 'sub-object',
     subObjectKey: BankAccountForm,
-    label: "Banka Hesapları",
+    label: 'Banka Hesapları',
   })
   override bankAccounts: BankAccountDTO[] = [];
 
@@ -168,4 +161,9 @@ export class AccountForm extends AccountDTO {
   })
   override bankSwift = '';
 
+  @minky({
+    disable: true,
+    widthRatio: '50%',
+  })
+  override id = '';
 }

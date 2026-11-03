@@ -4,11 +4,8 @@
 }
 
 .account-image {
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 100%;
+  --user-avatar-size: 1.5rem;
   margin-right: 5px;
-  display: inline-block;
 }
 
 .right-aligned-wrap {

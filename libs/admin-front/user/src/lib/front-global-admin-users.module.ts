@@ -16,10 +16,12 @@ import { WebdialogComponent } from '../../../../front-global/webdialog/src/lib/w
 import { AdminSocialOptionsComponent } from '@lotus/front-global/admin-social-options';
 import { UserAdminService } from '@lotus/front-global/auth';
 import { OnmobileHeaderComponent, OnpageHeaderComponent } from "@lotus/front-global/dynamic-headers";
+import { UserDisplayComponent } from '@lotus/front-global/user-display';
 
 @NgModule({
   imports: [
     CommonModule,
+    UserDisplayComponent,
     RouterModule.forChild(rota),
     FrontGlobalButtonModule,
     MinkyReformNgxPrimeModule,

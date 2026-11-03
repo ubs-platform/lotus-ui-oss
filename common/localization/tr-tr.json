@@ -662,6 +662,7 @@
       "REPORT_TOTAL": "Rapor toplam gideri",
       "PAYMENT_SERVICE_FEE": "Ödeme hizmeti sağlayıcılarına ödenecek toplam ücret",
       "PAYMENT_CHANNEL_FEE": "{channel} ödeme hizmeti ücreti",
+      "REFUND_ROUNDING_ADJUSTMENT": "İade yuvarlama düzeltmesi",
       "SHAQ_ONEAL_ADVERTISEMENT_FEE": "Turkcell'in reklamlarda Shaq O'neal'i  oynatma ücreti ( ͡° ͜ʖ ͡°)",
       "KOBE_BRYANT_RESURRECTION_AND_ADVERTISEMENT_FEE": "Turkcell'in Kobe Bryant'ı mezardan diriltip reklamlarında oynatma ücreti ( ͡° ͜ʖ ͡°)"
     }

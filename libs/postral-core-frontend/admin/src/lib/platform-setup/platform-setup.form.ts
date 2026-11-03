@@ -6,6 +6,7 @@ import {
   ValidatorResult,
 } from '@lotus/front-global/minky/core';
 import { currencyOptions } from '@lotus/postral-core-frontend/forms/account-types';
+import { returnOriginsValidator } from '@lotus/postral-core-frontend/forms/return-origins';
 import {
   PlatformSetupMode,
   PlatformSetupSettingsDTO,
@@ -196,6 +197,16 @@ export class PlatformSettingsForm {
 
   @minky({ label: 'postral.report-setup.yearly', inputType: 'checkbox' })
   yearly = true;
+
+  @minky({
+    label: 'postral.platform-setup.allowed-return-origins',
+    description: 'postral.platform-setup.allowed-return-origins-help',
+    inputType: 'array',
+    arrayItemInputType: 'text',
+    allowUserAddAndRemoveItem: true,
+    validators: [returnOriginsValidator],
+  })
+  allowedReturnOrigins: string[] = [location.origin];
 }
 
 export function setupSettings(
@@ -219,5 +230,8 @@ export function setupSettings(
       taxName: tax.taxName.trim(),
       taxRate: tax.taxRate,
     })),
+    allowedReturnOrigins: data.allowedReturnOrigins
+      .map((origin) => origin.trim())
+      .filter((origin) => origin),
   };
 }

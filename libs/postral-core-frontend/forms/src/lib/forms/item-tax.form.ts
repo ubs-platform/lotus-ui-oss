@@ -4,13 +4,6 @@ import { ItemTaxVariationForm } from './item-tax-variation.form';
 
 @minkyRoot()
 export class ItemTaxForm extends ItemTaxDTO {
-
-  @minky({
-    disable: true,
-    defaultValueConstructor: () => '',
-  })
-  override id = '';
-
   @minky({
     defaultValueConstructor: () => '',
     validators: [new RequiredValidator()],
@@ -33,4 +26,9 @@ export class ItemTaxForm extends ItemTaxDTO {
   })
   override isPublic: boolean = false;
 
+  @minky({
+    disable: true,
+    defaultValueConstructor: () => '',
+  })
+  override id = '';
 }

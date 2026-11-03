@@ -659,6 +659,7 @@
       "EXTERNAL_ITEM_CLASS_COMISSION": "{platform} commission for {itemClass} item class",
       "PAYMENT_SERVICE_FEE": "Total fee to be paid to payment service providers",
       "PAYMENT_CHANNEL_FEE": "{channel} payment service fee",
+      "REFUND_ROUNDING_ADJUSTMENT": "Refund rounding adjustment",
       "PLATFORM_COMISSION_TOTAL": "Total Postral commission",
       "REPORT_TOTAL": "Total report expense",
       "SHAQ_ONEAL_ADVERTISEMENT_FEE": "Turkcell's fee for featuring Shaq O'neal in advertisements ( ͡° ͜ʖ ͡°)",

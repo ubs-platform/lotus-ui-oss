@@ -14,9 +14,11 @@ import { ApplicationFooterDirective } from './application-footer.directive';
 import { PwaUpdateVersionComponent } from '@lotus/front-global/pwa-update-version';
 import { WebdialogComponent } from '@lotus/front-global/webdialog';
 import { OnmobileHeaderComponent, OnpageHeaderComponent } from '@lotus/front-global/dynamic-headers';
+import { UserDisplayComponent } from '@lotus/front-global/user-display';
 @NgModule({
   imports: [
     CommonModule,
+    UserDisplayComponent,
     FrontGlobalAuthLoginViewsModule,
     RouterModule,
     FrontGlobalButtonModule,

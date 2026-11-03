@@ -1,8 +1,12 @@
 @if (carrier()) {
 <div>
-  <!-- @if (!sourceEditor()) {
-
-  } -->
+  <block-button (click)="sourceEditor.set(!sourceEditor())" [stringContent]="!sourceEditor() ? 'Kaynak Kodu düzenle' : 'Görsel HTML Editör'">
+  </block-button>
+  @if (!sourceEditor()) {
+  <div>
+    <div #quillEditor></div>
+  </div>
+  }
 
   @if (sourceEditor()) {
   <div>

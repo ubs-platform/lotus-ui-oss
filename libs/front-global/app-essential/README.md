@@ -44,6 +44,13 @@ application class or standalone migration is required.
 whose homepage requires authentication can set `logoutRedirectUrl="/login"` so
 the header does not override a protected page's login redirect.
 
+## Header profile photos
+
+The account button and account menu use the shared `UserDisplayComponent` in
+avatar-only mode (24px and 96px). A missing or failed profile photo displays the
+user's initials without a separate existence request. A logged-out header does
+not request a profile photo.
+
 ## Running unit tests
 
 Run `nx test front-global-app-essential` to execute the unit tests.

@@ -666,6 +666,7 @@
       "EXTERNAL_ITEM_CLASS_COMISSION": "{platform}-Provision für die Artikelklasse {itemClass}",
       "PAYMENT_SERVICE_FEE": "Gesamtgebühr, die an Zahlungsdienstleister zu zahlen ist",
       "PAYMENT_CHANNEL_FEE": "Zahlungsdienstgebühr für {channel}",
+      "REFUND_ROUNDING_ADJUSTMENT": "Rundungskorrektur für Erstattungen",
       "PLATFORM_COMISSION_TOTAL": "Gesamte Postral-Provision",
       "REPORT_TOTAL": "Gesamtausgaben des Berichts",
       "SHAQ_ONEAL_ADVERTISEMENT_FEE": "Gebühr von Turkcell für die Werbung mit Shaq O'neal ( ͡° ͜ʖ ͡°)",

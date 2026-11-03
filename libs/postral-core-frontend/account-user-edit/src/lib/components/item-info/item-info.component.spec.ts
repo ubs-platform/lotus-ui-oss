@@ -4,10 +4,38 @@ import { TranslatorRepositoryService } from '@lotus/extra/ubs-translator-ngx';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { TabViewComponent } from '@lotus/front-global/tab-view';
 import { ItemCrudService } from '@lotus/postral-core-frontend/client';
+import { ItemForm } from '@lotus/postral-core-frontend/forms';
+import { Reform } from '@lotus/front-global/minky/core';
 import { of } from 'rxjs';
 import { ItemPriceEditComponent } from '../item-price-edit/item-price-edit.component';
 import { ItemPriceListComponent } from '../item-price-list/item-price-list.component';
 import { ItemInfoComponent } from './item-info.component';
+
+describe('Item editor details form', () => {
+  it('defaults new and legacy items to virtual', () => {
+    expect(new Reform(ItemForm).getValueByPath('isPhysical')).toBe(false);
+    expect(new Reform(ItemForm, { name: 'Legacy product' }).getValueByPath('isPhysical')).toBe(false);
+  });
+
+  it('loads physical and shared catalog references without losing them in form state', () => {
+    const details = {
+      isPhysical: true,
+      metaEntityGroup: 'CATALOG',
+      metaEntityName: 'LAPTOP',
+      metaEntityId: 'Thinkpad-E14',
+    };
+    const form = new Reform(ItemForm, details);
+    expect(form.value).toMatchObject(details);
+    expect(form.getPropertyMeta('isPhysical')?.inputType).toBe('checkbox');
+    for (const field of ['metaEntityGroup', 'metaEntityName', 'metaEntityId']) {
+      expect(form.getPropertyMeta(field)).toBeDefined();
+    }
+    form.patchValue({ isPhysical: false, metaEntityId: '' });
+    expect(form.value).toMatchObject({
+      ...details, isPhysical: false, metaEntityId: '',
+    });
+  });
+});
 
 describe('ItemInfoComponent price tabs', () => {
   beforeEach(async () => {

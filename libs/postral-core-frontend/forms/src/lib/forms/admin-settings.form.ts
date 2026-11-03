@@ -4,6 +4,7 @@ import { AccountControllerService, ItemTaxControllerService, ReportQueryControll
 import { AdminSettingsDto } from "@tk-postral/payment-common";
 import { map } from "rxjs";
 import { getAccountIdsRelated } from "../..";
+import { returnOriginsValidator } from "../constants/return-origins";
 
 @minkyRoot()
 export class AdminSettingsForm extends AdminSettingsDto {
@@ -73,11 +74,6 @@ export class AdminSettingsForm extends AdminSettingsDto {
     @minky({
         disable: true
     })
-    override id: string = "";
-
-    @minky({
-        disable: true
-    })
     override createdAt: Date = new Date();
 
     @minky({
@@ -107,4 +103,20 @@ export class AdminSettingsForm extends AdminSettingsDto {
         },
     })
     override billingAccountId?: string | undefined;
+
+    @minky({
+        inputType: "array",
+        arrayItemInputType: "text",
+        allowUserAddAndRemoveItem: true,
+        defaultValueConstructor: () => [],
+        validators: [returnOriginsValidator],
+        label: "postral.platform-setup.allowed-return-origins",
+        description: "postral.platform-setup.allowed-return-origins-help",
+    })
+    override allowedReturnOrigins?: string[] | undefined;
+
+    @minky({
+        disable: true
+    })
+    override id: string = "";
 }

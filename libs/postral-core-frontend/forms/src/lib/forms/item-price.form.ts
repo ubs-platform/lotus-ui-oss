@@ -9,25 +9,12 @@ import {
 @minkyRoot()
 export class ItemPriceForm implements ItemPriceDTO {
   @minky({
-    disable: true,
-    defaultValueConstructor: () => '',
-  })
-  id = '';
-
-  @minky({
-    disable: true,
-    defaultValueConstructor: () => '',
-    widthRatio: '50%',
-  })
-  itemId = '';
-
-  @minky({
     defaultValueConstructor: () => '',
     validators: [new RequiredValidator()],
     widthRatio: '50%',
   })
   variation = '';
-  
+
   @minky({
     defaultValueConstructor: () => '',
     validators: [new RequiredValidator()],
@@ -42,8 +29,6 @@ export class ItemPriceForm implements ItemPriceDTO {
     widthRatio: '50%',
   })
   itemPrice = 0;
-
-
 
   @minky({
     defaultValueConstructor: () => '',
@@ -71,4 +56,17 @@ export class ItemPriceForm implements ItemPriceDTO {
     disable: true,
   })
   automaticExchangeFromCurrency?: string | undefined;
+
+  @minky({
+    disable: true,
+    defaultValueConstructor: () => '',
+  })
+  id = '';
+
+  @minky({
+    disable: true,
+    defaultValueConstructor: () => '',
+    widthRatio: '50%',
+  })
+  itemId = '';
 }

@@ -220,25 +220,23 @@ export class PaymentComponent implements OnInit, OnDestroy {
     if (!pi) {
       return;
     }
+    const returnPath = this.location.prepareExternalUrl(
+      this.router.serializeUrl(
+        this.router.createUrlTree(['payment-return'], { relativeTo: this.activeRoute.parent })
+      )
+    );
     this.paymentService
       .startPayment(this.paymentId, {
         paymentChannelId: pc.channelId,
         paidAmount: pi.totalAmount,
         currency: pi.currency,
+        redirectUrl: new URL(returnPath, location.origin).toString(),
       })
       .subscribe({
         next: (paymentRes) => {
           if (paymentRes.redirectUrl) {
-            const returnPath = this.location.prepareExternalUrl(
-              this.router.serializeUrl(
-                this.router.createUrlTree(['payment-return'], { relativeTo: this.activeRoute.parent })
-              )
-            );
             this.paymentDialogRef = this.basicOverlay.showInstantModal({
-              url: resolvePaymentRedirectUrl(
-                paymentRes.redirectUrl,
-                new URL(returnPath, location.origin).toString()
-              ),
+              url: resolvePaymentRedirectUrl(paymentRes.redirectUrl),
               width: '90%',
               height: '80%',
               header: true,
@@ -251,7 +249,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
           // this.basicOverlay.alert("Ödeme alındı", "Ödeme başarıyla alındı", "success");
         },
         error: (err) => {
-          this.basicOverlay.alert('Ödeme alınamadı', err, 'error');
+          this.basicOverlay.alert('Ödeme alınamadı', err?.error?.message ?? err?.message ?? 'Bilinmeyen hata', 'error');
         },
       });
   }

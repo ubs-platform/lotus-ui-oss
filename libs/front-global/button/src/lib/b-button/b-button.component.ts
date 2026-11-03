@@ -4,6 +4,7 @@ import {
   QueryList,
   TemplateRef,
   ViewChildren,
+  computed,
   input
 } from '@angular/core';
 import { IIcon } from '@lotus/front-global/icon-type';
@@ -24,7 +25,14 @@ export class BButtonComponent {
   readonly iconClass = input<string | null | undefined>(undefined);
   readonly iconContent = input<string | null | undefined>(undefined);
   readonly iconImageSource = input<string | null | undefined>(undefined);
-  readonly buttonClass = input('surface');
+  readonly buttonClass = input<string | string[]>('surface');
+  readonly buttonClassStringified = computed(() => {
+    const cls = this.buttonClass();
+    if (Array.isArray(cls)) {
+      return cls.filter(Boolean).join(' ');
+    }
+    return cls;
+  });
 
   readonly growRight = input(false);
   readonly growLeft = input(false);

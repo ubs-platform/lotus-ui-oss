@@ -1,0 +1,89 @@
+:host {
+  display: block;
+  min-width: 0;
+  --trackbar-color: var(--primary-color, #ad1457);
+  --trackbar-track-color: var(--bg-1, #d2d3d4);
+  --trackbar-thumb-color: var(--bg-surface, #ffffff);
+}
+
+input[type='range'] {
+  --trackbar-direction: to right;
+  --trackbar-background: linear-gradient(
+    var(--trackbar-direction),
+    var(--trackbar-color) 0 var(--trackbar-fill, 0%),
+    var(--trackbar-track-color) var(--trackbar-fill, 0%) 100%
+  );
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: 2rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  accent-color: var(--trackbar-color);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type='range']:dir(rtl) {
+  --trackbar-direction: to left;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+  height: 0.375rem;
+  border-radius: 999px;
+  background: var(--trackbar-background);
+}
+
+input[type='range']::-moz-range-track {
+  height: 0.375rem;
+  border-radius: 999px;
+  background: var(--trackbar-background);
+}
+
+/* Browser-specific pseudo-elements must stay in separate rules. */
+input[type='range']::-webkit-slider-thumb {
+  box-sizing: border-box;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: -0.375rem;
+  border: 3px solid var(--trackbar-color);
+  border-radius: 50%;
+  background: var(--trackbar-thumb-color);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type='range']::-moz-range-thumb {
+  box-sizing: border-box;
+  width: 1.125rem;
+  height: 1.125rem;
+  border: 3px solid var(--trackbar-color);
+  border-radius: 50%;
+  background: var(--trackbar-thumb-color);
+}
+
+input[type='range']:hover::-webkit-slider-thumb,
+input[type='range']:active::-webkit-slider-thumb {
+  background: var(--trackbar-color);
+}
+
+input[type='range']:hover::-moz-range-thumb,
+input[type='range']:active::-moz-range-thumb {
+  background: var(--trackbar-color);
+}
+
+input[type='range']:focus-visible {
+  border-radius: 0.25rem;
+  outline: 2px solid var(--trackbar-color);
+  outline-offset: 2px;
+}
+
+@media (forced-colors: active) {
+  input[type='range'] {
+    -webkit-appearance: auto;
+    appearance: auto;
+  }
+}

@@ -422,7 +422,18 @@ describe('Platform setup settings', () => {
       sellerReports: true,
       dateGroupings: ['DAILY', 'YEARLY'],
       additionalTaxes: new PlatformSettingsForm().additionalTaxes,
+      allowedReturnOrigins: [location.origin],
     });
+  });
+
+  it('sends trimmed return origins without blank rows', () => {
+    const form = Object.assign(new PlatformSettingsForm(), {
+      allowedReturnOrigins: [' https://app.example.com ', '', 'http://localhost:4200'],
+    });
+    expect(setupSettings(form).allowedReturnOrigins).toEqual([
+      'https://app.example.com',
+      'http://localhost:4200',
+    ]);
   });
 
   it.each(['0', '29', '1.5', '1,', '1e1', '', '1, 29', '1 28'])(

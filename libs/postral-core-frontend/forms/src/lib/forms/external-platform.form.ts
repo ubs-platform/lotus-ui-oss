@@ -4,10 +4,6 @@ import { ExternalPlatformDTO } from "@tk-postral/payment-common";
 @minkyRoot()
 export class ExternalPlatformForm extends ExternalPlatformDTO {
 
-    @minky({
-        disable: true
-    })
-    override id: string = "";
 
     @minky({
         inputType: "checkbox",
@@ -39,5 +35,9 @@ export class ExternalPlatformForm extends ExternalPlatformDTO {
     }) override updatedAt?: Date | undefined;
 
 
+    @minky({
+        disable: true
+    })
+    override id: string = "";
 
 }

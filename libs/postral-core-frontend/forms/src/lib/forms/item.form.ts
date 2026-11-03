@@ -10,13 +10,6 @@ import { currencyOptions } from '../forms';
 @minkyRoot()
 export class ItemForm extends ItemDTO {
   @minky({
-    disable: true,
-    defaultValueConstructor: () => '',
-    widthRatio: '50%',
-  })
-  override id = '';
-
-  @minky({
     defaultValueConstructor: () => '',
     widthRatio: '50%',
   })
@@ -94,6 +87,13 @@ export class ItemForm extends ItemDTO {
   })
   override baseCurrency: string = '';
 
+
+  @minky({
+    defaultValueConstructor: () => false,
+    inputType: 'checkbox',
+  })
+  override isPhysical = false;
+
   @minky({
     defaultValueConstructor: () => '',
     widthRatio: '50%',
@@ -112,4 +112,28 @@ export class ItemForm extends ItemDTO {
   })
   override entityId: string = '';
 
+  @minky({
+    defaultValueConstructor: () => '',
+    widthRatio: '50%',
+  })
+  override metaEntityGroup = '';
+
+  @minky({
+    defaultValueConstructor: () => '',
+    widthRatio: '50%',
+  })
+  override metaEntityName = '';
+
+  @minky({
+    defaultValueConstructor: () => '',
+    widthRatio: '50%',
+  })
+  override metaEntityId = '';
+
+  @minky({
+    disable: true,
+    defaultValueConstructor: () => '',
+    widthRatio: '50%',
+  })
+  override id = '';
 }

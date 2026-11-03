@@ -7,6 +7,7 @@ import { ReportControllerService } from '@lotus/postral-core-frontend/client';
 import { EXTERNAL_ITEM_CLASS_COMISSION_PREFIX, EXTERNAL_PLATFORM_COMISSION_PREFIX, PAYMENT_CHANNEL_FEE_PREFIX, PAYMENT_SERVICE_FEE, PLATFORM_COMISSION_TOTAL, POSTRAL_INSTANCE, ReportExpenseDTO, ReportFullDTO, ReportItemDTO, ReportPlatformDTO } from '@tk-postral/payment-common';
 import { of } from 'rxjs';
 import { ReportInfoComponent } from './report-info.component';
+import { REFUND_ROUNDING_ADJUSTMENT } from '@tk-postral/payment-common';
 
 @Pipe({ name: 'translate' })
 class TranslateStubPipe implements PipeTransform {
@@ -167,5 +168,15 @@ describe('ReportInfoComponent sales breakdown', () => {
       'iyzico payment service fee',
       'market:tr payment service fee',
     ]);
+  });
+
+  it('renders signed refund rounding adjustments separately from provider fees', async () => {
+    const element = await render({ expenses: [
+      Object.assign(new ReportExpenseDTO(), { expenseKey: REFUND_ROUNDING_ADJUSTMENT, expenseAmount: -0.0033 }),
+    ] });
+    expect(element.querySelector('.expense-item h3')?.textContent?.trim())
+      .toBe('postral.expense.REFUND_ROUNDING_ADJUSTMENT');
+    expect(element.querySelector('.expense-item lib-money-display')?.textContent?.trim())
+      .toBe('-0.0033 TRY');
   });
 });

@@ -9,6 +9,8 @@ const LEGACY_CHANNEL_PREFIX = '/service/payment/api/';
  *   resolved under the payment service API prefix.
  *
  * `returnUrl`, when given, is passed to the channel as the `redirectUrl` query parameter.
+ * Omit it when the start request carried `captureInfo.redirectUrl`: Postral has then
+ * already pointed the channel at its own return endpoint.
  */
 export function resolvePaymentRedirectUrl(
   redirectUrl: string,

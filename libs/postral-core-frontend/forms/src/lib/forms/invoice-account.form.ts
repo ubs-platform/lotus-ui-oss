@@ -14,11 +14,6 @@ export class InvoiceAccountForm extends SnapshotAccountDTO {
   @minky({
     disable: true,
   })
-  override id = '';
-
-  @minky({
-    disable: true,
-  })
   override legalIdentity = '';
 
   @minky({
@@ -28,4 +23,9 @@ export class InvoiceAccountForm extends SnapshotAccountDTO {
 
   @minky({ inputType: 'select', selectItems: () => accountTypes })
   override type: 'INDIVIDUAL' | 'COMMERCIAL' = 'COMMERCIAL';
+
+  @minky({
+    disable: true,
+  })
+  override id = '';
 }

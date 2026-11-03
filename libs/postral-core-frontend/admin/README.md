@@ -49,6 +49,13 @@ tax and are not automatically assigned to products. Saved rows, like the other
 setup settings, cannot be edited after the step is committed. Older in-progress
 setups without this list and existing completed installations are unchanged.
 
+The settings step also has an add/remove list of allowed payment return origins
+(for example `https://app.example.com`, without a path), prefilled with the
+current origin. On completion they are merged into
+`AdminSettings.allowedReturnOrigins`, which remains editable on the admin
+settings page. Postral accepts every return origin outside production but
+rejects payment starts in production when the origin is not listed.
+
 The final review includes an optional, initially unchecked Reform checkbox for
 `dummy-ecommerce`. Selected missing channels are created by backend completion
 in the same transaction, enabled with `devOnly: false`. Existing channel records

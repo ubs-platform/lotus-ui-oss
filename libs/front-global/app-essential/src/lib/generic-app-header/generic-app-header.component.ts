@@ -132,9 +132,6 @@ export class GenericAppHeaderComponent
   allMenus = computed(() => {
     return this.loadMenus();
   });
-  imgUrl = computed(() => {
-    return this.user() ? `/api/file/PROFILE_PHOTO/${this.user()?.id}` : '';
-  });
   instantSwipeListenerSubscription?: Subscription;
   loading!: Observable<LoadingIndicatorState>;
   readonly KEY_THEME = 'theme';

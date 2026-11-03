@@ -5,10 +5,6 @@ export class InvoiceAddressForm extends SnapshotAddressDTO {
   @minky({
     disable: true,
   })
-  override id?: string = '';
-  @minky({
-    disable: true,
-  })
   override name: string = '';
   @minky({
     disable: true,
@@ -121,4 +117,9 @@ export class InvoiceAddressForm extends SnapshotAddressDTO {
     disable: true,
   })
   override timezone?: string;
+
+  @minky({
+    disable: true,
+  })
+  override id?: string = '';
 }

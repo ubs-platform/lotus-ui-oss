@@ -12,12 +12,6 @@ export interface AddressDtoWithUserInput extends AccountAddressDto {
 @minkyRoot()
 export class AddressForm extends AccountAddressDto {
   @minky({
-    disable: true,
-    widthRatio: '50%'
-  })
-  override id = undefined;
-
-  @minky({
     validators: [new RequiredValidator()],
     widthRatio: '50%'
   })
@@ -164,4 +158,9 @@ export class AddressForm extends AccountAddressDto {
   })
   override cityName = '';
 
+  @minky({
+    disable: true,
+    widthRatio: '50%'
+  })
+  override id = undefined;
 }

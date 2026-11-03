@@ -1,0 +1,8 @@
+<input
+  type="range"
+  [(ngModel)]="value"
+  [max]="maxValue()"
+  [min]="minValue()"
+  [step]="step()"
+  [style.--trackbar-fill]="fillPercentage() + '%'"
+/>

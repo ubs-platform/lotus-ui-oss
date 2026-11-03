@@ -27,6 +27,11 @@ are URI-decoded before translation. Overall report expenses still include all
 sources; this presentation does not change commission billing. Reconstruct
 historical reports to split previously combined commission rows.
 
+Platform/flow reports display `REFUND_ROUNDING_ADJUSTMENT` separately from
+provider fees. A positive signed adjustment is an extra platform refund cost;
+a negative adjustment reduces that cost. Nominal seller/tax/commission amounts
+remain unchanged. Precision policy and accounting are owned by Postral.
+
 Items identified by name instead of a catalog ID show `(no id)` after their name.
 Name normalization and grouping happen in Postral, not in the browser. Existing
 variation labels remain visible; empty variations do not render empty parentheses.

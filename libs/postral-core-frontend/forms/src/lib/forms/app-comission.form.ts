@@ -31,11 +31,6 @@ export class AppComissionForm extends AppComissionDTO {
   })
   override externalPlatformId?: string | undefined;
 
-  @minky({
-    disable: true,
-    widthRatio: '50%',
-  })
-  override id = '';
 
   @minky({
     label: 'Satıcı Hesap ID',
@@ -74,5 +69,10 @@ export class AppComissionForm extends AppComissionDTO {
   })
   override bias: number = 0;
 
+  @minky({
+    disable: true,
+    widthRatio: '50%',
+  })
+  override id = '';
 
 }

@@ -11,10 +11,7 @@
         <column name="fullname">
         <ng-template header> {{ 'fullname' | translate }}</ng-template>
         <ng-template data let-item="item">
-          <div class="flex gap-2 align-items-center">
-            <img class="rounded" src="/api/file/PROFILE_PHOTO/{{ item.id }}" />
-            {{ item.name }} {{ item.surname }}
-          </div>
+          <lotus-web-user-display [user]="item" [showUsername]="false" missingState="deleted"></lotus-web-user-display>
         </ng-template>
       </column>
       <column name="roles">

@@ -1,12 +1,12 @@
 <div class="w-full flex flex-column" [class.h-full]="!onlyButtons()">
-  <div class="flex gap-2">
+  <div class="flex" style="border-bottom:1px solid var(--border-color)">
     @for (item of blockPages(); track $index) {
     <block-button
       [iconClass]="item.iconClass()"
       [iconContent]="item.iconContent()"
       [iconImageSource]="item.iconImageSource()"
       
-      [buttonClass]="selectedTabName() === item.name() ? 'primary' : ''"
+      [buttonClass]="[selectedTabName() === item.name() ? 'primary' : '', 'sharp']"
       (click)="onTabHeaderClick(item.name())"
     >
       {{ item.title() | translate}}</block-button
