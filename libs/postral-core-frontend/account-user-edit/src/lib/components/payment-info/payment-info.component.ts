@@ -38,6 +38,7 @@ export class PaymentInfoComponent implements OnInit {
     this.activeRoute.params.subscribe((params) => {
       // console.log('Payment Component Params:', params);
       this.paymentId = params['paymentId'];
+      debugger;
       if (!this.paymentId) {
         this.notFound();
         return;

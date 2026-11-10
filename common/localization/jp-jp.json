@@ -340,6 +340,7 @@
       "paymentChannelId": "支払いチャネルID",
       "save": "保存",
       "email-format": "有効なメールアドレスを入力してください。",
+      "iban-format": "有効なIBANを入力してください（26文字）。",
       "min-length": "少なくとも {intended} 文字を入力してください",
       "max-length": "最大で {intended} 文字を入力してください",
       "username-regex": "ユーザー名は文字で始まり、その後に英数字、ピリオド、アンダースコアのみを使用できます。小文字のみ",

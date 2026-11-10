@@ -344,6 +344,7 @@
       "paymentChannelId": "Zahlungskanal-ID",
       "save": "Speichern",
       "email-format": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+      "iban-format": "Bitte geben Sie eine gültige IBAN ein (26 Zeichen).",
       "min-length": "Bitte geben Sie mindestens {intended} Wörter ein",
       "max-length": "Bitte geben Sie höchstens {intended} Wörter ein",
       "username-regex": "Der Benutzername muss mit einem Buchstaben beginnen, gefolgt von alphanumerischen Zeichen, Punkten und Unterstrichen. Nur Kleinbuchstaben",

@@ -343,6 +343,7 @@
       "paymentChannelId": "Ödeme Kanalı ID'si",
       "save": "Kaydet",
       "email-format": "Lütfen geçerli bir e-posta adresi giriniz.",
+      "iban-format": "Lütfen geçerli bir IBAN giriniz (26 karakter).",
       "min-length": "Lütfen en az {intended} kelime giriniz",
       "max-length": "Lütfen en fazla {intended} kelime giriniz",
       "username-regex": "Kullanıcı adı en az 2 harften oluşmalıdır. Bir harf ile başlamalı, ardından sadece alfanumerik, nokta ve alt çizgi ile devam edebilir. Sadece küçük harf kullanılmalıdır",

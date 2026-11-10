@@ -4,4 +4,35 @@
     min-width: 10px;
     min-height: 10px;
     padding: 1rem;
+    // transition: transform 0.3s ease-in-out;
+    animation: slideDown 0.1s ease-in-out;
+}
+
+.close-animation {
+    animation: slideMoreDown 0.1s ease-in-out;
+}
+
+
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+@keyframes slideMoreDown {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(10px);
+        opacity: 0;
+    }
 }

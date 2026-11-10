@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
 import {
   BPaginationProgrammaticComponent,
   PaginationItem,
-} from '@lotus/front-global/button';
+} from '@lotus/front-global/pagination-programmatic';
 import { EnvironmentController } from '@lotus/extra/translator-core';
 import { environment } from '@lotus-web/environment';
 import { Observable, Subject, Subscription, of } from 'rxjs';

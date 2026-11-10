@@ -1,4 +1,7 @@
-import { DialogVisibilityReference } from '@lotus/front-global/webdialog';
+import {
+  DialogVisibilityReference,
+  generateMobileOptimizedDialogHideController,
+} from '@lotus/front-global/history-back-flag';
 import {
   ChangeDetectorRef,
   Component,
@@ -15,7 +18,6 @@ import {
 } from '@angular/core';
 import { BlockNavigationDirective } from '../block-navigation.directive';
 import { Rotation } from '../../types';
-import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 
 @Component({
   selector: 'ubs-touch-pagination',
@@ -58,10 +60,7 @@ export class TouchPaginationComponent implements OnInit {
   maxSeconds = signal<number>(0.15);
   backButtonStates = signal<Array<DialogVisibilityReference<void>>>([]);
 
-  constructor(
-    private secondaryOverlay: BasicOverlayService,
-    private chDetec: ChangeDetectorRef
-  ) {}
+  constructor(private chDetec: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
     if (!this.foreground()) {
@@ -91,7 +90,7 @@ export class TouchPaginationComponent implements OnInit {
       this.sentBack.set('');
       this.backButtonStates.update((a) => [
         ...a,
-        this.secondaryOverlay.insertBackButtonFlag(() => {
+        generateMobileOptimizedDialogHideController(() => {
           this.backRaw();
         }),
       ]);

@@ -5,7 +5,8 @@ export const TOKEN_FIELD = 'TK_TOKEN';
 @Injectable({ providedIn: 'root' })
 export class TokenGetter {
   getToken() {
-    const token = localStorage.getItem(TOKEN_FIELD);
-    return token;
+    return (
+      sessionStorage.getItem(TOKEN_FIELD) ?? localStorage.getItem(TOKEN_FIELD)
+    );
   }
 }

@@ -17,7 +17,6 @@ export class TabViewComponent {
   selectedTabName = signal<string>('');
   readonly initialTab = input<string>('');
   readonly tabSelected = output<string>();
-  // dehşet p..na sitesi gibi oldu değişken ismi sadfdsşlafksaşdlf xd
   @HostBinding('class.only-buttons')
   readonly onlyButtons = input<boolean>(false);
   touchTabView = viewChild<any>('touchTabView');

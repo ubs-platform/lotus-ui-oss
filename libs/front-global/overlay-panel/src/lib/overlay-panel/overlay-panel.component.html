@@ -10,7 +10,7 @@
   (overlayOutsideClick)="hideDialog()"
   (detach)="show.set(false)"
 >
-  <div class="overlay-content">
+  <div class="overlay-content" [class.close-animation]="closeAnimationBegin()">
     <ng-content></ng-content>
   </div>
 </ng-template>

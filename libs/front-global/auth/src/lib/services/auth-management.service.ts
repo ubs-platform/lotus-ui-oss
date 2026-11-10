@@ -44,17 +44,20 @@ export class AuthManagementService {
     return this._user.asObservable().pipe(map(user => !!user));
   }
 
-  login(a: UserAuth) {
+  login(a: UserAuth, rememberMe = true) {
     return this.authService.authenticate(a).pipe(
       switchMap((b) => {
-        this.saveToken(b.token!);
+        this.saveToken(b.token!, rememberMe);
         return this.checkUser();
       })
     );
   }
 
-  saveToken(token: string) {
-    localStorage.setItem(TOKEN_FIELD, token);
+  saveToken(token: string, rememberMe = true) {
+    const storage = rememberMe ? localStorage : sessionStorage;
+    const otherStorage = rememberMe ? sessionStorage : localStorage;
+    storage.setItem(TOKEN_FIELD, token);
+    otherStorage.removeItem(TOKEN_FIELD);
   }
 
   getToken() {
@@ -106,6 +109,7 @@ export class AuthManagementService {
 
   removeToken() {
     localStorage.removeItem(TOKEN_FIELD);
+    sessionStorage.removeItem(TOKEN_FIELD);
   }
 
   logout() {

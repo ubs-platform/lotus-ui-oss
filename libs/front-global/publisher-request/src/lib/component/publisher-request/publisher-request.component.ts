@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Reform } from '@lotus/front-global/minky/core';
 import { PublisherRequestForm } from '../../form/publisher-request.form';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { AuthManagementService } from '@lotus/front-global/auth';
 import { IUserMessageDto } from '@ubs-platform/feedback-common';
 import { FileService } from '@lotus/front-global/images';
-import { Observable, forkJoin, mergeMap } from 'rxjs';
+import { Observable, forkJoin, map, mergeMap } from 'rxjs';
 import { UserMessageService } from '@lotus/front-global/feedback-front';
+
 interface FileInformation {
   category: string;
   name: string;
@@ -20,23 +22,29 @@ interface FileInformation {
 export class PublisherRequestComponent {
   reform?: Reform<PublisherRequestForm>;
   sent = false;
+  activeUser: import("@ubs-platform/users-common").UserDTO | null | undefined;
 
   constructor(
     private overlay: BasicOverlayService,
     private authMan: AuthManagementService,
     private userMessageService: UserMessageService,
-    private fileService: FileService
+    private fileService: FileService,
+    private activatedRoute: ActivatedRoute,
   ) {}
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.authMan.userChange().subscribe((a) => {
+      this.activeUser = a;
       this.reform = new Reform<Partial<PublisherRequestForm>>(
         PublisherRequestForm
       );
       this.reform.setValueByPath('firstName', a?.name);
       this.reform.setValueByPath('lastName', a?.surname);
       this.reform.setValueByPath('email', a?.primaryEmail);
+      this.activatedRoute.queryParams.pipe(map(a => a["teamId"])).subscribe(teamId => {
+        this.reform?.setValueByPath('publisherTeam', teamId);
+      });
     });
   }
   submit() {
@@ -44,6 +52,12 @@ export class PublisherRequestComponent {
       if (this.reform.allValidationErrors().length) {
         this.reform.revealAllErrors();
       } else {
+        // this.teamsService.get(this.reform?.value.publisherTeam).subscribe(team => {
+        //   team.initialUserEntityCapabilities.map(a => {
+            
+        //   })
+        // });
+
         const field_cv = 'cv',
           field_degree = 'degree';
         const formRawOut = this.reform.value;

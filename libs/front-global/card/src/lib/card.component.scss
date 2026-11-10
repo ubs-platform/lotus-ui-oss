@@ -1,0 +1,98 @@
+$border-radius: 5px;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 150px;
+  border-radius: $border-radius;
+
+  @media (min-width: 576px) {
+    min-height: 175px;
+  }
+
+  @media (min-width: 768px) {
+    min-height: 200px;
+  }
+
+  &:not(.skeleton) {
+    -webkit-tap-highlight-color: transparent;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.9;
+
+      .text-area {
+        background-color: var(--primary-color-bg-hover);
+        color: var(--primary-color-fg-hover);
+      }
+    }
+
+    &:active {
+      opacity: 0.95;
+
+      .text-area {
+        background-color: var(--primary-color-bg-active);
+        color: var(--primary-color-fg-active);
+      }
+    }
+  }
+
+  &.skeleton {
+    background-color: var(--bg-1);
+  }
+}
+
+.image-area {
+  flex: 1 1 auto;
+  min-height: 0;
+  position: relative;
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+  }
+}
+
+.text-area {
+  flex: 0 0 auto;
+  min-height: 4em;
+  padding: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+  background-color: var(--bg-1);
+  color: var(--fg);
+  transition: 100ms ease-in-out;
+  border-bottom-left-radius: $border-radius - 1px;
+  border-bottom-right-radius: $border-radius - 1px;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 0.75em;
+
+  @media (min-width: 992px) {
+    font-size: 1em;
+  }
+}
+
+.badge {
+  align-self: flex-start;
+  background: var(--surface-a);
+  border-radius: 20px;
+  font-size: 12px;
+  padding: 0.3em 0.8em;
+}

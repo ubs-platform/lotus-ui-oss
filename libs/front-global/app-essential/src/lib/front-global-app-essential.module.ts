@@ -4,6 +4,7 @@ import { GenericAppHeaderComponent } from './generic-app-header/generic-app-head
 import { FrontGlobalAuthLoginViewsModule } from '@lotus/front-global/auth-login-views';
 import { RouterModule } from '@angular/router';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
+import { FrontGlobalPaginationProgrammaticModule } from '@lotus/front-global/pagination-programmatic';
 import {
   LANGUAGE_JSON_URL,
   UbsTranslatorNgxModule,
@@ -22,6 +23,7 @@ import { UserDisplayComponent } from '@lotus/front-global/user-display';
     FrontGlobalAuthLoginViewsModule,
     RouterModule,
     FrontGlobalButtonModule,
+    FrontGlobalPaginationProgrammaticModule,
     UbsTranslatorNgxModule,
     FrontGlobalDebugToolsModule,
     PwaUpdateVersionComponent,

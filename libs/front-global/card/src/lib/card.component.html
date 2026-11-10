@@ -1,0 +1,16 @@
+@if (skeleton()) {
+<div class="card skeleton"></div>
+} @else {
+<div class="card" role="button" tabindex="0" (click)="selected.emit()" (keydown.enter)="selected.emit()"
+  (keydown.space)="$event.preventDefault(); selected.emit()">
+  <div class="image-area">
+    <img #img [src]="imageFailed() ? notFoundImage : src(img.width)" (error)="markFailed()" [alt]="title()" />
+  </div>
+  <div class="text-area">
+    <span class="title">{{ title() }}</span>
+    @if (badge()) {
+    <span class="badge">{{ badge() }}</span>
+    }
+  </div>
+</div>
+}

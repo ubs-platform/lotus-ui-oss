@@ -28,9 +28,10 @@ export class PaymentControllerService {
 
   interceptUrl(url: string): string {
     // you can modify url here if needed
-    return (
-      this.basePath + (!url || this.basePath.endsWith('/') ? '' : '/') + url
-    );
+    // return (
+    //   this.basePath + (!url || this.basePath.endsWith('/') ? '' : '/') + url
+    // );
+    return [this.basePath, ...url.split('/')].filter(Boolean).join('/');
   }
 
   initialize(requestBody: PaymentInitDTO): Observable<PaymentDTO> {

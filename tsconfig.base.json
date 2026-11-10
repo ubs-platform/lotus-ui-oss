@@ -18,13 +18,37 @@
     "baseUrl": ".",
     "paths": {
       "@lotus-web/environment": ["environment/environment"],
+      "@lotus/front-global/auth/service": [
+        "libs/front-global/auth/src/lib/services/auth.service.ts"
+      ],
+      "@lotus/postral-core-frontend/client/platform-setup": [
+        "libs/postral-core-frontend/client/src/lib/services/payment/platform-setup.service.ts"
+      ],
+      "@lotus/postral-core-frontend/forms/account-types": [
+        "libs/postral-core-frontend/forms/src/lib/constants/account-types.ts"
+      ],
+      "@lotus/postral-core-frontend/forms/return-origins": [
+        "libs/postral-core-frontend/forms/src/lib/constants/return-origins.ts"
+      ],
+      "@lotus/postral-core-frontend/admin/setup-guards": [
+        "libs/postral-core-frontend/admin/src/lib/platform-setup/platform-setup.guard.ts"
+      ],
       "@lotus/*": ["libs/*/src/index.ts"],
       "@ubs-platform/translator-core": [
         "libs/extra/translator-core/src/index.ts"
       ],
       "@ubs-platform/translator-ngx": [
         "libs/extra/ubs-translator-ngx/src/index.ts"
-      ]
+      ],
+      "overlay-panel": ["./libs/front-global/overlay-panel/src/index.ts"],
+      "chart": ["./libs/front-global/chart/src/index.ts"],
+      "team-selection-dialog": [
+        "./libs/front-global/team-selection-dialog/src/index.ts"
+      ],
+      "trackbar": ["./libs/front-global/input/trackbar/src/index.ts"],
+      "homepage": ["./libs/tkfn-front/homepage/src/index.ts"],
+      "clients": ["./libs/tkfn-front/clients/src/index.ts"],
+      "app-manager": ["./libs/tkfn-front/app-manager/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

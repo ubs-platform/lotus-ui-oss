@@ -20,7 +20,7 @@ import { minky, minkyRoot } from '@lotus/front-global/minky/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { insertIndexForUrlNavigation } from '@lotus/front-global/webdialog';
 import { LoadingIndicationService } from '@lotus/front-global/user-service-wraps';
-import { PaginationItem } from '@lotus/front-global/button';
+import { PaginationItem } from '@lotus/front-global/pagination-programmatic';
 import { PublisherTeamService } from '@lotus/front-global/publisher-teams/client';
 import { Option } from '@lotus/legendary-front/custom-select';
 import { AuthManagementService } from '@lotus/front-global/auth';

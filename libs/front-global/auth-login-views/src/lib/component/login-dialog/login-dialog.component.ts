@@ -46,7 +46,7 @@ class LoginObject implements UserAuth {
   standalone: false,
 })
 export class LoginDialogComponent implements OnInit {
-  reform?: Reform<any>;
+  reform: Reform<LoginObject>;
   @Output() loginSuccess = new EventEmitter<boolean>();
   loading: Observable<LoadingIndicatorState>;
   constructor(
@@ -79,7 +79,8 @@ export class LoginDialogComponent implements OnInit {
       // });
       this.reform.revealAllErrors();
     } else {
-      this.authManager.login(this.reform?.value).subscribe({
+      const { login, password, check } = this.reform.value;
+      this.authManager.login({ login, password }, check === true).subscribe({
         next: (u) => {
           this.basicOverlay.alert('mona.login-success', '', 'success');
           this.loginSuccess.emit(true);

@@ -1,0 +1,18 @@
+{
+  "name": "front-global-card",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/front-global/card/src",
+  "prefix": "lotus-web",
+  "tags": [],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/front-global/card"],
+      "options": {
+        "jestConfig": "libs/front-global/card/jest.config.ts"
+      }
+    },
+    "lint": { "executor": "@nx/eslint:lint" }
+  }
+}

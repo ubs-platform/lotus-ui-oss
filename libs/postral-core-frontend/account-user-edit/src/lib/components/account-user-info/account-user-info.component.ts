@@ -75,15 +75,7 @@ export class AccountUserInfoComponent {
     const form = new Reform(AccountForm, data);
 
     // Eğer kişisel hesap seçildiyse takım seçimi gerekli olacak şekilde işaretle
-    form.valueUpdate.subscribe((formValue) => {
-      this.instruction.update((a) => {
-        if (a == null) {
-          return a;
-        }
-        a.teamSelectionRequired = formValue.type === "COMMERCIAL";
-        return a;
-      });
-    });
+
 
     this.instruction.set({
       extraActions:[
@@ -102,7 +94,9 @@ export class AccountUserInfoComponent {
         );
       },
       beforeSave: (form: Reform) => true,
-      teamSelectionRequired: (data) => !data.id,
+      teamSelectionRequired: (data) => {
+        return (!data.id) && (data.type === 'COMMERCIAL');
+      },
       teamSelectionDialog: {
         title: 'Takım seçimi',
         description:

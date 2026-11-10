@@ -17,7 +17,7 @@ import { OnLoadDirective } from '@lotus/front-global/ui-element-utils';
 import {
   DialogVisibilityReference,
   generateMobileOptimizedDialogHideController,
-} from '../util/mod-util';
+} from '@lotus/front-global/history-back-flag';
 import { DocumentSwipeListener } from '@lotus/front-global/mobile-gestures-util';
 import { Subscription } from 'rxjs';
 import { TranslatorText } from '@lotus/extra/translator-core';

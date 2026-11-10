@@ -34,6 +34,7 @@ export class OverlayPanelComponent {
   minHeight = model<OptionalNumber>(undefined);
   origin = signal<HTMLElement | undefined>(undefined);
   positions = signal<ConnectedPosition[]>(POSITIONS.AUTO);
+  closeAnimationBegin = signal(false);
 
   showDialog(anchor: MouseEvent | HTMLElement, popupPosition: PopupPosition = "AUTO") {
     const element = anchor instanceof HTMLElement ? anchor : (anchor.currentTarget ?? anchor.target) as HTMLElement;
@@ -43,7 +44,11 @@ export class OverlayPanelComponent {
   }
 
   hideDialog() {
-    this.show.set(false);
+    this.closeAnimationBegin.set(true);
+    setTimeout(() => {
+      this.show.set(false);
+      this.closeAnimationBegin.set(false);
+    }, 100);
   }
 
   toggleDialog(anchor: MouseEvent | HTMLElement, popupPosition: PopupPosition = "AUTO") {
@@ -53,5 +58,5 @@ export class OverlayPanelComponent {
       this.showDialog(anchor, popupPosition);
     }
   }
-  
+
 }

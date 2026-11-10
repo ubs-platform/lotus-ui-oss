@@ -344,6 +344,7 @@
       "paymentChannelId": "Payment Channel ID",
       "save": "Save",
       "email-format": "Please enter a valid email address.",
+      "iban-format": "Please enter a valid IBAN (26 characters).",
       "min-length": "Please enter at least {intended} words",
       "max-length": "Please enter at most {intended} words",
       "username-regex": "Username must start with a letter, followed by alphanumerics, periods and underscores only. Lower case only",

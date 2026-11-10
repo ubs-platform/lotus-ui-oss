@@ -7,13 +7,15 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular/build:application",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/admin/postral-core",
+        "outputPath": {
+          "base": "dist/apps/admin/postral-core",
+          "browser": ""
+        },
         "index": "apps/admin/postral-core/src/index.html",
-        "main": "apps/admin/postral-core/src/main.ts",
-        "polyfills": "apps/admin/postral-core/src/polyfills.ts",
+        "browser": "apps/admin/postral-core/src/main.ts",
         "tsConfig": "apps/admin/postral-core/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -26,14 +28,13 @@
             "glob": "**/*",
             "input": "common/localization",
             "output": "localization"
-          },
+          }
         ],
         "styles": ["apps/admin/postral-core/src/styles.scss"],
         "stylePreprocessorOptions": {
           "includePaths": ["libs/front-global/base-style/style"]
         },
-        "serviceWorker": true,
-        "ngswConfigPath": "apps/admin/postral-core/ngsw-config.json"
+        "serviceWorker": "apps/admin/postral-core/ngsw-config.json"
       },
       "configurations": {
         "production": {
@@ -56,22 +57,18 @@
             }
           ],
           "outputHashing": "all",
-          "buildOptimizer": true,
           "optimization": true
         },
         "development": {
-          "buildOptimizer": false,
           "optimization": false,
-          "vendorChunk": true,
           "extractLicenses": false,
-          "sourceMap": true,
-          "namedChunks": true
+          "sourceMap": true
         }
       },
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
+      "executor": "@angular/build:dev-server",
       "configurations": {
         "production": {
           "buildTarget": "postral-core:build:production"
@@ -88,7 +85,7 @@
       "continuous": true
     },
     "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "executor": "@angular/build:extract-i18n",
       "options": {
         "buildTarget": "postral-core:build"
       }

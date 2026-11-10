@@ -4,6 +4,7 @@ import {
   minky,
   minkyRoot,
   RequiredValidator,
+  IbanValidator,
 } from '@lotus/front-global/minky/core';
 import { AddressControllerService } from '@lotus/postral-core-frontend/client';
 import { map } from 'rxjs';
@@ -43,6 +44,7 @@ export class BankAccountForm extends BankAccountDTO {
   @minky({
     label: 'IBAN',
     widthRatio: '50%',
+    validators: [new IbanValidator()],
   })
   override bankIban = '';
 
@@ -83,8 +85,21 @@ export class AccountForm extends AccountDTO {
     inputType: 'select',
     selectItems: () => accountTypes,
     widthRatio: '50%',
+    emitInitialValueChange: true,
+    onValueChange: (newValue, _oldValue, env) => {
+      // Kişisel hesapta temsilci kişi hesabın kendisidir; backend contactName'i name'den doldurur.
+      env.state.setHidden?.('contactName', newValue === 'INDIVIDUAL');
+      return undefined;
+    },
   })
   override type: 'INDIVIDUAL' | 'COMMERCIAL' = 'COMMERCIAL';
+
+  @minky({
+    label: 'Yetkili Kişi Ad Soyad',
+    validators: [new RequiredValidator()],
+    widthRatio: '50%',
+  })
+  override contactName = '';
 
   @minky({
     validators: [new RequiredValidator()],

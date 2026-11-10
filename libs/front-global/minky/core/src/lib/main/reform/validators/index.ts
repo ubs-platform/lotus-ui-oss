@@ -11,3 +11,4 @@ export * from './min-max';
 export * from './regex';
 export * from './max-min-length';
 export * from './email';
+export * from './iban';
