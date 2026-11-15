@@ -5,6 +5,7 @@ import { SocialCommentsComponent } from './component/social-comments/social-comm
 import { FormsModule } from '@angular/forms';
 import { SocialCommentsBottomBarComponent } from './component/social-comments-bottom-bar/social-comments-bottom-bar.component';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
+import { ContentReportModule } from '@lotus/front-global/content-report';
 import { SingleCommentComponent } from './component/single-comment/single-comment.component';
 import { CommentTextboxComponent } from './component/comment-textbox/comment-textbox.component';
 import { OverlayPanelComponent } from '@lotus/front-global/overlay-panel';
@@ -31,6 +32,7 @@ import { WebdialogHandler } from '@lotus/front-global/webdialog';
     UbsTranslatorNgxModule,
     FrontGlobalMarkdownEditorModule,
     RouterModule,
+    ContentReportModule,
     WebdialogComponent,
     OverlayPanelComponent,
   ],

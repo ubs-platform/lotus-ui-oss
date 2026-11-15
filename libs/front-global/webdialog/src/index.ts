@@ -4,3 +4,4 @@ export * from '@lotus/front-global/history-back-flag';
 export * from './lib/webdialog/webdialog.component';
 export * from './lib/webdialog/webdialog-handler.service';
 export * from './lib/webdialog/config';
+export * from './lib/util/dialog-aware-location-strategy';

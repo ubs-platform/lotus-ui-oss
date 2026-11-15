@@ -9,6 +9,16 @@ import { Reform } from '@lotus/front-global/minky/core';
 @Component({
   selector: 'lotus-web-feedback-details',
   templateUrl: './feedback-details.component.html',
+  styles: `
+  
+@import "placeholders";
+// Invoice Info Component Styles
+:host {
+  @extend %page-host;
+  height: 100%;
+  width: 100%;
+}
+`,
   standalone: false
 })
 export class FeedbackDetailsComponent {

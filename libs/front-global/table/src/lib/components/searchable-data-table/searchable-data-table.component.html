@@ -2,7 +2,7 @@
   <div class="flex-grow-1 flex flex-column gap-2" [class.flex-grow-1]="cover()" [class.overflow-auto]="cover()"
     [style.height]="cover() ? '31px' : ''">
     <div class="flex-grow-1 overflow-auto">
-      <div class="flex flex-column align-items-center gap-2 py-3">
+      <div class="flex flex-column align-items-center gap-2">
         @if (loading()) {
         <i class="material-symbols-outlined mi-spin text-4xl">progress_activity</i>
         <span>Yükleniyor...</span>

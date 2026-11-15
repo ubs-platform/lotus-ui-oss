@@ -45,5 +45,10 @@
     "target": "http://localhost:3768",
     "pathRewrite": { "^/service/iyzico": "" },
     "secure": false
+  },
+  "/service/greenhat/api": {
+    "target": "http://localhost:3000",
+    "pathRewrite": { "^/service/greenhat": "" },
+    "secure": false
   }
 }

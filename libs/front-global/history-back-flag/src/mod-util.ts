@@ -72,10 +72,114 @@ export const insertIndexForUrlNavigation = () => {
   }
 };
 
-window.addEventListener('popstate', (e: PopStateEvent) => {
-  console.info(window.history.state['index']);
+export interface DialogHistoryEntry {
+  /** Girdiye bağlı dialogun `modalCloseFlag` değeri. */
+  flag: number;
+  /** Dialog hâlâ açıksa true; kapandıysa girdi bayattır. */
+  active: boolean;
+  /** Girdi başka bir state ile değiştirilirken korunması gereken alanlar. */
+  state: {
+    modalCloseFlag: number;
+    dialogOpen: true;
+    closeDialog?: boolean;
+    index?: number;
+  };
+}
 
-  const currentFlagState = e.state['modalCloseFlag'];
+/**
+ * Şu anki history girdisi bir dialog için eklenen girdi ise (dialogOpen) bilgisini,
+ * değilse null döner.
+ */
+export const getCurrentDialogEntry = (): DialogHistoryEntry | null => {
+  const s = window.history.state;
+  if (s == null || s['dialogOpen'] !== true || s['modalCloseFlag'] == null) {
+    return null;
+  }
+  const flag = s['modalCloseFlag'];
+  const act = activeStates[flag];
+  return {
+    flag,
+    active: act != null && !act.completed,
+    state: {
+      modalCloseFlag: flag,
+      dialogOpen: true,
+      ...(s['closeDialog'] != null ? { closeDialog: s['closeDialog'] } : {}),
+      ...(s['index'] != null ? { index: s['index'] } : {}),
+    },
+  };
+};
+
+/**
+ * Açık tüm dialogları history'ye dokunmadan (back/forward çağırmadan) kapatır.
+ * Sayfadan ayrılırken dialog girdisinin üzerine yazılacağı zaman kullanılır;
+ * böylece geri gelindiğinde `closeDialog` girdisi ölü bir dialogu tetiklemez.
+ */
+export const releaseOpenDialogs = () => {
+  Object.keys(activeStates)
+    .map(Number)
+    .sort((a, b) => b - a)
+    .forEach((flag) => completeState(flag));
+};
+
+/**
+ * Programatik kapatmada dialog girdisini `history.back()` ile tüketme durumu.
+ * Tüketme sürerken gelen history yazmaları `runWhenDialogHistorySettled` ile
+ * bekletilir; aksi halde back() traversal'ı yeni yazılan girdiden geri gider.
+ */
+const CONSUMED_POPSTATE_MARK = '__dialogEntryConsumed';
+/** popstate hiç gelmezse bekleyenleri serbest bırakmak için güvenlik süresi. */
+const CONSUME_FALLBACK_MS = 1000;
+let consumePending: ReturnType<typeof setTimeout> | null = null;
+const settleWaiters: Array<() => void> = [];
+
+function finishConsume() {
+  if (consumePending == null) {
+    return;
+  }
+  clearTimeout(consumePending);
+  consumePending = null;
+  settleWaiters.splice(0).forEach((fn) => fn());
+}
+
+/** Şu anki girdi bu dialogun girdisiyse onu geri giderek geçmişten çıkarır. */
+function consumeDialogEntry(flag: number) {
+  const s = window.history.state;
+  if (
+    consumePending != null ||
+    s?.['dialogOpen'] !== true ||
+    s['modalCloseFlag'] !== flag
+  ) {
+    return;
+  }
+  consumePending = setTimeout(finishConsume, CONSUME_FALLBACK_MS);
+  window.history.back();
+}
+
+/**
+ * Popstate, programatik kapatmada dialog girdisini tüketmek için bizim
+ * yaptığımız `history.back()` sonucuysa true döner. Router bunu görmemelidir;
+ * görürse devam eden navigasyonu iptal eder.
+ */
+export const isConsumedDialogPopState = (e: Event): boolean =>
+  (e as unknown as Record<string, unknown>)[CONSUMED_POPSTATE_MARK] === true;
+
+/** Dialog girdisi tüketiliyorsa bitince, değilse hemen çalıştırır. */
+export const runWhenDialogHistorySettled = (fn: () => void) => {
+  if (consumePending != null) {
+    settleWaiters.push(fn);
+  } else {
+    fn();
+  }
+};
+
+window.addEventListener('popstate', (e: PopStateEvent) => {
+  if (consumePending != null) {
+    (e as unknown as Record<string, unknown>)[CONSUMED_POPSTATE_MARK] = true;
+    finishConsume();
+    return;
+  }
+
+  const currentFlagState = e.state?.['modalCloseFlag'];
 
   if (currentFlagState) {
     const act = activeStates[currentFlagState];
@@ -112,12 +216,14 @@ export const generateMobileOptimizedDialogHideController = <VALUE = any>(
     const completionAction = {
       closeManually: (value: VALUE) => {
         completeState(newState, value);
+        consumeDialogEntry(newState);
       },
       closeMainAction: (value: any, applyGoBack: boolean = true) => {
         activeStates[newState].value = value;
         currentValue = value;
         if (!applyGoBack) {
           completeState(newState, value);
+          consumeDialogEntry(newState);
         } else {
           window.history.back();
         }

@@ -14,7 +14,7 @@ import { FrontGlobalMobileGesturesUtilModule } from '@lotus/front-global/mobile-
 import { FrontGlobalFeedbackDialogModule } from '@lotus/front-global/feedback-dialog';
 import { FrontGlobalUserServiceWrapsModule } from '@lotus/front-global/user-service-wraps';
 import turkish from '@angular/common/locales/tr';
-import { WebdialogComponent } from '@lotus/front-global/webdialog';
+import { WebdialogComponent, provideDialogAwareHistory } from '@lotus/front-global/webdialog';
 import { FrontGlobalButtonModule } from '@lotus/front-global/button';
 import { MinkyReformNgxPrimeModule } from '@lotus/front-global/minky/reform-ngx-prime';
 import {
@@ -55,6 +55,7 @@ import { OverlayPanelComponent, PTooltipDirective } from '@lotus/front-global/ov
     PTooltipDirective
 ],
   providers: [
+    provideDialogAwareHistory(),
     provideFrontGlobal({
       language: 'tr-tr',
       localeData: turkish,

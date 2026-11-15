@@ -1,5 +1,6 @@
-import { Component, signal, viewChild } from '@angular/core';
+import { Component, inject, signal, viewChild } from '@angular/core';
 import {
+  CommentAdminService,
   CommentService,
 } from '@lotus/front-global/social-comments';
 import { ActivatedRoute } from '@angular/router';
@@ -11,6 +12,12 @@ import { Reform } from '@lotus/front-global/minky/core';
 import {
   BookCommentSearchForm,
 } from './book-comment-search.form';
+import {
+  AdminCommentSearchForm,
+  CommentFlagAddForm,
+  FLAG_FORM_PARAM_SUGGESTIONS,
+} from './admin-comment-search.form';
+import { Observable, map, of, shareReplay } from 'rxjs';
 import { AdminSocialOptionsComponent } from '@lotus/front-global/admin-social-options';
 import { SearchableDataTableComponent } from '@lotus/front-global/table';
 
@@ -34,6 +41,8 @@ export class BookCommentsComponent {
   deleted: { [key: string]: boolean } = {};
   // commentsTable = viewChild<SearchableDataTableComponent>('commentsTable')!;
   commentsTable = viewChild<SearchableDataTableComponent>('commentsTable');
+  private commentAdmin = inject(CommentAdminService);
+  private flagSuggestions$?: Observable<string[]>;
   linkAction: (c: CommentDTO) => string | string[] | undefined = () => {
     return undefined;
   }
@@ -71,6 +80,10 @@ export class BookCommentsComponent {
 
         this.searchReform.setValueByPath('mainEntityIdByOwner', true);
       } else {
+        // Admin modunda flag/görünürlük filtreleri olan ayrı form
+        this.searchReform = new Reform<CommentSearchDTO & Partial<SearchRequest>>(
+          AdminCommentSearchForm
+        );
         this.searchReform.setValueByPath('entityGroup', undefined);
         this.searchReform.setValueByPath('mainEntityName', undefined);
         this.searchReform.setValueByPath('mainEntityIdByOwner', undefined);
@@ -119,6 +132,76 @@ export class BookCommentsComponent {
     this.basicOverlay.alert("Hata", "Bu yorumun kaynağına gidilemiyor ya da desteklenmiyor.", "error");
   }
 
+
+  // ---- Moderasyon (sadece adminMode) ----
+
+  isShadow(item: CommentDTO): boolean {
+    return item.moderationStatus === 'SHADOW';
+  }
+
+  removeFlag(item: CommentDTO, flag: string): void {
+    this.commentAdmin.editFlags(item._id, { remove: [flag] }).subscribe(() => {
+      item.flags = (item.flags ?? []).filter((f) => f !== flag);
+    });
+  }
+
+  addFlag(item: CommentDTO): void {
+    this.loadFlagSuggestions().subscribe((suggestions) => {
+      const reform = new Reform<CommentFlagAddForm>(CommentFlagAddForm, undefined, {
+        parameters: { [FLAG_FORM_PARAM_SUGGESTIONS]: suggestions },
+      });
+      this.basicOverlay
+        .reformDialog(reform, 'Flag ekle', () =>
+          reform.value.flag?.trim() ? null : 'Flag boş olamaz.'
+        )
+        .subscribe((ok) => {
+          if (!ok) return;
+          const flag = reform.value.flag.trim();
+          this.commentAdmin.editFlags(item._id, { add: [flag] }).subscribe(() => {
+            item.flags = [...new Set([...(item.flags ?? []), flag])];
+          });
+        });
+    });
+  }
+
+  keepShadow(item: CommentDTO): void {
+    this.commentAdmin.keepShadow(item._id).subscribe(() => {
+      item.shadowExpiresAt = undefined;
+    });
+  }
+
+  releaseShadow(item: CommentDTO): void {
+    this.basicOverlay
+      .confirm('Yorumu yayınla', 'Bu gizli yorum herkese görünür olacak. Emin misiniz?')
+      .subscribe((ok) => {
+        if (!ok) return;
+        this.commentAdmin.releaseShadow(item._id).subscribe(() => {
+          item.moderationStatus = 'VISIBLE';
+          item.shadowExpiresAt = undefined;
+        });
+      });
+  }
+
+  deleteAsModerator(item: CommentDTO): void {
+    this.basicOverlay
+      .confirm('Yorumu sil', 'Bu yorum kalıcı olarak silinecek. Emin misiniz?')
+      .subscribe((ok) => {
+        if (!ok) return;
+        this.commentAdmin.deleteAsModerator(item._id).subscribe(() => {
+          this.deleted[item._id] = true;
+        });
+      });
+  }
+
+  private loadFlagSuggestions(): Observable<string[]> {
+    if (!this.flagSuggestions$) {
+      this.flagSuggestions$ = this.commentAdmin.listPatterns().pipe(
+        map((list) => CommentAdminService.flagSuggestions(list)),
+        shareReplay(1)
+      );
+    }
+    return this.flagSuggestions$ ?? of([]);
+  }
 
   ngOnInit(): void { }
 }

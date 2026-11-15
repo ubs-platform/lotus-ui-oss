@@ -13,9 +13,7 @@ import {
 } from '@angular/core';
 import { BasicOverlayService } from '@lotus/front-global/prompt-overlays';
 import { EnvironmentController } from '@lotus/extra/translator-core';
-import { Reform } from '@lotus/front-global/minky/core';
-import { FlagForm } from '../../forms/flag.form';
-import { UserMessageService } from '@lotus/front-global/feedback-front';
+import { ContentReportService } from '@lotus/front-global/content-report';
 import { AuthManagementService } from '@lotus/front-global/auth';
 import { UserDTO } from '@ubs-platform/users-common';
 import { CommentDTO, CommentSearchDTO } from '@ubs-platform/social-common';
@@ -47,7 +45,7 @@ export class SingleCommentComponent implements OnChanges, OnInit {
   constructor(
     private commentService: CommentService,
     private overlay: BasicOverlayService,
-    private umessageService: UserMessageService,
+    private contentReport: ContentReportService,
     private authService: AuthManagementService,
     private changeDetectorRef: ChangeDetectorRef
   ) { }
@@ -195,30 +193,18 @@ export class SingleCommentComponent implements OnChanges, OnInit {
   }
 
   flag() {
-    const reform = new Reform<FlagForm>(FlagForm, new FlagForm());
-    this.overlay.reformDialog(reform, 'İçeriği bildir').subscribe((a) => {
-      if (a) {
-        const item = this.item();
-        this.umessageService
-          .create({
-            email: 'social@tetakent.com',
-            firstName: 'Lotus',
-            lastName: 'System',
-            type: 'CONTENT_REPORT',
-            summary: this.user
-              ? `${this.user.id} tarafından yapılan yorum bildirimi`
-              : 'Anonim yorum bildirimi',
-            message: `Yorum yapan: ${item?.byFullName} (${item?.byUserId}) <br> Yorum: ${item?.textContent}  <br>  Yorum id: ${item?._id} <br> Kullanıcı şikayeti: ${reform.value.contentType} <br> Ekstra not: ${reform.value.extraNotes}
-            `,
-          })
-          .subscribe((a) => {
-            this.overlay.alert(
-              'Yorumunuz bildirildi',
-              'Bildiriniz için teşekkür ederiz. En yakın zamanda inceleyeceğiz',
-              'info'
-            );
-          });
-      }
-    });
+    const item = this.item();
+    if (!item) return;
+    this.contentReport
+      .report({
+        entityType: 'COMMENT',
+        entityId: item._id,
+        reporterUserId: this.user?.id,
+        contextLines: [
+          `Yorum yapan: ${item.byFullName} (${item.byUserId})`,
+          `Yorum: ${item.textContent}`,
+        ],
+      })
+      .subscribe();
   }
 }

@@ -48,25 +48,31 @@ export class CommentDialogComponent {
   sendComment() {
     const currentCommentText = this.currentCommentText();
     if (currentCommentText) {
-      const clc = currentCommentText.toLowerCase();
-      // Yandaş değilim, sadece bu yorumu yaparak hepimizin başı yansın istemiyorum
-      if (clc.includes("tayyip") || clc.includes("tayyib") || clc.includes("erdoğan") || clc.includes("erdogan") || clc.includes("akp")) {
-        // Undertale easter egg
-        this.overlayService.alert("Çok fazla köpek taşıyorsun", "", "warn")
-        this.ref.close(null);
-
-      } else {
-        this.commentService
-          .addComment({
-            ...(this.config.data! as CommentAddDTO),
-            textContent: currentCommentText,
-          })
-          .subscribe((a) => {
-            this.ref.close(a);
-          });
-      }
-      // this.dialogHideReference?.closeMainAction();
-
+      // İçerik filtreleme artık sunucuda (UBS social-webservice pattern filtresi).
+      // Reddedilen yorumlar hata döner, sessizce düşenler 200 döner ve burada normal akış gibi görünür.
+      this.commentService
+        .addComment({
+          ...(this.config.data! as CommentAddDTO),
+          textContent: currentCommentText,
+        })
+        .subscribe({
+          next: (a) => this.ref.close(a),
+          error: (err) => {
+            if (err?.status === 400) {
+              this.overlayService.alert(
+                'Yorumunuz yayınlanamadı',
+                'Yorum, topluluk kurallarına uymadığı için kabul edilmedi.',
+                'warn'
+              );
+            } else if (err?.status === 401 || err?.status === 403) {
+              this.overlayService.alert(
+                'Yorum yapamazsınız',
+                'Yorum yapma yetkiniz şu anda kapalı.',
+                'warn'
+              );
+            }
+          },
+        });
     }
   }
 }

@@ -1,3 +1,12 @@
+
+@import "placeholders";
+// Invoice Info Component Styles
+:host {
+  @extend %page-host;
+  height: 100%;
+  width: 100%;
+}
+
 .filter {
   @media screen and (min-width: 712px) {
     width: 300px;

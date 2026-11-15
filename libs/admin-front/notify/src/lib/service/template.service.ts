@@ -9,7 +9,7 @@ import {
 import { SearchResult } from '../../../../../api-interfaces/src/search-result.dto';
 @Injectable()
 export class TemplateService {
-  readonly RESOURCE_URL = `${environment.notifyUrl}/email-template`;
+  readonly RESOURCE_URL = `${environment.notifyUrl}email-template`;
 
   constructor(private http: HttpClient) {}
 

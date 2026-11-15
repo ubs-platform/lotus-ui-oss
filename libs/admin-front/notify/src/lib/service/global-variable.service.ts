@@ -10,7 +10,7 @@ import { Observable, map } from 'rxjs';
 
 @Injectable()
 export class GlobalVariableService {
-  readonly RESOURCE_URL = `${environment.notifyUrl}/global-variable`;
+  readonly RESOURCE_URL = `${environment.notifyUrl}global-variable`;
 
   constructor(public http: HttpClient) {}
 

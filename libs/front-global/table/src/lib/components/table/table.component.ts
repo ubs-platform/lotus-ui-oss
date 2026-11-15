@@ -12,7 +12,6 @@ import {
 } from '@angular/core';
 import { ColumnComponent } from '../column/column.component';
 import { ArrayToObjectUtil } from '@lotus/front-global/array-to-object';
-import { NgxMobileExperienceUtil } from '@lotus/front-global/mona-mobile-experience-ng';
 import { DialogInformation } from '@lotus/front-global/webdialog';
 import { DataDirective } from '../../directives/data.drective';
 import { EmptyDataDirective } from '../../directives/empty-data.directive';
