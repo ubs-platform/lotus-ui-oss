@@ -1,0 +1,207 @@
+:host {
+  display: block;
+}
+
+.xdraw-page {
+  position: relative;
+  box-sizing: border-box;
+  width: 100dvw;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.xdraw-surface {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  outline: none;
+}
+
+.xdraw-canvas-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-1, #ffffff);
+}
+
+.xdraw-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.xdraw-box {
+  position: absolute;
+  padding: 0.5rem;
+  border: 1px solid #6b7280;
+  border-radius: 12px;
+  background: var(--bg-2);
+}
+
+.xdraw-sidebar-host {
+  position: absolute;
+  z-index: 1;
+  top: 0.75rem;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.xdraw-sidebar-box {
+  max-height: 90dvh;
+  padding: 0.25rem;
+  overflow: auto;
+  border: 1px solid #6b7280;
+  border-radius: 12px;
+  background: var(--bg-2);
+}
+
+.xdraw-coordinates {
+  top: 0.75rem;
+  right: 0.75rem;
+}
+
+.xdraw-jumping-buttons {
+  right: 0.75rem;
+  bottom: 0.75rem;
+  transition: opacity 250ms ease, visibility 0s linear 250ms;
+}
+
+.xdraw-jumping-buttons-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.xdraw-controls {
+  transition: opacity 250ms ease;
+}
+
+.xdraw-controls-dimmed {
+  opacity: 0.5;
+
+  &:hover,
+  &:focus-within {
+    opacity: 1;
+  }
+}
+
+.xdraw-floating-menu {
+  position: fixed;
+  z-index: 2;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  background: var(--bg-1);
+  color: var(--fg);
+}
+
+.xdraw-selection-actions {
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+// Izgara: dunya koordinatlarina gore kaydirilan CSS arka plani
+.xdraw-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-repeat: repeat;
+  background-clip: content-box;
+  background-origin: 0px 0px;
+}
+
+.xdraw-grid-off {
+  background-image: none;
+}
+
+.xdraw-grid-solid {
+  background-image: none;
+  background-color: color-mix(in srgb, var(--fg, #000000) 12%, transparent);
+}
+
+.xdraw-grid-lines {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(139, 139, 139, 0.3) 0px,
+      rgba(139, 139, 139, 0.3) var(--lineWidth),
+      transparent var(--lineWidth),
+      transparent var(--gridSize)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(139, 139, 139, 0.3) 0px,
+      rgba(139, 139, 139, 0.3) var(--lineWidth),
+      transparent var(--lineWidth),
+      transparent var(--gridSize)
+    );
+  background-position: var(--gridOffset);
+  background-size: var(--gridSize);
+}
+
+.xdraw-grid-ruler {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(139, 139, 139, 0.55) 0px,
+      rgba(139, 139, 139, 0.55) var(--lineWidth),
+      transparent var(--lineWidth),
+      transparent var(--gridMajorSize)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(139, 139, 139, 0.55) 0px,
+      rgba(139, 139, 139, 0.55) var(--lineWidth),
+      transparent var(--lineWidth),
+      transparent var(--gridMajorSize)
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(139, 139, 139, 0.24) 0px,
+      rgba(139, 139, 139, 0.24) var(--lineWidth),
+      transparent var(--lineWidth),
+      transparent var(--gridSize)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(139, 139, 139, 0.24) 0px,
+      rgba(139, 139, 139, 0.24) var(--lineWidth),
+      transparent var(--lineWidth),
+      transparent var(--gridSize)
+    );
+  background-position: var(--gridMajorOffset), var(--gridMajorOffset), var(--gridOffset), var(--gridOffset);
+  background-size: var(--gridMajorSize), var(--gridMajorSize), var(--gridSize), var(--gridSize);
+}
+
+.xdraw-grid-ruler-far {
+  background-color: color-mix(in srgb, var(--fg, #000000) 8%, transparent);
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(139, 139, 139, 0.55) 0px,
+      rgba(139, 139, 139, 0.55) var(--lineWidth),
+      transparent var(--lineWidth),
+      transparent var(--gridMajorSize)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(139, 139, 139, 0.55) 0px,
+      rgba(139, 139, 139, 0.55) var(--lineWidth),
+      transparent var(--lineWidth),
+      transparent var(--gridMajorSize)
+    );
+  background-position: var(--gridMajorOffset), var(--gridMajorOffset);
+  background-size: var(--gridMajorSize), var(--gridMajorSize);
+}

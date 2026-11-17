@@ -1,0 +1,67 @@
+<div class="xdraw-panel flex flex-column gap-2">
+  <h2>{{ 'xdraw.color.selector' | translate }}</h2>
+  <div class="flex flex-column gap-1">
+    <label class="text-sm">{{ 'xdraw.colors.predefined' | translate }}</label>
+    <div class="xdraw-swatch-grid">
+      @for (color of colorPresets; track color) {
+        <button
+          type="button"
+          class="xdraw-swatch"
+          [style.background-color]="color"
+          [title]="color"
+          [attr.aria-label]="'xdraw.color.predefined' | translate: { color: color }"
+          (click)="applyColor(color)"
+        ></button>
+      }
+    </div>
+    <label class="text-sm">{{ 'xdraw.colors.previous' | translate }}</label>
+    <div class="xdraw-swatch-grid">
+      @for (color of settings.recentColors(); track color) {
+        <button
+          type="button"
+          class="xdraw-swatch"
+          [style.background-color]="color"
+          [title]="color"
+          [attr.aria-label]="'xdraw.color.predefined' | translate: { color: color }"
+          (click)="applyColor(color)"
+        ></button>
+      }
+    </div>
+  </div>
+  <input
+    type="color"
+    class="xdraw-color-input"
+    [value]="settings.strokeColor()"
+    [title]="'xdraw.color.stroke' | translate"
+    (input)="onColorInput($event)"
+    (change)="commit.emit()"
+  />
+  <div class="xdraw-hue-track" [style.background]="hueTrackStyle()">
+    <xdraw-labeled-trackbar label="H" [min]="0" [max]="360" [value]="colorHsl().h"
+      (valueChange)="setHsl('h', $event)" (changeEnd)="commit.emit()" />
+  </div>
+  <xdraw-labeled-trackbar label="S" [min]="0" [max]="100" [value]="colorHsl().s"
+    (valueChange)="setHsl('s', $event)" (changeEnd)="commit.emit()" />
+  <xdraw-labeled-trackbar label="L" [min]="0" [max]="100" [value]="colorHsl().l"
+    (valueChange)="setHsl('l', $event)" (changeEnd)="commit.emit()" />
+  <xdraw-labeled-trackbar label="R" [min]="0" [max]="255" [value]="colorRgb().r"
+    (valueChange)="setRgb('r', $event)" (changeEnd)="commit.emit()" />
+  <xdraw-labeled-trackbar label="G" [min]="0" [max]="255" [value]="colorRgb().g"
+    (valueChange)="setRgb('g', $event)" (changeEnd)="commit.emit()" />
+  <xdraw-labeled-trackbar label="B" [min]="0" [max]="255" [value]="colorRgb().b"
+    (valueChange)="setRgb('b', $event)" (changeEnd)="commit.emit()" />
+  <xdraw-labeled-trackbar label="A" [min]="0" [max]="1" [step]="0.01" [value]="settings.strokeAlpha()"
+    (valueChange)="setAlpha($event)" />
+  <div class="xdraw-swatch-grid">
+    @for (alpha of alphaPresets; track alpha) {
+      <button
+        type="button"
+        class="xdraw-alpha-preset"
+        [title]="'xdraw.color.alpha' | translate: { alpha: '' + alpha }"
+        (click)="setAlpha(alpha)"
+      >
+        {{ alpha }}
+      </button>
+    }
+  </div>
+</div>

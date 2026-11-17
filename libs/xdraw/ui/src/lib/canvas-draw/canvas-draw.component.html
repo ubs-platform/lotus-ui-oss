@@ -1,0 +1,100 @@
+<div class="xdraw-page">
+  <!-- @if (showSelectionActions()) {
+    <div class="xdraw-floating-menu xdraw-selection-actions flex gap-2">
+      <block-button buttonClass="primary" stringContent="xdraw.copy"
+        iconClass="material-symbols-outlined" iconContent="content_copy"
+        (click)="copySelection()"></block-button>
+      <block-button buttonClass="primary" stringContent="xdraw.cut"
+        iconClass="material-symbols-outlined" iconContent="content_cut"
+        (click)="cutSelection()"></block-button>
+    </div>
+  } -->
+
+  @if (showPasteMenu()) {
+    <div class="xdraw-floating-menu xdraw-paste-menu" [style.left.px]="pasteMenuX()" [style.top.px]="pasteMenuY()">
+      @if (hasSelection() || clipboardAvailable()) {
+        <div class="flex gap-2">
+          @if (hasSelection()) {
+            <block-button buttonClass="primary" stringContent="xdraw.copy"
+              iconClass="material-symbols-outlined" iconContent="content_copy"
+              (click)="copySelectionFromMenu()"></block-button>
+            <block-button buttonClass="primary" stringContent="xdraw.cut"
+              iconClass="material-symbols-outlined" iconContent="content_cut"
+              (click)="cutSelectionFromMenu()"></block-button>
+          }
+          @if (clipboardAvailable()) {
+            <block-button buttonClass="primary" stringContent="xdraw.paste"
+              iconClass="material-symbols-outlined" iconContent="content_paste"
+              (click)="pasteSelection()"></block-button>
+          }
+        </div>
+      } @else {
+        <span>{{ 'xdraw.clipboard-empty' | translate }}</span>
+      }
+    </div>
+  }
+
+  <div
+    class="xdraw-controls xdraw-sidebar-host"
+    [class.xdraw-controls-dimmed]="menusDimmed()"
+    (pointerdown)="revealControls()"
+    (pointerenter)="revealControls()"
+  >
+    <div class="xdraw-sidebar-box">
+      <xdraw-canvas-sidebar
+        [holder]="svgHolder"
+        [canUndo]="canUndo()"
+        [canRedo]="canRedo()"
+        (downloadProject)="downloadProject($event)"
+        (openProjectFromFile)="openProjectFromFile()"
+        (saveAndShareProject)="saveAndShareProject()"
+        (openRecentFile)="openRecentFile($event)"
+        (exportImage)="exportImage($event)"
+        (undo)="undo()"
+        (redo)="redo()"
+        (generateNew)="generateNew()"
+        (flushAutosave)="flushAutosave()"
+      />
+    </div>
+  </div>
+
+  <div #surface class="xdraw-surface" tabindex="0">
+    <div #canvasViewport class="xdraw-canvas-viewport">
+      <div class="xdraw-grid" [class]="gridClass()" [style]="gridStyle()"></div>
+      <canvas #canvas class="xdraw-canvas"></canvas>
+    </div>
+  </div>
+
+  <div
+    class="xdraw-controls xdraw-box xdraw-coordinates"
+    [class.xdraw-controls-dimmed]="menusDimmed()"
+    (pointerenter)="revealControls()"
+  >
+    X: {{ worldXUI() }}
+    <br />
+    Y: {{ worldYUI() }}
+    <br />
+    Zoom : {{ zoomFactorUI() }}
+  </div>
+
+  <div
+    class="xdraw-box xdraw-jumping-buttons"
+    [class.xdraw-jumping-buttons-hidden]="menusDimmed()"
+    (pointerenter)="revealControls()"
+  >
+    <div class="flex align-items-center justify-content-center gap-2">
+      <block-button buttonClass="primary" iconClass="material-symbols-outlined"
+        iconContent="keyboard_double_arrow_left" (click)="teleportNearestElement(180)"></block-button>
+      <div class="flex flex-column align-items-center justify-content-center gap-2">
+        <block-button buttonClass="primary" iconClass="material-symbols-outlined"
+          iconContent="keyboard_double_arrow_up" (click)="teleportNearestElement(-90)"></block-button>
+        <block-button buttonClass="primary" iconClass="material-symbols-outlined"
+          iconContent="circle" (click)="resetZoomFromButton()"></block-button>
+        <block-button buttonClass="primary" iconClass="material-symbols-outlined"
+          iconContent="keyboard_double_arrow_down" (click)="teleportNearestElement(90)"></block-button>
+      </div>
+      <block-button buttonClass="primary" iconClass="material-symbols-outlined"
+        iconContent="keyboard_double_arrow_right" (click)="teleportNearestElement(0)"></block-button>
+    </div>
+  </div>
+</div>

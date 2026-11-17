@@ -1,0 +1,39 @@
+<lib-webdialog
+  [(show)]="show"
+  position="center"
+  width="100dvw"
+  height="100dvh"
+  maxHeight="100dvh"
+  [title]="'xdraw.recent.title'"
+>
+  <div class="flex flex-column gap-3">
+    @if (provider().list().length === 0) {
+      <p class="xdraw-recent-empty">{{ 'xdraw.recent.empty' | translate }}</p>
+    }
+    <div class="xdraw-recent-grid">
+      @for (entry of provider().list(); track entry.id) {
+        <div role="button" tabindex="0" class="xdraw-recent-card" (click)="open(entry.id)">
+          <div class="xdraw-recent-thumb">
+            @if (thumbnailUrls()[entry.id]; as url) {
+              <img [src]="url" [alt]="entry.fileName" draggable="false" />
+            } @else {
+              <i class="material-symbols-outlined xdraw-recent-placeholder">draw</i>
+            }
+          </div>
+          <div class="xdraw-recent-info">
+            <span class="xdraw-recent-name">{{ entry.fileName }}</span>
+            <span class="xdraw-recent-date">{{ formatDate(entry.savedAt) }}</span>
+          </div>
+          <button
+            type="button"
+            class="xdraw-recent-remove"
+            [title]="'xdraw.recent.remove' | translate"
+            (click)="remove($event, entry.id)"
+          >
+            <i class="material-symbols-outlined">delete</i>
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</lib-webdialog>

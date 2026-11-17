@@ -1,0 +1,192 @@
+<div #toolsToolbar class="xdraw-tools-toolbar">
+  <block-button
+    [buttonClass]="toolClass(settings.mode() === 'selection')"
+    stringContent="xdraw.select"
+    iconClass="material-symbols-outlined"
+    iconContent="arrow_selector_tool"
+    (click)="selectMode('selection', toolsToolbar)"
+  ></block-button>
+  <block-button
+    [buttonClass]="toolClass(settings.mode() === 'move')"
+    stringContent="xdraw.move"
+    iconClass="material-symbols-outlined"
+    iconContent="open_with"
+    (click)="selectMode('move', toolsToolbar)"
+  ></block-button>
+  <block-button
+    [buttonClass]="toolClass(settings.mode() === 'pointer')"
+    iconClass="material-symbols-outlined"
+    iconContent="pan_tool"
+    (click)="selectMode('pointer', toolsToolbar)"
+  ></block-button>
+  <block-button
+    [buttonClass]="toolClass(isDrawType('pencil'))"
+    iconClass="material-symbols-outlined"
+    iconContent="edit"
+    (click)="selectDrawType('pencil', toolsToolbar)"
+  ></block-button>
+  <block-button
+    [buttonClass]="toolClass(isDrawType('rectangle'))"
+    iconClass="material-symbols-outlined"
+    iconContent="rectangle"
+    (click)="selectDrawType('rectangle', toolsToolbar)"
+  ></block-button>
+  <block-button
+    [buttonClass]="toolClass(isDrawType('ellipse'))"
+    iconClass="material-symbols-outlined"
+    iconContent="circle"
+    (click)="selectDrawType('ellipse', toolsToolbar)"
+  ></block-button>
+  <block-button
+    [buttonClass]="toolClass(settings.mode() === 'text')"
+    iconClass="material-symbols-outlined"
+    iconContent="text_fields"
+    (click)="selectMode('text', toolsToolbar)"
+  ></block-button>
+  <block-button
+    [buttonClass]="toolClass(isDrawType('erase'))"
+    iconClass="material-symbols-outlined"
+    iconContent="ink_eraser"
+    (click)="selectDrawType('erase', toolsToolbar)"
+  ></block-button>
+  <block-button
+    [buttonClass]="toolClass(isDrawType('fill'))"
+    iconClass="material-symbols-outlined"
+    iconContent="format_color_fill"
+    (click)="selectDrawType('fill', toolsToolbar, false)"
+  ></block-button>
+</div>
+
+<div #toolbar class="flex flex-column gap-2">
+  <block-button
+    buttonClass="surface"
+    iconClass="material-symbols-outlined"
+    iconContent="menu"
+    (click)="menuPanel.showDialog(toolbar, 'RIGHT')"
+  ></block-button>
+  <div class="xdraw-divider"></div>
+  <block-button
+    [buttonClass]="toolClass(canUndo())"
+    iconClass="material-symbols-outlined"
+    iconContent="undo"
+    (click)="canUndo() && undo.emit()"
+  ></block-button>
+  <block-button
+    [buttonClass]="toolClass(canRedo())"
+    iconClass="material-symbols-outlined"
+    iconContent="redo"
+    (click)="canRedo() && redo.emit()"
+  ></block-button>
+  <div class="xdraw-divider"></div>
+  <block-button
+    [buttonClass]="toolClass(settings.backgroundPatternMode() !== 0)"
+    iconClass="material-symbols-outlined"
+    iconContent="grid_on"
+    (click)="cycleBackgroundPattern()"
+  ></block-button>
+  <button
+    type="button"
+    class="xdraw-color-swatch"
+    [style.background-color]="settings.strokeColor()"
+    [title]="settings.strokeColor()"
+    aria-label="Rengi seçimi"
+    (click)="openColorPicker(toolbar)"
+  ></button>
+  <div class="flex flex-column gap-1">
+    @for (color of settings.recentColors().slice(0, 3); track color) {
+      <button
+        type="button"
+        class="xdraw-color-swatch"
+        [style.background-color]="color"
+        [title]="color"
+        [attr.aria-label]="'Rengi seç: ' + color"
+        (click)="pickRecentColor(color, toolbar)"
+      ></button>
+    }
+  </div>
+  <block-button
+    buttonClass="primary"
+    iconClass="material-symbols-outlined"
+    iconContent="layers"
+    (click)="layersPanel.showDialog(toolbar, 'RIGHT')"
+  ></block-button>
+</div>
+
+<lib-overlay-panel #menuPanel>
+  <div class="xdraw-menu flex flex-column gap-1">
+    <block-button buttonClass="surface" [cover]="true" stringContent="general.new"
+      (click)="closeMenu(); generateNew.emit()"></block-button>
+    <block-button buttonClass="surface" [cover]="true" stringContent="general.open"
+      (click)="closeMenu(); openProjectFromFile.emit()"></block-button>
+    <block-button buttonClass="surface" [cover]="true"
+      [stringContent]="canSaveToDevice ? 'general.save' : 'general.download'"
+      (click)="closeMenu(); downloadProject.emit(false)"></block-button>
+    <block-button buttonClass="surface" [cover]="true" stringContent="xdraw.export.title"
+      iconClass="material-symbols-outlined" iconContent="image"
+      (click)="openExportDialog()"></block-button>
+    @if (canSaveToDevice) {
+      <block-button buttonClass="surface" [cover]="true" stringContent="general.save-as"
+        (click)="closeMenu(); downloadProject.emit(true)"></block-button>
+    }
+    @if (appController.isMobileApp) {
+      <block-button buttonClass="surface" [cover]="true" stringContent="general.save-and-share"
+        (click)="closeMenu(); saveAndShareProject.emit()"></block-button>
+    }
+    @if (appController.recentFiles) {
+      <block-button buttonClass="surface" [cover]="true" stringContent="xdraw.recent.title"
+        iconClass="material-symbols-outlined" iconContent="history"
+        (click)="openRecentFilesDialog()"></block-button>
+    }
+    @if (appController.extraMenuItems; as extraMenuItems) {
+      @for (item of extraMenuItems(); track item.label) {
+        <block-button buttonClass="surface" [cover]="true" [stringContent]="item.label"
+          iconClass="material-symbols-outlined" [iconContent]="item.icon"
+          (click)="closeMenu(); item.onClick()"></block-button>
+      }
+    }
+    <div>
+      <block-button buttonClass="primary" iconClass="material-symbols-outlined" iconContent="invert_colors"
+        (click)="toggleTheme()"></block-button>
+    </div>
+  </div>
+  <p class="xdraw-about">
+    {{ appController.appName ?? 'XDraw' }}
+    @if (appController.appVersion; as version) {
+      v{{ version }}
+      <br />
+      {{ 'xdraw.about.version' | translate: { version: version } }}
+    }
+    <br />
+    {{ 'xdraw.about.copyright' | translate: { author: 'Tetakent(H.C.G)', year: copyrightYear } }}
+    <br />
+    <a href="https://tetakent.com" target="_blank" rel="noopener noreferrer">
+      <img src="tkneolitxdraw.png" alt="Tetakent Logo" class="xdraw-about-logo" />
+    </a>
+  </p>
+</lib-overlay-panel>
+
+<lib-overlay-panel #penPanel>
+  <xdraw-pen-settings-panel />
+</lib-overlay-panel>
+
+<lib-overlay-panel #textPanel>
+  <xdraw-text-settings-panel />
+</lib-overlay-panel>
+
+<lib-overlay-panel #colorPanel>
+  <xdraw-color-picker-panel (commit)="commitColorSelection()" />
+</lib-overlay-panel>
+
+<lib-overlay-panel #layersPanel>
+  <xdraw-layers-panel [holder]="holder()" (opacityCommitted)="flushAutosave.emit()" />
+</lib-overlay-panel>
+
+<xdraw-export-dialog [(show)]="showExportDialog" (exportImage)="exportImage.emit($event)" />
+
+@if (appController.recentFiles; as recentFiles) {
+  <xdraw-recent-files-dialog
+    [(show)]="showRecentFiles"
+    [provider]="recentFiles"
+    (openFile)="openRecentFile.emit($event)"
+  />
+}

@@ -1,0 +1,80 @@
+@import '../../../libs/front-global/base-style/base.scss';
+@import '../../../common/font/inter.css';
+
+// xdraw yesil paleti; degisken adlari lotus-web base-style konvansiyonunu izler.
+@mixin darktema {
+  --primary-color: #046f2a;
+  --primary-color-text: #c0ffd7;
+  --primary-color-bg-text: #c0ffd7;
+  --primary-color-card-bg: #020c1c;
+  --primary-color-card-bg-text: #c0ffd1;
+  --primary-color-bg-hover: #008f24;
+  --primary-color-fg-hover: rgb(0, 0, 0);
+  --primary-color-bg-active: #084939;
+  --primary-color-fg-active: #ffffff;
+  --primary-color-hover: #081949;
+
+  --bg-surface: #121416;
+  --bg-1: #141714;
+  --bg-2: #143622;
+  --bg-3: #14762b;
+  --border-color: #14ad33;
+  --fg: #ffffff;
+  &[amoled='true'] {
+    --bg-surface: #000000;
+  }
+}
+
+:root {
+  --primary-color: #2dd446;
+  --primary-color-text: #2d8a1a;
+  --primary-color-text-on-bg: #ffffff;
+  --primary-color-card-bg: #e8fff2;
+  --primary-color-card-bg-text: #0d5e10;
+  --primary-color-bg-hover: #4af5ab;
+  --primary-color-fg-hover: #ffffff;
+  --primary-color-bg-active: #c5ffd0;
+  --primary-color-fg-active: #0d5e16;
+  --primary-color-hover: #d4daff;
+
+  --bg-surface: #f5f5f7;
+  --bg-1: #ffffff;
+  --bg-2: #fff0f0;
+  --bg-3: #eff0ff;
+  --border-color: #cbeea0;
+  --fg: #111111;
+
+  --text-color: #212529;
+  --text-color-inverse: #f6fbff;
+  --text-color-secondary: #6c757d;
+  --font-family-primary: 'InterDisplay', system-ui, arial, sans-serif;
+  --font-family-secondary: 'InterDisplay', system-ui, -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
+  --border-radius: 10px;
+  --maskbg: rgba(0, 0, 0, 0.4);
+
+  &[theme='dark'] {
+    @include darktema;
+  }
+  overflow: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([theme='light']) {
+    @include darktema;
+  }
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-family-secondary);
+  background-color: var(--bg-surface);
+  color: var(--fg);
+  overflow: hidden;
+}
